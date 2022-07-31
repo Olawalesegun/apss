@@ -339,11 +339,8 @@ public class LandService : ILandService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<Season>> GetSeasonsAsync(long accountId)
+    public async Task<IQueryBuilder<Season>> GetSeasonsAsync()
     {
-        await _uow.Accounts.Query()
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Root, PermissionType.Read);
-
         return _uow.Sessions.Query();
     }
 
@@ -408,7 +405,6 @@ public class LandService : ILandService
            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Farmer, PermissionType.Update);
 
         var productExpense = await _uow.ProductExpenses.Query()
-            .Include(e => e.SpentOn.Expenses)
             .FindWithOwnershipValidationAync(landProductExpenseId, u => u.SpentOn.AddedBy, account);
 
         udapter(productExpense);
