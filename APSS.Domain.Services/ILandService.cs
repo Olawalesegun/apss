@@ -160,7 +160,7 @@ public interface ILandService
     /// </summary>
     /// <param name="accountId">The account id of the user who wants to get the seasons</param>
     /// <returns>The quey that gets all seasons</returns>
-    Task<IQueryBuilder<Season>> GetSeasonsAsync();
+    IQueryBuilder<Season> GetSeasonsAsync();
 
     /// <summary>
     /// Asynchronously adds a new land product unit
@@ -200,7 +200,7 @@ public interface ILandService
     /// <param name="accountId">The account id of the user who wants to get the land product units</param>
     /// <param name="landProductUnitId">The id of the land product unit</param>
     /// <returns>The quey that gets all the land product unit</returns>
-    Task<IQueryBuilder<LandProductUnit>> GetLandProductUnitsAsync();
+    IQueryBuilder<LandProductUnit> GetLandProductUnitsAsync();
 
     /// <summary>
     /// Asynchronously adds a new land product expense

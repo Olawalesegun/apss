@@ -338,7 +338,7 @@ public class LandService : ILandService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<Season>> GetSeasonsAsync()
+    public IQueryBuilder<Season> GetSeasonsAsync()
     {
         return _uow.Sessions.Query();
     }
@@ -444,7 +444,7 @@ public class LandService : ILandService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<LandProductUnit>> GetLandProductUnitsAsync()
+    public IQueryBuilder<LandProductUnit> GetLandProductUnitsAsync()
     {
         return _uow.LandProductUnits.Query();
     }
