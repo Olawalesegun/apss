@@ -624,9 +624,24 @@ public sealed class LandServiceTest
     }
 
     [Theory]
-    [InlineData(PermissionType.Read, true)]
-    [InlineData(PermissionType.Create | PermissionType.Update | PermissionType.Delete, false)]
+    [InlineData(AccessLevel.Root, PermissionType.Read, true)]
+    [InlineData(AccessLevel.District, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Group, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Directorate, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Governorate, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Farmer, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Presedint, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Village, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Root, PermissionType.Create | PermissionType.Delete | PermissionType.Update, false)]
+    [InlineData(AccessLevel.Group, PermissionType.Create | PermissionType.Delete | PermissionType.Update, false)]
+    [InlineData(AccessLevel.Village, PermissionType.Create | PermissionType.Delete | PermissionType.Update, false)]
+    [InlineData(AccessLevel.District, PermissionType.Create | PermissionType.Delete | PermissionType.Update, false)]
+    [InlineData(AccessLevel.Directorate, PermissionType.Create | PermissionType.Delete | PermissionType.Update, false)]
+    [InlineData(AccessLevel.Governorate, PermissionType.Create | PermissionType.Delete | PermissionType.Update, false)]
+    [InlineData(AccessLevel.Presedint, PermissionType.Create | PermissionType.Delete | PermissionType.Update, false)]
+    [InlineData(AccessLevel.Farmer, PermissionType.Create | PermissionType.Delete | PermissionType.Update, false)]
     public async Task GetLandsTheory(
+        AccessLevel accessLevel,
         PermissionType permissionType,
         bool shouldSucceed)
     {
@@ -639,22 +654,40 @@ public sealed class LandServiceTest
             account.User.Id,
             permissionType);
 
-        var superviserAccount = await _uow.CreateTestingAccountForUserAsync(
-            account.User.SupervisedBy!.Id,
-            permissionType);
+        if (accessLevel != AccessLevel.Farmer)
+        {
+            var supervisersAccount = await _uow.CreateTestingAccountAboveUserAsync(
+                account.User.Id,
+                accessLevel,
+                permissionType);
 
-        var getLandsTask = _landSvc.GetLandsAsync(ownerAccount.Id);
-        var getLandsTask1 = _landSvc.GetLandsAsync(superviserAccount.Id);
+            var getLandsTask1 = _landSvc.GetLandsAsync(supervisersAccount.Id, account.User.Id);
+
+            if (!shouldSucceed)
+            {
+                await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await getLandsTask1);
+                return;
+            }
+
+            await getLandsTask1;
+        }
+
+        var anotherFarmer = await _uow.CreateTestingAccountAsync(accessLevel, permissionType);
+        if (accessLevel != AccessLevel.Root)
+        {
+            await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
+            _landSvc.GetLandsAsync(anotherFarmer.Id, account.User.Id));
+        }
+
+        var getLandsTask = _landSvc.GetLandsAsync(ownerAccount.Id, account.User.Id);
 
         if (!shouldSucceed)
         {
             await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await getLandsTask);
-            await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await getLandsTask1);
             return;
         }
 
         await getLandsTask;
-        await getLandsTask1;
     }
 
     [Theory]
@@ -1190,6 +1223,39 @@ public sealed class LandServiceTest
         return;
     }
 
+    //[Theory]
+    //[InlineData(PermissionType.Read, true)]
+    //[InlineData(PermissionType.Create | PermissionType.Update | PermissionType.Delete, false)]
+    //public async Task GetLandsTheory(
+    //    PermissionType permissionType,
+    //    bool shouldSucceed)
+    //{
+    //    var (account, land) = await LandAddedTheory();
+
+    //    Assert.True(await _uow.Lands.Query().ContainsAsync(land!));
+    //    Assert.True(await _uow.Accounts.Query().ContainsAsync(account!));
+
+    //    var ownerAccount = await _uow.CreateTestingAccountForUserAsync(
+    //        account.User.Id,
+    //        permissionType);
+
+    //    var superviserAccount = await _uow.CreateTestingAccountForUserAsync(
+    //        account.User.SupervisedBy!.Id,
+    //        permissionType);
+
+    //    var getLandsTask = _landSvc.GetLandsAsync(ownerAccount.Id, account.User.Id);
+    //    var getLandsTask1 = _landSvc.GetLandsAsync(superviserAccount.Id, account.User.Id);
+
+    //    if (!shouldSucceed)
+    //    {
+    //        await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await getLandsTask);
+    //        await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await getLandsTask1);
+    //        return;
+    //    }
+
+    //    await getLandsTask;
+    //    await getLandsTask1;
+    //}
     //[Theory]
     //[InlineData(PermissionType.Create, true)]
     //[InlineData(PermissionType.Read | PermissionType.Delete | PermissionType.Update, false)]
