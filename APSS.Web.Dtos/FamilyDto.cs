@@ -1,10 +1,8 @@
-﻿namespace APSS.Web.Dto
+﻿namespace APSS.Web.Dtos;
+
+public class FamilyDto : BaseAuditbleDto
 {
-    public class FamilyDto
-    {
-        public long Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string LivingLocation { get; set; } = null!;
-        public string User { get; set; } = null!;
-    }
+    public string Name { get; set; } = null!;
+    public string LivingLocation { get; set; } = null!;
+    public UserDto User { get; set; } = null!;
 }

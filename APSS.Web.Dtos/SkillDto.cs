@@ -1,11 +1,9 @@
-﻿namespace APSS.Web.Dto
+﻿namespace APSS.Web.Dtos;
+
+public class SkillDto : BaseAuditbleDto
 {
-    public class SkillDto
-    {
-        public long Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string? Description { get; set; }
-        public string Field { get; set; } = null!;
-        public string NameIndividual { get; set; } = null!;
-    }
+    public string Name { get; set; } = null!;
+    public string? Description { get; set; }
+    public string Field { get; set; } = null!;
+    public IndividualDto NameIndividual { get; set; } = null!;
 }
