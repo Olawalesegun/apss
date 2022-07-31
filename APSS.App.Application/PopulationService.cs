@@ -153,13 +153,21 @@ public sealed class PopulationService : IPopulationService
     ///<inheritdoc/>
     public async Task RemoveIndividualAsync(long accountId, long individualId)
     {
+        await using var tx = await _uow.BeginTransactionAsync();
+
         var account = await GetAuthorizedGroupAccountAsync(accountId, PermissionType.Delete);
 
         var individual = await _uow.Individuals.Query()
             .Include(i => i.AddedBy)
             .FindWithOwnershipValidationAync(individualId, i => i.AddedBy, account);
+        var relationships = await _uow.FamilyIndividuals.Query()
+            .Where(f => f.Individual.Id == individualId)
+            .AsAsyncEnumerable()
+            .ToListAsync();
 
+        relationships.ForEach(_uow.FamilyIndividuals.Remove);
         _uow.Individuals.Remove(individual);
+
         await _uow.CommitAsync();
     }
 
