@@ -287,17 +287,16 @@ public class LandService : ILandService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<Land>> GetLandsAsync(long accountId)
+    public async Task<IQueryBuilder<Land>> GetLandsAsync(long accountId, long userId)
     {
         var account = await _uow.Accounts
             .Query()
             .Include(u => u.User)
             .FindAsync(accountId);
-
         await _permissionsSvc
-            .ValidatePermissionsAsync(accountId, account.User.Id, PermissionType.Read);
+            .ValidatePermissionsAsync(accountId, userId, PermissionType.Read);
 
-        return _uow.Lands.Query().Where(l => l.OwnedBy.Id == account.User.Id);
+        return _uow.Lands.Query().Where(l => l.OwnedBy.Id == userId);
     }
 
     /// <inheritdoc/>

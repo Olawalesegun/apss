@@ -40,8 +40,9 @@ public interface ILandService
     /// Asynchronously Gets the lands that owned by theloged in user
     /// </summary>
     /// <param name="accountId">The account id of user who owns the land</param>
+    /// <param name="userId">The user id of user who owns the land</param>
     /// <returns>the lands that owned by the user</returns>
-    Task<IQueryBuilder<Land>> GetLandsAsync(long accountId);
+    Task<IQueryBuilder<Land>> GetLandsAsync(long accountId, long userId);
 
     /// <summary>
     /// Asynchronously Updates a land
