@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - APSS</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/mystyle/StyleSheet.css" asp-append-vender="true " />
+    <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.0/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
+    <link href="../dashboard/dashboard.rtl.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/icons/css/all.css" />
+    <link rel="stylesheet" href="~/icons/css/main.css" />
+    <meta name="theme-color" content="#7952b3">
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row ">
+
+            <nav class="navbar navbar-expand-lg fa-bolt-lightning bg-light mt-0 col-2  ">
+                <div class="collapse navbar-collapse" id="navbarToggler">
+                    <div>
+                        <button class="navbar-toggler text-left" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-labelledby="Toggle navigation">
+                            <span class="navbar-toggler-icon bi bi-list"></span>
+                        </button>
+                        <ul class="nav flex-column pr-1">
+                            <li class="text-center ">
+                                <img src="~/icons/image/unnamed.png" class="img-fluid figure-img " style="height:100px;width:200px" />
+                                <hr />
+                            </li>
+                            <li class="nav-item text-right accordion ">
+                                <a class="nav-link tabslink" href="#" id="index" onclick="openSideVar(event,'hjk')">
+                                    <i class="fa-solid fa-house tabslink" onclick="openSideVar(event,'hjk')"></i>
+                                    <span data-feather="home"></span>
+                                    الصفحة الرئيسية
+                                </a>
+                            </li>
+                            <li class="nav-item text-right accordion ">
+                                <a class="nav-link tabslink" href="#" id="account_management" onclick="openSideVar(event,'hjk')">
+                                    <i class="fa-solid fa-user-group tabslink" onclick="openSideVar(event,'hjk')"></i>
+
+                                    إدارة الحسابات
+                                </a>
+                            </li>
+                            <li class="nav-item text-right accordion ">
+                                <a class="nav-link tabslink sidebar" href="#" id="data" onclick="openSideVar(event,'hjk')">
+                                    <i class="fa-solid fa-database tabslink" onclick="openSideVar(event,'hjk')"></i>
+
+                                    ادارة البيانات
+                                </a>
+                            </li>
+                            <li class="nav-item text-right accordion ">
+                                <a class="nav-link tabslink sidebar" href="#" onclick="openSideVar(event,'hjk')">
+                                    <i class="fa-solid fa-circle-question"></i>
+
+                                    إدارة الاستبيانات
+                                </a>
+                            </li>
+
+                            <li class="nav-item text-right accordion">
+                                <a class="nav-link tabslink" href="#">
+                                    <span data-feather="bar-chart-2"></span>
+                                    <br />
+                                </a>
+                            </li>
+                            <li class="nav-item text-right">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="layers"></span>
+                                    <br />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10  ">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center    border-bottom">
+                    <h1 class="h2 pb-2" style="color: #829AB1">المسح الزراعي</h1>
+                    <div class="btn-toolbar pt-4">
+                        <div class="btn-group  ">
+
+                            <a href="#" style="color: #829AB1" class="pt-1 ml-2"><i class="fa-solid fa-bell"></i></a>
+                            <a href="#" class="pt-1" style="border: 0px #486581 solid; border-radius: 50px; width: 30px; height: 30px; background-color: #829AB1"><center><i class="fa-solid fa-user "></i></center></a>
+                            <p class=" mr-2  " style="color: #829AB1"> محمد علي</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="" style="">
+                    <main role="main" class="">
+                        <br />
+                        @*  <partial name="_notification" />*@
+                        @RenderBody()
+                    </main>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script>
+        function close_hide(){
+         var   items=document.getElementById("hiden1");
+          var  items2=document.getElementById("hiden2");
+          var  items2=document.getElementById("hiden3");
+
+            if(items.style.display=="none" ){
+                items3.classList.add("ch");
+                items.classList.add("ch");
+                items2.classList.add("ch");
+            }
+            else{
+                items.className.replace("ch","");
+            }
+        }
+        function openSideVar(evt, name) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("sideBar");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent.classList.add("item-show") ;
+            }
+                  // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tabslink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active-side-bar", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+
+            evt.currentTarget.className += " active-side-bar";
+        }
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js" integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI" crossorigin="anonymous"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
