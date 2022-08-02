@@ -8,70 +8,206 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul>
 
-                    <div class="dropdown d-flex">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown button
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                </div>
+     <div class="main-container d-flex h-100 ">
+        <!-- start sidebar  -->
+        <div class="sidebar shadow-sm   sticky-top navbar-nav-scroll overflow-sctoll vh-100 " id="side_nav" style="position:fixed;">
+
+            <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between mt-2 ">
+                <h1 class="fs-4"><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
+                    <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
             </div>
-        </nav>
-    </header>
+            <ul class="list-unstyle px-2">
+                <li class="active"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
+                <li class=""><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
 
-    <main class="col-lg-8 mx-auto p-3 py-md-5">
-        <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-            <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img"><title>Bootstrap</title><path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path></svg>
-                <span class="fs-4">Starter template</span>
-            </a>
-        </header>
+                <li class=""><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
+                <li class=""><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
+            </ul>
 
-        <div class="container">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
+            <hr class="mx-2">
+            <ul class="list-unstyled px-2">
+                <li class="">
+
+                    <a href="#" class="text-decoration-none  px-3 py-2 d-block ">
+                                                <i class="fal fa-list fa-lg"></i>
+                              Settings
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="#" class="text-decoration-none px-3 py-2 d-flex justify-content-between">
+                            <span><i class="bi bi-bell-fill fa-lg"></i> Notification</span>
+                            <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
+                        </a>
+                  </li>
+            </ul>
+
+            <!-- other system bar -->
+
+                        <hr>
+
+             <div class="accordion m-1 " id="parent">
+                    <div class="accordion-item">
+                          <h4 class="accordion-hearder" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="#collapseOne">
+                                      other system
+                                </button>
+                          </h4>
+                          <div id="collapseOne" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingOne">
+                                <div class="collapse-body">
+                                      <ul class="list-unstyle list px-2">
+                                            <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
+                                            <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+
+                                        <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
+                                        <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
+                                        </ul>
+                                </div>
+                          </div>
+                    </div>
+                    <div class="accordion-item">
+                          <h4 class="accordion-hearder" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="#collapseTwo">
+                                      other system 2
+                                </button>
+                          </h4>
+                          <div id="collapseTwo" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingTwo">
+                                <div class="collapse-body">
+                                      <ul class="list-unstyle list px-2">
+                                            <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
+                                            <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+
+                                        <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
+                                        <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
+                                        </ul>
+                                </div>
+                          </div>
+                    </div>
+             </div>
         </div>
+        <!-- start content -->
+        <div class="content postion-absolute offset-sm-2 " id="maintContent">
 
-    </main>
+            <nav class="navbar navbar-expand-md navbar-light main-bg-color shadow-sm ">
+                <div class="container-fluid">
+                      <!-- Media Top Bar setting -->
+                    <div class="d-flex justify-content-between d-md-none d-block w-100">
+                           <!-- media top bar -->
+                          <button class="btn  btn-link text-decoration-none px-1 py-0 open-btn " onclick=""><i class="fas fa-stream  fs-1 "></i></button>
+                        <a href="#" class="navbar-brand fs-4">Scan System</a>
+                        <div class="d-flex">
+
+                              <div id="date-time" class=" mx-2 pt-2 fw-bold text-info">
+                              </div>
+
+                              <div class="pt-2">
+                                    <a href="#" class="text-decoration-none ">
+                                            <i class="fal fa-bell fs-1 "></i>
+                                       </a>
+                               </div>
+                              <div class="mx-3 dropstart">
+
+                                  <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
+                                        data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
+                                          <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                          <ul class="dropdown-menu">
+                                                <li>
+
+                                                      <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
+                                                              <span>  Logout </span>
+                                                            <span class="">
+                                                                  <i class="bi bi-box-arrow-left ">
+                                                                  </i>
+                                                </span>
+                                            </a>
+                                                </li>
+                                                <li>
+                                                      <a class="dropdown-item d-flex justify-content-between p-3" href="#">
+                                                               <span>  Setting</span>
+                                                               <span><i class="bi bi-info-circle "></i></span>
+                                                      </a>
+                                        </li>
+                                          </ul>
+                                    </a>
+                                                            <br>
+                               </div>
+                        </div>
+                    </div>
+
+                      <!-- <button class="navbar-toggler p-1 mt-1 " id="" type="" data-bs-toggle="collapse" data-bs-target="#media_collapse" aria-controls="media_collapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-stream"></i>
+                      </button> -->
+                    <!-- Top bar setting -->
+                      <div class="collapse navbar-collapse" id="media_collapse">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                  <li class="nav-item">
+
+                                        <h3>
+                                            Scan System
+                                        </h3>
+                                  </li>
+                            </ul>
+                            <div class="d-flex">
+
+                                  <div class="pt-2">
+                                        <a href="#" class="text-decoration-none ">
+                                                <i class="fal fa-bell  fs-sm-1"></i>
+                                           </a>
+                                   </div>
+                                  <div class="mx-3 dropstart">
+
+                                      <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
+                                            data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
+                                              <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                              <ul class="dropdown-menu">
+                                                    <li>
+
+                                                          <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
+                                                                  <span>  Logout </span>
+                                                                <span class="">
+                                                                      <i class="bi bi-box-arrow-left ">
+                                                                      </i>
+                                                </span>
+                                            </a>
+                                                    </li>
+                                                    <li>
+                                                          <a class="dropdown-item d-flex justify-content-between p-3" href="#">
+                                                                   <span>  Setting</span>
+                                                                   <span><i class="bi bi-info-circle "></i></span>
+                                                          </a>
+                                        </li>
+                                              </ul>
+                                        </a>
+                                                                <br>
+                                   </div>
+                            </div>
+                      </div>
+                </div>
+            </nav>
+            <!-- main body -->
+            <div class="dashboard-content container  mb-2 ">
+
+                <br>
+
+                    <main class="col-lg-12 mx-auto  ">
+                        <header class="d-flex align-items-center pb-3  "></header>
+
+                        <div class="container">
+                            <main role="main" class="mt-2">
+                                @RenderBody()
+                            </main>
+                        </div>
+                    </main>
+            </div>
+        </div>
+    </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -82,8 +218,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="MDB/js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="~/js/site.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
-
+    @await RenderSectionAsync("Scripts", required:         false)
 </body>
 </html>
