@@ -1,15 +1,6 @@
-﻿using APSS.Domain.Entities;
-using APSS.Web.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APSS.Web.Dtos
+﻿namespace APSS.Web.Dtos;
+public class AnimalProductDto : BaseAuditbleDto
 {
-    internal class AnimalProductDto : BaseAuditbleDto
-    {
         public string Name { get; set; } = null!;
 
         public AnimalProductUnitDto Unit { get; set; } = null!;
@@ -19,5 +10,4 @@ namespace APSS.Web.Dtos
         public TimeSpan PeriodTaken { get; set; }
 
         public AnimalGroupDto Producer { get; set; } = null!;
-    }
 }
