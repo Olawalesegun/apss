@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - APSS</title>
-
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
@@ -15,13 +16,13 @@
 </head>
 <body>
 
-     <div class="main-container d-flex h-100 ">
+    <div class="main-container d-flex h-100 ">
         <!-- start sidebar  -->
         <div class="sidebar shadow-sm   sticky-top navbar-nav-scroll overflow-sctoll vh-100 " id="side_nav" style="position:fixed;">
 
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between mt-2 ">
                 <h1 class="fs-4"><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
-                    <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
+                <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
             </div>
             <ul class="list-unstyle px-2">
                 <li class="active"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
@@ -36,159 +37,159 @@
                 <li class="">
 
                     <a href="#" class="text-decoration-none  px-3 py-2 d-block ">
-                                                <i class="fal fa-list fa-lg"></i>
-                              Settings
+                        <i class="fal fa-list fa-lg"></i>
+                        Settings
                     </a>
                 </li>
 
                 <li class="">
                     <a href="#" class="text-decoration-none px-3 py-2 d-flex justify-content-between">
-                            <span><i class="bi bi-bell-fill fa-lg"></i> Notification</span>
-                            <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
-                        </a>
-                  </li>
+                        <span><i class="bi bi-bell-fill fa-lg"></i> Notification</span>
+                        <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
+                    </a>
+                </li>
             </ul>
 
             <!-- other system bar -->
 
-                        <hr>
+            <hr>
 
-             <div class="accordion m-1 " id="parent">
-                    <div class="accordion-item">
-                          <h4 class="accordion-hearder" id="headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="#collapseOne">
-                                      other system
-                                </button>
-                          </h4>
-                          <div id="collapseOne" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingOne">
-                                <div class="collapse-body">
-                                      <ul class="list-unstyle list px-2">
-                                            <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
-                                            <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+            <div class="accordion m-1 " id="parent">
+                <div class="accordion-item">
+                    <h4 class="accordion-hearder" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="#collapseOne">
+                            other system
+                        </button>
+                    </h4>
+                    <div id="collapseOne" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingOne">
+                        <div class="collapse-body">
+                            <ul class="list-unstyle list px-2">
+                                <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
+                                <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
 
-                                        <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
-                                        <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
-                                        </ul>
-                                </div>
-                          </div>
+                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
+                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="accordion-item">
-                          <h4 class="accordion-hearder" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="#collapseTwo">
-                                      other system 2
-                                </button>
-                          </h4>
-                          <div id="collapseTwo" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingTwo">
-                                <div class="collapse-body">
-                                      <ul class="list-unstyle list px-2">
-                                            <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
-                                            <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+                </div>
+                <div class="accordion-item">
+                    <h4 class="accordion-hearder" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="#collapseTwo">
+                            other system 2
+                        </button>
+                    </h4>
+                    <div id="collapseTwo" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingTwo">
+                        <div class="collapse-body">
+                            <ul class="list-unstyle list px-2">
+                                <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
+                                <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
 
-                                        <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
-                                        <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
-                                        </ul>
-                                </div>
-                          </div>
+                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
+                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
+                            </ul>
+                        </div>
                     </div>
-             </div>
+                </div>
+            </div>
         </div>
         <!-- start content -->
         <div class="content postion-absolute offset-sm-2 " id="maintContent">
 
             <nav class="navbar navbar-expand-md navbar-light main-bg-color shadow-sm ">
                 <div class="container-fluid">
-                      <!-- Media Top Bar setting -->
+                    <!-- Media Top Bar setting -->
                     <div class="d-flex justify-content-between d-md-none d-block w-100">
-                           <!-- media top bar -->
-                          <button class="btn  btn-link text-decoration-none px-1 py-0 open-btn " onclick=""><i class="fas fa-stream  fs-1 "></i></button>
+                        <!-- media top bar -->
+                        <button class="btn  btn-link text-decoration-none px-1 py-0 open-btn " onclick=""><i class="fas fa-stream  fs-1 "></i></button>
                         <a href="#" class="navbar-brand fs-4">Scan System</a>
                         <div class="d-flex">
 
-                              <div id="date-time" class=" mx-2 pt-2 fw-bold text-info">
-                              </div>
+                            <div id="date-time" class=" mx-2 pt-2 fw-bold text-info">
+                            </div>
 
-                              <div class="pt-2">
-                                    <a href="#" class="text-decoration-none ">
-                                            <i class="fal fa-bell fs-1 "></i>
-                                       </a>
-                               </div>
-                              <div class="mx-3 dropstart">
+                            <div class="pt-2">
+                                <a href="#" class="text-decoration-none ">
+                                    <i class="fal fa-bell fs-1 "></i>
+                                </a>
+                            </div>
+                            <div class="mx-3 dropstart">
 
-                                  <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
-                                        data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
-                                          <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
-                                          <ul class="dropdown-menu">
-                                                <li>
+                                <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
+                                    <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                    <ul class="dropdown-menu">
+                                        <li>
 
-                                                      <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
-                                                              <span>  Logout </span>
-                                                            <span class="">
-                                                                  <i class="bi bi-box-arrow-left ">
-                                                                  </i>
+                                            <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
+                                                <span>  Logout </span>
+                                                <span class="">
+                                                    <i class="bi bi-box-arrow-left ">
+                                                    </i>
                                                 </span>
                                             </a>
-                                                </li>
-                                                <li>
-                                                      <a class="dropdown-item d-flex justify-content-between p-3" href="#">
-                                                               <span>  Setting</span>
-                                                               <span><i class="bi bi-info-circle "></i></span>
-                                                      </a>
                                         </li>
-                                          </ul>
-                                    </a>
-                                                            <br>
-                               </div>
+                                        <li>
+                                            <a class="dropdown-item d-flex justify-content-between p-3" href="#">
+                                                <span>  Setting</span>
+                                                <span><i class="bi bi-info-circle "></i></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </a>
+                                <br>
+                            </div>
                         </div>
                     </div>
 
-                      <!-- <button class="navbar-toggler p-1 mt-1 " id="" type="" data-bs-toggle="collapse" data-bs-target="#media_collapse" aria-controls="media_collapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-stream"></i>
-                      </button> -->
+                    <!-- <button class="navbar-toggler p-1 mt-1 " id="" type="" data-bs-toggle="collapse" data-bs-target="#media_collapse" aria-controls="media_collapse" aria-expanded="false" aria-label="Toggle navigation">
+                      <i class="fas fa-stream"></i>
+                    </button> -->
                     <!-- Top bar setting -->
-                      <div class="collapse navbar-collapse" id="media_collapse">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                  <li class="nav-item">
+                    <div class="collapse navbar-collapse" id="media_collapse">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
 
-                                        <h3>
-                                            Scan System
-                                        </h3>
-                                  </li>
-                            </ul>
-                            <div class="d-flex">
+                                <h3>
+                                    Scan System
+                                </h3>
+                            </li>
+                        </ul>
+                        <div class="d-flex">
 
-                                  <div class="pt-2">
-                                        <a href="#" class="text-decoration-none ">
-                                                <i class="fal fa-bell  fs-sm-1"></i>
-                                           </a>
-                                   </div>
-                                  <div class="mx-3 dropstart">
+                            <div class="pt-2">
+                                <a href="#" class="text-decoration-none ">
+                                    <i class="fal fa-bell  fs-sm-1"></i>
+                                </a>
+                            </div>
+                            <div class="mx-3 dropstart">
 
-                                      <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
-                                            data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
-                                              <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
-                                              <ul class="dropdown-menu">
-                                                    <li>
+                                <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
+                                    <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                    <ul class="dropdown-menu">
+                                        <li>
 
-                                                          <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
-                                                                  <span>  Logout </span>
-                                                                <span class="">
-                                                                      <i class="bi bi-box-arrow-left ">
-                                                                      </i>
+                                            <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
+                                                <span>  Logout </span>
+                                                <span class="">
+                                                    <i class="bi bi-box-arrow-left ">
+                                                    </i>
                                                 </span>
                                             </a>
-                                                    </li>
-                                                    <li>
-                                                          <a class="dropdown-item d-flex justify-content-between p-3" href="#">
-                                                                   <span>  Setting</span>
-                                                                   <span><i class="bi bi-info-circle "></i></span>
-                                                          </a>
                                         </li>
-                                              </ul>
-                                        </a>
-                                                                <br>
-                                   </div>
+                                        <li>
+                                            <a class="dropdown-item d-flex justify-content-between p-3" href="#">
+                                                <span>  Setting</span>
+                                                <span><i class="bi bi-info-circle "></i></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </a>
+                                <br>
                             </div>
-                      </div>
+                        </div>
+                    </div>
                 </div>
             </nav>
             <!-- main body -->
@@ -196,15 +197,15 @@
 
                 <br>
 
-                    <main class="col-lg-12 mx-auto  ">
-                        <header class="d-flex align-items-center pb-3  "></header>
+                <main class="col-lg-12 mx-auto  ">
+                    <header class="d-flex align-items-center pb-3  "></header>
 
-                        <div class="container">
-                            <main role="main" class="mt-2">
-                                @RenderBody()
-                            </main>
-                        </div>
-                    </main>
+                    <div class="container">
+                        <main role="main" class="mt-2">
+                            @RenderBody()
+                        </main>
+                    </div>
+                </main>
             </div>
         </div>
     </div>
