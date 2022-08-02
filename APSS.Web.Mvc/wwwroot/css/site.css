@@ -1,28 +1,19 @@
-html {
-    font-size: 14px;
-}
-/*
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}*/
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
 body {
     background-color: #F3F4F4 !important;
     color: #334E68;
+    height: 100%;
+}
+
+html, body {
+    height: 100%;
 }
 
 #side_nav {
     background-color: #F3F4F4;
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 270px;
+    max-width: 270px;
     transition: all 0.5s;
+    width: 270px;
 }
 
 .content {
@@ -48,11 +39,12 @@ hr.h-color {
 .sidebar li a {
     color: #829AB1;
     font-weight: 600;
+    padding: 15px;
 }
 
 @media(max-width:767px) {
     #side_nav {
-        margin-left: -250px;
+        margin-left: -270px;
         min-height: 100vh;
         z-index: 1;
     }
@@ -100,6 +92,9 @@ hr.h-color {
     color: red;
 }
 
+#maintContent {
+    outline-offset: 400px;
+}
 /* input[type="text"], input[type="number"],input[type="tel"],input[type="password"]{
     background-color: #F8F8F8 !important;
     border: 1px #829AB1 solid  !important;
