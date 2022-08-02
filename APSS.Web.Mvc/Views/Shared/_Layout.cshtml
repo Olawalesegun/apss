@@ -13,18 +13,26 @@
     <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="icon" href="~/css/all.css" />
+    <link rel="icon" href="~/css/main.css" />
+    <link rel="icon" href="~/css/icons.css" />
+    <link rel="stylesheet" href="~/MDB/bootstrap.main.css" />
+    <link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />
+    <link rel="stylesheet" href="~/MDB/css/mdb.min.css" />
 </head>
 <body>
 
-    <div class="main-container d-flex h-100 ">
+    <!-- main div  -->
+
+    <div class="main-container d-flex vh-100 ">
         <!-- start sidebar  -->
-        <div class="sidebar shadow-sm   sticky-top navbar-nav-scroll overflow-sctoll vh-100 " id="side_nav" style="position:fixed;">
+        <div class="sidebar  navbar-nav-scroll  vh-100 " id="side_nav" style="position:fixed;">
 
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between mt-2 ">
-                <h1 class="fs-4"><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
-                <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
+                <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
+                <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-1"></i></button>
             </div>
-            <ul class="list-unstyle px-2">
+            <ul class="list-unstyle px-2 ">
                 <li class="active"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
                 <li class=""><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
 
@@ -35,7 +43,6 @@
             <hr class="mx-2">
             <ul class="list-unstyled px-2">
                 <li class="">
-
                     <a href="#" class="text-decoration-none  px-3 py-2 d-block ">
                         <i class="fal fa-list fa-lg"></i>
                         Settings
@@ -54,40 +61,41 @@
 
             <hr>
 
-            <div class="accordion m-1 " id="parent">
+            <div class="accordion m-1 main-background" id="parent" style="  background-color: #F3F4F4 !important;">
                 <div class="accordion-item">
-                    <h4 class="accordion-hearder" id="headingOne">
+                    <h4 class="accordion-hearder " id="headingOne" style="  background: #DBE4F3 !important;">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="#collapseOne">
-                            other system
+                            Other System
                         </button>
                     </h4>
                     <div id="collapseOne" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingOne">
                         <div class="collapse-body">
-                            <ul class="list-unstyle list px-2">
-                                <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
-
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
-                            </ul>
+                            <div class="other-systems">
+                                <div>
+                                    <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded "><i class="fal fa-home fa-lg px-2"></i> System 1</a>
+                                    <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded"><i class="fal fa-home fa-lg px-2"></i> System 2</a>
+                                    <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded"><i class="fal fa-home fa-lg px-2"></i> System 3</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <h4 class="accordion-hearder" id="headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="#collapseTwo">
-                            other system 2
+                            Other Systems 2
                         </button>
                     </h4>
-                    <div id="collapseTwo" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingTwo">
-                        <div class="collapse-body">
-                            <ul class="list-unstyle list px-2">
-                                <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+                    <div id="collapseTwo" class="accordion-collaspse collapse bg-dark  " data-bs-parent="#parent" aria-labelledby="headingTwo">
+                        <div class="collapse-body ">
 
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
-                            </ul>
+                            <div class="other-systems">
+                                <div>
+                                    <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded "><i class="fal fa-home fa-lg px-2"></i> System 1</a>
+                                    <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded"><i class="fal fa-home fa-lg px-2"></i> system 2</a>
+                                    <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded"><i class="fal fa-home fa-lg px-2"></i> systekm 3</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,7 +125,7 @@
 
                                 <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
-                                    <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                    <img src="~/resources/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
                                     <ul class="dropdown-menu">
                                         <li>
 
@@ -166,7 +174,7 @@
 
                                 <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
-                                    <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                    <img src="~/resources/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
                                     <ul class="dropdown-menu">
                                         <li>
 
@@ -215,14 +223,14 @@
             &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
+    <script src="MDB/js/mdb.min.js"></script>
+    <script src="~/js/bootstrap-js.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript" src="MDB/js/mdb.min.js"></script>
     <!-- Custom scripts -->
     <script src="~/js/site.js"></script>
-
     @await RenderSectionAsync("Scripts", required:         false)
 </body>
 </html>

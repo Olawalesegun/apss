@@ -16,6 +16,24 @@ html, body {
     width: 270px;
 }
 
+.other-systems div {
+    background-color: #1783D2;
+    padding: 10px;
+}
+
+    .other-systems div a {
+        color: white;
+    }
+
+.other-systems {
+    background-color: white;
+}
+
+    .other-systems div a:hover {
+        background-color: #F3F4F4;
+        color: black !important;
+    }
+
 .content {
     min-height: 100vh;
     width: 100%;
