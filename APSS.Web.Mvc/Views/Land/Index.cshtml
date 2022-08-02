@@ -1,0 +1,89 @@
+﻿<div class="offcanvas offcanvas-start" id="land">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Add The Land Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+
+        <form class=" mt-3 ">
+            <!-- 2 column puts for the land name -->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Land Information
+                </h3>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="land_name" name="land_name" class="form-control" />
+                        <label class="form-label" for="land_name">Land Name</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="number" id="area" name="area" class="form-control" />
+                        <label class="form-label" for="area">Area</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input type="number" id="longitude" name="longitude" class="form-control" />
+                <label class="form-label" for="longitude">Longitude</label>
+            </div>
+            <!-- Text input for latitude-->
+            <div class="form-outline mb-4">
+                <input type="number" id="latitude" name="latitude" class="form-control" />
+                <label class="form-label" for="latitude">Latitude</label>
+            </div>
+
+            <!-- Text input address-->
+            <div class="form-outline mb-4">
+                <input type="text" id="address" class="form-control" />
+                <label class="form-label" for="address">Address</label>
+            </div>
+
+            <!-- IsUsable input -->
+            <div class="form-check-inline">
+
+                <h5 class="inline">IsUsable:</h5>
+            </div>
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" type="radio" name="isUsable" id="yes" value="true" checked />
+                <label class="form-check-label" for="yes">Yes</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="false" id="no" name="isUsable" />
+                <label class="form-check-label" for="no"> No </label>
+            </div>
+            <br />
+            <!-- IsUsed input -->
+            <div class="form-check-inline">
+
+                <h5 class="inline"> IsUsed: </h5>
+            </div>
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" type="radio" name="isUsed" id="yes" value="true" checked />
+                <label class="form-check-label" for="yes">Yes</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="false" id="no" name="isUsed" />
+                <label class="form-check-label" for="no"> No </label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+        </form>
+    </div>
+</div>
+
+<div class="container-fluid mt-3">
+
+    <a class="text-dark fw-bold" role="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#land">
+        Add Land Info
+    </a>
+</div>
