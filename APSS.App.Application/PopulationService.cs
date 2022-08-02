@@ -168,7 +168,7 @@ public sealed class PopulationService : IPopulationService
         relationships.ForEach(_uow.FamilyIndividuals.Remove);
         _uow.Individuals.Remove(individual);
 
-        await _uow.CommitAsync();
+        await _uow.CommitAsync(tx);
     }
 
     ///<inheritdoc/>
