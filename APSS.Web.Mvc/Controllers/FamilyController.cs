@@ -6,13 +6,13 @@ namespace APSS.Web.Mvc.Controllers
     public class FamilyController : Controller
     {
         // GET: FamilyController
-        public ActionResult Index()
+        public ActionResult GetFamilies()
         {
             return View();
         }
 
         // GET: FamilyController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult GetFamilyDetails(int id)
         {
             return View();
         }
