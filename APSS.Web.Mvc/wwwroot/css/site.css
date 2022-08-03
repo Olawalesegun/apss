@@ -66,6 +66,10 @@ hr.h-color {
         min-height: 100vh;
         z-index: 1;
     }
+
+    .content {
+        margin-left: 0;
+    }
 }
 
 #side_nav.active {
