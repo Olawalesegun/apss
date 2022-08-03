@@ -51,7 +51,7 @@ hr.h-color {
 
     .sidebar li.active a, .sidebar li.active a:hover {
         color: #1783D2;
-        font-weight: bolder;
+        font-size: 17px;
     }
 
 .sidebar li a {
@@ -67,8 +67,8 @@ hr.h-color {
         z-index: 1;
     }
 
-    .content {
-        margin-left: 0;
+    #account-manage {
+        display: none;
     }
 }
 
@@ -179,4 +179,26 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
+}
+
+.other ul .list-item {
+    color: dark;
+}
+
+nav ul li div a {
+    color: black !important;
+}
+
+nav ul li div a {
+    color: #829AB1 !important;
+}
+
+    nav ul li div a:hover {
+        color: #1783D2 !important;
+        font-weight: bold;
+    }
+
+.media-dropdown a {
+    color: #145fa5 !important;
+    background-color: #fff !important;
 }
