@@ -1,4 +1,4 @@
-﻿using APSS.Web.Dto;
+﻿using APSS.Web.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace APSS.Web.Dtos
 {
-    internal class AnimalProductUnitDto : BaseAuditbleDto
+    public class AnimalProductUnitDto : BaseAuditbleDto
     {
         public string Name { get; set; } = null!;
     }
