@@ -39,7 +39,7 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: FamilyController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Update(int id)
         {
             return View();
         }
@@ -47,7 +47,7 @@ namespace APSS.Web.Mvc.Controllers
         // POST: FamilyController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Update(int id, IFormCollection collection)
         {
             try
             {
