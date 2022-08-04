@@ -23,49 +23,46 @@
 <body>
 
     <!-- main div  -->
-
     <div class="main-container d-flex vh-100 ">
         <!-- start sidebar  -->
-        <div class="sidebar  navbar-nav-scroll  vh-100 " id="side_nav" style="position:fixed;">
+        <div class="sidebar  navbar-nav-scroll  vh-100 " id="side_nav">
 
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between mt-2 ">
                 <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
-                <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-1"></i></button>
+                <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
             </div>
             <ul class="list-unstyle px-2 ">
-                <li class="active"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+                <li class="active"><a href="#" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
+                <li class=""><a href="#" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
 
-                <li class=""><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
-                <li class=""><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
+                <li class=""><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
+                <li class=""><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
             </ul>
 
             <hr class="mx-2">
             <ul class="list-unstyled px-2">
                 <li class="">
                     <a href="#" class="text-decoration-none  px-3 py-2 d-block ">
-                        <i class="fal fa-list fa-lg"></i>
+                        <i class="fa-solid fa-gear px-2 fa-lg"></i>
                         Settings
                     </a>
                 </li>
 
                 <li class="">
                     <a href="#" class="text-decoration-none px-3 py-2 d-flex justify-content-between">
-                        <span><i class="bi bi-bell-fill fa-lg"></i> Notification</span>
+                        <span><i class="bi bi-bell-fill fa-lg px-2"></i> Notification</span>
                         <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
                     </a>
                 </li>
             </ul>
-
+            <hr>
             <!-- other system bar -->
 
-            <hr>
-
-            <div class="accordion m-1 main-background" id="parent" style="  background-color: #F3F4F4 !important;">
+            <div class="accordion  " id="parent">
                 <div class="accordion-item">
                     <h4 class="accordion-hearder " id="headingOne" style="  background: #DBE4F3 !important;">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="#collapseOne">
-                            Other System
+                        <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="#collapseOne">
+                            <span class="fs-4"> Other System</span>
                         </button>
                     </h4>
                     <div id="collapseOne" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingOne">
@@ -83,7 +80,7 @@
                 <div class="accordion-item">
                     <h4 class="accordion-hearder" id="headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="#collapseTwo">
-                            Other Systems 2
+                            <span class="fs-4">Other Systems 2</span>
                         </button>
                     </h4>
                     <div id="collapseTwo" class="accordion-collaspse collapse bg-dark  " data-bs-parent="#parent" aria-labelledby="headingTwo">
@@ -101,19 +98,73 @@
                 </div>
             </div>
         </div>
-        <!-- start content -->
-        <div class="content postion-absolute offset-sm-2 " id="maintContent">
+        <!-- start nav bar -->
+        <div class="content postion-absolute   " id="maintContent">
 
             <nav class="navbar navbar-expand-md navbar-light main-bg-color shadow-sm ">
                 <div class="container-fluid">
                     <!-- Media Top Bar setting -->
                     <div class="d-flex justify-content-between d-md-none d-block w-100">
+
                         <!-- media top bar -->
+
                         <button class="btn  btn-link text-decoration-none px-1 py-0 open-btn " onclick=""><i class="fas fa-stream  fs-1 "></i></button>
-                        <a href="#" class="navbar-brand fs-4">Scan System</a>
+                        <a href="#" class="navbar-brand ">
+                            <h4>Scan System</h4>
+                        </a>
                         <div class="d-flex">
 
-                            <div id="date-time" class=" mx-2 pt-2 fw-bold text-info">
+                            <div class="pt-1">
+
+                                @* <div class="dropdown" id="data-mange">
+                                    <button type="button" class="btn btn-link text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                                    menu
+                                    </button>
+                                    <ul class="dropdown-menu" id="">
+                                    <li class="  ">
+
+                                    <div class="d-flex justify-content-between media-dropdown">
+
+                                    <a class="dropdown-item" href="#">
+                                    <span class="mt-2"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
+                                    Last Account
+                                    </a>
+                                    </div>
+                                    <hr>
+                                    </li>
+
+                                    <li class=" mx-sm-2">
+                                    <div class="d-flex justify-content-between media-dropdown">
+                                    <a class="dropdown-item  " href="#">
+                                    <span class="mt-2"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
+                                    Add Account
+                                    </a>
+                                    </div>
+                                    <hr>
+                                    </li>
+
+                                    <li class=" mx-sm-2">
+                                    <div class="d-flex justify-content-between media-dropdown">
+
+                                    <a class="dropdown-item" href="#">
+                                    <span class="mt-2"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
+                                    Users
+                                    </a>
+                                    </div>
+                                    <hr>
+                                    </li>
+
+                                    <li class=" mx-sm-2">
+                                    <div class="d-flex justify-content-between media-dropdown">
+
+                                    <a class="dropdown-item" href="#">
+                                    <span class="mt-2"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
+                                    Add  User
+                                    </a>
+                                    </div>
+                                    </li>
+                                    </ul>
+                                    </div>*@
                             </div>
 
                             <div class="pt-2">
@@ -124,7 +175,7 @@
                             <div class="mx-3 dropstart">
 
                                 <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
+                                   data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="~/resources/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
                                     <ul class="dropdown-menu">
                                         <li>
@@ -201,9 +252,7 @@
                 </div>
             </nav>
             <!-- main body -->
-            <div class="dashboard-content container  mb-2 ">
-
-                <br>
+            <div class="dashboard-content container   ">
 
                 <main class="col-lg-12 mx-auto  ">
                     <header class="d-flex align-items-center pb-3  "></header>
@@ -224,7 +273,7 @@
         </div>
     </footer>
     <script src="MDB/js/mdb.min.js"></script>
-    <script src="~/js/bootstrap-js.js"></script>
+    @*<script src="~/js/bootstrap-js.js"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
