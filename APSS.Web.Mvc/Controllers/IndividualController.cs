@@ -39,7 +39,7 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: IndividualController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Update(int id)
         {
             return View();
         }
