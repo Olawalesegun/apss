@@ -47,16 +47,31 @@ public interface IAnimalService
     /// <param name="accountId">the id of account getting animal product</param>
     /// <param name="userId">the id of user getting animal group</param>
     /// <returns>animal group objects</returns>
-    Task<IQueryBuilder<AnimalGroup>> GetAnimalGroupsAsync(long accountId, long userId);
+    Task<IQueryBuilder<AnimalGroup>> GetAllAnimalGroupsAsync(long accountId, long userId);
+
+    /// <summary>
+    /// Asynchrnously get one animal group
+    /// </summary>
+    /// <param name="accountId">the id of account getting animal product</param>
+    /// <param name="animalGroupId">the id of the Animal Group</param>
+    /// <returns>animal group objects</returns>
+    Task<IQueryBuilder<AnimalGroup>> GetAnimalGroupAsync(long accountId, long animalGroupId);
 
     /// <summary>
     /// Asynchrnously get animal product
     /// </summary>
     /// <param name="accountId">the id of account getting animal product</param>
-    /// <param name="userId">The id of the user who owns the animal group</param>
-    /// <param name="animalGroupId">the id of animal group</param>
+    /// <param name="userId">The id of the user getting animal product</param>
     /// <returns>animal product object</returns>
-    Task<IQueryBuilder<AnimalProduct>> GetAnimalProductsAsync(long accountId, long userId);
+    Task<IQueryBuilder<AnimalProduct>> GetAllAnimalProductsAsync(long accountId, long userId);
+
+    /// <summary>
+    /// Asynchrnously get animal product
+    /// </summary>
+    /// <param name="accountId">the id of account getting animal product</param>
+    /// <param name="animalGroupId">the id of animal product</param>
+    /// <returns>animal product object</returns>
+    Task<IQueryBuilder<AnimalProduct>> GetAnimalProductAsync(long accountId, long animalProductId);
 
     /// <summary>
     /// Asynchrnously delete animal group

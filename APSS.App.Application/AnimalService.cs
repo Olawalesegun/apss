@@ -88,7 +88,7 @@ public class AnimalService : IAnimalService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<AnimalGroup>> GetAnimalGroupsAsync(long accountId, long userId)
+    public async Task<IQueryBuilder<AnimalGroup>> GetAllAnimalGroupsAsync(long accountId, long userId)
     {
         await _permissionsService.ValidatePermissionsAsync(accountId, userId, PermissionType.Read);
 
@@ -96,7 +96,27 @@ public class AnimalService : IAnimalService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<AnimalProduct>> GetAnimalProductsAsync(
+    public async Task<IQueryBuilder<AnimalProduct>> GetAnimalProductAsync(long accountId, long animalProductId)
+    {
+        var user = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindAsync(accountId);
+        await _permissionsService.ValidatePermissionsAsync(accountId, user.User.Id, PermissionType.Read);
+
+        return _uow.AnimalProducts.Query().Where(p => p.Id == animalProductId);
+    }
+
+    public async Task<IQueryBuilder<AnimalGroup>> GetAnimalGroupAsync(long accountId, long animalGroupId)
+    {
+        var user = await _uow.Accounts.Query().FindAsync(accountId);
+        await _permissionsService.ValidatePermissionsAsync(accountId, user.User.Id, PermissionType.Read);
+
+        return _uow.AnimalGroups.Query().Where(g => g.Id == animalGroupId);
+    }
+
+    /// <inheritdoc/>
+
+    public async Task<IQueryBuilder<AnimalProduct>> GetAllAnimalProductsAsync(
         long accountId,
         long userId)
     {
