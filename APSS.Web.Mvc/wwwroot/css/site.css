@@ -77,7 +77,7 @@ hr.h-color {
 
     .content {
         margin-left: 0;
-        position: fixed;
+        position: absolute;
     }
 
     #account-manage {
@@ -253,4 +253,14 @@ nav ul li div a {
 
 .system-description {
     font-size: 10px !important;
+}
+
+#box1, #box2, #box3, #box, #box4, #box5, #box6, #box7, #box8, #box9, #AddIcon {
+    display: none;
+}
+
+input, select {
+    /*background-color: #EFF3F7 !important;*/
+    /*background-color: #F3F4F4 !important;*/
+    background-color: none !important;
 }
