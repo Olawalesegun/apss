@@ -1,0 +1,368 @@
+﻿<div class="offcanvas offcanvas-start" id="landProduct">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Add The Land Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+
+        <form class=" mt-3 ">
+            <!-- 2 column puts for the land Product name -->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Land Product Information
+                </h3>
+            </div>
+            <div class="form-outline mb-4">
+                <input type="text" id="landProduct_name" name="landProduct_name" class="form-control" />
+                <label class="form-label" for="landProduct_name">Land Product Name</label>
+            </div>
+            <div class="form-outline mb-4">
+                <input type="datetime" id="harvestStart" name="harvestStart" class="form-control" />
+                <label class="form-label" for="harvestStart">Harvest Start</label>
+            </div>            <div class="form-outline mb-4">
+                <input type="datetime" id="harvestEnd" name="harvestEnd" class="form-control" />
+                <label class="form-label" for="harvestEnd">Harvest End</label>
+            </div>
+            <!-- Text input for quantity-->
+            <div class="form-outline mb-4">
+                <input type="number" id="quantity" name="quantity" class="form-control" />
+                <label class="form-label" for="quantity">Quantity</label>
+            </div>
+
+            <!-- Text input irrigationCount-->
+            <div class="form-outline mb-4">
+                <input type="number" id="irrigationCount" name="irrigationCount" class="form-control" />
+                <label class="form-label" for="irrigationCount">Irrigation Count</label>
+            </div>
+
+            <!-- Text input storingMethod-->
+            <div class="form-outline mb-4">
+                <input type="number" id="storingMethod" name="storingMethod" class="form-control" />
+                <label class="form-label" for="storingMethod">Storing Method </label>
+            </div>
+
+            <div class="form-outline mb-4">
+                <label for="specificSizeSelect">Irrigation Water Source</label>
+                <select class="form-select" id="specificSizeSelect">
+                    <option selected>Choose...</option>
+                    <option value="1">Natural</option>
+                    <option value="2">HumanStored</option>
+                    <option value="3">OnDemand</option>
+                </select>
+            </div>
+
+            <!-- isGovernmentFunded input -->
+            <div class="form-outline mb-4">
+                <div class="form-check-inline">
+
+                    <h5 class="inline">is Government Funded:</h5>
+                </div>
+                <br />
+                <div class="form-check form-check-inline">
+
+                    <input class="form-check-input hiden" type="radio" name="isGovernmentFunded" id="yes" value="true" checked />
+                    <label class="form-check-label" for="yes">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" value="false" id="no" name="isGovernmentFunded" />
+                    <label class="form-check-label" for="no"> No </label>
+                </div>
+            </div>
+            <br />
+            <!-- hasGreenhouse input -->
+            <div class="form-check-inline">
+
+                <h5 class="inline"> has Green house: </h5>
+            </div>
+            <br />
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" type="radio" name="hasGreenhouse" id="yes" value="true" checked />
+                <label class="form-check-label" for="yes">Yes</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="false" id="no" name="hasGreenhouse" />
+                <label class="form-check-label" for="no"> No </label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+        </form>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg shadow-sm pb-0 pt-2  mt-2 " id="account-manage">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="data-management">
+            <ul class="navbar-nav me-auto  pb-0 mb-lg-0">
+                <li class="nav-item pb-2 ">
+
+                    <div class="d-flex justify-content-between">
+
+                        <a class="nav-link " href="#">
+                            <span class="mt-2"><i class="fa-solid fa-wheat-awn"></i></i></span>
+                            Recent Land Products
+                        </a>
+                    </div>
+                </li>
+                @*<li class="nav-item mx-sm-2 pb-2">
+                    <div class="d-flex justify-content-between">
+                    <a class="nav-link  text-decoration-none" href="#">
+                    <span class="mt-2"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
+                    Add Account
+                    </a>
+                    </div>
+                    </li>*@
+                <li class="nav-item mx-sm-2 pb-2 ">
+                    <div class="d-flex justify-content-between">
+
+                        <a class="nav-link" href="#">
+                            <span class="mt-2"><i class="fa-solid fa-wheat-awn"></i></span>
+                            Land Products
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav-item mx-sm-2 pb-2 ">
+                    <div class="d-flex justify-content-between">
+
+                        <a class="nav-link" href="#" role="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#landProduct">
+                            <span class="mt-2"><i class="fa-solid fa-wheat-awn" aria-hidden="true"></i></span>
+                            Add Land Product
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid  border p-2  col-ms-12  mt-0  rounded ml-2 " id="">
+
+    <form class="row gx-3 gy-2 align-items-center mb-3 ">
+        <div class="col-sm-6">
+            <label class="visually-hidden" for="search"></label>
+            <div class="input-group">
+                <a href="#" class="input-group-text " style="background-color:#1B73B3">
+                    <div class=" ">
+                        <i class="fal fa-search" style="color:white"></i>
+                    </div>
+                </a>
+                <input type="text" class="form-control" placeholder="Search..." id="search" onkeyup="searchTable()">
+                <!-- <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"> -->
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <label class="visually-hidden" for="specificSizeSelect">Search By</label>
+            <select class="form-select" id="specificSizeSelect">
+                <option selected>Choose...</option>
+                <option value="1">Name</option>
+                <option value="2">Id</option>
+                <option value="3">Address</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="col-sm-12  ">
+
+        <div class="container mt-3 bg-light table-responsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
+
+            <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
+
+                <thead>
+                    <tr class="header">
+                        <th style="width:10%;" class=" text-capitalize align-middle">ID</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Harvest Start</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">Harvest End</th>
+                        <th style="width:5%;" class=" text-capitalize align-middle">Function</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-break text-capitalize align-middle">1</td>
+                        <td class="text-break text-capitalize align-middle"> John</td>
+                        <td class="text-break text-capitalize align-middle">Doe</td>
+                        <td class="text-break text-capitalize align-middle">
+                            john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
+                        </td>
+                        <td class="align-middle center">
+                            <div class=" dropend">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        <td>
+                            <div class=" dropend">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        <td>
+                            <div class=" dropend">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        <td>
+                            <div class=" dropend">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">i</a></li>
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>goo</td>
+                        <td>moe</td>
+                        <td>july@example.com</td>
+                        <td>
+                            <div class=" dropend">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        <td>
+                            <div class=" dropend">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        <td>
+                            <div class=" dropend">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        <td>
+                            <div class=" dropend">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav aria-label="Page navigation example" class="float-left pl-5">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
