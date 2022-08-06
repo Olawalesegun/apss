@@ -3,3 +3,120 @@
 *@
 @{
 }
+
+<div class="offcanvas offcanvas-start" id="individual">
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title" >Add New Individual</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form class=" mt-3 ">
+            <!-- 2 column puts for the National number and Phome Number-->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class="text-decoration-underline">
+                   Individual Information
+                </h3>
+            </div>
+            <!-- Text input for individual name-->
+            <div class=" mb-4">
+                <label class="form-label" for="individual_name">Name</label>
+                <input type="text" id="individual_name" name="individual_name" class="form-control" />
+            </div>
+            <!-- Text input for job -->
+            <div class=" mb-4">
+                <label class="form-label" for="individual_job">Job</label>
+                <input type="text" id="individual_job" name="individual_job" class="form-control" />
+            </div> 
+
+             <!-- Text input for phonenumber -->
+              <div class=" mb-4">
+                <label class="form-label" for="individual_phone">Phone Number</label>
+                <input type="tel" id="individual_phone" name="individual_phone" class="form-control" />
+            </div> 
+            
+             <!-- Text input for NationalId -->
+              <div class=" mb-4">
+                <label class="form-label" for="individual_NationalId">NationalId</label>
+                <input type="number" id="individual_NationalId" name="individual_NationalId" class="form-control" />
+            </div> 
+
+             <!-- Text input for Address -->
+              <div class=" mb-4">
+                <label class="form-label" for="individual_Address">Address</label>
+                <input type="text" id="individual_Address" name="individual_Address" class="form-control" />
+            </div> 
+
+             <!-- Text input for DateOfBirth -->
+              <div class=" mb-4">
+                <label class="form-label" for="individual_DateOfBirth">Birth Date</label>
+                <input type="text" id="individual_DateOfBirth" name="individual_DateOfBirth" class="form-control" />
+            </div> 
+
+           <!-- Gender input -->
+            <div class="form-check-inline">
+
+                <h5 class="inline">Gender:</h5>
+            </div>
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" type="radio" name="individual_gender" id="female" value="female" checked />
+                <label class="form-check-label" for="female">Female</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="" id="male" name="individual_gender" />
+                <label class="form-check-label" for="male"> Male </label>
+            </div>
+
+            <!-- Social Status input -->
+            <div class="form-check-inline">
+
+                <h5 class="inline">Status:</h5>
+            </div>
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" type="radio" name="individual_SocialStatus" id="Marrid" value="Marrid" checked />
+                <label class="form-check-label" for="Marrid">Marrid</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="" id="Unmarried" name="individual_SocialStatus" />
+                <label class="form-check-label" for="Unmarried"> Unmarr</label>
+            </div>
+            <div class="familydropdown">
+              <button  class="familybtn">family</button>
+              <div id="familyDropdown" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="familysearch" onkeyup="">
+                <a href="">About</a>
+                <a href="#">Base</a>
+                <a href="#">Blog</a>
+                <a href="#">Contact</a>
+                <a href="#">Custom</a>
+                <a href="#">Support</a>
+                <a href="#">Tools</a>
+              </div>
+            </div>
+            <button> </button>
+            <div class="form-check">
+                <label class="form-check-label" for="flexCheckDefault">
+               IsProvider
+           </label>
+           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            </div>
+           <div class="form-check">
+               <label class="form-check-label" for="flexCheckChecked">
+              Isparent
+           </label>
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+            </div>
+
+                   <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4 mt-4" asp-action="Create">Add</button>
+        </form>
+        </div>
+    </div>
+    <div class="container-fluid mt-3">
+        <a class="text-dark fw-bold text-decoration-none" role="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#individual">
+            <i class="fa-solid fa-plus"></i>    Add New Individual
+        </a>
+    </div>
