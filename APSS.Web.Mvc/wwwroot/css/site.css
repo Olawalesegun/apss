@@ -219,10 +219,6 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-.other ul .list-item {
-    color: dark;
-}
-
 nav ul li div a {
     color: black !important;
 }
@@ -239,4 +235,14 @@ nav ul li div a {
 .media-dropdown a {
     color: #145fa5 !important;
     background-color: #fff !important;
+}
+
+#media-system-name {
+    text-overflow: clip;
+    text-overflow: ellipsis ellipsis;
+    text-overflow: ellipsis " [..]";
+}
+
+.system-description {
+    font-size: 10px !important;
 }
