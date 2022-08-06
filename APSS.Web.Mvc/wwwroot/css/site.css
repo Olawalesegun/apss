@@ -16,6 +16,10 @@ html, body {
     width: 270px;
 }
 
+.familyicon {
+    margin-left: -2px;
+}
+
 .other-systems div {
     background-color: #1783D2;
     padding: 10px;
@@ -24,6 +28,10 @@ html, body {
     .other-systems div a {
         color: white;
     }
+
+.form-outline {
+    border-color: aqua;
+}
 
 .other-systems {
     background-color: white;
@@ -51,7 +59,7 @@ hr.h-color {
 
     .sidebar li.active a, .sidebar li.active a:hover {
         color: #1783D2;
-        font-size: 17px;
+        font-weight: bold;
     }
 
 .sidebar li a {
@@ -60,11 +68,16 @@ hr.h-color {
     padding: 15px;
 }
 
-@media(max-width:767px) {
+@media(max-width:768px) {
     #side_nav {
         margin-left: -270px;
         min-height: 100vh;
         z-index: 1;
+    }
+
+    .content {
+        margin-left: 0;
+        position: fixed;
     }
 
     #account-manage {
@@ -72,6 +85,39 @@ hr.h-color {
     }
 }
 
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
+    #side_nav {
+        margin-left: 0;
+        min-height: 100vh;
+        z-index: 1;
+    }
+
+    .content {
+        margin-right: 0;
+        position: static;
+    }
+
+    #account-manage {
+        display: none;
+    }
+}
+
+/*@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+    #side_nav {
+        margin-left: 0;
+        min-height: 100vh;
+        z-index: 1;
+    }
+
+    .content {
+        margin-left: 22.0%;
+    }
+
+    #account-manage {
+        display: none;
+    }
+}
+*/
 #side_nav.active {
     margin-left: 0;
 }
