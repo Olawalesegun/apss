@@ -1,15 +1,10 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-<div class="offcanvas offcanvas-start" id="animal-group">
+﻿<div class="offcanvas offcanvas-start" id="animal-group">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title">Animal Group Add</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
+
         <form class=" mt-3 ">
             <!-- 2 column puts for the type  and quantity of animal-->
             <div class="center d-flex justify-content-center mb-3 ">
@@ -19,38 +14,49 @@
             </div>
             <div class="row mb-4">
                 <div class="col">
-                    <div class="">
-                        <label class="form-label" for="animal_type">Type</label>
+                    <div class="form-outline">
                         <input type="text" id="animal_type" name="animal_type" class="form-control" />
+                        <label class="form-label" for="animal_type">Type</label>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="">
-                        <label class="form-label" for="Quentity">Quentity</label>
+                    <div class="form-outline">
                         <input type="number" id="Quentity" name="Quentity" class="form-control" />
+                        <label class="form-label" for="Quentity">Quentity</label>
                     </div>
                 </div>
-            </div>            <!-- Gender input -->
+            </div>
+
+            <!-- Gender input -->
             <div class="form-check-inline">
+
                 <h5 class="inline">Gender:</h5>
             </div>
             <div class="form-check form-check-inline">
+
                 <input class="form-check-input hiden" type="radio" name="gender" id="female" value="female" checked />
                 <label class="form-check-label" for="female">Female</label>
             </div>
+
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" value="" id="male" name="gender" />
-                <label class="form-check-label" for="male"> Male </label>div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" value="other" id="other" name="gender" />
-                    <label class="form-check-label" for="other"> Other </label>div>
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
-        </form>div>
+                <label class="form-check-label" for="male"> Male </label>
+            </div>
+
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input" type="radio" value="other" id="other" name="gender" />
+                <label class="form-check-label" for="other"> Other </label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+        </form>
     </div>
-    <div class="container-fluid mt-3">
-        <a class="text-dark fw-bold text-decoration-none" role="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#animal-group">
-            <i class="fa-solid fa-plus"></i>
-            Add Animal Group
-        </a>
-    </div>
+</div>
+<div class="container-fluid mt-3">
+    <a class="text-dark fw-bold text-decoration-none" role="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#animal-group">
+        <i class="fa-fa-plus"></i>
+        Add Animal Group
+    </a>
+</div>

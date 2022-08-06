@@ -25,7 +25,7 @@
     <!-- main div  -->
     <div class="main-container d-flex vh-100 ">
         <!-- start sidebar  -->
-        <div class="sidebar overflow-y-scroll  vh-100 " id="side_nav" style="">
+        <div class="sidebar  overflow-scroll  vh-100 " id="side_nav" style="">
 
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between mt-2 ">
                 <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
@@ -99,7 +99,7 @@
             </div>
         </div>
         <!-- start nav bar -->
-        <div class="content postion-absolute " id="maintContent">
+        <div class="content overflow-scroll " id="maintContent">
 
             <nav class="navbar navbar-expand-md navbar-light main-bg-color shadow-sm ">
                 <div class="container-fluid">
@@ -258,10 +258,10 @@
             <!-- main body -->
             <div class="dashboard-content container   ">
 
-                <main class="col-lg-12 mx-auto  ">
+                <main class="col-lg-12 mx-auto   ">
                     <header class="d-flex align-items-center pb-3  "></header>
 
-                    <div class="container">
+                    <div class="container ">
                         <main role="main" class="mt-2">
                             @RenderBody()
                         </main>
@@ -271,17 +271,18 @@
         </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @* <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="MDB/js/mdb.min.js"></script>
+        </footer>*@
+
+    @* <script src="MDB/js/mdb.min.js"></script>*@
     @*<script src="~/js/bootstrap-js.js"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script type="text/javascript" src="MDB/js/mdb.min.js"></script>
+    <script type="text/javascript" src="~/MDB/js/mdb.min.js"></script>
     <!-- Custom scripts -->
     <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", required:         false)
