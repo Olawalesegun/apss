@@ -2,23 +2,23 @@
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class LandProductController : Controller
+    public class SeasonController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
 
-        // GET: LandProductController/Add a new landProduct
-        public ActionResult Add(long landId)
+        // GET: SeasonController/Add a new Season
+        public ActionResult Add()
         {
             return View();
         }
 
-        // POST: LandController/Add a new landProduct
+        // POST: SeasonController/Add a new Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(long landId, IFormCollection collection)
+        public ActionResult Add(IFormCollection collection)
         {
             try
             {
@@ -30,21 +30,16 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        public ActionResult Details(long landProductId)
+        // GET: SeasonController/Update Season
+        public ActionResult Update(long seasonId)
         {
             return View();
         }
 
-        // GET: LandController/Update landProduct
-        public ActionResult Update(long lanProductId)
-        {
-            return View();
-        }
-
-        // POST: LandController/Update landProduct
+        // POST: SeasonController/Update Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(long landProductId, IFormCollection collection)
+        public ActionResult Update(long seasonId, IFormCollection collection)
         {
             try
             {
@@ -56,16 +51,16 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        // GET: LandController/Delete  landProduct
-        public ActionResult Delete(long landProductId)
+        // GET: SeasonController/Delete  Season
+        public ActionResult Delete(long seasonId)
         {
             return View();
         }
 
-        // POST: LandController/Delete landProduct
+        // POST: SeasonController/Delete Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(long landProductId, IFormCollection collection)
+        public ActionResult Delete(long seasonId, IFormCollection collection)
         {
             try
             {
@@ -77,30 +72,30 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        // GET: LandController/Get landProduct
-        public ActionResult GetLandProduct(long landProductId)
+        // GET: SeasonController/Get Season
+        public ActionResult GetLand(long seasonId)
         {
             return View();
         }
 
-        // POST: LandController/Get landProduct
+        // POST: SeasonController/Get Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetLandProduct(long landProductId, IFormCollection collection)
+        public ActionResult GetLand(long seasonId, IFormCollection collection)
         {
             return View();
         }
 
-        // GET: LandController/Get landProducts
-        public ActionResult GetLandProducts(long landId)
+        // GET: SeasonController/Get Seasons
+        public ActionResult GetLands()
         {
             return View();
         }
 
-        // POST: LandController/Get landProducts
+        // POST: SeasonController/Get Seasons
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetLandProducts(long landId, IFormCollection collection)
+        public ActionResult GetLands(IFormCollection collection)
         {
             return View();
         }

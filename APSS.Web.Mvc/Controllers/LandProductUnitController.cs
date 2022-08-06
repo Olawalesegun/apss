@@ -2,20 +2,20 @@
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class LandController : Controller
+    public class LandProductUnitController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
 
-        // GET: LandController/Add a new land
+        // GET: LandProductUnitController/Add a new LandProductUnit
         public ActionResult Add()
         {
             return View();
         }
 
-        // POST: LandController/Add a new land
+        // POST: LandProductUnitController/Add a new LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Add(IFormCollection collection)
@@ -30,21 +30,16 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        public ActionResult Details(long landId)
+        // GET: LandProductUnitController/Update LandProductUnit
+        public ActionResult Update(long landProductUnitId)
         {
             return View();
         }
 
-        // GET: LandController/Update land
-        public ActionResult Update(long landId)
-        {
-            return View();
-        }
-
-        // POST: LandController/Update land
+        // POST: LandProductUnit/Update LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(long landId, IFormCollection collection)
+        public ActionResult Update(long landProductUnitId, IFormCollection collection)
         {
             try
             {
@@ -56,16 +51,16 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        // GET: LandController/Delete  land
-        public ActionResult Delete(long landId)
+        // GET: LandProductUnitController/Delete  LandProductUnit
+        public ActionResult Delete(long landProductUnitId)
         {
             return View();
         }
 
-        // POST: LandController/Delete land
+        // POST: LandProductUnitController/Delete LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(long landId, IFormCollection collection)
+        public ActionResult Delete(long landProductUnitId, IFormCollection collection)
         {
             try
             {
@@ -77,30 +72,30 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        // GET: LandController/Get land
-        public ActionResult GetLand(long landId)
+        // GET: LandProductUnitController/Get LandProductUnit
+        public ActionResult GetLandProductUnit(long landProductUnitId)
         {
             return View();
         }
 
-        // POST: LandController/Get land
+        // POST: LandProductUnitController/Get LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetLand(long landId, IFormCollection collection)
+        public ActionResult GetLandProductUnit(long landProductUnitId, IFormCollection collection)
         {
             return View();
         }
 
-        // GET: LandController/Get lands
-        public ActionResult GetLands(long userId)
+        // GET: LandProductUnitController/Get LandProductUnits
+        public ActionResult GetLandProductUnits()
         {
             return View();
         }
 
-        // POST: LandController/Get lands
+        // POST: LandProductUnitController/Get LandProductUnits
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetLands(long userId, IFormCollection collection)
+        public ActionResult GetLandProductUnits(IFormCollection collection)
         {
             return View();
         }

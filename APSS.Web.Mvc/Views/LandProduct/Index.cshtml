@@ -1,98 +1,98 @@
-﻿<div class="offcanvas offcanvas-start" id="landProduct">
+﻿@*<div class="offcanvas offcanvas-start" id="landProduct">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Add The Land Information</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    <h5 class="offcanvas-title">Add The Land Information</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
 
-        <form class=" mt-3 ">
-            <!-- 2 column puts for the land Product name -->
-            <div class="center d-flex justify-content-center mb-3 ">
-                <h3 class=" ">
-                    Land Product Information
-                </h3>
-            </div>
-            <div class="form-outline mb-4">
-                <input type="text" id="landProduct_name" name="landProduct_name" class="form-control" />
-                <label class="form-label" for="landProduct_name">Land Product Name</label>
-            </div>
-            <div class="form-outline mb-4">
-                <input type="datetime" id="harvestStart" name="harvestStart" class="form-control" />
-                <label class="form-label" for="harvestStart">Harvest Start</label>
-            </div>            <div class="form-outline mb-4">
-                <input type="datetime" id="harvestEnd" name="harvestEnd" class="form-control" />
-                <label class="form-label" for="harvestEnd">Harvest End</label>
-            </div>
-            <!-- Text input for quantity-->
-            <div class="form-outline mb-4">
-                <input type="number" id="quantity" name="quantity" class="form-control" />
-                <label class="form-label" for="quantity">Quantity</label>
-            </div>
-
-            <!-- Text input irrigationCount-->
-            <div class="form-outline mb-4">
-                <input type="number" id="irrigationCount" name="irrigationCount" class="form-control" />
-                <label class="form-label" for="irrigationCount">Irrigation Count</label>
-            </div>
-
-            <!-- Text input storingMethod-->
-            <div class="form-outline mb-4">
-                <input type="number" id="storingMethod" name="storingMethod" class="form-control" />
-                <label class="form-label" for="storingMethod">Storing Method </label>
-            </div>
-
-            <div class="form-outline mb-4">
-                <label for="specificSizeSelect">Irrigation Water Source</label>
-                <select class="form-select" id="specificSizeSelect">
-                    <option selected>Choose...</option>
-                    <option value="1">Natural</option>
-                    <option value="2">HumanStored</option>
-                    <option value="3">OnDemand</option>
-                </select>
-            </div>
-
-            <!-- isGovernmentFunded input -->
-            <div class="form-outline mb-4">
-                <div class="form-check-inline">
-
-                    <h5 class="inline">is Government Funded:</h5>
-                </div>
-                <br />
-                <div class="form-check form-check-inline">
-
-                    <input class="form-check-input hiden" type="radio" name="isGovernmentFunded" id="yes" value="true" checked />
-                    <label class="form-check-label" for="yes">Yes</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" value="false" id="no" name="isGovernmentFunded" />
-                    <label class="form-check-label" for="no"> No </label>
-                </div>
-            </div>
-            <br />
-            <!-- hasGreenhouse input -->
-            <div class="form-check-inline">
-
-                <h5 class="inline"> has Green house: </h5>
-            </div>
-            <br />
-            <div class="form-check form-check-inline">
-
-                <input class="form-check-input hiden" type="radio" name="hasGreenhouse" id="yes" value="true" checked />
-                <label class="form-check-label" for="yes">Yes</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" value="false" id="no" name="hasGreenhouse" />
-                <label class="form-check-label" for="no"> No </label>
-            </div>
-
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
-        </form>
+    <form class=" mt-3 ">
+    <!-- 2 column puts for the land Product name -->
+    <div class="center d-flex justify-content-center mb-3 ">
+    <h3 class=" ">
+    Land Product Information
+    </h3>
     </div>
-</div>
+    <div class="form-outline mb-4">
+    <input type="text" id="landProduct_name" name="landProduct_name" class="form-control" />
+    <label class="form-label" for="landProduct_name">Land Product Name</label>
+    </div>
+    <div class="form-outline mb-4">
+    <input type="datetime" id="harvestStart" name="harvestStart" class="form-control" />
+    <label class="form-label" for="harvestStart">Harvest Start</label>
+    </div>            <div class="form-outline mb-4">
+    <input type="datetime" id="harvestEnd" name="harvestEnd" class="form-control" />
+    <label class="form-label" for="harvestEnd">Harvest End</label>
+    </div>
+    <!-- Text input for quantity-->
+    <div class="form-outline mb-4">
+    <input type="number" id="quantity" name="quantity" class="form-control" />
+    <label class="form-label" for="quantity">Quantity</label>
+    </div>
 
+    <!-- Text input irrigationCount-->
+    <div class="form-outline mb-4">
+    <input type="number" id="irrigationCount" name="irrigationCount" class="form-control" />
+    <label class="form-label" for="irrigationCount">Irrigation Count</label>
+    </div>
+
+    <!-- Text input storingMethod-->
+    <div class="form-outline mb-4">
+    <input type="number" id="storingMethod" name="storingMethod" class="form-control" />
+    <label class="form-label" for="storingMethod">Storing Method </label>
+    </div>
+
+    <div class="form-outline mb-4">
+    <label for="specificSizeSelect">Irrigation Water Source</label>
+    <select class="form-select" id="specificSizeSelect">
+    <option selected>Choose...</option>
+    <option value="1">Natural</option>
+    <option value="2">HumanStored</option>
+    <option value="3">OnDemand</option>
+    </select>
+    </div>
+
+    <!-- isGovernmentFunded input -->
+    <div class="form-outline mb-4">
+    <div class="form-check-inline">
+
+    <h5 class="inline">is Government Funded:</h5>
+    </div>
+    <br />
+    <div class="form-check form-check-inline">
+
+    <input class="form-check-input hiden" type="radio" name="isGovernmentFunded" id="yes" value="true" checked />
+    <label class="form-check-label" for="yes">Yes</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" value="false" id="no" name="isGovernmentFunded" />
+    <label class="form-check-label" for="no"> No </label>
+    </div>
+    </div>
+    <br />
+    <!-- hasGreenhouse input -->
+    <div class="form-check-inline">
+
+    <h5 class="inline"> has Green house: </h5>
+    </div>
+    <br />
+    <div class="form-check form-check-inline">
+
+    <input class="form-check-input hiden" type="radio" name="hasGreenhouse" id="yes" value="true" checked />
+    <label class="form-check-label" for="yes">Yes</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" value="false" id="no" name="hasGreenhouse" />
+    <label class="form-check-label" for="no"> No </label>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+    </form>
+    </div>
+    </div>
+*@
 <nav class="navbar navbar-expand-lg shadow-sm pb-0 pt-2  mt-2 " id="account-manage">
     <div class="container-fluid">
 
@@ -103,7 +103,7 @@
                     <div class="d-flex justify-content-between">
 
                         <a class="nav-link " href="#">
-                            <span class="mt-2"><i class="fa-solid fa-wheat-awn"></i></i></span>
+                            <span class="mt-2"><i class="fa-solid fa-wheat-awn"></i></span>
                             Recent Land Products
                         </a>
                     </div>
@@ -129,7 +129,7 @@
                 <li class="nav-item mx-sm-2 pb-2 ">
                     <div class="d-flex justify-content-between">
 
-                        <a class="nav-link" href="#" role="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#landProduct">
+                        <a class="nav-link" role="button" type="button" asp-action="Add">
                             <span class="mt-2"><i class="fa-solid fa-wheat-awn" aria-hidden="true"></i></span>
                             Add Land Product
                         </a>
@@ -196,8 +196,10 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Details" asp-route-id="">Details</a></li>
+                                    <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Add" asp-route-id="">Add Expense</a></li>
+                                    <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Update" asp-route-id="">Update</a></li>
+                                    <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Delete" asp-route-id="">Delete</a></li>
                                     <li><a class="dropdown-item" href="#">Active</a></li>
                                 </ul>
                             </div>

@@ -1,4 +1,8 @@
-﻿<nav class="navbar navbar-expand-lg shadow-sm pb-0 pt-2  mt-2 " id="account-manage">
+﻿@{
+    ViewData["title"] = "Season Management Page";
+}
+
+<nav class="navbar navbar-expand-lg shadow-sm pb-0 pt-2  mt-2 " id="season-manage">
     <div class="container-fluid">
 
         <div class="collapse navbar-collapse" id="data-management">
@@ -9,7 +13,7 @@
 
                         <a class="nav-link " href="#">
                             <span class="mt-2"><i class="fa-solid fa-money-bill-wheat"></i></span>
-                            Recent Land Product Expenses
+                            Recent Seasons
                         </a>
                     </div>
                 </li>
@@ -26,7 +30,7 @@
 
                         <a class="nav-link" href="#">
                             <span class="mt-2"><i class="fa-solid fa-money-bill-wheat"></i></span>
-                            Land Product Expenses
+                            Seasons
                         </a>
                     </div>
                 </li>
@@ -34,9 +38,9 @@
                 <li class="nav-item mx-sm-2 pb-2 ">
                     <div class="d-flex justify-content-between">
 
-                        <a class="nav-link" role="button" type="button" data-bs-toggle="offcanvas" data-bs-target="#LandProductExpense">
+                        <a class="nav-link" role="button" type="button" asp-action="Add">
                             <span class="mt-2"><i class="fa-solid fa-money-bill-wheat"></i></span>
-                            Add Land Product Expense
+                            Add Season
                         </a>
                     </div>
                 </li>
@@ -80,9 +84,9 @@
                 <thead>
                     <tr class="header">
                         <th style="width:10%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Type</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Price</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Spent On</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Start At</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">Ends At</th>
                         <th style="width:5%;" class=" text-capitalize align-middle">Function</th>
                     </tr>
                 </thead>
@@ -101,9 +105,8 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Details" asp-route-id="">Details</a></li>
-                                    <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Update" asp-route-id="">Update</a></li>
-                                    <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Delete" asp-route-id="">Delete</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Season" asp-action="Update" asp-route-id="">Update</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Season" asp-action="Delete" asp-route-id="">Delete</a></li>
                                     <li><a class="dropdown-item" href="#">Active</a></li>
                                 </ul>
                             </div>
@@ -121,7 +124,7 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Update</a></li>
                                     <li><a class="dropdown-item" href="#">Delete</a></li>
                                     <li><a class="dropdown-item" href="#">Active</a></li>
                                 </ul>
