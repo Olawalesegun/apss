@@ -51,6 +51,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Family}/{action=GetFamilies}/{id?}");
+    pattern: "{controller=Individual}/{action=GetIndividuals}/{id?}");
 
 app.Run();
