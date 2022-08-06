@@ -47,29 +47,21 @@
             </div> 
 
              <!-- Text input for DateOfBirth -->
-              <div class=" mb-4">
-                <label class="form-label" for="individual_DateOfBirth">Birth Date</label>
-                <input type="text" id="individual_DateOfBirth" name="individual_DateOfBirth" class="form-control" />
-            </div> 
+              <div class=" datepicker input-group.date-p mb-2">
+                  <label class="form-label" for="indvidual_birth_date">Birth Date</label>
+                  <input type="date" id="sandbox-container-p" name="indvidual_birth_date" class="form-control" />
+               </div>
 
             <div class="mb-4">
-                <label class="form-label" for="individual_family">Family</label>
-         <select class="form-select" name="family-box" id="family-box">
-   
-        <option>option1</option>
-        <option>option2</option>
-        <option>option3</option>
-        <option>option4</option>
-        <option>option1</option>
-        <option>option2</option>
-        <option>option3</option>
-        <option>option4</option>
-        <option>option1</option>
-        <option>option2</option>
-        <option>option3</option>
-        <option>option4</option>
-   
-</select>
+              <label for="browser" class="form-label">Family:</label>
+              <input class="form-control" list="browsers" name="browser" id="browser" placeholder="enter family">
+             <datalist id="browsers">
+               <option value="Edge"/>
+               <option value="Firefox"/>
+              <option value="Chrome"/>
+              <option value="Opera"/>
+              <option value="Safari"/>
+            </datalist>
             </div>
            <!-- Gender input -->
             <div class="form-check-inline mb-2">
