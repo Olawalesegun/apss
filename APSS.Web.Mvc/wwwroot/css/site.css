@@ -253,5 +253,6 @@ nav ul li div a {
 
 input, select {
     /*background-color: #EFF3F7 !important;*/
-    background-color: #F3F4F4 !important;
+    /*background-color: #F3F4F4 !important;*/
+    background-color: none !important;
 }
