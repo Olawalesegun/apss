@@ -251,8 +251,13 @@ nav ul li div a {
     display: none;
 }
 
-input, select {
+input, select, .form-outline {
     /*background-color: #EFF3F7 !important;*/
-    /*background-color: #F3F4F4 !important;*/
-    background-color: none !important;
+    background-color: #F3F4F4 !important;
+}
+
+.textOverflow {
+    white-space: nowrap;
+    overflow: initial;
+    text-overflow: ellipsis;
 }
