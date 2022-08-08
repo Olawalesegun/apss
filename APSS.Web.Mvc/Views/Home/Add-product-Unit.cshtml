@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="offcanvas offcanvas-start" id="productUnit" style="background-color:#F3F4F4 !important">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Product Unit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form class=" mt-3 ">
+            <!-- 2 column puts for the National number and Phome Number-->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class="text-decoration-underline">
+                    Required Product Unit info
+                </h3>
+            </div>
+            <!-- Text input for user name-->
+            <div class="form-outline mb-4">
+                <input type="tel" id="unitName" name="unitName" class="form-control" />
+                <label class="form-label" for="unitName">Name</label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-4 mt-4">Add</button>
+        </form>
+    </div>
+</div>
+<div class="container-fluid mt-3">
+    <a class="text-dark fw-bold text-decoration-none" role="button" data-bs-toggle="offcanvas" data-bs-target="#productUnit">
+        <i class="fa-solid fa-plus"></i>    Add Product Unit
+    </a>
+</div>

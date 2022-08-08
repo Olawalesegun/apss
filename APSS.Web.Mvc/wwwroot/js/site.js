@@ -2,6 +2,10 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+/*$(".sidebar ul li").on('click', function () {
+    $(".sidebar ul li.active").removeClass('active');
+    $(this).addClass('active');
+});*/
 $(".sidebar ul li").on('click', function () {
     $(".sidebar ul li.active").removeClass('active');
     $(this).addClass('active');
@@ -29,14 +33,14 @@ $(".navbar img").on('click', function () {
     $(".sidebar").removeClass('active');
 });
 $(".sidebar ul li").on('click', function () {
-    $("navbar-toggler").addClass('toggle_menu');
+    $(".navbar-toggler").addClass('toggle_menu');
 });
 
 $(document).ready(function () {
-    $('#dtBasicExample').DataTable();
+    /* $('#dtBasicExample').DataTable();*/
     $('.dataTables_length').addClass('bs-select');
 });
-document.getElementById("focus").focus();
+/*document.getElementById("focus").focus();*/
 
 $('#sandbox-container .input-group.date').datepicker({
     language: "ar"
