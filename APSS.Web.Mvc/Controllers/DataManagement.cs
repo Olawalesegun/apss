@@ -1,0 +1,18 @@
+﻿using APSS.Domain.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace APSS.Web.Mvc.Controllers
+{
+    public class DataManagement : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> AnimalProduct()
+        {
+            return View();
+        }
+    }
+}

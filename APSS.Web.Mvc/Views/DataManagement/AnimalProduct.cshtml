@@ -1,4 +1,38 @@
-﻿<div class="container-fluid  border p-2  col-ms-12  mt-0  rounded ml-2 " id="">
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<nav class="navbar navbar-expand-lg  py-0  rounded my-1 mx-0 shadow data-navbar">
+    <div class="container-fluid mx-0  ">
+        <a class="navbar-brand " href="#">Management:</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mx-0 manage-ment " id="navbarScroll">
+            <ul class="navbar-nav me-auto  my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <li class="nav-item ">
+                    <a class="nav-link pt-3   fw-bold   " aria-current="page" asp-action="Index">Animal Groups</a>
+                </li>
+                <li class="nav-item  ">
+                    <a class="nav-link actives  pt-3 fw-bold " asp-action="AnimalProduct">Animal Products</a>
+                </li>
+                <li class="nav-item  ">
+                    <a class="nav-link pt-3  fw-bold " href="#">Lands</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link pt-3  fw-bold " href="#">Land Products</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--table-->
+
+<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
 
     <form class="row gx-3 gy-2 align-items-center mb-3 ">
         <div class="col-sm-6">
@@ -11,7 +45,7 @@
 
                 <input type="text" class="form-control" id="search" placeholder="Search..." onkeyup="searchTable()">
 
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
+                <button class="btn btn-outline-secondary dropdown-toggle border border-black-100 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -34,21 +68,21 @@
 
     <div class="col-sm-12  ">
 
-        <div class="container mt-3 bg-light table-responsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
+        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
 
             <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
 
                 <thead>
-                    <tr class="header bg-dark bg-fixed text-white">
+                    <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
                         <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
                         <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
                         <th style="width:20%;" class=" text-capitalize align-middle">Phone Number</th>
                         <th style="width:30%;" class=" text-capitalize align-middle">Address</th>
-                        <th style="width:0%;" class=" text-capitalize align-middle">Function</th>
+                        <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="align-top">
                         <td class="text-break text-capitalize align-middle">1</td>
                         <td class="text-break text-capitalize align-middle"> John</td>
                         <td class="text-break text-capitalize align-middle">Doe</td>
@@ -62,9 +96,11 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                    <li><a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                    <li><a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li class="">
+                                        <a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
+                                    </li>
                                 </ul>
                             </div>
                         </td>
@@ -83,7 +119,7 @@
                                 <ul class="dropdown-menu pt-0 pb-0">
                                     <li><a class="dropdown-item" href="#">Details</a></li>
                                     <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -102,7 +138,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Details</a></li>
                                     <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -119,9 +155,13 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">i</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Delete
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -133,7 +173,7 @@
                         <td>july@example.com</td>
                         <td>
                             <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
+                                <a class="" href="#" id=""
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
@@ -232,3 +272,18 @@
         </ul>
     </nav>
 </div>
+
+@section scripts{
+<script>
+    $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+    $("#dataManagement").addClass('active');
+    });
+    document.getElementById("nav-system-name").innerHTML="Data Management";
+    document.getElementById("media-system-name").innerHTML="Data Management";
+    $(".manage-ment  ul li a").on('click',function(){
+    $(".manage-ment  ul li a.actives").removeClass('actives');
+        $(this).addClass('actives');
+      });
+</script>
+}
