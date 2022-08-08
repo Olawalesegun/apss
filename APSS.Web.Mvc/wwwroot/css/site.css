@@ -181,7 +181,7 @@ button {
 /* thable style */
 .my-custom-scrollbar {
     position: relative;
-    height: 400px;
+    height: 450px;
     overflow: auto;
 }
 
@@ -260,4 +260,67 @@ input, select, .form-outline {
     white-space: nowrap;
     overflow: initial;
     text-overflow: ellipsis;
+}
+
+.overflow-text {
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+#media-system-name {
+    font-weight: bold;
+    margin-left: 10px !important;
+    margin-top: 6px !important;
+    overflow: scroll;
+    white-space: nowrap;
+    font-size: 18px !important;
+}
+
+#data-mange {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#open-btn {
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+.actives {
+    color: #2680C2 !important;
+    border-bottom: 3px #2680C2 solid !important;
+    /* border-top: 3px #2680C2 solid !important;
+    border-radius: 30px 30px 30px 30px;*/
+}
+
+.manage-ment ul li a:hover {
+    color: #2680C2 !important;
+    /* border-bottom: 3px #2680C2 solid !important;*/
+}
+
+.manage-ment ul li a {
+    color: #334E68;
+}
+
+.manage-ment ul li {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.animal-manage::after {
+    content: "";
+    width: 5px;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    height: 100%;
+    background-color: #DBE4F3 !important;
+}
+
+.data-navbar {
+    border-left: 4px #2e8b57 solid;
+}
+
+.animal-table {
+    border: 3px #1970B0 solid;
 }
