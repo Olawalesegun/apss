@@ -32,11 +32,11 @@
                 <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
             </div>
             <ul class="list-unstyle px-2 ">
-                <li class="active"><a href="#" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
-                <li class=""><a href="#" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
+                <li class="active" id="dashBoard"><a  asp-action="Index" asp-controller="Home"  class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
+                <li class="" id="accountManagement"><a href="#" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
 
-                <li class=""><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
-                <li class=""><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
+                <li class="" id="dataManagement"><a asp-action="Index" asp-controller="DataManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
+                <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
             </ul>
 
             <hr class="mx-2">
@@ -110,7 +110,7 @@
 
                         <button class="btn px-0 btn-link  open-btn " onclick=""><i class="fas fa-stream  fs-1 "></i></button>
 
-                        <a href="#" class=" text-sm-start overflow-y-scroll fs-1  px-0  py-0 text-primary " id="media-system-name" style="word-wrap:break-word">
+                        <a href="#" class=" text-sm-start overflow-scroll fs-1  px-0  py-0 text-primary  " id="media-system-name" style="word-wrap:break-word">
                             Scan System
                         </a>
 
