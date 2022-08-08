@@ -3,3 +3,192 @@
 *@
 @{
 }
+
+<nav class="navbar navbar-expand-lg shadow-sm pb-0 pt-2  mt-2 " id="family-manage">
+  <div class="container-fluid">
+
+    <div class="collapse navbar-collapse" id="data-management">
+      <ul class="navbar-nav me-auto  pb-0 mb-lg-0">
+       
+        <li class="nav-item mx-sm-2 pb-2">
+         <div class="d-flex justify-content-between">
+     <a class="nav-link" role="button" asp-action="Create" asp-controller="Family">
+              <span class="mt-2"><i class="fa-solid fa-people-roof fa-lg"></i><i class="fa-solid fa-plus familyicon"></i></span>
+
+          Add Family
+        </a>
+         </div>
+        </li>
+         <li class="nav-item mx-sm-2 pb-2 ">
+          <div class="d-flex justify-content-between">
+
+            <a class="nav-link" href="#">
+               <span class="mt-2">
+                    
+</span>
+             last Family
+              </a>
+          </div>
+         </li>
+      </ul>
+    </div>
+  <div class="title-mange-page" >
+        <h4 style="font-weight:bold">
+            Families Management
+            </h4>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid  border p-2  col-ms-12  mt-0  rounded ml-2 " id="">
+
+    <form class="row gx-3 gy-2 align-items-center mb-3 ">
+        <div class="col-sm-6">
+
+            <div class="input-group">
+                <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
+
+                    <i class="fal fa-search " style="color:white"></i>
+                </a>
+
+                <input type="text" class="form-control" id="search" placeholder="Search..." onkeyup="searchTable()">
+
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-2 ">
+            <label class="visually-hidden" for="searchby">Search By</label>
+            <select class="form-select " id="searchby">
+                <option selected>Choose search by</option>
+                <option value="1">Name</option>
+                <option value="2">Id</option>
+                <option value="3">Address</option>
+            </select>
+        </div>
+    </form>
+ <div class="col-sm-12  ">
+
+        <div class="container mt-3 bg-light table-responsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
+
+            <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
+
+                <thead>
+                    <tr class="header bg-dark bg-fixed text-white">
+                    <th style="width:10%;" class=" text-capitalize align-middle">ID</th>
+                    <th style="width:30%;" class=" text-capitalize align-middle">Name Family</th>
+                    <th style="width:20%;" class=" text-capitalize align-middle">Name Individual</th>
+                    <th style="width:30%;" class=" text-capitalize align-middle">provider</th>
+                    <th style="width:30%;" class=" text-capitalize align-middle">parent</th>
+                    <th style="width:5%;" class=" text-capitalize align-middle">Function</th>
+                  </tr>
+                    </thead>
+                      <tbody>
+                              <tr>
+                                <td class="text-break text-capitalize align-middle">1</td>
+                                <td class="text-break text-capitalize align-middle"> John</td>
+                                <td class="text-break text-capitalize align-middle">Doe</td>
+                                <td class="text-break text-capitalize align-middle">Doe</td>
+                                <td class="text-break text-capitalize align-middle">trg</td>
+                                  <td class="align-middle center">
+                                  <div class=" dropend">
+                                      <a class="" href="#"  id="dropdownMenuLink"
+                                      data-bs-toggle="dropdown"  aria-expanded="false">
+                                                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                              </a>
+                                      <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-action="GetFamilyDetails">Details</a></li>
+                                        <li><a class="dropdown-item" asp-action="Delete">Delete</a></li>
+                                        <li><a class="dropdown-item" asp-action="Update">Edite</a></li>
+                                      </ul>
+                                    </div>
+                               </td>
+                              </tr>
+                             <tr>
+                                <td class="text-break text-capitalize align-middle">1</td>
+                                <td class="text-break text-capitalize align-middle"> John</td>
+                                <td class="text-break text-capitalize align-middle">Doe</td>
+                                <td class="text-break text-capitalize align-middle">Doe</td>
+                                <td class="text-break text-capitalize align-middle">trg</td>
+                                  <td class="align-middle center">
+                                  <div class=" dropend">
+                                      <a class="" href="#"  id="dropdownMenuLink"
+                                      data-bs-toggle="dropdown"  aria-expanded="false">
+                                                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                              </a>
+                                      <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-action="GetFamilyDetails">Details</a></li>
+                                        <li><a class="dropdown-item" asp-action="Delete">Delete</a></li>
+                                        <li><a class="dropdown-item" asp-action="Update">Edite</a></li>
+                                      </ul>
+                                    </div>
+                               </td>
+                              </tr>
+                               <tr>
+                                <td class="text-break text-capitalize align-middle">1</td>
+                                <td class="text-break text-capitalize align-middle"> John</td>
+                                <td class="text-break text-capitalize align-middle">Doe</td>
+                                <td class="text-break text-capitalize align-middle">Doe</td>
+                                <td class="text-break text-capitalize align-middle">trg</td>
+                                  <td class="align-middle center">
+                                  <div class=" dropend">
+                                      <a class="" href="#"  id="dropdownMenuLink"
+                                      data-bs-toggle="dropdown"  aria-expanded="false">
+                                                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                              </a>
+                                      <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-action="GetFamilyDetails">Details</a></li>
+                                        <li><a class="dropdown-item" asp-action="Delete">Delete</a></li>
+                                        <li><a class="dropdown-item" asp-action="Update">Edite</a></li>
+                                      </ul>
+                                    </div>
+                               </td>
+                              </tr>
+                               <tr>
+                                <td class="text-break text-capitalize align-middle">1</td>
+                                <td class="text-break text-capitalize align-middle"> John</td>
+                                <td class="text-break text-capitalize align-middle">Doe</td>
+                                <td class="text-break text-capitalize align-middle">Doe</td>
+                                <td class="text-break text-capitalize align-middle">trg</td>
+                                  <td class="align-middle center">
+                                  <div class=" dropend">
+                                      <a class="" href="#"  id="dropdownMenuLink"
+                                      data-bs-toggle="dropdown"  aria-expanded="false">
+                                                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                              </a>
+                                      <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-action="GetFamilyDetails">Details</a></li>
+                                        <li><a class="dropdown-item" asp-action="Delete">Delete</a></li>
+                                        <li><a class="dropdown-item" asp-action="Update">Edite</a></li>
+                                      </ul>
+                                    </div>
+                               </td>
+                              </tr>
+                            </tbody>
+          </table>
+          </div>
+    </div>
+    <nav aria-label="Page navigation example" class="float-left pl-5">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+  </div>
+
