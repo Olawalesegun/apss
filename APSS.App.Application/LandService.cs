@@ -329,6 +329,34 @@ public class LandService : ILandService
     }
 
     /// <inheritdoc/>
+    public async Task<IQueryBuilder<ProductExpense>> GetLandProductExpenseAsync(
+        long accountId,
+        long landProductExpenseId)
+    {
+        var landProductExpense = await _uow.ProductExpenses.Query()
+            .Include(p => p.SpentOn)
+            .FindAsync(landProductExpenseId);
+
+        await _permissionsSvc.ValidatePermissionsAsync(accountId, landProductExpense.SpentOn.Id, PermissionType.Read);
+
+        return _uow.ProductExpenses.Query().Where(e => e.Id == landProductExpenseId);
+    }
+
+    /// <inheritdoc/>
+    public async Task<IQueryBuilder<ProductExpense>> GetLandProductExpensesAsync(
+        long accountId,
+        long landProductId)
+    {
+        var landProduct = await _uow.LandProducts.Query()
+            .Include(u => u.AddedBy)
+            .FindAsync(landProductId);
+
+        await _permissionsSvc.ValidatePermissionsAsync(accountId, landProduct.AddedBy.Id, PermissionType.Read);
+
+        return _uow.ProductExpenses.Query().Where(p => p.SpentOn.Id == landProductId);
+    }
+
+    /// <inheritdoc/>
     public async Task<IQueryBuilder<Season>> GetSeasonAsync(long accountId, long seasonId)
     {
         await _uow.Accounts.Query()

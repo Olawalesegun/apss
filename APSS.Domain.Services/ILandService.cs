@@ -253,5 +253,25 @@ public interface ILandService
     /// <returns>The confimred or declined land</returns>
     Task<LandProduct> ConfirmLandProductAsync(long accountId, long landProductId, bool confirm);
 
+    /// <summary>
+    /// Asynchronously Gets the user`s land product expense by the expense id
+    /// </summary>
+    /// <param name="accountId">The account id of the user who want to get the product expense</param>
+    /// <param name="landProductExpenseId">The id of the product expense to get by</param>
+    /// <returns>The product expense</returns>
+    Task<IQueryBuilder<ProductExpense>> GetLandProductExpenseAsync(
+        long accountId,
+        long landProductExpenseId);
+
+    /// <summary>
+    /// Asynchronously Gets all the user`s land product expenses
+    /// </summary>
+    /// <param name="accountId">The account id of the user who want to get the product expenses</param>
+    /// <param name="landProductId">The id of the land product that the expense spent on</param>
+    /// <returns>The land product expenses</returns>
+    Task<IQueryBuilder<ProductExpense>> GetLandProductExpensesAsync(
+        long accountId,
+        long landProductId);
+
     #endregion Public Methods
 }
