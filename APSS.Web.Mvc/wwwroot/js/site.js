@@ -6,6 +6,10 @@
     $(".sidebar ul li.active").removeClass('active');
     $(this).addClass('active');
 });*/
+$(".sidebar ul li").on('click', function () {
+    $(".sidebar ul li.active").removeClass('active');
+    $(this).addClass('active');
+});
 $(".open-btn").on('click', function () {
     $(".sidebar").addClass('active');
 });
@@ -29,7 +33,7 @@ $(".navbar img").on('click', function () {
     $(".sidebar").removeClass('active');
 });
 $(".sidebar ul li").on('click', function () {
-    $("navbar-toggler").addClass('toggle_menu');
+    $(".navbar-toggler").addClass('toggle_menu');
 });
 
 $(document).ready(function () {

@@ -62,7 +62,7 @@ hr.h-color {
 
 @media(max-width:768px) {
     #side_nav {
-        margin-left: -270px;
+        margin-right: -270px;
         min-height: 100vh;
         z-index: 1;
     }
@@ -79,14 +79,14 @@ hr.h-color {
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
     #side_nav {
-        margin-left: 0;
+        margin-right: 0;
         min-height: 100vh;
         z-index: 1;
     }
 
     .content {
         margin-right: 0;
-        position: static;
+        position: absolute;
     }
 
     #account-manage {
@@ -111,7 +111,7 @@ hr.h-color {
 }
 */
 #side_nav.active {
-    margin-left: 0;
+    margin-right: 0;
 }
 
 #toggle_menu {
@@ -153,7 +153,6 @@ hr.h-color {
 }
 
 #maintContent {
-    outline-offset: 400px;
 }
 /* input[type="text"], input[type="number"],input[type="tel"],input[type="password"]{
     background-color: #F8F8F8 !important;
@@ -181,7 +180,7 @@ button {
 /* thable style */
 .my-custom-scrollbar {
     position: relative;
-    height: 450px;
+    height: 400px;
     overflow: auto;
 }
 
@@ -323,4 +322,8 @@ input, select, .form-outline {
 
 .animal-table {
     border: 3px #1970B0 solid;
+}
+
+.show-sidebar {
+    margin-right: 100px;
 }
