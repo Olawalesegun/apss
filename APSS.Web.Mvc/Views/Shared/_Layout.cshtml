@@ -34,7 +34,7 @@
             </div>
             <ul class="list-unstyle px-2 ">
                 <li class="active" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
-                <li class="" id="accountManagement"><a href="#" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
+                <li class="" id="accountManagement"><a asp-action="Index" asp-controller="AccountManagement" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
 
                 <li class="" id="dataManagement"><a asp-action="Index" asp-controller="DataManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
                 <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
@@ -175,16 +175,15 @@
                                     <i class="fal fa-bell fs-1 "></i>
                                 </a>
                             </div>
-                            <div class=" dropstart">
+                            <div class=" dropend">
                                 <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
                                     @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
                                 </a>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu ml-5">
                                     <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
                                     <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -237,7 +236,7 @@
                                 </a>
                                 <br>
                                 </div>*@
-                            <div class=" mx-3 dropstart">
+                            <div class=" mx-3 dropend">
                                 <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
@@ -245,9 +244,8 @@
                                     @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -280,9 +278,10 @@
     @*<script src="~/js/bootstrap-js.js"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
     <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
     <!-- Custom scripts -->
     <script src="~/js/site.js"></script>

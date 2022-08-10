@@ -317,7 +317,7 @@ input, select, .form-outline {
 }
 
 .data-navbar {
-    border-left: 4px #2e8b57 solid;
+    border-left: 7px #2e8b57 solid;
 }
 
 .animal-table {
@@ -326,4 +326,12 @@ input, select, .form-outline {
 
 .show-sidebar {
     margin-right: 100px;
+}
+
+.opecity-header:hover {
+    border-radius: 50px;
+    transition: all 0.1s;
+    opacity: 0.5;
+    cursor: pointer;
+    color: rgb(61, 109, 109);
 }

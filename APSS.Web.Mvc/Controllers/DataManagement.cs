@@ -14,5 +14,10 @@ namespace APSS.Web.Mvc.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> CreateAnimalProduct()
+        {
+            return View();
+        }
     }
 }
