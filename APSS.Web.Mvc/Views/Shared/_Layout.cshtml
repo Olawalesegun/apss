@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - APSS</title>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -16,16 +16,17 @@
     <link rel="icon" href="~/css/all.css" />
     <link rel="icon" href="~/css/main.css" />
     <link rel="icon" href="~/css/icons.css" />
-    <link rel="stylesheet" href="~/MDB/bootstrap.main.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="~/MDB/bootstrap.min.css" />
     <link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />
-    <link rel="stylesheet" href="~/MDB/css/mdb.min.css" />
+    <link rel="stylesheet" href="~/MDB/css/mdb.rtl.min.css" />
 </head>
 <body>
 
     <!-- main div  -->
     <div class="main-container d-flex vh-100 ">
         <!-- start sidebar  -->
-        <div class="sidebar  overflow-scroll  vh-100 " id="side_nav" style="">
+        <div class="sidebar  overflow-scroll   " id="side_nav">
 
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between mt-2 ">
                 <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
@@ -33,7 +34,7 @@
             </div>
             <ul class="list-unstyle px-2 ">
                 <li class="active" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
-                <li class="" id="accountManagement"><a href="#" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
+                <li class="" id="accountManagement"><a asp-action="Index" asp-controller="AccountManagement" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
 
                 <li class="" id="dataManagement"><a asp-action="Index" asp-controller="DataManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
                 <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
@@ -109,7 +110,7 @@
                         <!-- media top bar -->
 
                         <div id="open-btn" class=" d-flex justify-content-between ">
-                            <button class="btn px-0  btn-link  open-btn " onclick=""><i class="fas fa-stream fs-1  "></i></button>
+                            <button class="btn px-0  btn-link  open-btn "><i class="fas fa-stream fs-1  "></i></button>
 
                             <a href="#" class=" text-sm-start overflow-scroll py-1    text-primary  " id="media-system-name" style="word-wrap:break-word">
                                 Scan System
@@ -174,31 +175,16 @@
                                     <i class="fal fa-bell fs-1 "></i>
                                 </a>
                             </div>
-                            <div class="mx-1 dropstart">
-
-                                <a href="#" class="text-decoration-none rounded-circle pt-2  " id="dropdownMenuLink"
+                            <div class=" dropstart">
+                                <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/resources/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
-                                    <ul class="dropdown-menu">
-                                        <li>
-
-                                            <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
-                                                <span>  Logout </span>
-                                                <span class="">
-                                                    <i class="bi bi-box-arrow-left ">
-                                                    </i>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item d-flex justify-content-between p-3" href="#">
-                                                <span>  Setting</span>
-                                                <span><i class="bi bi-info-circle "></i></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                    @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
                                 </a>
-                                <br>
+                                <ul class="dropdown-menu ml-5">
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -208,15 +194,15 @@
                     </button> -->
                     <!-- Top bar setting -->
                     <div class="collapse navbar-collapse" id="media_collapse">
+                        <h3 class="" id="nav-system-name">
+
+                            Scan System
+                        </h3>
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-
-                                <h3 class="" id="nav-system-name">
-
-                                    Scan System
-                                </h3>
+                            <li class="nav-item align-content-end ml-1">
                             </li>
                         </ul>
+
                         <div class="d-flex">
 
                             <div class="pt-2">
@@ -224,31 +210,43 @@
                                     <i class="fal fa-bell  fs-sm-1"></i>
                                 </a>
                             </div>
-                            <div class="mx-3 dropstart">
+                            @*<div class="mx-3 dropend ">
 
                                 <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
-                                    <img src="~/resources/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
-                                    <ul class="dropdown-menu">
-                                        <li>
+                                data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
+                                <img src="~/resources/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                <ul class="dropdown-menu">
+                                <li>
 
-                                            <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
-                                                <span>  Logout </span>
-                                                <span class="">
-                                                    <i class="bi bi-box-arrow-left ">
-                                                    </i>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item d-flex justify-content-between p-3" href="#">
-                                                <span>  Setting</span>
-                                                <span><i class="bi bi-info-circle "></i></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
+                                <span>  Logout </span>
+                                <span class="">
+                                <i class="bi bi-box-arrow-left ">
+                                </i>
+                                </span>
+                                </a>
+                                </li>
+                                <li>
+                                <a class="dropdown-item d-flex justify-content-between p-3" href="#">
+                                <span>  Setting</span>
+                                <span><i class="bi bi-info-circle "></i></span>
+                                </a>
+                                </li>
+                                </ul>
                                 </a>
                                 <br>
+                                </div>*@
+                            <div class=" mx-3 dropstart">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+
+                                    @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -270,20 +268,46 @@
         </div>
     </div>
 
-    @* <footer class="border-top footer text-muted">
-        <div class="container">
-        &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-        </footer>*@
+    <!-- model-->
 
-    @* <script src="MDB/js/mdb.min.js"></script>*@
+    <div class="modal" tabindex="-1" id="form-model">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* <footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
+
+    @*<script src="MDB/js/mdb.min.js"></script>*@
     @*<script src="~/js/bootstrap-js.js"></script>*@
+    @*<script src="~/js/site.js" asp-append-version="true"></script>* @
+        @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>*@
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
-    <!-- Custom scripts -->
-    <script src="~/js/site.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/modelFunction.js" asp-append-version="true"></script>
+
+    <script>
+        $(".open-btn").on('click',function()
+        {
+            $(".sidebar").addClass('active');
+        });
+         $(".close-btn").on('click',function()
+        {
+            $(".sidebar").removeClass('active');
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required:         false)
 </body>
 </html>

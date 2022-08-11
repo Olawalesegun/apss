@@ -4,59 +4,39 @@
 @{
 }
 
-<nav class="navbar navbar-expand-lg  py-0  rounded my-1 mx-0 shadow data-navbar">
-    <div class="container-fluid mx-0  ">
-       <a class="navbar-brand " href="#">Management:</a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse mx-0 manage-ment " id="navbarScroll">
-            <ul class="navbar-nav me-auto  my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item ">
-                    <a class="nav-link pt-3 actives  fw-bold   " aria-current="page"  asp-action="Index">Animal Groups</a>
-                </li>
-                <li class="nav-item  ">
-                    <a class="nav-link  pt-3 fw-bold "  asp-action="AnimalProduct">Animal Products</a>
-                </li>
-                <li class="nav-item  ">
-                    <a class="nav-link pt-3  fw-bold " href="#">Lands</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link pt-3  fw-bold " href="#">Land Products</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <!--table-->
+
+<partial name="_dataNavBar" model="@Model" />
 
 <div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
 
-    <form class="row gx-3 gy-2 align-items-center mb-3 ">
+    <form class="row  justify-content-between mb-3 ">
         <div class="col-sm-6">
 
-            <div class="input-group">
-                <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
+            <div class="input-group ">
 
-                    <i class="fal fa-search " style="color:white"></i>
-                </a>
+                <span style="height:20px">
+                    <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
 
-                <input type="text" class="form-control" id="search" placeholder="Search..." onkeyup="searchTable()">
-
-                <button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
-                <ul class="dropdown-menu dropdown-menu-end">
+                        <i class="fal fa-search " style="color:white;"></i>
+                    </a>
+                </span>
+                <span class="form-outline " style="width:83%;padding-top:0px">
+                    <input type="search" class="form-control" id="search" onkeyup="searchTable()">
+                    <label class="form-label">Search</label>
+                </span>
+                @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
+                    <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
-                </ul>
+                    </ul>*@
             </div>
         </div>
-        <div class="col-sm-2 ">
-            <label class="visually-hidden" for="searchby">Search By</label>
+        <div class="col-sm-2  ">
+
             <select class="form-select " id="searchby">
                 <option selected>Choose search by</option>
                 <option value="1">Name</option>
@@ -64,18 +44,13 @@
                 <option value="3">Address</option>
             </select>
         </div>
-        <div class="col-sm-2 ">
-          @*  <label class="visually-hidden" for="searchby">Search By</label>
-            <select class="form-select " id="searchby">
-                <option selected>Choose search by</option>
-                <option value="1">Name</option>
-                <option value="2">Id</option>
-                <option value="3">Address</option>
-            </select>*@
+
+        <div class="col-sm-3 d-flex  justify-content-end">
+            <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#animal-group">
+                <i class="fa-solid fa-plus"></i>
+                Add
+            </a>
         </div>
-       @* <div class="col-sm-2 d-flex justify-content-end">
-            <a href="#" class="btn btn-primary"><i class="fa-solid fa-plus "></i></a>
-        </div>*@
     </form>
 
     <div class="col-sm-12  ">
@@ -85,12 +60,12 @@
             <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
 
                 <thead>
-                    <tr class="header bg-dark bg-fixed text-white">
-                        <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Phone Number</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Address</th>
-                        <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
+                    <tr class="header  bg-fixed border border-bottom fw-bold">
+                        <th style="width:8%;" class=" fw-bold align-middle">ID</th>
+                        <th style="width:30%;" class="fw-bold align-middle">Name</th>
+                        <th style="width:20%;" class="fw-bold align-middle">Phone Number</th>
+                        <th style="width:30%;" class="fw-bold align-middle">Address</th>
+                        <th style="width:0%;" class="fw-bold align-middle">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,10 +83,10 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Details</span>  <span ><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                    <li><a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Delete</span>  <span ><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li><a class="dropdown-item" asp-action="AnimalDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                    <li><a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     <li class="">
-                                        <a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Add Product</span>  <span ><i class="fa-solid fa-plus"></i> </span> </div></a>
+                                        <a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
                                     </li>
                                 </ul>
                             </div>
@@ -168,8 +143,11 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete
-                                    </a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Delete
+                                        </a>
+                                    </li>
                                     <li><a class="dropdown-item" href="#">Add Product</a></li>
                                 </ul>
                             </div>
@@ -281,18 +259,28 @@
         </ul>
     </nav>
 </div>
+<!-- canvas body for create-->
+<div class="offcanvas offcanvas-end" id="animal-group">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Animal Group Add</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <partial name="_Add_animal_group" />
+    </div>
+</div>
+
+@*<div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+    </div>*@
 
 @section scripts{
 <script>
-    $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#dataManagement").addClass('active');
-    });
-    document.getElementById("nav-system-name").innerHTML="Data Management";
+     document.getElementById("nav-system-name").innerHTML="Data Management";
     document.getElementById("media-system-name").innerHTML="Data Management";
     $(".manage-ment  ul li a").on('click',function(){
     $(".manage-ment  ul li a.actives").removeClass('actives');
-        $(this).addClass('actives');
+       $("#animalGroups").addClass('actives');
       });
 </script>
 }
