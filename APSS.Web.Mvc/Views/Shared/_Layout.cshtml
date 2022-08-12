@@ -16,7 +16,7 @@
     <link rel="icon" href="~/css/all.css" />
     <link rel="icon" href="~/css/main.css" />
     <link rel="icon" href="~/css/icons.css" />
-    @*<link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />*@
+    <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="~/MDB/bootstrap.min.css" />
     <link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />
     <link rel="stylesheet" href="~/MDB/css/mdb.rtl.min.css" />
@@ -110,7 +110,7 @@
                         <!-- media top bar -->
 
                         <div id="open-btn" class=" d-flex justify-content-between ">
-                            <button class="btn px-0  btn-link  open-btn " onclick=""><i class="fas fa-stream fs-1  "></i></button>
+                            <button class="btn px-0  btn-link  open-btn "><i class="fas fa-stream fs-1  "></i></button>
 
                             <a href="#" class=" text-sm-start overflow-scroll py-1    text-primary  " id="media-system-name" style="word-wrap:break-word">
                                 Scan System
@@ -175,7 +175,7 @@
                                     <i class="fal fa-bell fs-1 "></i>
                                 </a>
                             </div>
-                            <div class=" dropend">
+                            <div class=" dropstart">
                                 <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
@@ -236,7 +236,7 @@
                                 </a>
                                 <br>
                                 </div>*@
-                            <div class=" mx-3 dropend">
+                            <div class=" mx-3 dropstart">
                                 <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
@@ -268,23 +268,45 @@
         </div>
     </div>
 
-    @* <footer class="border-top footer text-muted">
-        <div class="container">
-        &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- model-->
+
+    <div class="modal" tabindex="-1" id="form-model">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
         </div>
-        </footer>*@
+    </div>
+
+    @* <footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
 
     @*<script src="MDB/js/mdb.min.js"></script>*@
     @*<script src="~/js/bootstrap-js.js"></script>*@
+    @*<script src="~/js/site.js" asp-append-version="true"></script>* @
+        @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>*@
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
-    <!-- Custom scripts -->
-    <script src="~/js/site.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/modelFunction.js" asp-append-version="true"></script>
+
+    <script>
+        $(".open-btn").on('click',function()
+        {
+            $(".sidebar").addClass('active');
+        });
+         $(".close-btn").on('click',function()
+        {
+            $(".sidebar").removeClass('active');
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required:         false)
 </body>
