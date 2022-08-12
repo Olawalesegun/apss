@@ -1,6 +1,6 @@
 body {
     background-color: #F3F4F4 !important;
-    color: #334E68;
+    color: #3A6A59 !important;
     height: 100%;
 }
 
@@ -91,6 +91,14 @@ hr.h-color {
 
     #account-manage {
         display: none;
+    }
+
+    #media-system-name {
+        text-overflow: clip;
+        text-overflow: ellipsis ellipsis;
+        text-overflow: ellipsis " [..]";
+        overflow: scroll;
+        white-space: nowrap;
     }
 }
 
@@ -236,12 +244,6 @@ nav ul li div a {
     background-color: #fff !important;
 }
 
-#media-system-name {
-    text-overflow: clip;
-    text-overflow: ellipsis ellipsis;
-    text-overflow: ellipsis " [..]";
-}
-
 .system-description {
     font-size: 10px !important;
 }
@@ -268,10 +270,8 @@ input, select, .form-outline {
 
 #media-system-name {
     font-weight: bold;
-    margin-left: 10px !important;
+    margin-right: 10px !important;
     margin-top: 6px !important;
-    overflow: scroll;
-    white-space: nowrap;
     font-size: 18px !important;
 }
 
@@ -281,7 +281,6 @@ input, select, .form-outline {
 }
 
 #open-btn {
-    overflow: scroll;
     white-space: nowrap;
 }
 
