@@ -21,10 +21,10 @@
                         <a class="nav-link  pt-3 fw-bold " id="animalProducts" asp-action="AnimalProduct">Animal Products</a>
                     </li>
                     <li class="nav-item  ">
-                        <a class="nav-link pt-3  fw-bold " id="lands" asp-controller="Land" asp-action="Index" href="#">Lands</a>
+                        <a class="nav-link pt-3  fw-bold " id="lands" asp-controller="Land" asp-action="Index">Lands</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link pt-3  fw-bold " id="landProducts" asp-controller="LandProduct" asp-action="Index" href="#">Land Products</a>
+                        <a class="nav-link pt-3  fw-bold " id="landProducts" asp-controller="LandProduct" asp-action="Index" >Land Products</a>
                     </li>
                 </ul>
             </div>
@@ -32,6 +32,11 @@
     </div>
 </nav>
 <script>
+      document.getElementById("nav-system-name").innerHTML="Data Management";
+    document.getElementById("media-system-name").innerHTML="Data Management";
+    $(".manage-ment  ul li a").on('click',function(){
+    $(".manage-ment  ul li a.actives").removeClass('actives');
+      });
      $(document).ready(function(){
     $(".sidebar ul li.active").removeClass('active');
     $("#dataManagement").addClass('active');

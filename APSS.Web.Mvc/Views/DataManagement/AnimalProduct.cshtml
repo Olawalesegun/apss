@@ -59,6 +59,20 @@
                 </thead>
                 <tbody>
                     <tr class="align-top">
+                        @{
+                            List<string> ls = new List<string>
+                            {
+                                "اسم المنتج",
+                                "اسومي",
+                                "الكمية",
+                                "1000",
+                                "نوع المنتج",
+                                "مدري"
+                            };
+                        }
+                        @await Html.PartialAsync("_CreateProductExpense.cshtml")
+                        @await Html.PartialAsync("_EditProduct.cshtml")
+                        @await Html.PartialAsync("_ConfirmDelete.cshtml",ls)
                         <td class="text-break text-capitalize align-middle">1</td>
                         <td class="text-break text-capitalize align-middle"> John</td>
                         <td class="text-break text-capitalize align-middle">Doe</td>
@@ -66,6 +80,7 @@
                             john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
                         </td>
                         <td class="align-middle center">
+
                             <div class=" dropend">
                                 <a class="" role="button" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,157 +88,17 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li><a class="dropdown-item" asp-action="AnimalProductDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                    <li><a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ConfirmDelete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     <li class="">
-                                        <a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
+                                        <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#Add_product_Expense">
+                                        <div class="d-flex justify-content-between"> <span>Add Expense</span>  <span><i class="fa-solid fa-dollar-sign"></i> </span> </div></a>
+                                    </li>
+                                    <li class="">
+                                        <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#edit_animal_product">
+                                        <div class="d-flex justify-content-between"> <span>Update Product</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
                                     </li>
                                 </ul>
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu pt-0 pb-0">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            Delete
-                                        </a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>goo</td>
-                        <td>moe</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id=""
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
                         </td>
                     </tr>
                 </tbody>
