@@ -4,33 +4,7 @@
 @{
 }
 
-<nav class="navbar navbar-expand-lg  py-0  rounded my-1 mx-0 shadow data-navbar">
-    <div class="container-fluid mx-0  ">
-        <a class="navbar-brand " href="#">Management:</a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse mx-0 manage-ment " id="navbarScroll">
-            <div class="d-flex justify-content-end">
-                <ul class="navbar-nav me-auto  my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <li class="nav-item ">
-                        <a class="nav-link pt-3   fw-bold   " aria-current="page" asp-action="Index">Animal Groups</a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a class="nav-link actives  pt-3 fw-bold " asp-action="AnimalProduct">Animal Products</a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a class="nav-link pt-3  fw-bold " href="#">Lands</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link pt-3  fw-bold " href="#">Land Products</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
+<partial name="_dataNavBar" />
 
 <!--table-->
 
@@ -70,7 +44,7 @@
 
     <div class="col-sm-12  ">
 
-        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
+        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x ">
 
             <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
 
@@ -93,12 +67,12 @@
                         </td>
                         <td class="align-middle center">
                             <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
+                                <a class="" role="button" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" asp-action="AnimalProductDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
                                     <li><a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     <li class="">
                                         <a class="dropdown-item" href="#"><div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
@@ -277,15 +251,11 @@
 
 @section scripts{
 <script>
-    $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#dataManagement").addClass('active');
-    });
-    document.getElementById("nav-system-name").innerHTML="Data Management";
+     document.getElementById("nav-system-name").innerHTML="Data Management";
     document.getElementById("media-system-name").innerHTML="Data Management";
     $(".manage-ment  ul li a").on('click',function(){
     $(".manage-ment  ul li a.actives").removeClass('actives');
-        $(this).addClass('actives');
+    $("#animalProducts").addClass('actives');
       });
 </script>
 }
