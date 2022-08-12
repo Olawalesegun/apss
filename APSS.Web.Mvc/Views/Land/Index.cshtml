@@ -62,6 +62,8 @@
                 </thead>
                 <tbody>
                     <tr>
+
+                        @await Html.PartialAsync("~/Views/LandProduct/_add.cshtml")
                         <td class="text-break text-capitalize align-middle">1</td>
                         <td class="text-break text-capitalize align-middle"> John</td>
                         <td class="text-break text-capitalize align-middle">Doe</td>
@@ -76,7 +78,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-controller="Land" asp-action="Details" asp-route-id="">Details</a></li>
-                                    <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Add" asp-route-id="">Add Product</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#landProduct">Add Product</a></li>
                                     <li><a class="dropdown-item" asp-controller="Land" asp-action="Update" asp-route-id="">Update</a></li>
                                     <li><a class="dropdown-item" asp-controller="Land" asp-action="Delete" asp-route-id="">Delete</a></li>
                                     <li><a class="dropdown-item" href="#">Active</a></li>
