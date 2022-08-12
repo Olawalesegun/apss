@@ -1,7 +1,11 @@
 body {
-    background-color: #F3F4F4 !important;
-    color: #334E68;
+    background-color: #F3F4F4;
+    color: #3A6A59 !important;
     height: 100%;
+}
+
+.content {
+    background-color: #f3f4f4 !important;
 }
 
 html, body {
@@ -99,6 +103,14 @@ hr.h-color {
 
     #account-manage {
         display: none;
+    }
+
+    #media-system-name {
+        text-overflow: clip;
+        text-overflow: ellipsis ellipsis;
+        text-overflow: ellipsis " [..]";
+        overflow: scroll;
+        white-space: nowrap;
     }
 }
 
@@ -244,12 +256,6 @@ nav ul li div a {
     background-color: #fff !important;
 }
 
-#media-system-name {
-    text-overflow: clip;
-    text-overflow: ellipsis ellipsis;
-    text-overflow: ellipsis " [..]";
-}
-
 .system-description {
     font-size: 10px !important;
 }
@@ -276,10 +282,8 @@ input, select, .form-outline {
 
 #media-system-name {
     font-weight: bold;
-    margin-left: 10px !important;
+    margin-right: 10px !important;
     margin-top: 6px !important;
-    overflow: scroll;
-    white-space: nowrap;
     font-size: 18px !important;
 }
 
@@ -289,7 +293,6 @@ input, select, .form-outline {
 }
 
 #open-btn {
-    overflow: scroll;
     white-space: nowrap;
 }
 
@@ -325,7 +328,7 @@ input, select, .form-outline {
 }
 
 .data-navbar {
-    border-left: 4px #2e8b57 solid;
+    border-left: 7px #2e8b57 solid;
 }
 
 .animal-table {
@@ -334,4 +337,12 @@ input, select, .form-outline {
 
 .show-sidebar {
     margin-right: 100px;
+}
+
+.opecity-header:hover {
+    border-radius: 50px;
+    transition: all 0.1s;
+    opacity: 0.5;
+    cursor: pointer;
+    color: rgb(61, 109, 109);
 }
