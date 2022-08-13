@@ -15,15 +15,18 @@
             <div class="d-flex justify-content-end">
                 <ul class="navbar-nav me-auto  my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item ">
-                        <a class="nav-link pt-3 actives  fw-bold   " id="animalGroups" aria-current="page" asp-action="Index">Animal Groups</a>
+                        <a class="nav-link pt-3 actives  fw-bold   " id="animalGroups" asp-controller="DataManagement" aria-current="page" asp-action="Index">Animal Groups</a>
                     </li>
                     <li class="nav-item  ">
-                        <a class="nav-link  pt-3 fw-bold " id="animalProducts" asp-action="AnimalProduct">Animal Products</a>
+                        <a class="nav-link  pt-3 fw-bold " id="animalProducts" asp-controller="DataManagement" asp-action="AnimalProduct">Animal Products</a>
                     </li>
                     <li class="nav-item  ">
                         <a class="nav-link pt-3  fw-bold " id="lands" asp-controller="Land" asp-action="Index">Lands</a>
                     </li>
                     <li class="nav-item ">
+                        <a class="nav-link pt-3  fw-bold " id="landProducts" asp-controller="LandProduct" asp-action="Index" >Land Products</a>
+                    </li>
+                     <li class="nav-item justify-content-end">
                         <a class="nav-link pt-3  fw-bold " id="landProducts" asp-controller="LandProduct" asp-action="Index" >Land Products</a>
                     </li>
                 </ul>

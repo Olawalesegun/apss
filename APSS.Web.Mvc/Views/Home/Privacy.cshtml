@@ -1,4 +1,5 @@
-﻿@{
+﻿@model APSS.Web.Mvc.Models.AnimalGroup
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
@@ -13,13 +14,13 @@
     </div>
     <!-- Text input for account name-->
     <div class="form-outline mb-4">
-        <input type="tel" id="account-name" name="account-name" class="form-control" />
-        <label class="form-label" for="account-name">Name</label>
+        <input type="text" value="@Model.Type" asp-for="Type" class="form-control" />
+        <label class="form-label" asp-for="Type"></label>
     </div>
     <!-- Text input for AccessLevel -->
     <div class="form-outline mb-4">
-        <input type="password" id="account-passwor" name="account-password" class="form-control" />
-        <label class="form-label" for="account-password">Password</label>
+        <input type="text" asp-for="Quantity" value="@Model.Quantity" name="account-password" class="form-control" />
+        <label class="form-label" asp-for="Quantity"></label>
     </div>
     <!-- account Permission -->
     <div class="form-check-inline">

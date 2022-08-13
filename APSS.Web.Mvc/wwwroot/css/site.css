@@ -1,15 +1,20 @@
 body {
-    background-color: #F3F4F4;
+    /*  background-color: #F3F4F4;*/
     color: #3A6A59 !important;
     height: 100%;
 }
 
 .content {
-    background-color: #f3f4f4 !important;
+    /*   background-color: #f3f4f4;*/
 }
 
 html, body {
     height: 100%;
+}
+
+input[type="text"], input[type="password"], input[type="tel"], input[type="search"],
+input {
+    background-color: none !important;
 }
 
 #side_nav {
@@ -143,7 +148,7 @@ hr.h-color {
 }
 
 .btn-color {
-    background-color: #186FAF !important;
+    /*  background-color: #186FAF !important;*/ /**/
 }
 
 .form-layout {
@@ -182,8 +187,7 @@ input[type="password"]{
     background-color: #F8F8F8 !important;
     border: 1px #829AB1 solid  !important;
 } */
-button {
-}
+
 /* select{
     background-color: #F3F4F4 !important;
     border: 1px #829AB1 solid  !important;
@@ -258,7 +262,7 @@ nav ul li div a {
 
 input, select, .form-outline {
     /*background-color: #EFF3F7 !important;*/
-    background-color: #F3F4F4 !important;
+    /* background-color: #F3F4F4 !important;*/
 }
 
 .textOverflow {
