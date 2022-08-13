@@ -4,169 +4,248 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - APSS</title>
-
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/mystyle/StyleSheet.css" asp-append-vender="true " />
-    <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="manifest" href="/docs/5.0/assets/img/favicons/manifest.json">
-    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
-    <link href="../dashboard/dashboard.rtl.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/icons/css/all.css" />
-    <link rel="stylesheet" href="~/icons/css/main.css" />
-    <meta name="theme-color" content="#7952b3">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    @*-ms-flex-wraplink rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">*@
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="icon" href="~/css/all.css" />
+    <link rel="icon" href="~/css/main.css" />
+    <link rel="icon" href="~/css/icons.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
+    @*<link rel="stylesheet" href="~/MDB/bootstrap.min.css" />*@
+    @*<link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />*@
+    <link rel="stylesheet" href="~/MDB/css/mdb.rtl.min.css" />
 </head>
 <body>
 
-    <div class="container-fluid">
-        <div class="row ">
+    <!-- main div  -->
+    <div class="main-container d-flex vh-100 ">
+        <!-- start sidebar  -->
+        <div class="sidebar  overflow-scroll   " id="side_nav">
 
-            <nav class="navbar navbar-expand-lg fa-bolt-lightning bg-light mt-0 col-2  ">
-                <div class="collapse navbar-collapse" id="navbarToggler">
+            <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between mt-2 ">
+                <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
+                <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
+            </div>
+            <ul class="list-unstyle px-2 ">
+                <li class="active" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
+                <li class="" id="accountManagement"><a asp-action="Index" asp-controller="AccountManagement" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
+
+                <li class="" id="dataManagement"><a asp-action="Index" asp-controller="DataManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
+                <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
+            </ul>
+
+            <hr class="mx-2">
+            <ul class="list-unstyled px-2">
+                <li class="">
+                    <a href="#" class="text-decoration-none  px-3 py-2 d-block ">
+                        <i class="fa-solid fa-gear px-2 fa-lg"></i>
+                        Settings
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="#" class="text-decoration-none px-3 py-2 d-flex justify-content-between">
+                        <span><i class="bi bi-bell-fill fa-lg px-2"></i> Notification</span>
+                        <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <!-- other system bar -->
+
+    @*          <div class="item active">
+              <a href="#sub" class=" dropdown-toggole d-flex justify-content-between" data-bs-toggle="collapse" aria-expanded="false" > <span> <i class="fas fa-stream"></i> other system </span> <i class="fa fa-angle-left mt-4 " aria-hidden="true"></i></a>
+            <div class="sub-menu collapse" id="sub">
+                <ul class="unstyle">
+                    <li><a href="#" class="sub-item">system 1</a></li>
+                    <li><a href="#" class="sub-item">system 2</a></li>
+                    <li><a href="#" class="sub-item">system 3</a></li>
+                    <li><a href="#" class="sub-item">system 4</a></li>
+                    <li><a href="#" class="sub-item">system 5</a></li>
+                </ul>
+                <div class="other-systems">
                     <div>
-                        <button class="navbar-toggler text-left" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-labelledby="Toggle navigation">
-                            <span class="navbar-toggler-icon bi bi-list"></span>
-                        </button>
-                        <ul class="nav flex-column pr-1">
-                            <li class="text-center ">
-                                <img src="~/icons/image/unnamed.png" class="img-fluid figure-img " style="height:100px;width:200px" />
-                                <hr />
-                            </li>
-                            <li class="nav-item text-right accordion ">
-                                <a class="nav-link tabslink" href="#" id="index" onclick="openSideVar(event,'hjk')">
-                                    <i class="fa-solid fa-house tabslink" onclick="openSideVar(event,'hjk')"></i>
-                                    <span data-feather="home"></span>
-                                    الصفحة الرئيسية
-                                </a>
-                            </li>
-                            <li class="nav-item text-right accordion ">
-                                <a class="nav-link tabslink" href="#" id="account_management" onclick="openSideVar(event,'hjk')">
-                                    <i class="fa-solid fa-user-group tabslink" onclick="openSideVar(event,'hjk')"></i>
-
-                                    إدارة الحسابات
-                                </a>
-                            </li>
-                            <li class="nav-item text-right accordion ">
-                                <a class="nav-link tabslink sidebar" href="#" id="data" onclick="openSideVar(event,'hjk')">
-                                    <i class="fa-solid fa-database tabslink" onclick="openSideVar(event,'hjk')"></i>
-
-                                    ادارة البيانات
-                                </a>
-                            </li>
-                            <li class="nav-item text-right accordion ">
-                                <a class="nav-link tabslink sidebar" href="#" onclick="openSideVar(event,'hjk')">
-                                    <i class="fa-solid fa-circle-question"></i>
-
-                                    إدارة الاستبيانات
-                                </a>
-                            </li>
-
-                            <li class="nav-item text-right accordion">
-                                <a class="nav-link tabslink" href="#">
-                                    <span data-feather="bar-chart-2"></span>
-                                    <br />
-                                </a>
-                            </li>
-                            <li class="nav-item text-right">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="layers"></span>
-                                    <br />
-                                </a>
-                            </li>
-                        </ul>
+                        <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded "><i class="fal fa-home fa-lg px-2"></i> System 1</a>
+                        <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded"><i class="fal fa-home fa-lg px-2"></i> system 2</a>
+                        <a href="#" class="text-decoration-none px-3 py-2 my-1 d-block list-item rounded"><i class="fal fa-home fa-lg px-2"></i> systekm 3</a>
                     </div>
-                </div>
-            </nav>
+              </div></div></div> *@
 
-            <main class="col-md-9 ms-sm-auto col-lg-10  ">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center    border-bottom">
-                    <h1 class="h2 pb-2" style="color: #829AB1">المسح الزراعي</h1>
-                    <div class="btn-toolbar pt-4">
-                        <div class="btn-group  ">
+<div class="sidebarSystem">
+      <div class="menu">
 
-                            <a href="#" style="color: #829AB1" class="pt-1 ml-2"><i class="fa-solid fa-bell"></i></a>
-                            <a href="#" class="pt-1" style="border: 0px #486581 solid; border-radius: 50px; width: 30px; height: 30px; background-color: #829AB1"><center><i class="fa-solid fa-user "></i></center></a>
-                            <p class=" mr-2  " style="color: #829AB1"> محمد علي</p>
-                        </div>
+        <div class="item">
+          <a href="#sub" class=" dropdown-toggole drop d-flex justify-content-between" data-bs-toggle="collapse" aria-expanded="false">
+              <span>الانظمة الاخراء</span>
+             <i class="fa fa-angle-left    dropdown rotate" style="padding-top:20px" aria-hidden="true"></i>
+             </a>
+        <div class="sub-menu collapse" id="sub">
+          <a href="#" class="sub-item">system 1</a>
+          <a href="#" class="sub-item">system 2</a>
+          <a href="#" class="sub-item">system 3</a>
+          <a href="#" class="sub-item">system 4</a>
+          <a href="#" class="sub-item">system 5</a>
+        </div>
+        </div>
+        </div>
+       </div>
+       </div>
+
+        <!-- start nav bar -->
+   <div class="content overflow-scroll " id="maintContent">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+
+       <div class="d-flex justify-content-between d-md-none d-block w-100 ">
+
+         <div id="open-btn" class=" d-flex justify-content-around ">
+                      <!-- Toggle button -->
+       <button class="navbar-toggler open-btn" type="button" data-mdb-toggle="collapse" data-mdb-target="" aria-controls="media_collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+          </button>
+
+        <a href="#" class=" text-sm-start overflow-scroll py-1  text-primary  " id="media-system-name" style="word-wrap:break-word">
+                    Scan System 2
+          </a>
+          </div>
+          <div class="d-flex">
+             <div class="pt-2">
+                     <a href="#" class="text-decoration-none ">
+                        <i class="fal fa-bell fs-1 "></i>
+                      </a>
+                  </div>
+                <div class=" dropstart">
+                 <a class="" href="#" id="dropdownMenuLink"
+                     data-bs-toggle="dropdown" aria-expanded="false">
+                         <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                         </a>
+                    <ul class="dropdown-menu ml-5">
+                        <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                        <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
+                    </ul>
+             </div>
+         </div>
+     </div>
+
+    <!-- Navbar brand -->
+    <div class="navbar-brand collapse navbar-collapse">
+        <h3 class="" id="nav-system-name">
+          Scan System
+         </h3>
+         <!--notification-->
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item  ml-1">
+             </li>
+          </ul>
+    </div>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse d-flex navbar-collapse " id="media_collapse">
+      <!-- Left links -->
+
+      <!-- Left links -->
+       <h3 class="" id="">
+         </h3>
+         <!--notification-->
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item  ml-1">
+             </li>
+          </ul>
+
+         <div class="d-flex ">
+
+                 <div class="pt-2">
+                    <a href="#" class="text-decoration-none ">
+                        <i class="fal fa-bell  fs-sm-1"></i>
+                    </a>
+                 </div>
+
+            <div class=" mx-3 dropstart">
+                <a class="" href="#" id="dropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
+                </ul>
+            </div>
+          </div>
+    </div>
+    <!-- Collapsible wrapper -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+
+            <!-- main body -->
+            <div class="dashboard-content container px-0 mx-0 ">
+
+                <main class="col-lg-12 mx-auto mx-0 px-0 ">
+                    <header class="d-flex align-items-center   "></header>
+
+                    <div class="container mx-0 px-1">
+                        <main role="main" class="mt-1">
+                            @RenderBody()
+                        </main>
                     </div>
-                </div>
-
-                <div class="" style="">
-                    <main role="main" class="">
-                        <br />
-                        @*  <partial name="_notification" />*@
-                        @RenderBody()
-                    </main>
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- model-->
+
+    <div class="modal" tabindex="-1" id="form-model">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+
+    @* <footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
+
+    @*<script src="MDB/js/mdb.min.js"></script>*@
+    @*<script src="~/js/bootstrap-js.js"></script>*@
+    @*<script src="~/js/site.js" asp-append-version="true"></script>* @
+            @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>*@
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/modelFunction.js" asp-append-version="true"></script>
 
     <script>
-        function close_hide(){
-         var   items=document.getElementById("hiden1");
-          var  items2=document.getElementById("hiden2");
-          var  items2=document.getElementById("hiden3");
-
-            if(items.style.display=="none" ){
-                items3.classList.add("ch");
-                items.classList.add("ch");
-                items2.classList.add("ch");
-            }
-            else{
-                items.className.replace("ch","");
-            }
-        }
-        function openSideVar(evt, name) {
-            // Declare all variables
-            var i, tabcontent, tablinks;
-
-            // Get all elements with class="tabcontent" and hide them
-            tabcontent = document.getElementsByClassName("sideBar");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-                tabcontent.classList.add("item-show") ;
-            }
-                  // Get all elements with class="tablinks" and remove the class "active"
-            tablinks = document.getElementsByClassName("tabslink");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active-side-bar", "");
-            }
-
-            // Show the current tab, and add an "active" class to the button that opened the tab
-
-            evt.currentTarget.className += " active-side-bar";
-        }
+        $(".open-btn").on('click',function()
+        {
+            $(".sidebar").addClass('active');
+        });
+         $(".close-btn").on('click',function()
+        {
+            $(".sidebar").removeClass('active');
+        });
+       $(".rotate").click(function () {
+    $(this).toggleClass("down");
+})
     </script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js" integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI" crossorigin="anonymous"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required:         false)
 </body>
 </html>

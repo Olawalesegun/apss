@@ -41,6 +41,7 @@ input {
     .other-systems div a:hover {
         background-color: #F3F4F4;
         color: black !important;
+        transition: 0.3s ease;
     }
 
 .content {
@@ -61,6 +62,7 @@ hr.h-color {
     .sidebar li.active a, .sidebar li.active a:hover {
         color: #1783D2;
         font-weight: bold;
+        transition: 0.3s ease;
     }
 
 .sidebar li a {
@@ -341,4 +343,78 @@ input, select, .form-outline {
     opacity: 0.5;
     cursor: pointer;
     color: rgb(61, 109, 109);
+}
+
+#othersystemtoggle {
+    font-size: 20px;
+}
+
+.rotate {
+    -moz-transition: all .5s linear;
+    -webkit-transition: all .5s linear;
+    transition: all .5s linear;
+}
+
+    .rotate.down {
+        -moz-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+}
+
+.sidebarSystem {
+    overflow-y: auto;
+}
+
+.drop {
+    font-weight: bold;
+}
+
+.sidebarSystem .menu {
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+    .sidebarSystem .menu .item a {
+        font-size: 16px;
+        text-decoration: none;
+        display: block;
+        padding: 0px 20px;
+        line-height: 60px;
+    }
+
+        .sidebarSystem .menu .item a:hover {
+            background-color: #DBE4F3;
+            transition: 0.3s ease;
+        }
+
+    .sidebarSystem .menu .item i {
+        margin-left: 15px;
+    }
+
+    .sidebarSystem .menu .item a .dropdown {
+        left: 0;
+        transition: 0.3s ease;
+    }
+
+    .sidebarSystem .menu .item .sub-menu {
+        background: rgba(255,255,255,0.1);
+    }
+
+        .sidebarSystem .menu .item .sub-menu a {
+        }
+
+#sub a {
+    border-bottom: 1px #829AB1 solid;
+}
+
+.drop {
+    border-bottom: 1px #829AB1 solid;
+    /* border-top: 1px #829AB1 solid;*/
 }
