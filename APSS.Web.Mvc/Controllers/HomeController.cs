@@ -7,6 +7,7 @@ namespace APSS.Web.Mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AnimalGroup _contextAccessor;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -15,12 +16,28 @@ namespace APSS.Web.Mvc.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            AnimalGroup animal = new AnimalGroup();
+            animal = new AnimalGroup()
+            {
+                Id = 1,
+                Type = "dog",
+                Quantity = 100,
+                Sex = "male"
+            };
+            return View(animal);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult Privacy(AnimalGroup animalGroup)
         {
-            return View();
+            if (animalGroup != null)
+                return RedirectToAction("Index", "DataManagement");
+            else
+            {
+                return RedirectToAction("Index", "DataManagement");
+            }
+
+            return View(animalGroup);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
