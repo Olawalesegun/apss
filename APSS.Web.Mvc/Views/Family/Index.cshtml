@@ -4,7 +4,7 @@
 @{
 }
 
-<partial name="_dataNavBar" />
+<partial name="_PupolationNavBar" />
 
 <!--table-->
 
@@ -70,9 +70,9 @@
                                 "مدري"
                             };
                         }
-                        @await Html.PartialAsync("_CreateProductExpense.cshtml")
+                       @* @await Html.PartialAsync("_CreateProductExpense.cshtml")
                         @await Html.PartialAsync("_EditProduct.cshtml")
-                        @await Html.PartialAsync("_ConfirmDelete.cshtml",ls)
+                        @await Html.PartialAsync("_ConfirmDelete.cshtml",ls)*@
                         <td class="text-break text-capitalize align-middle">1</td>
                         <td class="text-break text-capitalize align-middle"> John</td>
                         <td class="text-break text-capitalize align-middle">Doe</td>
@@ -126,12 +126,11 @@
 
 @section scripts{
 <script>
-     document.getElementById("nav-system-name").innerHTML="Data Management";
-    document.getElementById("media-system-name").innerHTML="Data Management";
+     document.getElementById("nav-system-name").innerHTML="Pupolation Management";
+    document.getElementById("media-system-name").innerHTML="Pupolation Management";
 
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-       $("#animalGroups").removeClass('actives');
-    $("#animalProducts").addClass('actives');
+       $("#Individual").removeClass('actives');
+       $("#Family").removeClass('actives');
+      
 </script>
 }
