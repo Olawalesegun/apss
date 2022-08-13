@@ -3,3 +3,134 @@
 *@
 @{
 }
+
+<partial name="_PupolationNavBar" />
+
+<!--table-->
+
+<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
+
+    <form class="row gx-3 gy-2 align-items-center mb-3 ">
+        <div class="col-sm-6">
+
+            <div class="input-group">
+                <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
+
+                    <i class="fal fa-search " style="color:white"></i>
+                </a>
+
+                <input type="text" class="form-control" id="search" placeholder="Search..." onkeyup="searchTable()">
+
+                <button class="btn btn-outline-secondary dropdown-toggle border border-black-100 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-2 ">
+            <label class="visually-hidden" for="searchby">Search By</label>
+            <select class="form-select " id="searchby">
+                <option selected>Choose search by</option>
+                <option value="1">Name</option>
+                <option value="2">Id</option>
+                <option value="3">Address</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="col-sm-12  ">
+
+        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x ">
+
+            <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
+
+                <thead>
+                    <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
+                        <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">Phone Number</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Address</th>
+                        <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="align-top">
+                        @{
+                            List<string> ls = new List<string>
+                            {
+                                "اسم المنتج",
+                                "اسومي",
+                                "الكمية",
+                                "1000",
+                                "نوع المنتج",
+                                "مدري"
+                            };
+                        }
+                        @*@await Html.PartialAsync("_CreateProductExpense.cshtml")
+                        @await Html.PartialAsync("_EditProduct.cshtml")
+                        @await Html.PartialAsync("_ConfirmDelete.cshtml",ls)*@
+                        <td class="text-break text-capitalize align-middle">1</td>
+                        <td class="text-break text-capitalize align-middle"> John</td>
+                        <td class="text-break text-capitalize align-middle">Doe</td>
+                        <td class="text-break text-capitalize align-middle">
+                            john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
+                        </td>
+                        <td class="align-middle center">
+
+                            <div class=" dropend">
+                                <a class="" role="button" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" asp-action="AnimalProductDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ConfirmDelete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li class="">
+                                        <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#Add_product_Expense">
+                                        <div class="d-flex justify-content-between"> <span>Add Expense</span>  <span><i class="fa-solid fa-dollar-sign"></i> </span> </div></a>
+                                    </li>
+                                    <li class="">
+                                        <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#edit_animal_product">
+                                        <div class="d-flex justify-content-between"> <span>Update Product</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav aria-label="Page navigation example" class="float-left pl-5">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+@section scripts{
+<script>
+     document.getElementById("nav-system-name").innerHTML="PUpolation Management";
+    document.getElementById("media-system-name").innerHTML="PUpolation Management";
+
+       $("#individual").removeClass('actives');
+       $("#Family").removeClass('actives');
+      
+</script>
+}
