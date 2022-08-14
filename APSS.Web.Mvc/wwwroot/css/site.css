@@ -356,9 +356,9 @@ input, select, .form-outline {
 }
 
     .rotate.down {
-        -moz-transform: rotate(90deg);
-        -webkit-transform: rotate(90deg);
-        transform: rotate(90deg);
+        -moz-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
     }
 
 {
@@ -386,11 +386,12 @@ input, select, .form-outline {
         text-decoration: none;
         display: block;
         padding: 0px 20px;
-        line-height: 60px;
+        line-height: 40px;
     }
 
         .sidebarSystem .menu .item a:hover {
             background-color: #DBE4F3;
+            color: black !important;
             transition: 0.3s ease;
         }
 
@@ -407,14 +408,45 @@ input, select, .form-outline {
         background: rgba(255,255,255,0.1);
     }
 
-        .sidebarSystem .menu .item .sub-menu a {
-        }
+.sub-menu a {
+    background: rgba(255,250,255,1);
+    color: black;
+    padding-right: 30px !important;
+}
 
-#sub a {
-    border-bottom: 1px #829AB1 solid;
+.sidebarSystem .menu .item .sub-menu a {
 }
 
 .drop {
-    border-bottom: 1px #829AB1 solid;
-    /* border-top: 1px #829AB1 solid;*/
+    background-color: darkcyan;
+    color: white !important;
+}
+
+/* style for scroll navbar */
+div.scrollmenu {
+    /* background-color: #333;*/
+    overflow: auto;
+    white-space: nowrap;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+    div.scrollmenu a {
+        display: inline-block;
+        color: black;
+        text-align: center;
+        padding: 14px;
+        text-decoration: none;
+    }
+
+.MediaActive {
+    border-bottom: 2px #1C74B4 solid;
+    color: #1C74B4 !important;
+    background-color: #DBE4F3 !important;
+    transition: 0.3s ease;
+}
+
+/*search button style*/
+.search-btn {
+    border-radius: 0 5px 5px 0 !important;
 }
