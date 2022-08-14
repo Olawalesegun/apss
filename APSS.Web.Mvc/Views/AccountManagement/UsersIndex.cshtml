@@ -9,9 +9,9 @@
     <form class="row  justify-content-between mb-3 ">
         <div class="col-sm-6">
 
-            <div class="input-group ">
+            @*<div class="input-group ">*@
 
-                <span style="height:20px">
+                @*<span style="height:20px">
                     <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
 
                         <i class="fal fa-search " style="color:white;"></i>
@@ -20,7 +20,7 @@
                 <span class="form-outline " style="width:83%;padding-top:0px">
                     <input type="search" class="form-control" id="search" onkeyup="searchTable()">
                     <label class="form-label">Search</label>
-                </span>
+                </span>*@
                 @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="#">Action</a></li>
@@ -29,7 +29,17 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                     </ul>*@
-            </div>
+            @*</div>*@
+
+            <div class="input-group mb-1">
+                  <button type="button" class="btn btn-primary search-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <div class="form-outline" style="width:80%">
+                    <input type="search" id="form1" class="form-control" />
+                    <label class="form-label" for="form1">Search</label>
+                  </div>
+                </div>
         </div>
         <div class="col-sm-2  ">
 
