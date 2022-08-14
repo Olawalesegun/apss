@@ -8,5 +8,25 @@ namespace APSS.Web.Mvc.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> EditUser()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> UserDetials(int id)
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> UsersIndex()
+        {
+            return View();
+        }
     }
 }

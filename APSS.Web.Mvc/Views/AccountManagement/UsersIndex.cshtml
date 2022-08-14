@@ -2,28 +2,25 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-
 }
-
-<div>
-    @await Html.PartialAsync("_AccountNavBar.cshtml")
-</div>
-
-<!--the main account view-->
 
 <div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
 
     <form class="row  justify-content-between mb-3 ">
         <div class="col-sm-6">
 
-        @*    <div class="input-group mb-1 ">
+            @*<div class="input-group ">*@
 
-                    <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3;border-radius:0 5px 5px 0">
+                @*<span style="height:20px">
+                    <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
 
-                        <i class="fal fa-search " style="color:white;" ></i>
-                     </a>
-                    <input type="search" class="form-control rounded" id="search" onkeyup="searchTable()">*@
-
+                        <i class="fal fa-search " style="color:white;"></i>
+                    </a>
+                </span>
+                <span class="form-outline " style="width:83%;padding-top:0px">
+                    <input type="search" class="form-control" id="search" onkeyup="searchTable()">
+                    <label class="form-label">Search</label>
+                </span>*@
                 @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="#">Action</a></li>
@@ -32,9 +29,9 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                     </ul>*@
-           @* </div>*@
+            @*</div>*@
 
-           <div class="input-group mb-1">
+            <div class="input-group mb-1">
                   <button type="button" class="btn btn-primary search-btn">
                     <i class="fas fa-search"></i>
                   </button>
@@ -44,7 +41,7 @@
                   </div>
                 </div>
         </div>
-        <div class="col-sm-2 mb-1 ">
+        <div class="col-sm-2  ">
 
             <select class="form-select " id="searchby">
                 <option selected>Choose search by</option>
@@ -54,7 +51,7 @@
             </select>
         </div>
 
-        <div class="col-sm-3 d-flex   justify-content-end mb-1">
+        <div class="col-sm-3 d-flex   justify-content-end">
             <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#AddUser">
                 <i class="fa-solid fa-plus"></i>
                 Add User
@@ -282,21 +279,15 @@
 
 @section scripts{
 <script>
-        $(document).ready(function(){
+    $(document).ready(function(){
     $(".sidebar ul li.active").removeClass('active');
     $("#accountManagement").addClass('active');
     });
     document.getElementById("nav-system-name").innerHTML="Account Management";
     document.getElementById("media-system-name").innerHTML="Account Management";
-
-    $(".scrollmenu a").on('click',function(){
-        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-
-    });
-    $(".manage-ment ul li a").on('click',function(){
-        $(".scrollmenu a.actives").removeClass('actives');
-        $("#animalGroups").addClass('actives');
-
-    });
+    $(".manage-ment  ul li a").on('click',function(){
+    $(".manage-ment  ul li a.actives").removeClass('actives');
+        $(this).addClass('actives');
+      });
 </script>
 }

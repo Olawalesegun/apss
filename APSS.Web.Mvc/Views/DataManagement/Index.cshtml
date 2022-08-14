@@ -13,29 +13,35 @@
     <form class="row  justify-content-between mb-3 ">
         <div class="col-sm-6">
 
-            <div class="input-group ">
+            @*       <div class="input-group mb-1">
 
-                <span style="height:20px">
-                    <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
+                <a href="#" class="input-group-text text-decoration-none search-btn" style="background-color:#1B73B3">
 
-                        <i class="fal fa-search " style="color:white;"></i>
-                    </a>
-                </span>
-                <span class="form-outline " style="width:83%;padding-top:0px">
-                    <input type="search" class="form-control" id="search" onkeyup="searchTable()">
-                    <label class="form-label">Search</label>
-                </span>
-                @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    </ul>*@
-            </div>
+                <i class="fal fa-search " style="color:white;"></i>
+                </a>
+
+                <input type="search" class="form-control rounded" id="search" onkeyup="searchTable()">*@
+
+            @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>*@
+            @*</div>*@
+            <div class="input-group mb-1">
+                  <button type="button" class="btn btn-primary search-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <div class="form-outline" style="width:80%">
+                    <input type="search" id="form1" class="form-control" />
+                    <label class="form-label" for="form1">Search</label>
+                  </div>
+                </div>
         </div>
-        <div class="col-sm-2  ">
+        <div class="col-sm-2  mb-1 ">
 
             <select class="form-select " id="searchby">
                 <option selected>Choose search by</option>
@@ -45,7 +51,7 @@
             </select>
         </div>
 
-        <div class="col-sm-3 d-flex   justify-content-end">
+        <div class="col-sm-3 d-flex   justify-content-end mb-1">
             <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#animal-group">
                 <i class="fa-solid fa-plus"></i>
                 Add
@@ -59,7 +65,7 @@
 
             <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
 
-                <thead>
+                <thead class="table-light">
                     <tr class="header  bg-fixed border border-bottom fw-bold">
                         <th style="width:8%;" class=" fw-bold align-middle">ID</th>
                         <th style="width:30%;" class="fw-bold align-middle">Name</th>
@@ -70,9 +76,9 @@
                 </thead>
                 <tbody>
                     <tr class="align-top">
-                         @await Html.PartialAsync("_CreateAnimalProduct.cshtml")
+                        @await Html.PartialAsync("_CreateAnimalProduct.cshtml")
 
-                          @await Html.PartialAsync("_productDetails")
+                        @await Html.PartialAsync("_productDetails")
                         <td class="text-break text-capitalize align-middle">1</td>
                         <td class="text-break text-capitalize align-middle"> John</td>
                         <td class="text-break text-capitalize align-middle">Doe</td>
@@ -214,35 +220,7 @@
                                 </ul>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
+                    </tr>tbody>
             </table>
         </div>
     </div>

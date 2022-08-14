@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<nav class="navbar navbar-expand-lg  py-0  rounded my-1 mx-0 shadow data-navbar">
+    <div class="container-fluid mx-0  ">
+
+                 <div class="d-flex justify-content-between d-md-none d-block w-100 mx-0 ">
+
+                    <div class="scrollmenu w-100">
+                          <a href="#home" class="styles">المستخدمين</a>
+                          <a href="#news"> الحسابات </a>
+                    </div>
+                </div>
+
+        <div class="collapse navbar-collapse mx-0 manage-ment " id="navbarScroll">
+            <div class="d-flex justify-content-end">
+                <ul class="navbar-nav me-auto  my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li><a class="navbar-brand " href="#">Management:</a></li>
+                    <li class="nav-item ">
+                        <a class="nav-link pt-3 actives  fw-bold   " aria-current="page" asp-controller="AccountManagement" asp-action="Index">المستخدمين</a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a class="nav-link  pt-3 fw-bold " asp-controller="AccountManagement" asp-action="UsersIdex">الحسابات</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
