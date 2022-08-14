@@ -16,6 +16,11 @@ namespace APSS.Web.Mvc.Controllers
             return View();
         }
 
+        public ActionResult AddQuestion()
+        {
+            return View();
+        }
+
         // GET: ServeyManagement/Details/5
         public ActionResult Details(int id)
         {
@@ -57,6 +62,20 @@ namespace APSS.Web.Mvc.Controllers
             try
             {
                 return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddQuestion(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(AddQuestion));
             }
             catch
             {
