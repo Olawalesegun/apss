@@ -7,6 +7,7 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -32,11 +33,12 @@
                 <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
                 <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
             </div>
-            <ul class="list-unstyle px-2 ">
-                <li class="active" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
+            <ul class="list-unstyle px-1 " >
+                <li class="active" id="dashBoard"><a  asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block mainlink"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
                 <li class="" id="accountManagement"><a asp-action="Index" asp-controller="AccountManagement" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
 
                 <li class="" id="dataManagement"><a asp-action="Index" asp-controller="DataManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
+                <li class="" id="populationManagement"><a asp-action="GetFamilies" asp-controller="Population" class="text-decoration-none px-0 py-2 my-1 d-block"><i class="fa-solid fa-people-roof px-2 fa-lg"></i> Population Management</a></li>
                 <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
             </ul>
 
