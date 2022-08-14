@@ -15,10 +15,10 @@
             <div class="d-flex justify-content-end">
                 <ul class="navbar-nav me-auto  my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item ">
-                        <a class="nav-link pt-3 actives  fw-bold   " id="Family" aria-current="page" asp-controller="Family" asp-action="Index">Families</a>
+                        <a class="nav-link pt-3 actives  fw-bold   " id="Family" aria-current="page" asp-controller="Population" asp-action="GetFamilies">Families</a>
                     </li>
                     <li class="nav-item  ">
-                        <a class="nav-link  pt-3 fw-bold " id="Individual" asp-controller="Individual" asp-action="GetIndividual">Individuals</a>
+                        <a class="nav-link  pt-3 fw-bold " id="Individual" asp-controller="Population" asp-action="GetIndividuals">Individuals</a>
                     </li>
      
                 </ul>
@@ -27,15 +27,10 @@
     </div>
 </nav>
 <script>
-      document.getElementById("nav-system-name").innerHTML="Pupolation Management";
-    document.getElementById("media-system-name").innerHTML="Pupolation Management";
-    $(".manage-ment  ul li a").on('click',function(){
-    $(".manage-ment  ul li a.actives").removeClass('actives');
-      });
-     $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#dataManagement").addClass('active');
-    });
-    document.getElementById("nav-system-name").innerHTML="Pupolation Management";
-    document.getElementById("media-system-name").innerHTML="Pupolation Management";
+   
+    document.getElementById("nav-system-name").innerHTML="Population Management";
+    document.getElementById("media-system-name").innerHTML="Population Management";
+  
+        
+    
     </script>
