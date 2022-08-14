@@ -16,18 +16,14 @@
     <form class="row  justify-content-between mb-3 ">
         <div class="col-sm-6">
 
-            <div class="input-group ">
+        @*    <div class="input-group mb-1 ">
 
-                <span style="height:20px">
-                    <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
+                    <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3;border-radius:0 5px 5px 0">
 
-                        <i class="fal fa-search " style="color:white;"></i>
-                    </a>
-                </span>
-                <span class="form-outline " style="width:83%;padding-top:0px">
-                    <input type="search" class="form-control" id="search" onkeyup="searchTable()">
-                    <label class="form-label">Search</label>
-                </span>
+                        <i class="fal fa-search " style="color:white;" ></i>
+                     </a>
+                    <input type="search" class="form-control rounded" id="search" onkeyup="searchTable()">*@
+
                 @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="#">Action</a></li>
@@ -36,9 +32,19 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                     </ul>*@
-            </div>
+           @* </div>*@
+
+           <div class="input-group mb-1">
+                  <button type="button" class="btn btn-primary search-btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <div class="form-outline" style="width:80%">
+                    <input type="search" id="form1" class="form-control" />
+                    <label class="form-label" for="form1">Search</label>
+                  </div>
+                </div>
         </div>
-        <div class="col-sm-2  ">
+        <div class="col-sm-2 mb-1 ">
 
             <select class="form-select " id="searchby">
                 <option selected>Choose search by</option>
@@ -48,7 +54,7 @@
             </select>
         </div>
 
-        <div class="col-sm-3 d-flex   justify-content-end">
+        <div class="col-sm-3 d-flex   justify-content-end mb-1">
             <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#AddUser">
                 <i class="fa-solid fa-plus"></i>
                 Add User
@@ -276,15 +282,21 @@
 
 @section scripts{
 <script>
-    $(document).ready(function(){
+        $(document).ready(function(){
     $(".sidebar ul li.active").removeClass('active');
     $("#accountManagement").addClass('active');
     });
     document.getElementById("nav-system-name").innerHTML="Account Management";
     document.getElementById("media-system-name").innerHTML="Account Management";
-    $(".manage-ment  ul li a").on('click',function(){
-    $(".manage-ment  ul li a.actives").removeClass('actives');
-        $(this).addClass('actives');
-      });
+
+    $(".scrollmenu a").on('click',function(){
+        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+
+    });
+    $(".manage-ment ul li a").on('click',function(){
+        $(".scrollmenu a.actives").removeClass('actives');
+        $("#animalGroups").addClass('actives');
+
+    });
 </script>
 }
