@@ -1,0 +1,103 @@
+﻿   <form class=" mt-3 ">
+            <!-- 2 column puts for the National number and Phome Number-->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class="text-decoration-underline">
+                   Individual Information
+                </h3>
+            </div>
+            <!-- Text input for individual name-->
+            <div class="form-outline mb-4">
+                <input type="text" id="individual_name" name="individual_name" class="form-control" />
+                <label class="form-label" for="individual_name">Name</label>
+            </div>
+            <!-- Text input for job -->
+            <div class="form-outline mb-4">
+                <input type="text" id="individual_job" name="individual_job" class="form-control" />
+                <label class="form-label" for="individual_job">Job</label>
+            </div> 
+
+             <!-- Text input for phonenumber -->
+              <div class="form-outline mb-4">
+                <input type="tel" id="individual_phone" name="individual_phone" class="form-control" />
+                <label class="form-label" for="individual_phone">Phone Number</label>
+            </div> 
+            
+             <!-- Text input for NationalId -->
+              <div class="form-outline mb-4">
+                <input type="number" id="individual_NationalId" name="individual_NationalId" class="form-control" />
+                <label class="form-label" for="individual_NationalId">NationalId</label>
+            </div> 
+
+             <!-- Text input for Address -->
+              <div class="form-outline mb-4">
+                <input type="text" id="individual_Address" name="individual_Address" class="form-control" />
+                <label class="form-label" for="individual_Address">Address</label>
+            </div> 
+
+             <!-- Text input for DateOfBirth -->
+              <div class="form-outline datepicker input-group.date-p mb-2">
+                  <input type="date" id="sandbox-container-p" name="indvidual_birth_date" class="form-control" />
+                  <label class="form-label" for="indvidual_birth_date">Birth Date</label>
+               </div>
+
+            <div class=" form-outline mb-4">
+              <input class="form-control" list="browsers" name="browser" id="browser">
+             <datalist id="browsers">
+               <option value="Edge"/>
+               <option value="Firefox"/>
+              <option value="Chrome"/>
+              <option value="Opera"/>
+              <option value="Safari"/>
+            </datalist>
+
+              <label for="browser" class="form-label">Family</label>
+            </div>
+           <!-- Gender input -->
+            <div class="form-check-inline mb-2">
+
+                <h5 class="inline">Gender:</h5>
+            </div>
+            <div class="form-check form-check-inline ">
+
+                <input class="form-check-input hiden" type="radio" name="individual_gender" id="female" value="female" checked />
+                <label class="form-check-label" for="female">Female</label>
+            </div>
+
+            <div class="form-check form-check-inline ">
+                <input class="form-check-input" type="radio" value="" id="male" name="individual_gender" />
+                <label class="form-check-label" for="male"> Male </label>
+            </div>
+
+            <!-- Social Status input -->
+            <div class="form-check-inline mb-2">
+
+                <h5 class="inline">Status:</h5>
+            </div>
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" type="radio" name="individual_SocialStatus" id="Marrid" value="Marrid" checked />
+                <label class="form-check-label" for="Marrid">Marrid</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="" id="Unmarried" name="individual_SocialStatus" />
+                <label class="form-check-label" for="Unmarried"> Unmarr</label>
+            </div>
+          
+              
+            <div class="form-check">
+                <label class="form-check-label" for="flexCheckDefault">
+               IsProvider
+           </label>
+           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            </div>
+           <div class="form-check">
+               <label class="form-check-label" for="flexCheckChecked">
+              Isparent
+           </label>
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+            </div>
+
+                   <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4 mt-4" asp-action="Create">Add</button>
+        </form>
