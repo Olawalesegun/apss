@@ -33,6 +33,16 @@ namespace APSS.Web.Mvc.Controllers
             return View();
         }
 
+        public ActionResult SurveyDetails(int id)
+        {
+            return View();
+        }
+
+        public ActionResult SurveyEntryDetails(int id)
+        {
+            return View();
+        }
+
         // POST: ServeyManagement/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
