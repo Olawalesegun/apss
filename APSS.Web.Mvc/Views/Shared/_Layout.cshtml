@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,7 +18,7 @@
     <link rel="icon" href="~/css/icons.css" />
     <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="~/MDB/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />
+    @*<link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />*@
     <link rel="stylesheet" href="~/MDB/css/mdb.rtl.min.css" />
 </head>
 <body>
@@ -57,10 +57,47 @@
                 </li>
             </ul>
             <hr>
+
+            <div class="sidebarSystem">
+      <div class="menu">
+
+        <div class="item ">
+
+          <a href="#sub" id="drops" class="  dropdown-toggole px-2 py-1 my-1 d-inline  drop d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
+              <span>الانظمة الاخراء</span>
+             <i class="fa fa-angle-left  rotate dropdown " style="padding-top:10px" aria-hidden="true"></i>
+             </a>
+
+        <div class="sub-menu collapse" id="sub">
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 1</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 2</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 3</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 4</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 5</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 6</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 7</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 8</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 9</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 10</a>
+                <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 11</a>
+
+        @*  <a href="#" class="sub-item">system 1</a>
+          <a href="#" class="sub-item">system 2</a>
+          <a href="#" class="sub-item">system 3</a>
+          <a href="#" class="sub-item">system 4</a>
+          <a href="#" class="sub-item">system 5</a>*@
+        </div>
+        </div>
+        </div>
+       </div>
+       </div>
+
+        <!-- start nav bar -->
+
             <!-- other system bar -->
 
-            <div class="accordion  " id="parent">
-                <div class="accordion-item">
+          @*  <div class="accordion  " id="parent">*@
+           @*     <div class="accordion-item">
                     <h4 class="accordion-hearder " id="headingOne" style="  background: #DBE4F3 !important;">
                         <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="#collapseOne">
                             <span class="fs-4"> Other System</span>
@@ -77,8 +114,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
+                </div>*@
+      @*          <div class="accordion-item">
                     <h4 class="accordion-hearder" id="headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="#collapseTwo">
                             <span class="fs-4">Other Systems 2</span>
@@ -96,9 +133,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div>*@
+            @*</div>*@
+      @*  </div>*@
         <!-- start nav bar -->
         <div class="content overflow-scroll " id="maintContent">
 
@@ -266,7 +303,6 @@
                 </main>
             </div>
         </div>
-    </div>
 
     <!-- model-->
 
@@ -281,6 +317,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     @* <footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
@@ -305,6 +342,9 @@
          $(".close-btn").on('click',function()
         {
             $(".sidebar").removeClass('active');
+        });
+          $("#drops").on('click',function(){
+         $('.rotate').toggleClass('down');
         });
     </script>
 
