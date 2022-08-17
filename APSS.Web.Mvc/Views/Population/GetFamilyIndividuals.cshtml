@@ -35,7 +35,6 @@
                             };
                         }
                        
-                        @await Html.PartialAsync("EditFamilyIndividual.cshtml")
                         @await Html.PartialAsync("../DataManagement/_ConfirmDelete.cshtml",ls)
                         <td class="text-break text-capitalize align-middle">1</td>
                         <td class="text-break text-capitalize align-middle"> John</td>
@@ -56,7 +55,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ConfirmDelete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li class="">
-                                        <a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#EditFamilyIndividual">
+                                        <a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#updatefamilyindividual">
                                         <div class="d-flex justify-content-between"> <span>Update Family Individual</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
                                     </li>
                                 </ul>
@@ -67,3 +66,14 @@
             </table>
         </div>
     </div>
+
+                                        <!--Canvas skills-->
+<div class="offcanvas offcanvas-end" id="updatefamilyindividual">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title"> Update Individual of family </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <partial name="EditFamilyIndividual" />
+    </div>
+</div>

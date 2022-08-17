@@ -115,3 +115,17 @@ function searchTable() {
         }
     }
 }
+
+//function for title nave bar
+function btnpopulationmanagement() {
+    if (!$("#populationManagement").hasClass("active")) {
+        $("#populationManagement").addClass("active");
+        $("#accountManagement").removeClass("active");
+        $("#dataManagement").removeClass("active");
+        $("#dashBoard").removeClass("active");
+        $("#surveyManagement").removeClass("active");
+    }
+
+    document.getElementById("nav-system-name").innerHTML = "Population System";
+    document.getElementById("media-system-name").innerHTML = "Population system";
+}

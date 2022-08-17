@@ -24,12 +24,46 @@
                 <tr></tr>
             </tbody>
         </table>
-        <a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> الأفراد</a>
-    <br />
-        <div cllass="d-inline pt-2">
+  <div class="d-flex justify-content-between ">
+      <div class="d-flex justify-content-start">
+        <a id="familyofindividuals" class="btn text-primary shadow-0 btn-link text-decoration-none" onclick="showinfividualoffamily()"><span class=""><i class="fa-solid fa-angles-left" id="anglefamily"></i></span> الأفراد</a>
+    </div>
+        <div class="d-inline pt-2 d-flex justify-content-start">
             <button class="btn btn-outline-primary btn-rounded  mx-1"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
         <button  class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
         <button class="btn btn-outline-danger btn-rounded mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
         </div>
+
+        </div>
     </div>
 </div>
+
+<!--get family individual-->
+<div class="showdefualtdetails" id="showfamilyindividualsdiv">
+    <partial name="GetFamilyIndividuals" />
+</div>
+
+
+
+
+  <script>
+function showinfividualoffamily() {
+    if ($("#showfamilyindividualsdiv").hasClass("showdefualtdetails")) {
+        $("#showfamilyindividualsdiv").removeClass("showdefualtdetails");
+        $("#showfamilyindividualsdiv").addClass("showdetails");
+       
+        $("#anglefamily").removeClass("fa-angles-left");
+        $("#anglefamily").addClass("fa-angles-down");
+
+    }
+
+else if ($("#showfamilyindividualsdiv").hasClass("showdetails")) {
+    $("#showfamilyindividualsdiv").removeClass("showdetails");
+    $("#showfamilyindividualsdiv").addClass("showdefualtdetails");
+    $("#anglefamily").removeClass("fa-angles-down");
+    $("#anglefamily").addClass("fa-angles-left");
+    
+    }
+}
+
+  </script>

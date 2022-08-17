@@ -38,7 +38,7 @@
                 <li class="" id="accountManagement"><a asp-action="Index" asp-controller="AccountManagement" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
 
                 <li class="" id="dataManagement"><a asp-action="Index" asp-controller="DataManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
-                <li class="" id="populationManagement"><a asp-action="GetFamilies" asp-controller="Population" class="text-decoration-none px-0 py-2 my-1 d-block"><i class="fa-solid fa-people-roof px-2 fa-lg"></i> Population Management</a></li>
+                <li class="" id="populationManagement" onclick="btnpopulationmanagement()"><a asp-action="GetFamilies" asp-controller="Population" class="text-decoration-none px-0 py-2 my-1 d-block"><i class="fa-solid fa-people-roof px-2 fa-lg"></i> Population Management</a></li>
                 <li class="" id="surveyManagement"><a asp-action="GetSurveys" asp-controller="SurveysManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
             </ul>
 
@@ -66,7 +66,7 @@
         <div class="item ">
 
           <a href="#sub" id="drops" class="  dropdown-toggole px-2 py-1 my-1 d-inline  drop d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
-              <span>الانظمة الاخراء</span>
+              <span>لانظمة الأخرى</span>
              <i class="fa fa-angle-left  rotate dropdown " style="padding-top:10px" aria-hidden="true"></i>
              </a>
 
@@ -348,6 +348,31 @@
           $("#drops").on('click',function(){
          $('.rotate').toggleClass('down');
         });
+
+function btndashboardmanagement() {
+    if (!$("#dashBoard").hasClass("active")) {
+        $("#accountManagement").removeClass("active");
+        $("#dataManagement").removeClass("active");
+        $("#populationManagement").removeClass("active");
+        $("#surveyManagement").removeClass("active");
+    }
+    document.getElementById("nav-system-name").innerHTML="Scan System";
+    document.getElementById("media-system-name").innerHTML="Scan system";
+}
+
+function btnpopulationmanagement() {
+    if (!$("#populationManagement").hasClass("active")) {
+        $("#populationManagement").addClass("active");
+        $("#accountManagement").removeClass("active");
+        $("#dataManagement").removeClass("active");
+        $("#dashBoard").removeClass("active");
+        $("#surveyManagement").removeClass("active");
+    }
+
+    
+    document.getElementById("nav-system-name").innerHTML="Population System";
+    document.getElementById("media-system-name").innerHTML="Population system";
+}
     </script>
 
     @await RenderSectionAsync("Scripts", required:         false)
