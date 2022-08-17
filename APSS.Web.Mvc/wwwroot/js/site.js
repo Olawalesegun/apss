@@ -37,7 +37,7 @@ $("#sandbox-container-p .input-group.date-p").datepicker({
     language: "ar"
 });*/
 
-const notchedOutline = new MDCNotchedOutline(document.querySelector('.mdc-notched-outline'));* /
+const notchedOutline = new MDCNotchedOutline(document.querySelector('.mdc-notched-outline'));
 function myFunction() {
     // Declare variables
     var input, filter, table, tr, td, i, txtValue;
@@ -76,18 +76,6 @@ const interval = setInterval(() => {
     // Display the date and time on the screen using div#date-time
     document.getElementById('date-time').innerHTML = dateTime;
 }, 1000);
-
-function otherSystem() {
-    var othersystem = document.getElementById("system1");
-    var iconro = document.getElementsByClassName("rotate");
-    if (othersystem.style.display == "none") {
-        othersystem.style.display = "block";
-        iconro.classList.add("rotation");
-    }
-    else
-        othersystem.style.display = "none";
-    iconro.classList.remove("rotation");
-}
 
 function searchTable() {
     // Declare variables
