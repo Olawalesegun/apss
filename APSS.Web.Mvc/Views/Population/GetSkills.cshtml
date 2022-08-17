@@ -1,5 +1,5 @@
 ﻿
-    <div class="col-sm-12  ">
+<div class="col-sm-12  ">
 
         <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x ">
 
@@ -8,9 +8,9 @@
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
                         <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle"> Description</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">field</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Name Skill</th>                        
+                        <th style="width:30%;" class=" text-capitalize align-middle">Description</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Field</th>
                         <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
                     </tr>
                 </thead>
@@ -19,21 +19,24 @@
                         @{
                             List<string> ls = new List<string>
                             {
-                                "اسم المهارة",
-                                "اسومي",
-                                "الوصف",
-                                "تعز",
-                                "المجال ",
+                                "اسم  المهارة",
+                                "مدبر",
+                                "الوصف ",
+                                "شغال قرعه",
+                                " المجال",
                                 "مدري"
                             };
                         }
+                       
+                        @await Html.PartialAsync("EditSkill.cshtml")
                         @await Html.PartialAsync("../DataManagement/_ConfirmDelete.cshtml",ls)
                         <td class="text-break text-capitalize align-middle">1</td>
                         <td class="text-break text-capitalize align-middle"> John</td>
                         <td class="text-break text-capitalize align-middle">Doe</td>
                         <td class="text-break text-capitalize align-middle">
-                            john@example.com
+                          any field
                         </td>
+                        
                         <td class="align-middle center">
 
                             <div class=" dropend">
@@ -43,10 +46,9 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ConfirmDelete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                   
-                                    <li class="">
-                                        <a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#updateskill">
-                                        <div class="d-flex justify-content-between"> <span>Update Skill</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
+                                        <li class="">
+                                        <a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#EditSkill">
+                                        <div class="d-flex justify-content-between"> <span>Update  Skill</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
                                     </li>
                                 </ul>
                             </div>
@@ -56,17 +58,4 @@
             </table>
         </div>
     </div>
-   
- 
-    <!--canvas update skill-->
-
-<div class="offcanvas offcanvas-end" id="updateskill">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">  Skill of Individual  </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <partial name="EditSkill" />
-    </div>
-</div>
 

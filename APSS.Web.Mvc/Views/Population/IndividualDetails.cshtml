@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Individual Detials";
+    ViewData["Title"] = "Animal Product Detials";
 }
 
 <div class="card mt-2">
@@ -44,7 +44,8 @@
                     <td>منكوب  </td>
                 </tr>
                 <tr>
-                    <td><span class="">الرجال </span></td>
+                    <td>المستخدم   </td>
+                    <td><span class="">الابار </span></td>
                 </tr>
                 <tr>
                     <td>  تاريخ الإضافة </td>
@@ -57,82 +58,14 @@
               
             </tbody>
         </table>
-        <div class="d-flex justify-content-between ">
-        <div class="d-flex justify-content-start">
-        <a class="btn text-primary shadow-0 btn-link text-decoration-none" id="showskill" style="font-size:18px" onclick="showskills()"><span class=""><i class="fa-solid fa-angles-left" id="angleskill"></i></span> المهارات </a>
-        <a class="btn text-primary shadow-0 btn-link text-decoration-none" id="showvoluntary" style="font-size:18px" onclick="showvoluntary()"><span class=""><i class="fa-solid fa-angles-left" id="anglevoluntary"></i></span> التطوعات </a>
-         </div>
-        <div class="d-inline pt-2 d-flex justify-content-start"> 
-            <button class="btn btn-outline-primary btn-rounded mx-2 "><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
-        <button  class="btn btn-outline-dark btn-rounded mx-2"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
-        <button class="btn btn-outline-danger btn-rounded mx-2"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
-        </div>
+        <a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> المهارات </a>
+        <a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التطوعات </a>
+         <br />
+        <div cllass="d-inline pt-2">
+            <button class="btn btn-outline-primary btn-rounded  mx-1"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+        <button  class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
+        <button class="btn btn-outline-danger btn-rounded mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
         </div>
     </div>
-    <hr class="border-light mt-1">
-    <div id="skill"  class="showdefualtdetails" >
-    <partial name="GetSkills" />
-    </div>
-        <div id="voluntary"  class="showdefualtdetails" >
-    <partial name="GetVoluntaries"  class="showdefualtdetails" />
-    </div>
+    <hr class="border-light m-0">
 </div>
-
-
-
-
-    <script>
-function showvoluntary() {
-    if ($("#voluntary").hasClass("showdefualtdetails")) {
-        $("#voluntary").removeClass("showdefualtdetails");
-        $("#voluntary").addClass("showdetails");
-        $("#skill").addClass("showdefualtdetails");
-        $("#skill").removeClass("showdetails");
-        $("#anglevoluntary").removeClass("fa-angles-left");
-        $("#anglevoluntary").addClass("fa-angles-down");
-
-       if ($("#angleskill").hasClass("fa-angles-down")) {
-            $("#angleskill").removeClass("fa-angles-down");
-            $("#angleskill").addClass("fa-angles-left");
-         }
-
-        
-    }
-
-else if ($("#voluntary").hasClass("showdetails")) {
-    $("#voluntary").removeClass("showdetails");
-    $("#voluntary").addClass("showdefualtdetails");
-    $("#skill").addClass("showdefualtdetails");
-    $("#skill").removeClass("showdetails");
-    $("#anglevoluntary").removeClass("fa-angles-down");
-    $("#anglevoluntary").addClass("fa-angles-left");
-    
-    }
-}
-
-function showskills() {
-    if ($("#skill").hasClass("showdefualtdetails")) {
-
-        $("#skill").removeClass("showdefualtdetails");
-        $("#skill").addClass("showdetails");
-        $("#voluntary").addClass("showdefualtdetails");
-        $("#voluntary").removeClass("showdetails");
-        $("#angleskill").removeClass("fa-angles-left");
-        $("#angleskill").addClass("fa-angles-down");
-
-        if ($("#anglevoluntary").hasClass("fa-angles-down")) {
-            $("#anglevoluntary").removeClass("fa-angles-down");
-            $("#anglevoluntary").addClass("fa-angles-left");
-        }
-    }
-    
-    else if ($("#skill").hasClass("showdetails")) {
-    $("#skill").removeClass("showdetails");
-    $("#skill").addClass("showdefualtdetails");
-    $("#voluntary").addClass("showdefualtdetails");
-    $("#voluntary").removeClass("showdetails");
-    $("#angleskill").removeClass("fa-angles-down");
-    $("#angleskill").addClass("fa-angles-left");
-    }
-}
-    </script>
