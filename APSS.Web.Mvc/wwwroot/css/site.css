@@ -86,6 +86,14 @@ hr.h-color {
     #account-manage {
         display: none;
     }
+
+    #loader {
+        left: 65% !important;
+    }
+
+    #search {
+        width: 70% !important;
+    }
 }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -96,23 +104,27 @@ hr.h-color {
     }
 
     .content {
-        margin-right: 0;
-        position: absolute;
+        position: inherit;
     }
 
     #account-manage {
         display: none;
     }
 
-    #media-system-name {
-        text-overflow: clip;
-        text-overflow: ellipsis ellipsis;
-        text-overflow: ellipsis " [..]";
-        overflow: scroll;
-        white-space: nowrap;
+    #loader {
+        left: 65% !important;
+    }
+
+    #search {
+        width: 70% !important;
     }
 }
 
+#media-system-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 /*@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
     #side_nav {
         margin-left: 0;
@@ -127,8 +139,7 @@ hr.h-color {
     #account-manage {
         display: none;
     }
-}
-*/
+}*/
 #side_nav.active {
     margin-right: 0;
 }
@@ -449,4 +460,78 @@ div.scrollmenu {
 /*search button style*/
 .search-btn {
     border-radius: 0 5px 5px 0 !important;
+}
+
+/* setting for doading style*/
+#table {
+    display: none;
+}
+
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    margin: -76px 0 0 -76px;
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    /* border-top: 5px solid blue;*/
+    border-bottom: 5px solid #343434;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 0px;
+        opacity: 1
+    }
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 0;
+        opacity: 1
+    }
 }
