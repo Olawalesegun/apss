@@ -1,4 +1,7 @@
-﻿using APSS.Domain.Entities;
+﻿using System.Linq;
+using System.Threading.Tasks;
+
+using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions;
 using APSS.Domain.Services;
@@ -6,8 +9,7 @@ using APSS.Domain.Services.Exceptions;
 using APSS.Tests.Domain.Entities.Validators;
 using APSS.Tests.Extensions;
 using APSS.Tests.Utils;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Xunit;
 
 namespace APSS.Tests.Application.App;
@@ -16,6 +18,7 @@ public sealed class AccountServiceTest
 {
     #region Private fields
 
+    private readonly IRandomGeneratorService _rndSvc;
     private readonly IUnitOfWork _uow;
     private readonly IAccountsService _accountSvc;
     private readonly IUsersService _usersSvc;
@@ -24,8 +27,13 @@ public sealed class AccountServiceTest
 
     #region Constructors
 
-    public AccountServiceTest(IUnitOfWork uow, IAccountsService accountsSvc, IUsersService userSvc)
+    public AccountServiceTest(
+        IRandomGeneratorService rndSvc,
+        IUnitOfWork uow,
+        IAccountsService accountsSvc,
+        IUsersService userSvc)
     {
+        _rndSvc = rndSvc;
         _uow = uow;
         _accountSvc = accountsSvc;
         _usersSvc = userSvc;
@@ -41,9 +49,9 @@ public sealed class AccountServiceTest
     [InlineData(PermissionType.Delete, false)]
     [InlineData(PermissionType.Read, false)]
     public async Task<(Account, Account?)> AccountsAddedTheory(
-            PermissionType permissions = PermissionType.Create, bool shouldSucceed = true)
+           PermissionType permissions = PermissionType.Create, bool shouldSucceed = true)
     {
-        var user = ValidEntitiesFactory.CreateValidUser(RandomGenerator.NextAccessLevel());
+        var user = ValidEntitiesFactory.CreateValidUser(_rndSvc.NextAccessLevel());
 
         _uow.Users.Add(user);
         await _uow.CommitAsync();
@@ -57,15 +65,15 @@ public sealed class AccountServiceTest
         Assert.True(await _uow.Users.Query().ContainsAsync(user));
 
         var superAccount =
-             await _uow
+            await _uow
             .CreateTestingAccountAboveUserAsync(user.Id, user.AccessLevel.NextLevelUpove(), permissions);
 
         var createAccountTask = _accountSvc.CreateAsync(
             superAccount.Id,
-             user.Id,
-             templateAccount.HolderName,
-             templateAccount.PasswordHash,
-             templateAccount.Permissions);
+            user.Id,
+            templateAccount.HolderName,
+            templateAccount.PasswordHash,
+            templateAccount.Permissions);
 
         if (!shouldSucceed)
         {
@@ -83,7 +91,7 @@ public sealed class AccountServiceTest
                 .CreateTestingAccountAsync(user.AccessLevel.NextLevelBelow(), PermissionType.Create);
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await
-             _accountSvc.CreateAsync(
+              _accountSvc.CreateAsync(
               outhersuper.Id,
               user.Id,
               templateAccount.HolderName,
@@ -114,9 +122,9 @@ public sealed class AccountServiceTest
         Assert.True(await _uow.Accounts.Query().ContainsAsync(account!));
         Assert.True(await _uow.Accounts.Query().ContainsAsync(superAccount));
 
-        var name = RandomGenerator.NextString(40, RandomStringOptions.Mixed);
-        var phone = RandomGenerator.NextString(15, RandomStringOptions.Numeric);
-        var job = RandomGenerator.NextString(20, RandomStringOptions.Alpha);
+        var name = _rndSvc.NextString(40, RandomStringOptions.Mixed);
+        var phone = _rndSvc.NextString(15, RandomStringOptions.Numeric);
+        var job = _rndSvc.NextString(20, RandomStringOptions.Alpha);
 
         var superAccountnew = await _uow
             .CreateTestingAccountForUserAsync(superAccount.User.Id, permissions);
@@ -178,7 +186,7 @@ public sealed class AccountServiceTest
         var superAccountnew = await _uow
             .CreateTestingAccountForUserAsync(superAccount.User.Id, permissions);
 
-        var status = RandomGenerator.NextBool();
+        var status = _rndSvc.NextBool();
 
         var activeAccountTask = _accountSvc.SetActiveAsync(superAccountnew.Id, account!.Id, status);
 
@@ -192,7 +200,7 @@ public sealed class AccountServiceTest
             .CreateTestingAccountAsync(superAccount!.User.AccessLevel, PermissionType.Update);
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await
-                      _accountSvc.SetActiveAsync(othersuper.Id, account!.Id, status));
+                     _accountSvc.SetActiveAsync(othersuper.Id, account!.Id, status));
 
         var accountnew = await activeAccountTask;
 
@@ -231,7 +239,7 @@ public sealed class AccountServiceTest
             .CreateTestingAccountAsync(superAccount!.User.AccessLevel, PermissionType.Update);
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await
-                _accountSvc.SetPermissionsAsync(othersuper.Id, account!.Id, permissionnew));
+                  _accountSvc.SetPermissionsAsync(othersuper.Id, account!.Id, permissionnew));
 
         var accountnew = await setPermissionTask;
 
@@ -246,7 +254,7 @@ public sealed class AccountServiceTest
     [InlineData(PermissionType.Create, false)]
     [InlineData(PermissionType.Read, false)]
     public async Task AccountRemovedTheory(
-      PermissionType permissions, bool shouldSucceed)
+        PermissionType permissions, bool shouldSucceed)
     {
         var (superaccount, account) = await AccountsAddedTheory();
 

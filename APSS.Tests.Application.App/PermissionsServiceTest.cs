@@ -15,6 +15,7 @@ public sealed class PermissionsServiceTest
 {
     #region Fields
 
+    private readonly IRandomGeneratorService _rndSvc;
     private readonly IPermissionsService _permissionsSvc;
     private readonly IUnitOfWork _uow;
 
@@ -22,8 +23,12 @@ public sealed class PermissionsServiceTest
 
     #region Public Constructors
 
-    public PermissionsServiceTest(IUnitOfWork uow, IPermissionsService permissionsSvc)
+    public PermissionsServiceTest(
+        IRandomGeneratorService rndSvc,
+        IUnitOfWork uow,
+        IPermissionsService permissionsSvc)
     {
+        _rndSvc = rndSvc;
         _uow = uow;
         _permissionsSvc = permissionsSvc;
     }
@@ -62,7 +67,7 @@ public sealed class PermissionsServiceTest
         bool shouldSucceed)
     {
         var account = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Presedint),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Presedint),
             permissions);
 
         var validatePermissionsTask = _permissionsSvc.ValidatePermissionsAsync(
@@ -113,7 +118,7 @@ public sealed class PermissionsServiceTest
         PermissionType expectedPermissions,
         bool shouldSucceed)
     {
-        var accessLevel = RandomGenerator.NextAccessLevel(max: AccessLevel.Presedint);
+        var accessLevel = _rndSvc.NextAccessLevel(max: AccessLevel.Presedint);
 
         var account = await _uow.CreateTestingAccountAsync(accessLevel, PermissionType.Full);
         var otherAccount = await _uow.CreateTestingAccountForUserAsync(
@@ -169,7 +174,7 @@ public sealed class PermissionsServiceTest
         bool shouldSucceed)
     {
         var account = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(),
+            _rndSvc.NextAccessLevel(),
             PermissionType.Full);
 
         var rootAccount = await _uow.CreateTestingAccountAsync(AccessLevel.Root, permissions);
@@ -224,12 +229,12 @@ public sealed class PermissionsServiceTest
         bool shouldSucceed)
     {
         var account = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Directorate),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Directorate),
             PermissionType.Full);
 
         var accessLevel = shouldSucceed
             ? account.User.AccessLevel.NextLevelUpove()
-            : RandomGenerator.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove().NextLevelUpove());
+            : _rndSvc.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove().NextLevelUpove());
 
         var superuserAccount = await _uow.CreateTestingAccountAboveUserAsync(
             account.User.Id,

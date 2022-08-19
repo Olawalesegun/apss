@@ -1,18 +1,16 @@
-﻿using APSS.Domain.Entities;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
-using APSS.Domain.Repositories.Exceptions;
 using APSS.Domain.Repositories.Extensions;
 using APSS.Domain.Repositories.Extensions.Exceptions;
 using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
 using APSS.Tests.Domain.Entities.Validators;
 using APSS.Tests.Extensions;
-using APSS.Tests.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Xunit;
 
 namespace APSS.Tests.Application.App
@@ -21,6 +19,7 @@ namespace APSS.Tests.Application.App
     {
         #region Private Field
 
+        private readonly IRandomGeneratorService _rndSvc;
         private readonly IUnitOfWork _uow;
         private readonly IAnimalService _animal;
 
@@ -28,8 +27,9 @@ namespace APSS.Tests.Application.App
 
         #region Constructor
 
-        public AnimalGroupTest(IUnitOfWork uow, IAnimalService animal)
+        public AnimalGroupTest(IRandomGeneratorService rndSvc, IUnitOfWork uow, IAnimalService animal)
         {
+            _rndSvc = rndSvc;
             _uow = uow;
             _animal = animal;
         }
@@ -61,7 +61,7 @@ namespace APSS.Tests.Application.App
                 animalobj.Name,
                 animalobj.Quantity,
                 animalobj.Sex
-                );
+                                                                );
 
             if (!shouldSuccess)
             {
@@ -90,7 +90,7 @@ namespace APSS.Tests.Application.App
 
             PermissionType permissionType = PermissionType.Create,
             bool shouldSuccess = true
-            )
+                                                                             )
         {
             var (account, animalGroups) = await AnimalAddedTheory();
 
@@ -107,7 +107,7 @@ namespace APSS.Tests.Application.App
                 animalProduct.Name,
                 animalProduct.Quantity,
                 animalProduct.PeriodTaken
-                );
+                                                                 );
 
             if (!shouldSuccess)
             {
@@ -134,7 +134,7 @@ namespace APSS.Tests.Application.App
             var (account, animalGroup) = await AnimalAddedTheory(
                 AccessLevel.Farmer,
                 PermissionType.Create | permissionType, true
-                );
+                                                                );
 
             Assert.True(await _uow.AnimalGroups.Query().ContainsAsync(animalGroup!));
 
@@ -167,7 +167,7 @@ namespace APSS.Tests.Application.App
             await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await _animal.RemoveAnimalProductAsync(
                 otherAccount.Id,
                 animalProduct!.Id
-                ));
+                                                                                                                         ));
 
             var removeAninalProductTask = _animal.RemoveAnimalProductAsync(account.Id, animalProduct!.Id);
 
@@ -228,14 +228,14 @@ namespace APSS.Tests.Application.App
             var (account, animalGroup) = await AnimalAddedTheory(
                  AccessLevel.Farmer,
                  PermissionType.Create | permissionType, true
-                 );
+                                                                );
 
             Assert.True(await _uow.Accounts.Query().ContainsAsync(account));
             Assert.True(await _uow.AnimalGroups.Query().ContainsAsync(animalGroup!));
 
-            var type = RandomGenerator.NextString(RandomGenerator.NextInt32(10, 15), RandomStringOptions.Alpha);
-            var name = RandomGenerator.NextString(RandomGenerator.NextInt32(15, 20), RandomStringOptions.Alpha);
-            var quantity = RandomGenerator.NextInt32(5, 10);
+            var type = _rndSvc.NextString(_rndSvc.NextInt32(10, 15), RandomStringOptions.Alpha);
+            var name = _rndSvc.NextString(_rndSvc.NextInt32(15, 20), RandomStringOptions.Alpha);
+            var quantity = _rndSvc.NextInt32(5, 10);
 
             var animalGroupUpdateTask = _animal.UpdateAnimalGroupAsync(account.Id, animalGroup!.Id,
                 A =>
@@ -254,12 +254,12 @@ namespace APSS.Tests.Application.App
             var otherAccount = await _uow.CreateTestingAccountAsync(accessLevel, permissionType);
 
             var animalGroupUpdateTask2 = _animal.UpdateAnimalGroupAsync(otherAccount.Id, animalGroup!.Id,
-               A =>
-               {
-                   A.Name = name;
-                   A.Quantity = quantity;
-                   A.Type = type;
-               });
+                A =>
+                {
+                    A.Name = name;
+                    A.Quantity = quantity;
+                    A.Type = type;
+                });
 
             await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await animalGroupUpdateTask2);
 
@@ -286,8 +286,8 @@ namespace APSS.Tests.Application.App
 
             var newaccount = await _uow.CreateTestingAccountForUserAsync(account.User.Id, permissionType);
 
-            var name = RandomGenerator.NextString(RandomGenerator.NextInt32(10, 20), RandomStringOptions.Alpha);
-            var quantity = RandomGenerator.NextInt32(10, 20);
+            var name = _rndSvc.NextString(_rndSvc.NextInt32(10, 20), RandomStringOptions.Alpha);
+            var quantity = _rndSvc.NextInt32(10, 20);
 
             var animalProductUpdateTask = _animal
                 .UpdateAnimalProductAsync(newaccount.Id, animalProduct!.Id,
@@ -296,7 +296,7 @@ namespace APSS.Tests.Application.App
                     P.Name = name;
                     P.Quantity = quantity;
                 }
-                );
+                                         );
 
             if (!shouldsuccess)
             {
@@ -313,7 +313,7 @@ namespace APSS.Tests.Application.App
                     P.Name = name;
                     P.Quantity = quantity;
                 }
-                );
+                                         );
 
             await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await
             otheranimalProductUpdateTask);
@@ -335,7 +335,7 @@ namespace APSS.Tests.Application.App
             var unit = await AnimalProductUnitAddedTheory();
             var account = await _uow.CreateTestingAccountAsync(AccessLevel.Farmer, permissionType);
 
-            var name = RandomGenerator.NextString(RandomGenerator.NextInt32(10, 20), RandomStringOptions.Alpha);
+            var name = _rndSvc.NextString(_rndSvc.NextInt32(10, 20), RandomStringOptions.Alpha);
 
             var updateProductUnit = _animal.UpdateProductUnit(account.Id, unit!.Id, U => U.Name = name);
 
@@ -351,7 +351,7 @@ namespace APSS.Tests.Application.App
         }
 
         public void Dispose()
-       => _uow.Dispose();
+        => _uow.Dispose();
 
         #endregion Test
     }

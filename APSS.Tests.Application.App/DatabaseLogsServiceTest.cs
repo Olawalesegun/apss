@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions;
@@ -15,6 +16,7 @@ public sealed class DatabaseLogsServiceTest
 {
     #region Private fields
 
+    private readonly IRandomGeneratorService _rndSvc;
     private readonly IUnitOfWork _uow;
     private readonly ILogsService _logsSvc;
 
@@ -22,8 +24,9 @@ public sealed class DatabaseLogsServiceTest
 
     #region Constructors
 
-    public DatabaseLogsServiceTest(IUnitOfWork uow, ILogsService logsSvc)
+    public DatabaseLogsServiceTest(IRandomGeneratorService rndSvc, IUnitOfWork uow, ILogsService logsSvc)
     {
+        _rndSvc = rndSvc;
         _uow = uow;
         _logsSvc = logsSvc;
     }
@@ -40,7 +43,7 @@ public sealed class DatabaseLogsServiceTest
     [InlineData(LogSeverity.Fatal)]
     public async Task LogAddedTheory(LogSeverity severity)
     {
-        var message = RandomGenerator.NextString(0xff);
+        var message = _rndSvc.NextString(0xff);
         var log = await _logsSvc.LogAsync(severity, message);
 
         Assert.Equal(severity, log.Severity);
@@ -51,10 +54,10 @@ public sealed class DatabaseLogsServiceTest
     [Fact]
     public async Task LogTagsAddedFact()
     {
-        var message = RandomGenerator.NextString(0xff);
+        var message = _rndSvc.NextString(0xff);
         var tags = Enumerable
-            .Range(0, RandomGenerator.NextInt32(5, 20))
-            .Select(_ => RandomGenerator.NextString(RandomGenerator.NextInt32(5, 20), RandomStringOptions.Alpha))
+            .Range(0, _rndSvc.NextInt32(5, 20))
+            .Select(_ => _rndSvc.NextString(_rndSvc.NextInt32(5, 20), RandomStringOptions.Alpha))
             .ToArray();
 
         var log = await _logsSvc.LogDebugAsync(message, tags);
