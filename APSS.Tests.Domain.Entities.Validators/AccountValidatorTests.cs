@@ -1,8 +1,11 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
+using APSS.Domain.Services;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -12,6 +15,7 @@ public class AccountValidatorTests
     #region Private fields
 
     private readonly AccountValidator _validator = new();
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
 
@@ -22,8 +26,8 @@ public class AccountValidatorTests
     {
         var account = new Account
         {
-            HolderName = RandomGenerator.NextString(0xff),
-            NationalId = RandomGenerator.NextString(0xff),
+            HolderName = _rndSvc.NextString(0xff),
+            NationalId = _rndSvc.NextString(0xff),
         };
 
         Assert.IsTrue(_validator.Validate(account).IsValid);

@@ -1,9 +1,11 @@
-﻿using APSS.Domain.Entities;
+﻿using System.Linq;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -13,6 +15,7 @@ public class MultipleChoiceQuestionValidatorTests
     #region Private fields
 
     private readonly MultipleChoiceQuestionValidator _validator = new();
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
 
@@ -23,8 +26,8 @@ public class MultipleChoiceQuestionValidatorTests
     {
         var multiple = new MultipleChoiceQuestion
         {
-            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt32(2, 6))
-                .Select(i => new MultipleChoiceAnswerItem { Value = RandomGenerator.NextString(0xff) })
+            CandidateAnswers = Enumerable.Range(2, _rndSvc.NextInt32(2, 6))
+                .Select(i => new MultipleChoiceAnswerItem { Value = _rndSvc.NextString(0xff) })
                 .ToList()
         };
 
@@ -37,7 +40,7 @@ public class MultipleChoiceQuestionValidatorTests
         var multiple = new MultipleChoiceQuestion
         {
             CandidateAnswers = Enumerable.Range(0, 1)
-                .Select(i => new MultipleChoiceAnswerItem { Value = RandomGenerator.NextString(0xff) })
+                .Select(i => new MultipleChoiceAnswerItem { Value = _rndSvc.NextString(0xff) })
                 .ToList()
         };
 

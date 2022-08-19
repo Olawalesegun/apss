@@ -1,8 +1,9 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -11,6 +12,7 @@ public class TextQuestionAnswerValidatorTests
 {
     #region Private fields
 
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
     private readonly TextQuestionAnswerValidator _validator = new();
 
     #endregion Private fields
@@ -23,7 +25,7 @@ public class TextQuestionAnswerValidatorTests
         var textQuestion = new TextQuestionAnswer
         {
             Question = new TextQuestion { IsRequired = true },
-            Answer = RandomGenerator.NextString(0xff)
+            Answer = _rndSvc.NextString(0xff)
         };
 
         Assert.IsTrue(_validator.Validate(textQuestion).IsValid);
