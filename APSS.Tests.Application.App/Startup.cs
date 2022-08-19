@@ -1,8 +1,9 @@
-﻿using APSS.Application.App;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+using APSS.Application.App;
 using APSS.Domain.Services;
 using APSS.Tests.Infrastructure.Repositories.EntityFramework.Util;
-
-using Microsoft.Extensions.DependencyInjection;
+using APSS.Tests.Utils;
 
 namespace APSS.Tests.Application.App;
 
@@ -12,6 +13,7 @@ public class Startup
     {
         services.AddScoped(_ => TestUnitOfWork.Create());
 
+        services.AddTransient<IRandomGeneratorService, SimpleRandomGeneratorService>();
         services.AddTransient<IAccountsService, AccountsService>();
         services.AddTransient<IUsersService, UsersService>();
         services.AddTransient<ILogsService, DatabaseLogsService>();
