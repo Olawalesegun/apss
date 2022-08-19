@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
 using APSS.Domain.Services;
@@ -19,18 +20,24 @@ public sealed class SecureRandomGeneratorService : IRandomGeneratorService
 
     /// <inheritdoc/>
     public short NextInt16(short min = short.MinValue, short max = short.MaxValue)
-        => (short)RandomNumberGenerator.GetInt32(min, max);
+        => min == max ? min : (short)RandomNumberGenerator.GetInt32(min, max);
 
     /// <inheritdoc/>
     public int NextInt32(int min = int.MinValue, int max = int.MaxValue)
-        => RandomNumberGenerator.GetInt32(min, max);
+        => min == max ? min : RandomNumberGenerator.GetInt32(min, max);
 
     /// <inheritdoc/>
     public long NextInt64(long min = long.MinValue, long max = long.MaxValue)
     {
-        var randomBytes = NextBytes(sizeof(long)).ToArray();
+        long range = max - min;
+        long val;
 
-        return checked(BitConverter.ToInt64(randomBytes) % (max + 1 - min) + min);
+        do
+        {
+            val = BitConverter.ToInt64(NextBytes(sizeof(long)).ToArray());
+        } while (val > long.MaxValue - ((long.MaxValue % range) + 1) % range);
+
+        return (val % range) + min;
     }
 
     /// <inheritdoc/>
@@ -40,9 +47,7 @@ public sealed class SecureRandomGeneratorService : IRandomGeneratorService
     /// <inheritdoc/>
     public double NextFloat64(double min = double.MinValue, double max = double.MaxValue)
     {
-        var randomBytes = NextBytes(sizeof(double)).ToArray();
-
-        return checked(BitConverter.ToDouble(randomBytes) % (max + 1 - min) + min);
+        return (1.0 / NextInt32(2)) * (max - min) + min;
     }
 
     /// <inheritdoc/>
@@ -59,7 +64,7 @@ public sealed class SecureRandomGeneratorService : IRandomGeneratorService
 
         return new string(Enumerable
             .Range(0, length)
-            .Select(i => pool[NextInt32(pool.Length - 1)])
+            .Select(i => pool[NextInt32(0, pool.Length - 1)])
             .ToArray());
     }
 
@@ -68,7 +73,7 @@ public sealed class SecureRandomGeneratorService : IRandomGeneratorService
     /// </summary>
     /// <param name="opts">Options to generate the pool with</param>
     /// <returns>Generated pool</returns>
-    private string GenerateStringPool(RandomStringOptions opts = RandomStringOptions.Mixed)
+    private string GenerateStringPool(RandomStringOptions opts)
     {
         var poolBuilder = new StringBuilder();
 
