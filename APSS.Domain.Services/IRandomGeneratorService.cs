@@ -1,4 +1,6 @@
-﻿namespace APSS.Domain.Services;
+﻿using System.Text;
+
+namespace APSS.Domain.Services;
 
 public interface IRandomGeneratorService
 {
@@ -64,7 +66,55 @@ public interface IRandomGeneratorService
     /// <exception cref="InvalidOperationException">
     /// Thrown if <see cref="RandomStringOptions.None"/> is used
     /// </exception>
-    string NextString(int length, RandomStringOptions opts = RandomStringOptions.Mixed);
+    string NextString(int length, RandomStringOptions opts = RandomStringOptions.Mixed)
+    {
+        var pool = GenerateStringPool(opts);
+
+        return new string(Enumerable
+            .Range(0, length)
+            .Select(i => pool[NextInt32(0, pool.Length - 1)])
+            .ToArray());
+    }
+
+    /// <summary>
+    /// Generates the random string generation pool
+    /// </summary>
+    /// <param name="opts">Options to generate the pool with</param>
+    /// <returns>Generated pool</returns>
+    private static string GenerateStringPool(RandomStringOptions opts)
+    {
+        const string LOWERCASE_ALPHA = "abcdefghijklmnopqrstuvwxyz";
+        const string UPPERCASE_ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string NUMBERS = "1234567890";
+        const string SYMBOLS = "`~!@#$%^&*()-_=+\"\\/?.>,<";
+
+        var poolBuilder = new StringBuilder();
+
+        if (opts.HasFlag(RandomStringOptions.Alpha))
+        {
+            if (!opts.HasFlag(RandomStringOptions.Lowercase) &&
+                !opts.HasFlag(RandomStringOptions.Uppercase))
+            {
+                poolBuilder.Append(LOWERCASE_ALPHA);
+            }
+            else
+            {
+                if (opts.HasFlag(RandomStringOptions.Lowercase))
+                    poolBuilder.Append(LOWERCASE_ALPHA);
+
+                if (opts.HasFlag(RandomStringOptions.Uppercase))
+                    poolBuilder.Append(UPPERCASE_ALPHA);
+            }
+        }
+
+        if (opts.HasFlag(RandomStringOptions.Numeric))
+            poolBuilder.Append(NUMBERS);
+
+        if (opts.HasFlag(RandomStringOptions.Symbol))
+            poolBuilder.Append(SYMBOLS);
+
+        return poolBuilder.ToString();
+    }
 }
 
 /// <summary>
