@@ -25,7 +25,7 @@ public interface ICryptoHashService
     /// Asynchronously hashes a string
     /// </summary>
     /// <param name="plain">The string to be hashed</param>
-    /// <param name="salt">The salt used for hashing</param>
+    /// <param name="salt">The salt used for hashing in base64 format</param>
     /// <returns>The generated hash encoded in base64</returns>
     async Task<string> HashAsync(string plain, string salt)
         => Convert.ToBase64String(await HashAsync(Encoding.UTF8.GetBytes(plain), Convert.FromBase64String(salt)));
