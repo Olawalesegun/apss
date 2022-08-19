@@ -1,5 +1,7 @@
 ﻿using System.Text;
 
+using APSS.Domain.Entities;
+
 namespace APSS.Domain.Services.Util;
 
 public abstract class BasicRandomStringGeneratorService : IRandomGeneratorService
@@ -25,21 +27,10 @@ public abstract class BasicRandomStringGeneratorService : IRandomGeneratorServic
     public virtual float NextFloat32(float min = float.MinValue, float max = float.MaxValue)
         => (float)NextFloat64(min, max);
 
-    /// <summary>
-    /// Generates a random boolean value
-    /// </summary>
-    /// <returns>The generated value</returns>
+    /// <inheritdoc/>
     public virtual bool NextBool() => NextInt32(0, 1) == 1;
 
-    /// <summary>
-    /// Generates a random string value
-    /// </summary>
-    /// <param name="length">The length of the string</param>
-    /// <param name="opts">The options used to build the pool</param>
-    /// <returns></returns>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown if <see cref="RandomStringOptions.None"/> is used
-    /// </exception>
+    /// <inheritdoc/>
     public virtual string NextString(int length, RandomStringOptions opts = RandomStringOptions.Mixed)
     {
         var pool = GenerateStringPool(opts);
@@ -48,6 +39,35 @@ public abstract class BasicRandomStringGeneratorService : IRandomGeneratorServic
             .Range(0, length)
             .Select(i => pool[NextInt32(0, pool.Length - 1)])
             .ToArray());
+    }
+
+    /// <inheritdoc/>
+    public AccessLevel NextAccessLevel(
+        AccessLevel min = AccessLevel.Farmer,
+        AccessLevel max = AccessLevel.Root)
+    {
+        var accessLevels = new[]
+        {
+            AccessLevel.Farmer,
+            AccessLevel.Group,
+            AccessLevel.Village,
+            AccessLevel.District,
+            AccessLevel.Directorate,
+            AccessLevel.Governorate,
+            AccessLevel.Presedint,
+            AccessLevel.Root,
+        };
+
+        while (true)
+        {
+            var idx = NextInt32(0, accessLevels.Length - 1);
+
+            if (accessLevels[idx].IsBelow(min) || accessLevels[idx].IsAbove(max))
+
+                continue;
+
+            return accessLevels[idx];
+        }
     }
 
     /// <summary>
