@@ -103,6 +103,11 @@ public class SecureRandomGeneratorServiceTests
 
         Assert.True(value >= min);
         Assert.True(value < max);
+
+        value = _rndSvc.NextInt16(-max, -min);
+
+        Assert.True(value >= -max);
+        Assert.True(value < -min);
     }
 
     [Fact]
@@ -115,6 +120,11 @@ public class SecureRandomGeneratorServiceTests
 
         Assert.True(value >= min);
         Assert.True(value < max);
+
+        value = _rndSvc.NextInt32(-max, -min);
+
+        Assert.True(value >= -max);
+        Assert.True(value < -min);
     }
 
     [Fact]
@@ -127,6 +137,11 @@ public class SecureRandomGeneratorServiceTests
 
         Assert.True(value >= min);
         Assert.True(value < max);
+
+        value = _rndSvc.NextInt64(-max, -min);
+
+        Assert.True(value >= -max);
+        Assert.True(value < -min);
     }
 
     [Fact]
@@ -135,10 +150,15 @@ public class SecureRandomGeneratorServiceTests
         const float min = 1.0f;
         const float max = 100.0f;
 
-        var value = _rndSvc.NextFloat64(min, max);
+        var value = _rndSvc.NextFloat32(min, max);
 
         Assert.True(value >= min);
         Assert.True(value < max);
+
+        value = _rndSvc.NextFloat32(-max, -min);
+
+        Assert.True(value >= -max);
+        Assert.True(value < -min);
     }
 
     [Fact]
@@ -151,6 +171,11 @@ public class SecureRandomGeneratorServiceTests
 
         Assert.True(value >= min);
         Assert.True(value < max);
+
+        value = _rndSvc.NextFloat64(-max, -min);
+
+        Assert.True(value >= -max);
+        Assert.True(value < -min);
     }
 
     #endregion Tests
