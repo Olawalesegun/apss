@@ -1,10 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using APSS.Domain.Services;
+using APSS.Web.Dtos;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers
 {
     public class PopulationController : Controller
     {
+        private readonly IPopulationService _populationSvc;
+
+        public PopulationController(IPopulationService populationSvc)
+        {
+            _populationSvc = populationSvc;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -13,6 +22,9 @@ namespace APSS.Web.Mvc.Controllers
         // GET: FamilyController
         public ActionResult GetFamilies()
         {
+            long id;
+            /*            List<FamilyDto> families = await _populationSvc.GetFamiliesAsync(id);
+            */
             return View();
         }
 
