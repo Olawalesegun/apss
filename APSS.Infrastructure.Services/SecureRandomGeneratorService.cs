@@ -7,11 +7,6 @@ namespace APSS.Infrastructure.Services;
 
 public sealed class SecureRandomGeneratorService : IRandomGeneratorService
 {
-    /// <summary>
-    /// Gets a singleton instance of this class
-    /// </summary>
-    public static readonly IRandomGeneratorService Instance = new SecureRandomGeneratorService();
-
     /// <inheritdoc/>
     public short NextInt16(short min = short.MinValue, short max = short.MaxValue)
         => (short)RandomNumberGenerator.GetInt32(min, max);

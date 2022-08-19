@@ -16,7 +16,7 @@ public class Argon2iCryptoHashServiceTests
 
     public Argon2iCryptoHashServiceTests()
     {
-        _rndSvc = SecureRandomGeneratorService.Instance;
+        _rndSvc = new SecureRandomGeneratorService();
         _cryptoHashSvc = new Argon2iCryptoHashService();
     }
 

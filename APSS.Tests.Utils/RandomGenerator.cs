@@ -6,7 +6,7 @@ namespace APSS.Tests.Utils;
 
 public static class RandomGenerator
 {
-    private static readonly IRandomGeneratorService _rnd = SecureRandomGeneratorService.Instance;
+    private static readonly IRandomGeneratorService _rnd = new SecureRandomGeneratorService();
 
     private static readonly AccessLevel[] _accessLevels = new[]
     {
