@@ -43,19 +43,15 @@ public class Argon2iCryptoHashServiceTests
     {
         var plainLen = _rndSvc.NextInt32(64, 256);
         var plain = _rndSvc.NextString(plainLen);
-        var salt = _rndSvc.NextString(SALT_LENGTH);
+        var salt = _rndSvc.NextBytes(SALT_LENGTH).ToArray();
+        var base64Salt = Convert.ToBase64String(salt);
 
-        var binaryHash = await _cryptoHashSvc.HashAsync(
-            Encoding.UTF8.GetBytes(plain),
-            Convert.FromBase64String(salt));
-        var hash = await _cryptoHashSvc.HashAsync(plain, salt);
+        var binaryHash = await _cryptoHashSvc.HashAsync(Encoding.UTF8.GetBytes(plain), salt);
+        var base64Hash = await _cryptoHashSvc.HashAsync(plain, base64Salt);
 
-        Assert.Equal(hash, Convert.ToBase64String(binaryHash));
+        Assert.Equal(base64Hash, Convert.ToBase64String(binaryHash));
 
-        Assert.True(await _cryptoHashSvc.VerifyAsync(hash, plain, salt));
-        Assert.True(await _cryptoHashSvc.VerifyAsync(
-            binaryHash,
-            Encoding.UTF8.GetBytes(plain),
-            Convert.FromBase64String(salt)));
+        Assert.True(await _cryptoHashSvc.VerifyAsync(base64Hash, plain, base64Salt));
+        Assert.True(await _cryptoHashSvc.VerifyAsync(binaryHash, Encoding.UTF8.GetBytes(plain), salt));
     }
 }
