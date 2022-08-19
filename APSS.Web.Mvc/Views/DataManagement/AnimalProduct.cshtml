@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿@model APSS.Web.Dtos.AnimalGroupAndProductDto
 <partial name="_dataNavBar" />
 
 <!--table-->
@@ -16,50 +11,50 @@
             @*<div class="input-group">
                 <a href="#" class="input-group-text text-decoration-none search-btn" style="background-color:#1B73B3">
 
-                    <i class="fal fa-search " style="color:white"></i>
+                <i class="fal fa-search " style="color:white"></i>
                 </a>
 
                 <input type="text" class="form-control rounded" id="search" placeholder="Search..." onkeyup="searchTable()">
-*@
-               <div class="input-group mb-1">
-                  <button type="button" class="btn btn-primary search-btn">
+            *@
+            <div class="input-group mb-1">
+                <button type="button" class="btn btn-primary search-btn">
                     <i class="fas fa-search"></i>
-                  </button>
-                  <div class="form-outline" style="width:80%">
+                </button>
+                <div class="form-outline" style="width:80%">
                     <input type="search" id="form1" class="form-control" />
                     <label class="form-label" for="form1">Search</label>
-                  </div>
                 </div>
-                               @* <button class="btn btn-outline-secondary dropdown-toggle border border-black-100 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+            </div>
+            @* <button class="btn btn-outline-secondary dropdown-toggle border border-black-100 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>*@
-           @* </div>*@
+            @* </div>*@
         </div>
         <div class="col-sm-2 ">
             @*<label class="visually-hidden" for="searchby">Search By</label>
-            <select class="form-select " id="searchby">
+                <select class="form-select " id="searchby">
                 <option selected>Choose search by</option>
                 <option value="1">Name</option>
                 <option value="2">Id</option>
                 <option value="3">Address</option>
-            </select>*@
+                </select>*@
             <select class="select form-select" data-mdb-filter="true">
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-  <option value="4">Four</option>
-  <option value="5">Five</option>
-  <option value="6">Six</option>
-  <option value="7">Seven</option>
-  <option value="8">Eight</option>
-  <option value="9">Nine</option>
-  <option value="10">Ten</option>
-</select>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+                <option value="4">Four</option>
+                <option value="5">Five</option>
+                <option value="6">Six</option>
+                <option value="7">Seven</option>
+                <option value="8">Eight</option>
+                <option value="9">Nine</option>
+                <option value="10">Ten</option>
+            </select>
         </div>
     </form>
 
@@ -79,17 +74,18 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     <tr class="align-top">
                         @{
                             List<string> ls = new List<string>
-                            {
-                                "اسم المنتج",
-                                "اسومي",
-                                "الكمية",
-                                "1000",
-                                "نوع المنتج",
-                                "مدري"
-                            };
+                        {
+                        "اسم المنتج",
+                        "اسومي",
+                        "الكمية",
+                        "1000",
+                        "نوع المنتج",
+                        "مدري"
+                        };
                         }
                         @await Html.PartialAsync("_CreateProductExpense.cshtml")
                         @await Html.PartialAsync("_EditProduct.cshtml")
@@ -109,14 +105,16 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li><a class="dropdown-item" asp-action="AnimalProductDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ConfirmDelete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                    <li class="pe-auto">
-                                        <a class="dropdown-item pe-auto" data-bs-toggle="offcanvas" data-bs-target="#AddProductExpense">
-                                        <div class="d-flex justify-content-between"> <span>Add Expense</span>  <span><i class="fa-solid fa-dollar-sign"></i> </span> </div></a>
+                                    <li><a class="dropdown-item" asp-controller="DataManagement" asp-action="DeleteAnimalProduct"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li class="">
+                                        <a class="dropdown-item"  asp-controller="DataManagement" asp-action="AddProductExpense">
+                                            <div class="d-flex justify-content-between"> <span>Add Expense</span>  <span><i class="fa-solid fa-dollar-sign"></i> </span> </div>
+                                        </a>
                                     </li>
-                                    <li class="pe-auto">
-                                        <a class="dropdown-item pe-auto" data-bs-toggle="offcanvas" data-bs-target="#EditAnimalProduct">
-                                        <div class="d-flex justify-content-between"> <span>Update Product</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
+                                    <li class="">
+                                        <a class="dropdown-item " asp-controller="DataManagement" asp-action="EditAnimalProduct">
+                                            <div class="d-flex justify-content-between"> <span>Update Product</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -147,23 +145,22 @@
 
 @section scripts{
 <script>
-     document.getElementById("nav-system-name").innerHTML="Data Management";
-    document.getElementById("media-system-name").innerHTML="Data Management";
 
-    $(document).ready(function(){
-   $(".sidebar ul li.active").removeClass('active');
-    $("#animalProducts").addClass('active');
-   });
-
-       $(document).ready(function(){
-        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-        $("#animalProductMedia").addClass('MediaActive')
-
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
     });
-      $("#animalGroups").removeClass('actives');
-      $("#lands").removeClass('actives');
-      $("#landProducts").removeClass('actives');
 
-        $("#animalProducts").addClass('actives');
+        $(document).ready(function(){
+         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+         $("#animalProductMedia").addClass('MediaActive')
+
+     });
+
+       $("#animalGroups").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+
+         $("#animalProducts").addClass('actives');
 </script>
 }

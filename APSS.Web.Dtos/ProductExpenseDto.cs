@@ -1,10 +1,25 @@
-﻿namespace APSS.Web.Dtos;
+﻿using APSS.Web.Dtos;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class ProductExpenseDto : BaseAuditbleDto
+namespace APSS.Web.Dtos
 {
-    public string Type { get; set; } = null!;
+    public class ProductExpenseDto : BaseAuditbleDto
+    {
+        [Required(ErrorMessage = "يجب ادخال نوع التكلقة")]
+        [Display(Name = "نوع النكلفة")]
+        public string Type { get; set; } = null!;
 
-    public decimal Price { get; set; }
+        [Required(ErrorMessage = "يجب ادخال قيمة التكلقة")]
+        [Display(Name = "التكلفة")]
+        public decimal Price { get; set; }
 
-    public ProductDto SpentOn { get; set; } = null!;
+        public int ProductId { get; set; }
+
+        public ProductDto SpentOn { get; set; } = null!;
+    }
 }

@@ -1,47 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿@model APSS.Web.Dtos.AnimalGroupAndProductDto
 <!--table-->
 
 <partial name="_dataNavBar" />
+<div class="aling" id="loader"></div>
 
-<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
+<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="table">
 
-    <form class="row  justify-content-between mb-3 ">
-        <div class="col-sm-6">
+    <form class="row d-flex justify-content-between  d-inline mb-3 ">
 
-            @*       <div class="input-group mb-1">
+        @*       <div class="input-group mb-1">
 
-                <a href="#" class="input-group-text text-decoration-none search-btn" style="background-color:#1B73B3">
+            <a href="#" class="input-group-text text-decoration-none search-btn" style="background-color:#1B73B3">
 
-                <i class="fal fa-search " style="color:white;"></i>
-                </a>
+            <i class="fal fa-search " style="color:white;"></i>
+            </a>
 
-                <input type="search" class="form-control rounded" id="search" onkeyup="searchTable()">*@
+            <input type="search" class="form-control rounded" id="search" onkeyup="searchTable()">*@
 
-            @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-                </ul>*@
-            @*</div>*@
-            <div class="input-group mb-1">
-                  <button type="button" class="btn btn-primary search-btn">
-                    <i class="fas fa-search"></i>
-                  </button>
-                  <div class="form-outline" style="width:80%">
-                    <input type="search" id="form1" class="form-control" />
-                    <label class="form-label" for="form1">Search</label>
-                  </div>
-                </div>
+        @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
+            <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>*@
+        @*</div>*@
+        <div class=" mb-2 col-sm  d-flex">
+            <button type="button" class="btn btn-primary search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+            <div class="form-outline w-100 search-input">
+                <input type="search" class="form-control" id="search" onkeyup="searchTable()" />
+                <label class="form-label">بحث</label>
+            </div>
         </div>
-        <div class="col-sm-2  mb-1 ">
+
+        <div class="col-sm mb-2 ">
 
             <select class="form-select " id="searchby">
                 <option selected>Choose search by</option>
@@ -50,9 +45,12 @@
                 <option value="3">Address</option>
             </select>
         </div>
-
-        <div class="col-sm-3 d-flex   justify-content-end mb-1">
-            <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#animal-group">
+        <div class="col-sm d-flex   d-inline mb-2">
+            <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#animalGroup">
+                <i class="fa-solid fa-plus"></i>
+                Unit
+            </a>
+            <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#animalGroup">
                 <i class="fa-solid fa-plus"></i>
                 Add
             </a>
@@ -61,211 +59,115 @@
 
     <div class="col-sm-12  ">
 
-        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
-
+        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar" id="">
             <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
 
                 <thead class="table-light">
-                    <tr class="header  bg-fixed border border-bottom fw-bold">
-                        <th style="width:8%;" class=" fw-bold align-middle">ID</th>
-                        <th style="width:30%;" class="fw-bold align-middle">Name</th>
-                        <th style="width:20%;" class="fw-bold align-middle">Phone Number</th>
-                        <th style="width:30%;" class="fw-bold align-middle">Address</th>
+                    <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
+                        <th style="width:8%;" class=" fw-bold align-middle"> ارقم</th>
+                        <th style="width:30%;" class="fw-bold align-middle">النوع</th>
+                        <th style="width:20%;" class="fw-bold align-middle">الكمية</th>
+                        <th style="width:30%;" class="fw-bold align-middle">الجنس</th>
                         <th style="width:0%;" class="fw-bold align-middle">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="align-top">
+                    @*
+                        <tr class="align-top">
                         @await Html.PartialAsync("_CreateAnimalProduct.cshtml")
 
-                        @await Html.PartialAsync("_productDetails")
-                        <td class="text-break text-capitalize align-middle">1</td>
+                        @await Html.PartialAsync("_productDetails.cshtml")
+                        <td class="text-break text-capitalize align-middle">1 </td>
                         <td class="text-break text-capitalize align-middle"> John</td>
                         <td class="text-break text-capitalize align-middle">Doe</td>
                         <td class="text-break text-capitalize align-middle">
-                            john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
+                        john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
                         </td>
                         <td class="align-middle center">
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-action="AnimalDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                    <li><button class="dropdown-item btn-link"  data-bs-toggle="modal" data-bs-target="#exampleModal" ><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></button></li>
-                                    <li class="">
-                                           <a class="dropdown-item text-decoration-none" role="button" data-bs-toggle="offcanvas" data-bs-target="#animal_product">
+                        <div class=" dropend">
+                        <a class="" href="#" id="dropdownMenuLink"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-action="AnimalDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                        <li><button class="dropdown-item btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></button></li>
+                        <li class="">
+                        <a class="dropdown-item text-decoration-none" role="button" data-bs-toggle="offcanvas" data-bs-target="#animal_product">
 
-<div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
+                        </a>
+                        </li>
+                        </ul>
+                        </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
+                        </tr>*@
+
+                    @foreach (var item in Model.AnimalGroupDtos)
+                    {
+
+                        <tr>
+                            @* @{
+                                await Html.RenderPartialAsync("_CreateAnimalProduct.cshtml", Model.AnimalProducts);
+                                }*@
+
+                            <td>@item.Id</td>
+                            <td>@item.Type</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Sex</td>
+
+                            <td class="align-middle center">
+                                <div class=" dropend">
+                                    <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu pt-0 pb-0">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            Delete
-                                        </a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Add Product</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>goo</td>
-                        <td>moe</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id=""
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>tbody>
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-action="AnimalDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                        <li><a class="dropdown-item btn-link" asp-controller="DataManagement" asp-action="DeleteAnimalGroup"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li class="">
+                                            @* <a class="dropdown-item text-decoration-none" role="button" data-bs-toggle="offcanvas" data-bs-target="#animal_product">
+
+                                                <div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
+                                                </a>*@
+                                            <a class="dropdown-item text-decoration-none" role="button" asp-route-Id="@item.Id" asp-controller="DataManagement" asp-action="CreateAnimalProduct">
+
+                                                <div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
             </table>
         </div>
     </div>
-    <nav aria-label="Page navigation example" class="float-left pl-5">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
 </div>
 <!-- canvas body for create-->
-<div class="offcanvas offcanvas-end" id="animal-group">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Animal Group Add</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <partial name="_Add_animal_group" />
-    </div>
-</div>
-
+@await Html.PartialAsync("_AddAnimalGroup.cshtml",Model.AnimalGroup)
+@*<partial name="_AddAnimalGroup.cshtml", />*@
 <!--
     canvas for add animal product
 -->
-@{
-    var id = "100";
-}
-
 @*<div class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
     </div>*@
 
 @section scripts{
 <script>
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
+    });
      document.getElementById("nav-system-name").innerHTML="Data Management";
     document.getElementById("media-system-name").innerHTML="Data Management";
 
