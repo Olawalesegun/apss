@@ -8,7 +8,7 @@ public interface IRandomGeneratorService
     /// <param name="min">The minimum boundary</param>
     /// <param name="max">The maximum boundary</param>
     /// <returns>The generated value</returns>
-    public short NextInt16(short min = short.MinValue, short max = short.MaxValue);
+    short NextInt16(short min = short.MinValue, short max = short.MaxValue);
 
     /// <summary>
     /// Generates a random 32-bit integer
@@ -16,7 +16,7 @@ public interface IRandomGeneratorService
     /// <param name="min">The minimum boundary</param>
     /// <param name="max">The maximum boundary</param>
     /// <returns>The generated value</returns>
-    public int NextInt32(int min = int.MinValue, int max = int.MaxValue);
+    int NextInt32(int min = int.MinValue, int max = int.MaxValue);
 
     /// <summary>
     /// Generates a random 64-bit integer
@@ -24,7 +24,7 @@ public interface IRandomGeneratorService
     /// <param name="min">The minimum boundary</param>
     /// <param name="max">The maximum boundary</param>
     /// <returns>The generated value</returns>
-    public long NextInt64(long min = long.MinValue, long max = long.MaxValue);
+    long NextInt64(long min = long.MinValue, long max = long.MaxValue);
 
     /// <summary>
     /// Generates a random 32-bit floating point number
@@ -32,7 +32,7 @@ public interface IRandomGeneratorService
     /// <param name="min">The minimum boundary</param>
     /// <param name="max">The maximum boundary</param>
     /// <returns>The generated value</returns>
-    public float NextFloat32(float min = float.MinValue, float max = float.MaxValue);
+    float NextFloat32(float min = float.MinValue, float max = float.MaxValue);
 
     /// <summary>
     /// Generates a random 64-bit floating point number
@@ -40,20 +40,20 @@ public interface IRandomGeneratorService
     /// <param name="min">The minimum boundary</param>
     /// <param name="max">The maximum boundary</param>
     /// <returns>The generated value</returns>
-    public double NextFloat64(double min = double.MinValue, double max = double.MaxValue);
+    double NextFloat64(double min = double.MinValue, double max = double.MaxValue);
 
     /// <summary>
     /// Generates a random boolean value
     /// </summary>
     /// <returns>The generated value</returns>
-    public bool NextBool();
+    bool NextBool();
 
     /// <summary>
     /// Generates a random sequence of bytes
     /// </summary>
     /// <param name="length">The length of the sequence to be generated</param>
     /// <returns>The generated sequence</returns>
-    public IEnumerable<byte> NextBytes(int length);
+    IEnumerable<byte> NextBytes(int length);
 
     /// <summary>
     /// Generates a random string value
