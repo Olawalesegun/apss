@@ -1,4 +1,6 @@
-﻿namespace APSS.Domain.Services;
+﻿using APSS.Domain.Entities;
+
+namespace APSS.Domain.Services;
 
 public interface IRandomGeneratorService
 {
@@ -65,6 +67,14 @@ public interface IRandomGeneratorService
     /// Thrown if <see cref="RandomStringOptions.None"/> is used
     /// </exception>
     string NextString(int length, RandomStringOptions opts = RandomStringOptions.Mixed);
+
+    /// <summary>
+    /// Generates a random access level
+    /// </summary>
+    /// <param name="min">The minimum boundary</param>
+    /// <param name="max">The maximum boundary</param>
+    /// <returns>The generated value</returns>
+    AccessLevel NextAccessLevel(AccessLevel min = AccessLevel.Farmer, AccessLevel max = AccessLevel.Root);
 }
 
 /// <summary>
