@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿@model APSS.Web.Dtos.AnimalGroupAndProductDto
 <partial name="_dataNavBar" />
 
 <!--table-->
@@ -79,6 +74,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     <tr class="align-top">
                         @{
                             List<string> ls = new List<string>
@@ -109,14 +105,14 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li><a class="dropdown-item" asp-action="AnimalProductDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ConfirmDelete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li><a class="dropdown-item" asp-controller="DataManagement" asp-action="DeleteAnimalProduct"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     <li class="">
-                                        <a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#AddProductExpense">
+                                        <a class="dropdown-item"  asp-controller="DataManagement" asp-action="AddProductExpense">
                                             <div class="d-flex justify-content-between"> <span>Add Expense</span>  <span><i class="fa-solid fa-dollar-sign"></i> </span> </div>
                                         </a>
                                     </li>
                                     <li class="">
-                                        <a class="dropdown-item " href="#" data-bs-toggle="offcanvas" data-bs-target="#EditAnimalProduct">
+                                        <a class="dropdown-item " asp-controller="DataManagement" asp-action="EditAnimalProduct">
                                             <div class="d-flex justify-content-between"> <span>Update Product</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
                                         </a>
                                     </li>

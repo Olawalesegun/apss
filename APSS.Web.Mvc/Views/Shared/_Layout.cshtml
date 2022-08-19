@@ -52,7 +52,7 @@
                 </li>
 
                 <li class="">
-                    <a  class="text-decoration-none px-3 py-2 d-flex justify-content-between">
+                    <a class="text-decoration-none px-3 py-2 d-flex justify-content-between">
                         <span><i class="bi bi-bell-fill fa-lg px-2"></i> Notification</span>
                         <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
                     </a>
@@ -65,7 +65,7 @@
 
                     <div class="item ">
 
-                        <a href="#sub" id="drops"  class="  dropdown-toggole px-2 py-1 my-1 d-inline  drop d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
+                        <a href="#sub" id="drops" class="  dropdown-toggole px-2 py-1 my-1 d-inline  drop d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
                             <span>الانظمة الاخراء</span>
                             <i class="fa fa-angle-left  rotate dropdown " style="padding-top:10px" aria-hidden="true"></i>
                         </a>
@@ -176,7 +176,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="collapse navbar-collapse" id="media_collapse">
+                    <div class="collapse navbar-collapse" id="media_collapse">
                         <h3 class="" id="nav-system-name">
 
                             Scan System
@@ -202,7 +202,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
-                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
+                                    <li><a asp-controller="AccountManagement" asp-action="AccountDetails" class="dropdown-item p-3 d-flex justify-content-between"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -240,7 +240,7 @@
         </div>
     </div>
 
-     @*<footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
+    @*<footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
@@ -248,19 +248,19 @@
     <script src="~/js/modelFunction.js" asp-append-version="true"></script>
 
     <script>
-        $(".open-btn").on('click',function()
-        {
-            $(".sidebar").addClass('active');
-        });
-         $(".close-btn").on('click',function()
-        {
-            $(".sidebar").removeClass('active');
-        });
-          $("#drops").on('click',function(){
-         $('.rotate').toggleClass('down');
-        });
+              $(".open-btn").on('click',function()
+              {
+                  $(".sidebar").addClass('active');
+              });
+               $(".close-btn").on('click',function()
+              {
+                  $(".sidebar").removeClass('active');
+              });
+                $("#drops").on('click',function(){
+               $('.rotate').toggleClass('down');
+              });
 
-  });
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required:         false)

@@ -1,50 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<APSS.Web.Dtos.AnimalProductDto>
 @{
+    ViewData["Title"] = "Animal  Detials";
 }
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class=" mt-3 ">
-                    <!-- 2 column puts for the National number and Phome Number-->
-                    <div class="center d-flex justify-content-center mb-3 ">
-                        <h3 class="text-decoration-underline">
-                            Required Infromation
-                        </h3>
-                    </div>
-                    <!-- Text input for user name-->
-                    <div class="form-outline mb-4">
-                        <input type="tel" id="user_name" name="user_name" class="form-control" />
-                        <label class="form-label" for="user_name">Name</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <h5 class="inline">User status:</h5>
-                    </div>
-                    <!--used -->
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input hiden" type="radio" name="used" id="used" value="true" />
-                        <label class="form-check-label" for="used">Yes</label>
-                    </div>
-                    <!--unused -->
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="false" id="unused" name="used" checked />
-                        <label class="form-check-label" for="unused"> False </label>
-                    </div>
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary w-100 mb-4 mt-4">Add</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:4px"></i> <h3>معلومات المنتج</h3></div>
+
+        <table class="table user-view-table m-0 t ">
+            <tbody style="font-size:14px">
+                @foreach (var item in Model)
+                {
+                    <tr class="">
+                        <th>@Html.DisplayNameFor(p=>p.Name)</th>
+                        <td> قات</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(p=>p.Quantity) </th>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(p=>p.PeriodTaken)</th>
+                        <td>-- </td>
+                    </tr>
+                    <hr />
+                    <tr class="my-4 border border-bottom ">
+                        <td>
+                            <div class="d-inline pt-2">
+                                <button class="btn btn-outline-primary btn-rounded  mx-1"><i class="fa-solid fa-plus mx-2"></i><span>اضافة تكلفة</span> </button>
+                                <button class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
+                                <button class="btn btn-outline-danger btn-rounded mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
     </div>
+    <hr class="border-light m-0">
 </div>

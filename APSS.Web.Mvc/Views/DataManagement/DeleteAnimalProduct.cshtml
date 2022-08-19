@@ -1,0 +1,38 @@
+﻿@model APSS.Web.Dtos.AnimalProductDto
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف المنتج</h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th>@Html.DisplayNameFor(m=>m.Name)</th>
+                    <td> @Model.Name</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.Quantity)</th>
+                    <td> @Model.Quantity</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
+                    <td> @Model.PeriodTaken</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                    <td> @Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                    <td> @Model.ModifiedAt</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="DataManagement" asp-action="ConfirmDeleteAnimalProduct">تأكيد</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="DataManagement" asp-action="DeleteAnimalProduct">رجوع</a>
+        </div>
+
+        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
+    </div>
+</div>

@@ -99,8 +99,8 @@ hr.h-color {
         left: 65% !important;
     }
 
-    #search {
-        width: 70% !important;
+    .form-outline #search {
+        width: 100% !important;
     }
 }
 
@@ -123,8 +123,8 @@ hr.h-color {
         left: 65% !important;
     }
 
-    #search {
-        width: 70% !important;
+    .form-outline #search {
+        width: 100% !important;
     }
 }
 
@@ -542,4 +542,3 @@ div.scrollmenu {
         bottom: 0;
         opacity: 1
     }
-}

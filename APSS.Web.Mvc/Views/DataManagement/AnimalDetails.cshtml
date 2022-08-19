@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model APSS.Web.Dtos.AnimalGroupAndProductDto
 @{
     ViewData["Title"] = "Animal Details";
 }
@@ -13,28 +11,43 @@
 
             <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>معلومات الحيوان</h3>
         </div>
-            <table class="table user-view-table m-0 t ">
+        <table class="table user-view-table m-0 t ">
             <tbody>
                 <tr class="">
-                    <td>نوع الحيوان</td>
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.AnimalGroup.Type)</label></td>
                     <td> دغاغة</td>
                 </tr>
                 <tr>
-                    <td> الكمية</td>
+                    <td> <label>@Html.DisplayNameFor(m => m.AnimalGroup.Quantity);</label></td>
                     <td>12 </td>
                 </tr>
                 <tr>
-                    <td>الجنس   </td>
-                    <td> عيب</td>
+                    <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.Sex)</label>  </td>
+                    <td> --</td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.CreatedAt)</label>  </td>
+                    <td>
+                        @{
+                            DateTime date = new DateTime();
+                        } @date
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.ModifiedAt)</label>  </td>
+                    <td>
+                        @date
+                    </td>
                 </tr>
                 <tr></tr>
             </tbody>
         </table>
         <br />
         <div cllass="d-inline pt-2">
-         <button  class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
-        <button class="btn btn-outline-danger btn-rounded mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
+            <a class="btn btn-primary-danger btn-rounded  text-primary mx-1 pr-1 my-2 "> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
+            <a class="btn  btn-link-danger btn-rounded text-danger mx-1 my-2 " asp-controller="DataManagement" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.AnimalGroup.Id" > <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
+            <a id="III" class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1"  asp-controller="DataManagement" asp-action="AllAnimalProduct"><i class="fa-solid fa-angle-down"></i><span class="">المنتجات </span> </a>
+            <a id="III" class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1 "  asp-controller="DataManagement" asp-action="Index" ><i class="fa-solid fa-angle-right px-1"></i><span class="">رجوع </span> </a>
         </div>
-        @*<a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> المنتجات</a>*@
     </div>
 </div>
