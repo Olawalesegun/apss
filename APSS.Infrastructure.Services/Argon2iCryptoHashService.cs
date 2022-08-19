@@ -4,7 +4,7 @@ using Konscious.Security.Cryptography;
 
 namespace APSS.Infrastructure.Services;
 
-public sealed class Argon2CryptoHashService : ICryptoHashService
+public sealed class Argon2iCryptoHashService : ICryptoHashService
 {
     private const int HASH_PARALLELISM_DEGREE = 16;
     private const int HASH_MEMORY_SIZE = 8192;
