@@ -5,7 +5,6 @@ using APSS.Domain.Repositories;
 using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
 using APSS.Tests.Extensions;
-using APSS.Tests.Utils;
 
 using Xunit;
 

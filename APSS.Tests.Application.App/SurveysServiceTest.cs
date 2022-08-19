@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +10,6 @@ using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
 using APSS.Tests.Domain.Entities.Validators;
 using APSS.Tests.Extensions;
-using APSS.Tests.Utils;
 
 using Xunit;
 

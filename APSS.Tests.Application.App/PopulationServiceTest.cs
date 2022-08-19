@@ -10,7 +10,6 @@ using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
 using APSS.Tests.Domain.Entities.Validators;
 using APSS.Tests.Extensions;
-using APSS.Tests.Utils;
 
 using Xunit;
 

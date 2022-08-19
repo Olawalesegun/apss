@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
-using APSS.Domain.Services;
 using APSS.Tests.Utils;
 
 using FluentValidation.TestHelper;
