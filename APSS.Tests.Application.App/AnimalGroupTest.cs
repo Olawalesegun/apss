@@ -233,9 +233,9 @@ namespace APSS.Tests.Application.App
             Assert.True(await _uow.Accounts.Query().ContainsAsync(account));
             Assert.True(await _uow.AnimalGroups.Query().ContainsAsync(animalGroup!));
 
-            var type = RandomGenerator.NextString(RandomGenerator.NextInt(10, 15), RandomStringOptions.Alpha);
-            var name = RandomGenerator.NextString(RandomGenerator.NextInt(15, 20), RandomStringOptions.Alpha);
-            var quantity = RandomGenerator.NextInt(5, 10);
+            var type = RandomGenerator.NextString(RandomGenerator.NextInt32(10, 15), RandomStringOptions.Alpha);
+            var name = RandomGenerator.NextString(RandomGenerator.NextInt32(15, 20), RandomStringOptions.Alpha);
+            var quantity = RandomGenerator.NextInt32(5, 10);
 
             var animalGroupUpdateTask = _animal.UpdateAnimalGroupAsync(account.Id, animalGroup!.Id,
                 A =>
@@ -286,8 +286,8 @@ namespace APSS.Tests.Application.App
 
             var newaccount = await _uow.CreateTestingAccountForUserAsync(account.User.Id, permissionType);
 
-            var name = RandomGenerator.NextString(RandomGenerator.NextInt(10, 20), RandomStringOptions.Alpha);
-            var quantity = RandomGenerator.NextInt(10, 20);
+            var name = RandomGenerator.NextString(RandomGenerator.NextInt32(10, 20), RandomStringOptions.Alpha);
+            var quantity = RandomGenerator.NextInt32(10, 20);
 
             var animalProductUpdateTask = _animal
                 .UpdateAnimalProductAsync(newaccount.Id, animalProduct!.Id,
@@ -335,7 +335,7 @@ namespace APSS.Tests.Application.App
             var unit = await AnimalProductUnitAddedTheory();
             var account = await _uow.CreateTestingAccountAsync(AccessLevel.Farmer, permissionType);
 
-            var name = RandomGenerator.NextString(RandomGenerator.NextInt(10, 20), RandomStringOptions.Alpha);
+            var name = RandomGenerator.NextString(RandomGenerator.NextInt32(10, 20), RandomStringOptions.Alpha);
 
             var updateProductUnit = _animal.UpdateProductUnit(account.Id, unit!.Id, U => U.Name = name);
 

@@ -30,7 +30,7 @@ public sealed class QueryBuilderExtensionsTest
     public async Task FindFact()
     {
         var logs = Enumerable
-            .Range(0, RandomGenerator.NextInt(10, 20))
+            .Range(0, RandomGenerator.NextInt32(10, 20))
             .Select(_ => ValidEntitiesFactory.CreateValidLog())
             .ToArray();
 
@@ -55,7 +55,7 @@ public sealed class QueryBuilderExtensionsTest
         {
             while (true)
             {
-                var id = RandomGenerator.NextLong(0);
+                var id = RandomGenerator.NextInt64(0);
 
                 if (!logs.Any(l => l.Id == id))
                     return id;
@@ -77,7 +77,7 @@ public sealed class QueryBuilderExtensionsTest
     public async Task ContainsFact()
     {
         var logs = Enumerable
-            .Range(0, RandomGenerator.NextInt(10, 20))
+            .Range(0, RandomGenerator.NextInt32(10, 20))
             .Select(_ => ValidEntitiesFactory.CreateValidLog())
             .ToArray();
 

@@ -55,7 +55,7 @@ public static class ValidEntitiesFactory
         {
             Name = RandomGenerator.NextString(0xff),
             Type = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
+            Quantity = RandomGenerator.NextInt32(1),
             OwnedBy = CreateValidUser(AccessLevel.Farmer),
         };
     }
@@ -69,9 +69,9 @@ public static class ValidEntitiesFactory
         return new AnimalProduct
         {
             Name = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
+            Quantity = RandomGenerator.NextInt32(1),
             Unit = CreateValidAnimalProductUnit(),
-            PeriodTaken = new TimeSpan(RandomGenerator.NextLong()),
+            PeriodTaken = new TimeSpan(RandomGenerator.NextInt64()),
             Producer = CreateValidAnimalGroup(),
         };
     }
@@ -129,9 +129,9 @@ public static class ValidEntitiesFactory
         {
             Name = RandomGenerator.NextString(0xff),
             Address = RandomGenerator.NextString(0xff),
-            Area = RandomGenerator.NextLong(),
-            Latitude = RandomGenerator.NextDouble(-90, 90),
-            Longitude = RandomGenerator.NextDouble(-180, 180),
+            Area = RandomGenerator.NextInt64(),
+            Latitude = RandomGenerator.NextFloat64(-90, 90),
+            Longitude = RandomGenerator.NextFloat64(-180, 180),
             IsUsable = true,
             IsUsed = true,
             OwnedBy = CreateValidUser(AccessLevel.Farmer),
@@ -147,12 +147,12 @@ public static class ValidEntitiesFactory
         return new LandProduct
         {
             CropName = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
+            Quantity = RandomGenerator.NextInt32(1),
             StoringMethod = RandomGenerator.NextString(0xff),
             Unit = CreateValidLandProductUnit(),
             Category = RandomGenerator.NextString(0xff),
             IrrigationMethod = RandomGenerator.NextString(0xff),
-            IrrigationCount = RandomGenerator.NextDouble(),
+            IrrigationCount = RandomGenerator.NextFloat64(),
             IrrigationWaterSource = IrrigationWaterSource.HumanStored,
             IrrigationPowerSource = IrrigationPowerSource.FossileFuel,
             Fertilizer = RandomGenerator.NextString(0xff),
@@ -227,7 +227,7 @@ public static class ValidEntitiesFactory
         return new ProductExpense
         {
             Type = RandomGenerator.NextString(0xff),
-            Price = Convert.ToDecimal(RandomGenerator.NextDouble(0, 1_000_000)),
+            Price = Convert.ToDecimal(RandomGenerator.NextFloat64(0, 1_000_000)),
             SpentOn = RandomGenerator.NextBool()
                 ? CreateValidLandProduct()
                 : CreateValidAnimalProduct()
@@ -284,7 +284,7 @@ public static class ValidEntitiesFactory
     {
         return new LogicalQuestion
         {
-            Index = (uint)RandomGenerator.NextInt(0),
+            Index = (uint)RandomGenerator.NextInt32(0),
             Text = RandomGenerator.NextString(0xff),
             IsRequired = IsRequired
         };
@@ -298,7 +298,7 @@ public static class ValidEntitiesFactory
     {
         return new TextQuestion
         {
-            Index = (uint)RandomGenerator.NextInt(0),
+            Index = (uint)RandomGenerator.NextInt32(0),
             Text = RandomGenerator.NextString(0xff),
             IsRequired = IsRequired
         };
@@ -324,10 +324,10 @@ public static class ValidEntitiesFactory
     {
         return new MultipleChoiceQuestion
         {
-            Index = (uint)RandomGenerator.NextInt(0),
+            Index = (uint)RandomGenerator.NextInt32(0),
             Text = RandomGenerator.NextString(0xff),
             IsRequired = IsRequired,
-            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt(2, 6))
+            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt32(2, 6))
                 .Select(i => CreateValidMultipleChoiceAnswerItem())
                 .ToList(),
             CanMultiSelect = RandomGenerator.NextBool(),
@@ -374,7 +374,7 @@ public static class ValidEntitiesFactory
             Answers = question.CanMultiSelect
                 ? question
                     .CandidateAnswers
-                    .Take(RandomGenerator.NextInt(2, question.CandidateAnswers.Count))
+                    .Take(RandomGenerator.NextInt32(2, question.CandidateAnswers.Count))
                     .ToList()
                 : new List<MultipleChoiceAnswerItem> { question.CandidateAnswers.First() },
         };

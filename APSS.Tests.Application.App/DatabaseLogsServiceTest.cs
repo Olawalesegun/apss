@@ -53,8 +53,8 @@ public sealed class DatabaseLogsServiceTest
     {
         var message = RandomGenerator.NextString(0xff);
         var tags = Enumerable
-            .Range(0, RandomGenerator.NextInt(5, 20))
-            .Select(_ => RandomGenerator.NextString(RandomGenerator.NextInt(5, 20), RandomStringOptions.Alpha))
+            .Range(0, RandomGenerator.NextInt32(5, 20))
+            .Select(_ => RandomGenerator.NextString(RandomGenerator.NextInt32(5, 20), RandomStringOptions.Alpha))
             .ToArray();
 
         var log = await _logsSvc.LogDebugAsync(message, tags);

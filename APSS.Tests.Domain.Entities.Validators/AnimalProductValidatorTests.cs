@@ -23,7 +23,7 @@ public class AnimalProductValidatorTests
         var animalProduct = new AnimalProduct
         {
             Name = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
+            Quantity = RandomGenerator.NextInt32(1),
         };
 
         Assert.IsTrue(_validator.Validate(animalProduct).IsValid);

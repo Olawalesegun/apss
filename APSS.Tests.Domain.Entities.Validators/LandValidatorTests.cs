@@ -24,8 +24,8 @@ public class LandValidatorTests
         {
             Name = RandomGenerator.NextString(0xff),
             OwnedBy = new User { AccessLevel = AccessLevel.Farmer },
-            Latitude = RandomGenerator.NextInt(-90, 90),
-            Longitude = RandomGenerator.NextInt(-180, 180)            
+            Latitude = RandomGenerator.NextInt32(-90, 90),
+            Longitude = RandomGenerator.NextInt32(-180, 180)            
         };
 
         Assert.IsTrue(_validator.Validate(land).IsValid);
@@ -38,8 +38,8 @@ public class LandValidatorTests
         {
             Name = "",
             OwnedBy = new User { AccessLevel = AccessLevel.Group },
-            Latitude = RandomGenerator.NextInt(-100),
-            Longitude = RandomGenerator.NextInt(200)
+            Latitude = RandomGenerator.NextInt32(-100),
+            Longitude = RandomGenerator.NextInt32(200)
         };
 
         var result = _validator.TestValidate(land);

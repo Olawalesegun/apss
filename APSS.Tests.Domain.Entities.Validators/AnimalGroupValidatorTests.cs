@@ -24,7 +24,7 @@ public class AnimalGroupValidatorTests
         {
             Name = RandomGenerator.NextString(0xff),
             Type = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
+            Quantity = RandomGenerator.NextInt32(1),
             OwnedBy = new User { AccessLevel = AccessLevel.Farmer }
         };
 

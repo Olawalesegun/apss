@@ -23,7 +23,7 @@ public class MultipleChoiceQuestionValidatorTests
     {
         var multiple = new MultipleChoiceQuestion
         {
-            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt(2, 6))
+            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt32(2, 6))
                 .Select(i => new MultipleChoiceAnswerItem { Value = RandomGenerator.NextString(0xff) })
                 .ToList()
         };

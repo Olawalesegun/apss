@@ -1,9 +1,9 @@
-using APSS.Domain.Entities;
-using APSS.Tests.Utils;
+using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using System.Linq;
+using APSS.Domain.Entities;
+using APSS.Domain.Services;
+using APSS.Tests.Utils;
 
 namespace APSS.Tests.Util.Tests;
 
@@ -101,10 +101,10 @@ public class RandomGeneratorTests
         const int min = 1;
         const int max = 100;
 
-        var value = RandomGenerator.NextInt(min, max);
+        var value = RandomGenerator.NextInt32(min, max);
 
         Assert.IsTrue(value >= min);
-        Assert.IsTrue(value <= max);
+        Assert.IsTrue(value < max);
     }
 
     [TestMethod]
@@ -113,10 +113,10 @@ public class RandomGeneratorTests
         const long min = 1L;
         const long max = 100L;
 
-        var value = RandomGenerator.NextLong(min, max);
+        var value = RandomGenerator.NextInt64(min, max);
 
         Assert.IsTrue(value >= min);
-        Assert.IsTrue(value <= max);
+        Assert.IsTrue(value < max);
     }
 
     [TestMethod]
@@ -125,10 +125,10 @@ public class RandomGeneratorTests
         const double min = 1.0;
         const double max = 100.0;
 
-        var value = RandomGenerator.NextDouble(min, max);
+        var value = RandomGenerator.NextFloat64(min, max);
 
         Assert.IsTrue(value >= min);
-        Assert.IsTrue(value <= max);
+        Assert.IsTrue(value < max);
     }
 
     [TestMethod]

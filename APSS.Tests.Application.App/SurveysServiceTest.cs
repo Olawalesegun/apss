@@ -209,7 +209,7 @@ public sealed class SurveysServiceTest
         var templateQuestion = ValidEntitiesFactory.CreateValidMultipleChoiceQuestion(true);
 
         var candidateAnswers = Enumerable
-            .Range(3, RandomGenerator.NextInt(5, 10))
+            .Range(3, RandomGenerator.NextInt32(5, 10))
             .Select(_ => RandomGenerator.NextString(30))
             .ToArray();
 
@@ -508,7 +508,7 @@ public sealed class SurveysServiceTest
         await _uow.CommitAsync();
 
         var candidateQuestions = Enumerable
-           .Range(3, RandomGenerator.NextInt(5, 10))
+           .Range(3, RandomGenerator.NextInt32(5, 10))
            .Select(_ => RandomGenerator.NextString(30))
            .ToArray();
 
@@ -526,7 +526,7 @@ public sealed class SurveysServiceTest
             questionAccount.Id,
             entry.Id,
             question.Id,
-           question.CanMultiSelect? question.CandidateAnswers.Take(RandomGenerator.NextInt(2, candidateQuestions.Length)).Select(a => a.Id).ToArray() :
+           question.CanMultiSelect? question.CandidateAnswers.Take(RandomGenerator.NextInt32(2, candidateQuestions.Length)).Select(a => a.Id).ToArray() :
            question.CandidateAnswers.Take(1).Select(a => a.Id).ToArray());
 
         if (!shouldSucceed)
@@ -547,7 +547,7 @@ public sealed class SurveysServiceTest
            account.Id,
            entry.Id,
            question.Id,
-           question.CanMultiSelect ? question.CandidateAnswers.Take(RandomGenerator.NextInt(2, candidateQuestions.Length)).Select(a => a.Id).ToArray() :
+           question.CanMultiSelect ? question.CandidateAnswers.Take(RandomGenerator.NextInt32(2, candidateQuestions.Length)).Select(a => a.Id).ToArray() :
            question.CandidateAnswers.Take(1).Select(a => a.Id).ToArray());
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await invalidAnswerTask);

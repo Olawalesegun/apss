@@ -73,7 +73,7 @@ public class QueryBuilderTests
         using var uow = TestUnitOfWork.Create();
 
         var logs = Enumerable
-            .Range(0, RandomGenerator.NextInt(0, 100))
+            .Range(0, RandomGenerator.NextInt32(0, 100))
             .Select(i => ValidEntitiesFactory.CreateValidLog())
             .ToArray();
 
@@ -122,7 +122,7 @@ public class QueryBuilderTests
         using var uow = TestUnitOfWork.Create();
 
         var logs = Enumerable
-            .Range(0, RandomGenerator.NextInt(0, 200))
+            .Range(0, RandomGenerator.NextInt32(0, 200))
             .Select(i => ValidEntitiesFactory.CreateValidLog())
             .Where(l => l.Message.Length % 2 == 0)
             .ToArray();

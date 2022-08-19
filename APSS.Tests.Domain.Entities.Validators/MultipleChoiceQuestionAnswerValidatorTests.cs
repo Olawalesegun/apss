@@ -24,10 +24,10 @@ public class MultipleChoiceQuestionAnswerValidatorTests
     {
         var question = new MultipleChoiceQuestion
         {
-            Index = (uint)RandomGenerator.NextInt(0),
+            Index = (uint)RandomGenerator.NextInt32(0),
             Text = RandomGenerator.NextString(0xff),
             IsRequired = true,
-            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt(2, 6))
+            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt32(2, 6))
                 .Select(i => new MultipleChoiceAnswerItem { Value = RandomGenerator.NextString(0xff) })
                 .ToList(),
             CanMultiSelect = RandomGenerator.NextBool(),
@@ -39,7 +39,7 @@ public class MultipleChoiceQuestionAnswerValidatorTests
             Answers = question.CanMultiSelect
                 ? question
                     .CandidateAnswers
-                    .Take(RandomGenerator.NextInt(2, question.CandidateAnswers.Count))
+                    .Take(RandomGenerator.NextInt32(2, question.CandidateAnswers.Count))
                     .ToList()
                 : new List<MultipleChoiceAnswerItem> { question.CandidateAnswers.First() },
         };

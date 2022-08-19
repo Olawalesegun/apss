@@ -344,8 +344,8 @@ public sealed class PopulationServiceTest : IDisposable
 
         var account = await _uow.CreateTestingAccountForUserAsync(familyAccount.User.Id, permission);
 
-        var name = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var living = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
+        var name = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var living = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
 
         var updateFamilyTask = _populationSvc
             .UpdateFamilyAsync(account.Id, family!.Id,
@@ -390,10 +390,10 @@ public sealed class PopulationServiceTest : IDisposable
 
         var account = await _uow.CreateTestingAccountForUserAsync(individualAccount.User.Id, permission);
 
-        var name = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var job = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var phone = RandomGenerator.NextString(RandomGenerator.NextInt(9, 15));
-        var address = RandomGenerator.NextString(RandomGenerator.NextInt(10, 30), RandomStringOptions.Mixed);
+        var name = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var job = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var phone = RandomGenerator.NextString(RandomGenerator.NextInt32(9, 15));
+        var address = RandomGenerator.NextString(RandomGenerator.NextInt32(10, 30), RandomStringOptions.Mixed);
 
         var updateIndividualTask = _populationSvc
             .UpdateIndividualAsync(account.Id, individual!.Id,
@@ -450,9 +450,9 @@ public sealed class PopulationServiceTest : IDisposable
 
         Assert.True(await _uow.Skills.Query().ContainsAsync(skill!));
 
-        var name = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var field = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var description = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
+        var name = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var field = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var description = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
 
         var updateSkillTask = _populationSvc
             .UpdateSkillAsync(account.Id, skill!.Id,
@@ -507,8 +507,8 @@ public sealed class PopulationServiceTest : IDisposable
 
         Assert.True(await _uow.Volantaries.Query().ContainsAsync(voluntary!));
 
-        var name = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var field = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
+        var name = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var field = RandomGenerator.NextString(RandomGenerator.NextInt32(5, 15), RandomStringOptions.Alpha);
 
         var updateVoluntaryTask = _populationSvc
             .UpdateVoluntaryAsync(account.Id, voluntary!.Id,

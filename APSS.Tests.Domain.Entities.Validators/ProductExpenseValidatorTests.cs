@@ -23,7 +23,7 @@ public class ProductExpenseValidatorTests
     {
         var expense = new ProductExpense
         {
-            Price = Convert.ToDecimal(RandomGenerator.NextDouble(0, 1_000_000))
+            Price = Convert.ToDecimal(RandomGenerator.NextFloat64(0, 1_000_000))
         };
 
         Assert.IsTrue(_validator.Validate(expense).IsValid);
