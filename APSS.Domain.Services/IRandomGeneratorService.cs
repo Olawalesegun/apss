@@ -48,7 +48,7 @@ public interface IRandomGeneratorService
     /// Generates a random boolean value
     /// </summary>
     /// <returns>The generated value</returns>
-    public bool NextBool();
+    public bool NextBool() => NextInt32(0, 1) == 1;
 
     /// <summary>
     /// Generates a random sequence of bytes
