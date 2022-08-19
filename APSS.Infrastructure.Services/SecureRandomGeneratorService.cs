@@ -14,11 +14,11 @@ public sealed class SecureRandomGeneratorService : IRandomGeneratorService
 
     /// <inheritdoc/>
     public short NextInt16(short min = short.MinValue, short max = short.MaxValue)
-        => min == max ? min : (short)RandomNumberGenerator.GetInt32(min, max);
+        => (short)RandomNumberGenerator.GetInt32(min, max);
 
     /// <inheritdoc/>
     public int NextInt32(int min = int.MinValue, int max = int.MaxValue)
-        => min == max ? min : RandomNumberGenerator.GetInt32(min, max);
+        => RandomNumberGenerator.GetInt32(min, max);
 
     /// <inheritdoc/>
     public long NextInt64(long min = long.MinValue, long max = long.MaxValue)
