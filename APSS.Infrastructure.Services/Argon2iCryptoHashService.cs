@@ -9,7 +9,8 @@ public sealed class Argon2iCryptoHashService : ICryptoHashService
     private const int HASH_PARALLELISM_DEGREE = 16;
     private const int HASH_MEMORY_SIZE = 8192;
     private const int HASH_ITERATION_COUNT = 48;
-    private const int HASH_BYTE_COUNT = 128;
+
+    public const int HASH_BYTE_COUNT = 128;
 
     /// <inheritdoc/>
     public Task<byte[]> HashAsync(byte[] plain, byte[] salt)
