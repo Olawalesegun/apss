@@ -84,7 +84,7 @@ public sealed class AppSettingsConfigurationServiceTests
         var defaultValue = _rndSvc.NextString(0x7f);
 
         Assert.False(_configSvc.HasKey(key));
-        Assert.Equal("default", _configSvc.Get(key, defaultValue));
+        Assert.Equal(defaultValue, _configSvc.Get(key, defaultValue));
     }
 
     [Fact]
