@@ -79,7 +79,7 @@ public sealed class AppSettingsConfigurationService : IConfigurationService
 
     /// <inheritdoc/>
     public bool HasKey(string key)
-        => _config.GetValue<object?>(key, null) == null;
+        => _config.GetValue<object?>(key, null) != null;
 
     /// <inheritdoc/>
     public void Bind<T>(string name, T output)
