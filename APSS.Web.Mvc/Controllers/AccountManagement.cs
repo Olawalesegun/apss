@@ -28,5 +28,10 @@ namespace APSS.Web.Mvc.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> AccountDetails(int id)
+        {
+            return View();
+        }
     }
 }

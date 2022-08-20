@@ -11,10 +11,10 @@
     })
 }
 
-$(".sidebar ul li").on('click', function () {
+/*$(".sidebar ul li").on('click', function () {
     $(".sidebar ul li.active").removeClass('active');
     $(this).addClass('active');
-});
+});*/
 $(".open-btn").on('click', function () {
     $(".sidebar").addClass('active');
 });
@@ -70,7 +70,7 @@ function searchTable() {
 var myVar;
 
 function myFunction() {
-    myVar = setTimeout(showPage, 3000);
+    myVar = setTimeout(showPage, 1000);
 }
 
 function showPage() {
