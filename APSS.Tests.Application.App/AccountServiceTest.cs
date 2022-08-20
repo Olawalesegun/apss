@@ -18,6 +18,7 @@ public sealed class AccountServiceTest
     #region Private fields
 
     private readonly IRandomGeneratorService _rndSvc;
+    private readonly ICryptoHashService _cryptoHashSvc;
     private readonly IUnitOfWork _uow;
     private readonly IAccountsService _accountSvc;
     private readonly IUsersService _usersSvc;
@@ -28,11 +29,13 @@ public sealed class AccountServiceTest
 
     public AccountServiceTest(
         IRandomGeneratorService rndSvc,
+        ICryptoHashService cryptoHashSvc,
         IUnitOfWork uow,
         IAccountsService accountsSvc,
         IUsersService userSvc)
     {
         _rndSvc = rndSvc;
+        _cryptoHashSvc = cryptoHashSvc;
         _uow = uow;
         _accountSvc = accountsSvc;
         _usersSvc = userSvc;
@@ -56,6 +59,7 @@ public sealed class AccountServiceTest
         await _uow.CommitAsync();
 
         var templateAccount = ValidEntitiesFactory.CreateValidAccount(permissions);
+        var password = _rndSvc.NextString(64);
 
         _uow.Accounts.Add(templateAccount);
         await _uow.CommitAsync();
@@ -71,7 +75,7 @@ public sealed class AccountServiceTest
             superAccount.Id,
             user.Id,
             templateAccount.HolderName,
-            templateAccount.PasswordHash,
+            password,
             templateAccount.Permissions);
 
         if (!shouldSucceed)
@@ -80,32 +84,30 @@ public sealed class AccountServiceTest
             return (superAccount, null);
         }
 
-        Account outhersuper;
-
-        if (user.AccessLevel.Equals(AccessLevel.Farmer))
-            outhersuper = await _uow
-                .CreateTestingAccountAsync(user.AccessLevel, PermissionType.Create);
-        else
-            outhersuper = await _uow
-                .CreateTestingAccountAsync(user.AccessLevel.NextLevelBelow(), PermissionType.Create);
+        var otherSuper = await _uow.CreateTestingAccountAsync(
+            user.AccessLevel == AccessLevel.Farmer
+                ? user.AccessLevel
+                : user.AccessLevel.NextLevelBelow(),
+            PermissionType.Create);
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await
               _accountSvc.CreateAsync(
-              outhersuper.Id,
+              otherSuper.Id,
               user.Id,
               templateAccount.HolderName,
-              templateAccount.PasswordHash,
+              password,
               templateAccount.Permissions));
 
-        var accountnew = await createAccountTask;
+        var account = await createAccountTask;
 
-        Assert.True(await _uow.Accounts.Query().ContainsAsync(accountnew));
-        Assert.Equal(user, accountnew.User);
-        Assert.Equal(superAccount.User, accountnew.AddedBy);
-        Assert.Equal(templateAccount.HolderName, accountnew.HolderName);
-        Assert.Equal(templateAccount.Permissions, accountnew.Permissions);
+        Assert.True(await _uow.Accounts.Query().ContainsAsync(account));
+        Assert.Equal(user, account.User);
+        Assert.Equal(superAccount.User, account.AddedBy);
+        Assert.Equal(templateAccount.HolderName, account.HolderName);
+        Assert.Equal(templateAccount.Permissions, account.Permissions);
+        Assert.True(await _cryptoHashSvc.VerifyAsync(password, account.PasswordHash, account.PasswordSalt));
 
-        return (superAccount, accountnew);
+        return (superAccount, account);
     }
 
     [Theory]
