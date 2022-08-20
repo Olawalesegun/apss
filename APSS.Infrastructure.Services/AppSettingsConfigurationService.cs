@@ -26,7 +26,7 @@ public sealed class AppSettingsConfigurationService : IConfigurationService
     /// <summary>
     /// Default constructor
     /// </summary>
-    public AppSettingsConfigurationService() : this(new ConfigurationBuilder().Build())
+    public AppSettingsConfigurationService() : this(new ConfigurationBuilder().AddInMemoryCollection().Build())
     {
     }
 
