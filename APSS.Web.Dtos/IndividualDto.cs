@@ -13,4 +13,5 @@ public class IndividualDto : BaseAuditbleDto
     public string Address { get; set; } = null!;
     public UserDto User { get; set; } = null!;
     public DateTime DateOfBirth { get; set; }
+    public FamilyDto Family { get; set; } = null!;
 }
