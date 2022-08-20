@@ -23,6 +23,13 @@ public sealed class AppSettingsConfigurationService : IConfigurationService
         _config = config;
     }
 
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public AppSettingsConfigurationService() : this(new ConfigurationBuilder().Build())
+    {
+    }
+
     #endregion Ctors
 
     #region Public properties
