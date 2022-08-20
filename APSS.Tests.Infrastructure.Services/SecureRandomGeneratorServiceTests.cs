@@ -6,6 +6,6 @@ using Xunit;
 
 namespace APSS.Tests.Infrastructure.Services;
 
-public sealed class SecureRandomGeneratorServiceTests : RandomGeneratorServiceTests<SimpleRandomGeneratorService>
+public sealed class SecureRandomGeneratorServiceTests : RandomGeneratorServiceTests<SecureRandomGeneratorService>
 {
 }
