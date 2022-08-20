@@ -1,9 +1,5 @@
-﻿<div class="offcanvas offcanvas-end" id="EditIndividual" style="background-color:#F3F4F4 !important " >
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title"> Indvidual </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">   
+﻿@model APSS.Web.Dtos.IndividualDto
+
 <form class=" mt-3 ">
             <!-- 2 column puts for the National number and Phome Number-->
             <div class="center d-flex justify-content-center mb-3 ">
@@ -13,8 +9,8 @@
             </div>
             <!-- Text input for individual name-->
             <div class="form-outline mb-4">
-                <input type="text" id="individual_name" name="individual_name" class="form-control" />
-                <label class="form-label" for="individual_name">Name</label>
+                <input type="text" id="individual_name" asp-for="Name" name="individual_name" class="form-control"  />
+                <label class="form-label" for="individual_name" asp-for="Name">Name</label>
             </div>
             <!-- Text input for job -->
             <div class="form-outline mb-4">

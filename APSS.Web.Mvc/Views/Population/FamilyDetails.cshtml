@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model APSS.Web.Dtos.FamilyDto
 @{
     ViewData["Title"] = "Family Details";
 }
@@ -11,17 +9,17 @@
             <tbody>
                 <tr class="">
                     <td>إسم العائلة</td>
-                    <td> عائلة </td>
+                    <td> @Model.Name </td>
                 </tr>
                 <tr>
                     <td> العنوان</td>
-                    <td>هانا </td>
+                    <td>@Model.LivingLocation </td>
                 </tr>
                 <tr>
                     <td>المستخدم   </td>
-                    <td> واحد</td>
+                    <td> @Model.User.Name</td>
                 </tr>
-                <tr></tr>
+               
             </tbody>
         </table>
         <a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> الأفراد</a>

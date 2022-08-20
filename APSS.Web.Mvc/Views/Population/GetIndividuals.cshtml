@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<APSS.Web.Dtos.IndividualDto>
 
 <partial name="_PupolationNavBar" />
 
@@ -64,30 +60,19 @@
                     </tr> 
                 </thead>
                 <tbody>
-                    <tr class="align-top">
-                        @{
-                            List<string> ls = new List<string>
-                            {
-                                "اسم المنتج",
-                                "اسومي",
-                                "الكمية",
-                                "1000",
-                                "نوع المنتج",
-                                "مدري"
-                            };
-                        }
-                        @await Html.PartialAsync("EditIndividual.cshtml")
-                        @await Html.PartialAsync("../DataManagement/_ConfirmDelete.cshtml",ls)
-                        <td  class="text-break text- text-capitalize align-middle">1</td>
-                        <td  class="text-break text-capitalize align-middle"> John</td>
-                        <td class="text-break text-capitalize align-middle">Doe</td>
-                        <td  class="text-break text-capitalize align-middle">john@example.com </td> 
-                        <td class="text-break text-capitalize align-middle"> John</td>
-                        <td  class="text-break text-capitalize align-middle">Doe</td>
-                        <td  class="text-break text-capitalize align-middle">john@example.com </td> 
-                        <td  class="text-break text-capitalize align-middle"> John</td>
-                        <td class="text-break text-capitalize align-middle">Doe</td>
-                        <td class="text-break text-capitalize align-middle">john@example.com </td>
+                    
+                        @foreach (var item in Model)
+                        {<tr class="align-top">
+                             <td  class="text-break text- text-capitalize align-middle">@item.Id</td>
+                        <td  class="text-break text-capitalize align-middle"> @item.Name</td>
+                        <td class="text-break text-capitalize align-middle">@item.Address</td>
+                        <td  class="text-break text-capitalize align-middle">@item.Address</td> 
+                        <td class="text-break text-capitalize align-middle"> @item.Job</td>
+                        <td  class="text-break text-capitalize align-middle">@item.DateOfBirth</td>
+                        <td  class="text-break text-capitalize align-middle">@item.PhonNumber</td> 
+                        <td  class="text-break text-capitalize align-middle"> @item.Sex</td>
+                        <td class="text-break text-capitalize align-middle">@item.SocialStatus</td>
+                        <td class="text-break text-capitalize align-middle">@item.User</td>
                         <td class="text-break align-middle center">
 
                             <div class=" dropend">
@@ -114,6 +99,8 @@
                             </div>
                         </td>
                     </tr>
+                        }
+                       
                 </tbody>
             </table>
         </div>
@@ -137,28 +124,7 @@
     </nav>
 </div>
 
-    <!--canvas for skill-->
-
-<div class="offcanvas offcanvas-end" id="skill">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title"> Add Skill for Individual </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <partial name="AddSkill" />
-    </div>
-</div>
-   <!--canvas for voluntary-->
-
-<div class="offcanvas offcanvas-end" id="voluntary">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title"> Add Voluntary for Individual </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <partial name="AddVoluntary" />
-    </div>
-</div>
+  
 
 @section scripts{
 <script>

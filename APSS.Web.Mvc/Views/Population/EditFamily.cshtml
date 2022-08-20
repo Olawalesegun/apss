@@ -1,10 +1,5 @@
 ﻿
-<div class="offcanvas offcanvas-end" id="EditFamily" style="background-color:#F3F4F4 !important " >
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title"> Family </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
+@model APSS.Web.Dtos.FamilyDto
 
         <form class=" mt-3 ">
             <!-- 2 column puts for the National number and Phome Number-->
@@ -15,19 +10,19 @@
             </div>
             <div class=" mb-4">
                     <div class="form-outline">
-                        <input type="text" id="family_name" name="family_name" class="form-control" />
-                        <label class="form-label" for="family_name">Name</label>
+                        <input type="text" id="family_name" asp-for="Name" name="family_name" class="form-control" />
+                        <label class="form-label" asp-for="Name">Name</label>
                     </div>
                 
                
                     <div class="form-outline mt-4">
-                        <input type="text" id="LivingLocation" name="LivingLocation" class="form-control" />
-                        <label class="form-label" for="LivingLocation">Living Location </label>
+                        <input type="text" id="LivingLocation" asp-for="LivingLocation" name="LivingLocation" class="form-control" />
+                        <label class="form-label" asp-for="LivingLocation">Living Location </label>
                     </div>
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary w-100   mb-4 mt-4"><i class="fa-solid fa-pen-to-square fa-lg"></i>Edit</button>
+            <button type="submit" class="btn btn-primary w-100   mb-4 mt-4" asp-action="UpdateFamily"><i class="fa-solid fa-pen-to-square fa-lg"></i>Edit</button>
         </form>
     </div>
 </div>
