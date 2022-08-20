@@ -35,7 +35,7 @@ public sealed class AppSettingsConfigurationService : IConfigurationService
     #region Public properties
 
     /// <inheritdoc/>
-    public string this[string key] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public string this[string key] { get => Get(key); set => Set(key, value); }
 
     #endregion Public properties
 
