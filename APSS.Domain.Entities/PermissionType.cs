@@ -15,6 +15,11 @@ public enum PermissionType
 
 public static class PermissionTypeExtensions
 {
+    /// <summary>
+    /// Gets the permission values as strings
+    /// </summary>
+    /// <param name="permissions"></param>
+    /// <returns></returns>
     public static IEnumerable<string> GetPermissionValues(this PermissionType permissions)
     {
         if (permissions.HasFlag(PermissionType.Read))
@@ -30,6 +35,11 @@ public static class PermissionTypeExtensions
             yield return "create";
     }
 
+    /// <summary>
+    /// Gets display string of permissions
+    /// </summary>
+    /// <param name="permissions"></param>
+    /// <returns></returns>
     public static string ToFormattedString(this PermissionType permissions)
         => $"{{ {string.Join(", ", permissions.GetPermissionValues())} }}";
 }
