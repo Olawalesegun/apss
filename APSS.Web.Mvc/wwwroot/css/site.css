@@ -524,6 +524,11 @@ div.scrollmenu {
     }
 }
 
+.userAccount {
+    position: relative;
+    overflow: auto;
+}
+
 @keyframes animatebottom {
     from {
         bottom: -100px;
