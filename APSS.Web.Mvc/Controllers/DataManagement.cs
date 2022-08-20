@@ -165,6 +165,18 @@ namespace APSS.Web.Mvc.Controllers
             return View("Index");
         }
 
+        public async Task<IActionResult> EditAnimalGroup(int id)
+        {
+            AnimalGroupDto animalGroupDto = new AnimalGroupDto();
+            return View(animalGroupDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAnimalGroup(AnimalGroupDto animalGroupDto)
+        {
+            return Ok("Edit Animal Group");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Search()
         {
