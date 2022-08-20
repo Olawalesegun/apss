@@ -15,11 +15,11 @@ public interface ICryptoHashService
     /// <summary>
     /// Asynchronously verifies a hash
     /// </summary>
-    /// <param name="hash">The hash to be verified</param>
     /// <param name="plain">The plain data of the hash</param>
+    /// <param name="hash">The hash to be verified</param>
     /// <param name="salt">The salt used for hashing</param>
     /// <returns>True if the hash is valid, false otherwise</returns>
-    Task<bool> VerifyAsync(byte[] hash, byte[] plain, byte[] salt);
+    Task<bool> VerifyAsync(byte[] plain, byte[] hash, byte[] salt);
 
     /// <summary>
     /// Asynchronously hashes a string
@@ -33,13 +33,13 @@ public interface ICryptoHashService
     /// <summary>
     /// Asynchronously verifies a hash
     /// </summary>
-    /// <param name="hash">The base64-encoded hash to be verified</param>
     /// <param name="plain">The plain string of the hash</param>
+    /// <param name="hash">The base64-encoded hash to be verified</param>
     /// <param name="salt">The salt used for hashing</param>
     /// <returns>True if the hash is valid, false otherwise</returns>
-    Task<bool> VerifyAsync(string hash, string plain, string salt)
+    Task<bool> VerifyAsync(string plain, string hash, string salt)
         => VerifyAsync(
-            Convert.FromBase64String(hash),
             Encoding.UTF8.GetBytes(plain),
+            Convert.FromBase64String(hash),
             Convert.FromBase64String(salt));
 }

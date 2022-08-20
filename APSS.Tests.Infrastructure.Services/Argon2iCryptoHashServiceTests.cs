@@ -33,9 +33,9 @@ public class Argon2iCryptoHashServiceTests
 
         Assert.Equal(Argon2iCryptoHashService.HASH_BYTE_COUNT, hash.Length);
 
-        Assert.False(await _cryptoHashSvc.VerifyAsync(hash, notPlain, salt));
-        Assert.False(await _cryptoHashSvc.VerifyAsync(hash, plain, notSalt));
-        Assert.True(await _cryptoHashSvc.VerifyAsync(hash, plain, salt));
+        Assert.False(await _cryptoHashSvc.VerifyAsync(notPlain, hash, salt));
+        Assert.False(await _cryptoHashSvc.VerifyAsync(plain, hash, notSalt));
+        Assert.True(await _cryptoHashSvc.VerifyAsync(plain, hash, salt));
     }
 
     [Fact]
@@ -51,7 +51,7 @@ public class Argon2iCryptoHashServiceTests
 
         Assert.Equal(base64Hash, Convert.ToBase64String(binaryHash));
 
-        Assert.True(await _cryptoHashSvc.VerifyAsync(base64Hash, plain, base64Salt));
-        Assert.True(await _cryptoHashSvc.VerifyAsync(binaryHash, Encoding.UTF8.GetBytes(plain), salt));
+        Assert.True(await _cryptoHashSvc.VerifyAsync(plain, base64Hash, base64Salt));
+        Assert.True(await _cryptoHashSvc.VerifyAsync(Encoding.UTF8.GetBytes(plain), binaryHash, salt));
     }
 }

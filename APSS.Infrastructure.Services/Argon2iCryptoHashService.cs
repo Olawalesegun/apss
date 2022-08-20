@@ -27,6 +27,6 @@ public sealed class Argon2iCryptoHashService : ICryptoHashService
     }
 
     /// <inheritdoc/>
-    public async Task<bool> VerifyAsync(byte[] hash, byte[] plain, byte[] salt)
+    public async Task<bool> VerifyAsync(byte[] plain, byte[] hash, byte[] salt)
         => hash.SequenceEqual(await HashAsync(plain, salt));
 }
