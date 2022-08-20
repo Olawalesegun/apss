@@ -1,18 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APSS.Web.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers
 {
     public class LandController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            LandAndProductUnit landAndUnit = new LandAndProductUnit
+            {
+                landDto = new LandDto { Name = "land1", Id = 1, Address = "djskhao" },
+                LandList = new List<LandDto>
+                {
+                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
+                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
+                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                },
+                ProductUnitDto = new LandProductUnitDto { Name = "P1", Id = 1 },
+                ProductUnitList = new List<LandProductUnitDto>
+                {
+                    new LandProductUnitDto{Name ="P1", Id=1},
+                    new LandProductUnitDto{Name ="P2", Id=2}
+                }
+            };
+            List<LandDto> landDto = new List<LandDto>();
+
+            return View(landAndUnit);
         }
 
         // GET: LandController/Add a new land
         public ActionResult Add()
         {
-            return View();
+            var land = new LandDto();
+            return View(land);
         }
 
         // POST: LandController/Add a new land
@@ -30,21 +50,49 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        public ActionResult Details(long landId)
+        public ActionResult Details(long Id)
         {
-            return View();
+            var landAndProduct = new LandAndLandProduct
+            {
+                landDto = new LandDto { Name = "land1", Id = 1, Address = "djskhao" },
+                LandList = new List<LandDto>
+                {
+                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
+                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
+                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                }
+            };
+
+            landAndProduct.landDto = landAndProduct.LandList.Where(i => i.Id == Id).First();
+            landAndProduct.landDto.OwnedBy = new UserDto
+            {
+                Name = "Farouq"
+            };
+            return View(landAndProduct);
         }
 
         // GET: LandController/Update land
-        public ActionResult Update(long landId)
+        public ActionResult Update(long Id)
         {
-            return View();
+            var landAndProduct = new LandAndLandProduct
+            {
+                landDto = new LandDto { Name = "land1", Id = 1, Address = "djskhao" },
+                LandList = new List<LandDto>
+                {
+                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123, Latitude=123, Longitude=456, IsUsable=false, IsUsed=false},
+                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321, Latitude=123, Longitude=456, IsUsable=false, IsUsed=false},
+                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555, Latitude=123, Longitude=456, IsUsable=false, IsUsed=false},
+                }
+            };
+
+            LandDto land = landAndProduct.LandList.Where(i => i.Id == Id).First();
+            return View(land);
         }
 
         // POST: LandController/Update land
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(long landId, IFormCollection collection)
+        public ActionResult Update(LandDto landDto)
         {
             try
             {

@@ -1,4 +1,6 @@
-﻿@await Html.PartialAsync("_dataNavBar")
+﻿@model APSS.Web.Dtos.LandAndLandProduct
+
+@await Html.PartialAsync("_dataNavBar")
 <div class="container-fluid  border p-2  col-ms-12  mt-0  rounded ml-2 " id="">
 
     <form class="row  justify-content-between mb-3 ">
@@ -53,38 +55,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        @await Html.PartialAsync("~/Views/LandProductExpense/_add.cshtml")
-                        <td class="text-break text-capitalize align-middle">1</td>
-                        <td class="text-break text-capitalize align-middle"> John</td>
-                        <td class="text-break text-capitalize align-middle">Doe</td>
-                        <td class="text-break text-capitalize align-middle">
-                            john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
-                        </td>
-                        <td class="align-middle center">
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
+                    @await Html.PartialAsync("~/Views/LandProductExpense/_add.cshtml", @Model.landProductDto)
+                    @foreach (var item in Model.ProductList)
+                    {
+                        <tr>
+
+                            <td class="text-break text-capitalize align-middle">@item.Id</td>
+                            <td class="text-break text-capitalize align-middle">@item.CropName</td>
+                            <td class="text-break text-capitalize align-middle">@item.HarvestStart</td>
+                            <td class="text-break text-capitalize align-middle">@item.HarvestEnd </td>
+                            <td class="align-middle center">
+                                <div class=" dropend">
+                                    <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Details" asp-route-id=""><div class="d-flex justify-content-between"><i class="fa-solid fa-info"></i> Details </div></a></li>
-                                    <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#landProductExpense"><div class="d-flex justify-content-between"><i class="fa-solid fa-plus mx-2"></i> Add Expense </div></a></li>
-                                    <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Update" asp-route-id=""><div class="d-flex justify-content-between"><i class="fa-solid fa-pen-to-square mx-2"></i> Update </div></a></li>
-                                    <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Delete" asp-route-id=""><div class="d-flex justify-content-between"><i class="fa-solid fa-trash-can mx-2"></i> Delete </div></a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                        </td>
-                    </tr>
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Details" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-info"></i> Details </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-pen-to-square mx-2"></i> Update </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="add" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-plus mx-2"></i> Add Expense </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-trash-can mx-2"></i> Delete </div></a></li>
+                                        <li><a class="dropdown-item" href="#">Active</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

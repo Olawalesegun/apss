@@ -1,33 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model APSS.Web.Dtos.LandProductDto
 <div class="container-fluid  mx-auto ml-0 ">
     <div class="row d-flex justify-content-start">
         <div class="col-xl-7 col-lg-8 col-md-9 col-11  shadow-sm pb-3">
             <div class="d-flex  justify-content-center pb-4 pt-4">
                 <div class=""> <h3 class="text-decoration-underline textOverflow ">Add New Land Product</h3></div>
             </div>
-            <form class="form-card" onsubmit="">
+            <form class="form-card" method="post" asp-controller="LandProduct" asp-action="Add">
+                <input type="hidden" asp-for="ProducerId" />
+                <div asp-validation-summary="ModelOnly"></div>
                 <!-- row 1 -->
                 <div class="row justify-content-between  ">
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <label for="season" class="form-label textOverflow"> Select Season</label>
-                        <select class="form-select" name="season_type" aria-label="season type" id="select_season">
+                        <label asp-for="Seasons" class="form-label textOverflow"> Select Season</label>
+                        <select class="form-select" asp-for="SeasonId" asp-items="@(new SelectList(Model.Seasons,"Id","Name"))">
                             <option selected>Select Season</option>
-                            <option value="1">season 1</option>
-                            <option value="2">season 2</option>
-                            <option value="3">season 3</option>
                         </select>
                     </div>
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <label for="product_unit " class="form-label textOverflow"> Select Product Unit</label>
-                        <select class="form-select" name="product_unit" aria-label="product unit" id="selectProductUnit">
+                        <label asp-for="Unit" class="form-label textOverflow"> Select Product Unit</label>
+                        <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model.Unit,"Id","Name"))">
                             <option selected>Select Product Unit</option>
-                            <option value="1">uint 1</option>
-                            <option value="2">unit 2</option>
-                            <option value="3">unit 3</option>
                         </select>
                     </div>
                 </div>
@@ -36,15 +28,15 @@
                 <div class="row justify-content-between  ">
                     <div class=" mt-3  col-sm-6 flex-column form-group d-flex">
                         <div class="form-outline">
-                            <input type="text" name="productName" class="form-control" aria-label="Text input for product name">
-                            <label for="productName" class="form-label textOverflow">Prodcut Name</label>
+                            <input type="text" class="form-control" asp-for="CropName" />
+                            <label asp-for="CropName" class="form-label textOverflow"></label>
                         </div>
                     </div>
 
                     <div class=" col-sm-6 mt-3 form-group flex-column d-flex">
                         <div class="form-outline form-group" id="">
-                            <input type="text" name="productQuantity" class="form-control" id="productQuantity">
-                            <label for="productQuantity" class="form-label textOverflow">Product Quantity</label>
+                            <input type="text" asp-for="Quantity" class="form-control" />
+                            <label asp-for="Quantity" class="form-label textOverflow"></label>
                         </div>
                     </div>
                 </div>
@@ -75,15 +67,15 @@
                     <!-- 1 -->
                     <div class=" col-sm-6 mt-3 flex-column form-group d-flex">
                         <div class="form-outline form-group" id="">
-                            <input type="text" name="irrigationCountMethod" class="form-control" id="irrigationCountMethod " />
-                            <label for="irrigationCountmthoded" class="form-label textOverflow">IrrigationCount Method</label>
+                            <input type="text" asp-for="IrrigationMethod" class="form-control" />
+                            <label asp-for="IrrigationMethod" class="form-label textOverflow"></label>
                         </div>
                     </div>
                     <!-- 2 -->
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
                         <div class="form-outline form-group" id="">
-                            <input type="text" name="storageMethod" class="form-control" id="storageMethod" />
-                            <label for="storageMethod" class="form-label">Storage Method</label>
+                            <input type="text" class="form-control" asp-for="StoringMethod" />
+                            <label asp-for="StoringMethod" class="form-label"></label>
                         </div>
                     </div>
                 </div>
@@ -92,16 +84,16 @@
                     <!-- 1 -->
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
                         <div class="form-outline form-group" id="">
-                            <input type="text" name="fertilizerType" class="form-control" id="fertilizerType" />
-                            <label for="fertilizerType" class="form-label">fertilizer Type</label>
+                            <input type="text" asp-for="Fertilizer" class="form-control" />
+                            <label asp-for="Fertilizer" class="form-label"></label>
                         </div>
                     </div>
                     <!-- 2 -->
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="form-outline form-group" id="">
-                            <input type="text" name="selection_five" class="form-control" id="exampleFormControlInput1" placeholder="selection...">
-                            <label for="selection_five" class="form-label">Product Category</label>
-                        </div>
+                        <label asp-for="Unit"></label>
+                        <select asp-for="UnitId" asp-items="@(new SelectList(Model.Unit, "Id", "Name"))">
+                            <option></option>
+                        </select>
                     </div>
                 </div>
                 <!-- row 6 -->

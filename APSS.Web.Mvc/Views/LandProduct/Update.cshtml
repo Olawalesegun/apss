@@ -1,87 +1,90 @@
-﻿@{
+﻿@model APSS.Web.Dtos.LandProductDto
+@{
     ViewData["title"] = "Update land product page";
 }
+<div class="container-fluid">
+    <div class="d-flex">
+        <form class=" mt-3 align-items-center " method="post" asp-controller="LandProduct" asp-action="Update">
+            <div class="d-flex justify-content-center">
+                <h5 class="">Edit The Land Information</h5>
+            </div>
+            <div class="form-outline mb-4">
+                <input type="text" asp-for="CropName" class="form-control" />
+                <label class="form-label" asp-for="CropName"></label>
+            </div>
+            <div class="form-outline mb-4">
+                <input type="datetime" asp-for="HarvestStart" class="form-control" />
+                <label class="form-label" asp-for="HarvestStart"></label>
+            </div>            <div class="form-outline mb-4">
+                <input type="datetime" asp-for="HarvestEnd" class="form-control" />
+                <label class="form-label" asp-for="HarvestEnd"></label>
+            </div>
+            <!-- Text input for quantity-->
+            <div class="form-outline mb-4">
+                <input type="number" asp-for="Quantity" class="form-control" />
+                <label class="form-label" asp-for="Quantity"></label>
+            </div>
 
-<div class="">
-    <h5 class="offcanvas-title">Update Land Product Information</h5>
+            <!-- Text input irrigationCount-->
+            <div class="form-outline mb-4">
+                <input type="number" asp-for="IrrigationCount" class="form-control" />
+                <label class="form-label" asp-for="IrrigationCount"></label>
+            </div>
+
+            <!-- Text input storingMethod-->
+            <div class="form-outline mb-4">
+                <input type="text" asp-for="StoringMethod" class="form-control" />
+                <label class="form-label" asp-for="StoringMethod"></label>
+            </div>
+
+            <div class="form-outline mb-4">
+                <label for="specificSizeSelect">Irrigation Water Source</label>
+                <select class="form-select" id="specificSizeSelect">
+                    <option selected>Choose...</option>
+                    <option value="1">Natural</option>
+                    <option value="2">HumanStored</option>
+                    <option value="3">OnDemand</option>
+                </select>
+            </div>
+
+            <!-- isGovernmentFunded input -->
+            <div class="form-outline mb-4">
+                <div class="form-check-inline">
+
+                    <h5 class="inline">is Government Funded:</h5>
+                </div>
+                <br />
+                <div class="form-check form-check-inline">
+
+                    <input class="form-check-input hiden" type="radio" asp-for="IsGovernmentFunded" value="true" />
+                    <label class="form-check-label" asp-for="IsGovernmentFunded">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" value="false" asp-for="IsGovernmentFunded" />
+                    <label class="form-check-label" asp-for="IsGovernmentFunded"> No </label>
+                </div>
+            </div>
+            <br />
+            <!-- hasGreenhouse input -->
+            <div class="form-check-inline">
+
+                <h5 class="inline"> has Green house: </h5>
+            </div>
+            <br />
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" type="radio" asp-for="HasGreenhouse" value="true" />
+                <label class="form-check-label" asp-for="HasGreenhouse">Yes</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="false" asp-for="HasGreenhouse" />
+                <label class="form-check-label" asp-for="HasGreenhouse"> No </label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+        </form>
+    </div>
 </div>
-
-<form class=" mt-3 align-items-center " method="post" asp-action="">
-    <div class="form-outline mb-4">
-        <input type="text" id="landProduct_name" name="landProduct_name" class="form-control" />
-        <label class="form-label" for="landProduct_name">Land Product Name</label>
-    </div>
-    <div class="form-outline mb-4">
-        <input type="datetime" id="harvestStart" name="harvestStart" class="form-control" />
-        <label class="form-label" for="harvestStart">Harvest Start</label>
-    </div>            <div class="form-outline mb-4">
-        <input type="datetime" id="harvestEnd" name="harvestEnd" class="form-control" />
-        <label class="form-label" for="harvestEnd">Harvest End</label>
-    </div>
-    <!-- Text input for quantity-->
-    <div class="form-outline mb-4">
-        <input type="number" id="quantity" name="quantity" class="form-control" />
-        <label class="form-label" for="quantity">Quantity</label>
-    </div>
-
-    <!-- Text input irrigationCount-->
-    <div class="form-outline mb-4">
-        <input type="number" id="irrigationCount" name="irrigationCount" class="form-control" />
-        <label class="form-label" for="irrigationCount">Irrigation Count</label>
-    </div>
-
-    <!-- Text input storingMethod-->
-    <div class="form-outline mb-4">
-        <input type="number" id="storingMethod" name="storingMethod" class="form-control" />
-        <label class="form-label" for="storingMethod">Storing Method </label>
-    </div>
-
-    <div class="form-outline mb-4">
-        <label for="specificSizeSelect">Irrigation Water Source</label>
-        <select class="form-select" id="specificSizeSelect">
-            <option selected>Choose...</option>
-            <option value="1">Natural</option>
-            <option value="2">HumanStored</option>
-            <option value="3">OnDemand</option>
-        </select>
-    </div>
-
-    <!-- isGovernmentFunded input -->
-    <div class="form-outline mb-4">
-        <div class="form-check-inline">
-
-            <h5 class="inline">is Government Funded:</h5>
-        </div>
-        <br />
-        <div class="form-check form-check-inline">
-
-            <input class="form-check-input hiden" type="radio" name="isGovernmentFunded" id="yes" value="true" checked />
-            <label class="form-check-label" for="yes">Yes</label>
-        </div>
-
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="false" id="no" name="isGovernmentFunded" />
-            <label class="form-check-label" for="no"> No </label>
-        </div>
-    </div>
-    <br />
-    <!-- hasGreenhouse input -->
-    <div class="form-check-inline">
-
-        <h5 class="inline"> has Green house: </h5>
-    </div>
-    <br />
-    <div class="form-check form-check-inline">
-
-        <input class="form-check-input hiden" type="radio" name="hasGreenhouse" id="yes" value="true" checked />
-        <label class="form-check-label" for="yes">Yes</label>
-    </div>
-
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="false" id="no" name="hasGreenhouse" />
-        <label class="form-check-label" for="no"> No </label>
-    </div>
-
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
-</form>

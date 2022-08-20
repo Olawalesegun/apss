@@ -1,96 +1,43 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewData["Title"] = "Land Product Detials";
+﻿@{
+    ViewData["Title"] = "Land Details";
 }
-@await Html.PartialAsync("~/Views/LandProductExpense/_add.cshtml")
+
 <div class="card mt-2">
+    <div class="d-inline">
+    </div>
     <div class="card-body">
-        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:4px"></i> <h3>معلومات المنتج</h3></div>
+        <div class="d-flex ">
 
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>معلومات الارض</h3>
+        </div>
         <table class="table user-view-table m-0 t ">
-            <tbody style="font-size:14px">
+            <tbody>
                 <tr class="">
-                    <td>اسم المنتج</td>
-                    <td> قات</td>
+                    <td>@Html.DisplayNameFor(m => m.landDto.Name)</td>
+                    <td>@Model.landDto.Name</td>
                 </tr>
                 <tr>
-                    <td>تاريخ الانتاج/الحصاد </td>
-                    <td>01/23/2018 (قبل 12 يوم)</td>
+                    <td>@Html.DisplayNameFor(a => a.landDto.Address)</td>
+                    <td>@Model.landDto.Address</td>
                 </tr>
                 <tr>
-                    <td>الكمية   </td>
-                    <td>1000 علاقية</td>
+                    <td>@Html.DisplayNameFor(a => a.landDto.Area)</td>
+                    <td>@Model.landDto.Area</td>
                 </tr>
                 <tr>
-                    <td>رقم الباقة   </td>
-                    <td>0387268</td>
-                </tr>
-                <tr>
-                    <td>النوع  </td>
-                    <td>فواكة </td>
-                </tr>
-                <tr>
-                    <td>طريقة التخزين  </td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>طريقة الري  </td>
-                    <td>الغمر</td>
-                </tr>
-                <tr>
-                    <td>عدد مرات الري  </td>
-                    <td>7 مرات  </td>
-                </tr>
-                <tr>
-                    <td>مصدر الري   </td>
-                    <td><span class="">الابار </span></td>
-                </tr>
-                <tr>
-                    <td>مصدر  طاقة الري   </td>
-                    <td><span class="">مولدات </span></td>
-                </tr>
-                <tr>
-                    <td>   سماد   </td>
-                    <td><span class="">-- </span></td>
-                </tr>
-                <tr>
-                    <td>   مبيد حشري   </td>
-                    <td><span class="">-- </span></td>
-                </tr>
-                <tr>
-                    <td>   بداية الحصاد      </td>
-                    <td><span class="">10-6-2022 </span></td>
-                </tr>
-                <tr>
-                    <td>  نهاية الحصاد    </td>
-                    <td><span class="">20-6-2022 </span></td>
-                </tr>
-                <tr>
-                    <td>دعم حكوم-/حاص</td>
-                    <td>لا يوجد</td>
-                </tr>
-
-                <tr>
-                    <td>الموسم</td>
-                    <td>--</td>
-                </tr>
-                <tr>
-                    <td>اسم الارض المنتجة</td>
-                    <td>--</td>
+                    <td>@Html.DisplayNameFor(c => c.landDto.OwnedBy)</td>
+                    <td>@Model.landDto.OwnedBy.Name</td>
                 </tr>
             </tbody>
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <button class="btn btn-outline-primary btn-rounded  mx-1"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
-            <button class="btn btn-outline-primary btn-rounded  mx-1"><i class="fa-solid fa-plus mx-2"></i><span> <a data-bs-toggle="offcanvas" data-bs-target="#landProductExpense">اضافة تكلفة</a> </span> </button>
-            <button class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
-            <button class="btn btn-outline-danger btn-rounded mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Land" asp-action="Index"> <i class="fa-solid fa-share mx-2"></i><span> رجوع </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="LandProduct" asp-action="add" asp-route-Id="@Model.landDto.Id"> <i class="fa-solid fa-plus mx-2"></i><span> اضافة منتج </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="DataManagement" asp-action="AllAnimalProduct"><i class="fa-solid fa-angle-down"></i><span class="">المنتجات </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </a>
         </div>
-
-        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
+        @*<a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> المنتجات</a>*@
     </div>
-    <hr class="border-light m-0">
 </div>
