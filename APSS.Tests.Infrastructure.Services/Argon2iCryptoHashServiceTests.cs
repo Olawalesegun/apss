@@ -9,16 +9,26 @@ namespace APSS.Tests.Infrastructure.Services;
 
 public class Argon2iCryptoHashServiceTests
 {
+    #region Fields
+
     private const int SALT_LENGTH = 128;
 
-    private readonly IRandomGeneratorService _rndSvc;
     private readonly ICryptoHashService _cryptoHashSvc;
+    private readonly IRandomGeneratorService _rndSvc;
+
+    #endregion Fields
+
+    #region Public Constructors
 
     public Argon2iCryptoHashServiceTests()
     {
         _rndSvc = new SecureRandomGeneratorService();
         _cryptoHashSvc = new Argon2iCryptoHashService();
     }
+
+    #endregion Public Constructors
+
+    #region Public Methods
 
     [Fact]
     public async Task BinaryFullCycleFact()
@@ -54,4 +64,6 @@ public class Argon2iCryptoHashServiceTests
         Assert.True(await _cryptoHashSvc.VerifyAsync(plain, base64Hash, base64Salt));
         Assert.True(await _cryptoHashSvc.VerifyAsync(Encoding.UTF8.GetBytes(plain), binaryHash, salt));
     }
+
+    #endregion Public Methods
 }
