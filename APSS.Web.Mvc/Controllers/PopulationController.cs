@@ -9,7 +9,7 @@ namespace APSS.Web.Mvc.Controllers
     public class PopulationController : Controller
     {
         private readonly IPopulationService _populationSvc;
-        private UserDto _userDto = new UserDto { Name = "yemen", AccessLevel = AccessLevel.Root, UserStatus = UserStatus.Active, SupervisedBy = null };
+        private readonly UserDto userDto = new() { Name = "yemen", AccessLevel = AccessLevel.Root, userStatus = UserStatus.Active, SupervisedBy = null };
         private List<FamilyDto> families = null!;
         private List<IndividualDto> individuals = null!;
 
@@ -20,11 +20,11 @@ namespace APSS.Web.Mvc.Controllers
             //families List
             families = new List<FamilyDto>
            {
-               new FamilyDto{Id=0,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=_userDto},
-               new FamilyDto{Id=1,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=_userDto},
-               new FamilyDto{Id=2,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=_userDto},
-               new FamilyDto{Id=3,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=_userDto},
-               new FamilyDto{Id=4,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=_userDto}
+               new FamilyDto{Id=0,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=userDto},
+               new FamilyDto{Id=1,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=userDto},
+               new FamilyDto{Id=2,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=userDto},
+               new FamilyDto{Id=3,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=userDto},
+               new FamilyDto{Id=4,Name="ali",CreatedAt=DateTime.Now, LivingLocation="sana'a",User=userDto}
            };
 
             //Individual
@@ -32,19 +32,19 @@ namespace APSS.Web.Mvc.Controllers
             {
                 new IndividualDto{Id=0,Name="ali",Job="programmer",Address="sana",PhonNumber="777777777777",
                     Sex=IndividualSex.Male,SocialStatus=SocialStatus.Unmarried,NationalId="5453535",
-                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=_userDto},
+                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=userDto},
                 new IndividualDto{Id=1,Name="ali",Job="programmer",Address="sana",PhonNumber="777777777777",
                     Sex=IndividualSex.Male,SocialStatus=SocialStatus.Unmarried,NationalId="5453535",
-                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=_userDto},
+                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=userDto},
                 new IndividualDto{Id=2,Name="ali",Job="programmer",Address="sana",PhonNumber="777777777777",
                     Sex=IndividualSex.Male,SocialStatus=SocialStatus.Unmarried,NationalId="5453535",
-                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=_userDto},
+                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=userDto},
                 new IndividualDto{Id=3,Name="ali",Job="programmer",Address="sana",PhonNumber="777777777777",
                     Sex=IndividualSex.Male,SocialStatus=SocialStatus.Unmarried,NationalId="5453535",
-                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=_userDto},
+                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=userDto},
                 new IndividualDto{Id=4,Name="ali",Job="programmer",Address="sana",PhonNumber="777777777777",
                     Sex=IndividualSex.Male,SocialStatus=SocialStatus.Unmarried,NationalId="5453535",
-                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=_userDto},
+                    CreatedAt=DateTime.Now,DateOfBirth=DateTime.Today,User=userDto},
             };
         }
 
@@ -96,7 +96,7 @@ namespace APSS.Web.Mvc.Controllers
                     Id = 434,
                     Name = family.Name,
                     LivingLocation = family.LivingLocation,
-                    User = _userDto,
+                    User = userDto,
                     CreatedAt = DateTime.Now
                 };
                 families.Add(family);
