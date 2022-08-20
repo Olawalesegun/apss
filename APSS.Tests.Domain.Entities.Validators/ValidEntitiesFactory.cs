@@ -39,7 +39,8 @@ public static class ValidEntitiesFactory
         {
             HolderName = _rndSvc.NextString(0xff),
             NationalId = _rndSvc.NextString(0xff),
-            PasswordHash = String.Empty,
+            PasswordHash = _rndSvc.NextString(0x7f),
+            PasswordSalt = _rndSvc.NextString(0x7f),
             PhoneNumber = string.Empty,
             SocialStatus = SocialStatus.Unspecified,
             Job = string.Empty,
