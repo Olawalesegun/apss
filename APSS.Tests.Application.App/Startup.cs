@@ -2,6 +2,7 @@
 
 using APSS.Application.App;
 using APSS.Domain.Services;
+using APSS.Infrastructure.Services;
 using APSS.Tests.Infrastructure.Repositories.EntityFramework.Util;
 using APSS.Tests.Utils;
 
@@ -13,6 +14,7 @@ public class Startup
     {
         services.AddScoped(_ => TestUnitOfWork.Create());
 
+        services.AddTransient<ICryptoHashService, Argon2iCryptoHashService>();
         services.AddTransient<IRandomGeneratorService, SimpleRandomGeneratorService>();
         services.AddTransient<IAccountsService, AccountsService>();
         services.AddTransient<IUsersService, UsersService>();
