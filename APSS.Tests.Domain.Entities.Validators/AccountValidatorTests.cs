@@ -27,6 +27,8 @@ public class AccountValidatorTests
         {
             HolderName = _rndSvc.NextString(0xff),
             NationalId = _rndSvc.NextString(0xff),
+            PasswordHash = _rndSvc.NextString(128),
+            PasswordSalt = _rndSvc.NextString(128),
         };
 
         Assert.IsTrue(_validator.Validate(account).IsValid);
