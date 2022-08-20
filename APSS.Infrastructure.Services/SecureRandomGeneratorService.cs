@@ -26,7 +26,15 @@ public sealed class SecureRandomGeneratorService : BasicRandomStringGeneratorSer
 
     /// <inheritdoc/>
     public override double NextFloat64(double min = double.MinValue, double max = double.MaxValue)
-        => (1.0 / NextInt32(2)) * (max - min) + min;
+    {
+        if (min >= max)
+            throw new ArgumentException("max bound cannot be lower or equal to min bound");
+
+        var randomBytes = NextBytes(sizeof(long)).ToArray();
+        var value = BitConverter.ToDouble(randomBytes);
+
+        return Math.Abs(value % (max - min)) + min;
+    }
 
     /// <inheritdoc/>
     public override IEnumerable<byte> NextBytes(int length)
