@@ -1,7 +1,8 @@
-﻿@{
+﻿@model APSS.Web.Dtos.LandAndLandProduct
+@{
     ViewData["Title"] = "Land Details";
 }
-@await Html.PartialAsync("~/Views/LandProduct/_add.cshtml")
+
 <div class="card mt-2">
     <div class="d-inline">
     </div>
@@ -13,25 +14,30 @@
         <table class="table user-view-table m-0 t ">
             <tbody>
                 <tr class="">
-                    <td> اسم الارض</td>
-                    <td> المشهد</td>
+                    <td>@Html.DisplayNameFor(m => m.landDto.Name)</td>
+                    <td>@Model.landDto.Name</td>
                 </tr>
                 <tr>
-                    <td> الموقع</td>
-                    <td>إب\السبرة\عزلة عينان </td>
+                    <td>@Html.DisplayNameFor(a => a.landDto.Address)</td>
+                    <td>@Model.landDto.Address</td>
                 </tr>
                 <tr>
-                    <td>المساحة   </td>
-                    <td> 1000 م^2</td>
+                    <td>@Html.DisplayNameFor(a => a.landDto.Area)</td>
+                    <td>@Model.landDto.Area</td>
                 </tr>
-                <tr></tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(c => c.landDto.OwnedBy)</td>
+                    <td>@Model.landDto.OwnedBy.Name</td>
+                </tr>
             </tbody>
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <button class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-plus mx-2"></i><span><a data-bs-toggle="offcanvas" data-bs-target="#landProduct"> اضافة منتج </a></span> </button>
-            <button class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
-            <button class="btn btn-outline-danger btn-rounded mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Land" asp-action="Index"> <i class="fa-solid fa-share mx-2"></i><span> رجوع </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="LandProduct" asp-action="add" asp-route-Id="@Model.landDto.Id"> <i class="fa-solid fa-plus mx-2"></i><span> اضافة منتج </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="DataManagement" asp-action="AllAnimalProduct"><i class="fa-solid fa-angle-down"></i><span class="">المنتجات </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </a>
         </div>
         @*<a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> المنتجات</a>*@
     </div>

@@ -1,80 +1,88 @@
-﻿@*<form class=" mt-3 align-items-center " method="post" asp-action="">
+﻿<div class="container-fluid">
+    <div class="col-sm-6 d-flex">
+        <form class=" mt-3 align-items-center " method="post" asp-action="">
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Add New Land Product
+                </h3>
+            </div>
+            <div class="form-outline mb-4">
+                <input type="text" id="landProduct_name" name="landProduct_name" class="form-control" />
+                <label class="form-label" for="landProduct_name">Land Product Name</label>
+            </div>
+            <div class="form-outline mb-4">
+                <input type="datetime" id="harvestStart" name="harvestStart" class="form-control" />
+                <label class="form-label" for="harvestStart">Harvest Start</label>
+            </div>            <div class="form-outline mb-4">
+                <input type="datetime" id="harvestEnd" name="harvestEnd" class="form-control" />
+                <label class="form-label" for="harvestEnd">Harvest End</label>
+            </div>
+            <!-- Text input for quantity-->
+            <div class="form-outline mb-4">
+                <input type="number" id="quantity" name="quantity" class="form-control" />
+                <label class="form-label" for="quantity">Quantity</label>
+            </div>
 
-    <div class=" col-4 mb-4">
-    <label class="form-label" for="Phone_Number">NameFamily</label>
-    <input type="text" id="NameFamily" name="Name_Family" placeholder="enter name family" class="form-control" />
+            <!-- Text input irrigationCount-->
+            <div class="form-outline mb-4">
+                <input type="number" id="irrigationCount" name="irrigationCount" class="form-control" />
+                <label class="form-label" for="irrigationCount">Irrigation Count</label>
+            </div>
+
+            <!-- Text input storingMethod-->
+            <div class="form-outline mb-4">
+                <input type="number" id="storingMethod" name="storingMethod" class="form-control" />
+                <label class="form-label" for="storingMethod">Storing Method </label>
+            </div>
+
+            <div class="form-outline mb-4">
+                <label for="specificSizeSelect">Irrigation Water Source</label>
+                <select class="form-select" id="specificSizeSelect">
+                    <option selected>Choose...</option>
+                    <option value="1">Natural</option>
+                    <option value="2">HumanStored</option>
+                    <option value="3">OnDemand</option>
+                </select>
+            </div>
+
+            <!-- isGovernmentFunded input -->
+            <div class="form-outline mb-4">
+                <div class="form-check-inline">
+
+                    <h5 class="inline">is Government Funded:</h5>
+                </div>
+                <br />
+                <div class="form-check form-check-inline">
+
+                    <input class="form-check-input hiden" type="radio" name="isGovernmentFunded" id="yes" value="true" checked />
+                    <label class="form-check-label" for="yes">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" value="false" id="no" name="isGovernmentFunded" />
+                    <label class="form-check-label" for="no"> No </label>
+                </div>
+            </div>
+            <br />
+            <!-- hasGreenhouse input -->
+            <div class="form-check-inline">
+
+                <h5 class="inline"> has Green house: </h5>
+            </div>
+            <br />
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" type="radio" name="hasGreenhouse" id="yes" value="true" checked />
+                <label class="form-check-label" for="yes">Yes</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="false" id="no" name="hasGreenhouse" />
+                <label class="form-check-label" for="no"> No </label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+        </form>
     </div>
-    <!-- Text input for Education Level-->
-    <div class="col-4">
-    <label class="Living_Location" for="Living_Location">Living Location</label>
-    <input type="text" id="Living_Location" placeholder="enter living location family" name="Living_Location" class="form-control" />
-    </div>
-
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary  mt-4 col-2 ">Add</button>
-    </form>*@
-
-<div class="">
-    <h5 class="offcanvas-title">Enter The Land Information</h5>
 </div>
-
-<form class=" mt-3 align-items-center " method="post" asp-action="">
-    <div class="col-4 mb-4">
-        <input type="text" id="land_name" name="land_name" class="form-control" />
-        <label class="form-label" for="land_name">Land Name</label>
-    </div>
-    <div class="col-4 mb-4">
-        <input type="number" id="area" name="area" class="form-control" />
-        <label class="form-label" for="area">Area</label>
-    </div>
-    <!-- Text input for longitude-->
-    <div class=" col-4 mb-4">
-        <input type="number" id="longitude" name="longitude" class="form-control" />
-        <label class="form-label" for="longitude">Longitude</label>
-    </div>
-    <!-- Text input for latitude-->
-    <div class="col-4 mb-4">
-        <input type="number" id="latitude" name="latitude" class="form-control" />
-        <label class="form-label" for="latitude">Latitude</label>
-    </div>
-
-    <!-- Text input address-->
-    <div class="col-4 mb-4">
-        <input type="text" id="address" class="form-control" />
-        <label class="form-label" for="address">Address</label>
-    </div>    <!-- IsUsable input -->
-    <div class="form-check-inline">
-
-        <h5 class="inline">IsUsable:</h5>
-    </div>
-    <div class="form-check form-check-inline">
-
-        <input class="form-check-input hiden" type="radio" name="isUsable" id="yes" value="true" checked />
-        <label class="form-check-label" for="yes">Yes</label>
-    </div>
-
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="false" id="no" name="isUsable" />
-        <label class="form-check-label" for="no"> No </label>
-    </div>
-
-    <br />
-    <!-- IsUsed input -->
-    <div class="form-check-inline">
-
-        <h5 class="inline"> IsUsed: </h5>
-    </div>
-    <div class="form-check form-check-inline">
-
-        <input class="form-check-input hiden" type="radio" name="isUsed" id="yes" value="true" checked />
-        <label class="form-check-label" for="yes">Yes</label>
-    </div>
-
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="false" id="no" name="isUsed" />
-        <label class="form-check-label" for="no"> No </label>
-    </div>
-
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block mt-4 col-2">Add</button>
-</form>

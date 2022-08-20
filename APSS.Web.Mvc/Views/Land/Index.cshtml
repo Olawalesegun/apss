@@ -1,33 +1,21 @@
-﻿@await Html.PartialAsync("_dataNavBar")
+﻿@model APSS.Web.Dtos.LandAndProductUnit
+
+@await Html.PartialAsync("_dataNavBar")
 
 <div class="container-fluid  border p-2  col-ms-12  mt-0  rounded ml-2 " id="">
 
-    <form class="row  justify-content-between mb-3 ">
-        <div class="col-sm-6">
-
-            <div class="input-group ">
-
-                <span style="height:20px">
-                    <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
-
-                        <i class="fal fa-search " style="color:white;"></i>
-                    </a>
-                </span>
-                <span class="form-outline " style="width:83%;padding-top:0px">
-                    <input type="search" class="form-control" id="search" onkeyup="searchTable()">
-                    <label class="form-label">Search</label>
-                </span>
-                @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    </ul>*@
+    <form class="row d-flex justify-content-between  d-inline mb-3 ">
+        <div class=" mb-2 col-sm  d-flex">
+            <button type="button" class="btn btn-primary search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+            <div class="form-outline w-100 search-input">
+                <input type="search" class="form-control" id="search" onkeyup="searchTable()" />
+                <label class="form-label">بحث</label>
             </div>
         </div>
-        <div class="col-sm-2  ">
+
+        <div class="col-sm mb-2 ">
 
             <select class="form-select " id="searchby">
                 <option selected>Choose search by</option>
@@ -36,8 +24,11 @@
                 <option value="3">Address</option>
             </select>
         </div>
-
-        <div class="col-sm-3 d-flex  justify-content-end">
+        <div class="col-sm d-flex   d-inline mb-2">
+            <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#land">
+                <i class="fa-solid fa-plus"></i>
+                Unit
+            </a>
             <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#land">
                 <i class="fa-solid fa-plus"></i>
                 Add
@@ -61,31 +52,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-
-                        @await Html.PartialAsync("~/Views/LandProduct/_add.cshtml")
-                        <td class="text-break text-capitalize align-middle">1</td>
-                        <td class="text-break text-capitalize align-middle"> John</td>
-                        <td class="text-break text-capitalize align-middle">Doe</td>
-                        <td class="text-break text-capitalize align-middle">
-                            john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
-                        </td>
-                        <td class="align-middle center">
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
+                    @foreach (var item in Model.LandList)
+                    {
+                        <tr>
+                            <td class="text-break text-capitalize align-middle">@item.Id</td>
+                            <td class="text-break text-capitalize align-middle"> @item.Name</td>
+                            <td class="text-break text-capitalize align-middle">@item.Address</td>
+                            <td class="text-break text-capitalize align-middle">@item.Area</td>
+                            <td class="align-middle center">
+                                <div class=" dropend">
+                                    <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="Land" asp-action="Details" asp-route-id=""><div class="d-flex justify-content-between"><i class="fa-solid fa-info"></i> Details </div></a></li>
-                                    <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#landProduct"><div class="d-flex justify-content-between"><i class="fa-solid fa-plus mx-2"></i> Add Product </div></a></li>
-                                    <li><a class="dropdown-item" asp-controller="Land" asp-action="Update" asp-route-id=""><div class="d-flex justify-content-between"><i class="fa-solid fa-pen-to-square mx-2"> </i> Update </div></a></li>
-                                    <li><a class="dropdown-item" asp-controller="Land" asp-action="Delete" asp-route-id=""><div class="d-flex justify-content-between"><i class="fa-solid fa-trash-can mx-2"></i> Delete </div></a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="Land" asp-action="Details" ><div class="d-flex justify-content-between"><i class="fa-solid fa-info"></i> Details </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="LandProduct" asp-action="add" ><div class="d-flex justify-content-between"><i class="fa-solid fa-plus mx-2"></i> Add Product </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="Land" asp-action="Update" ><div class="d-flex justify-content-between"><i class="fa-solid fa-pen-to-square mx-2"> </i> Update </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="Land" asp-action="Delete" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-trash-can mx-2"></i> Delete </div></a></li>
+                                        <li><a class="dropdown-item" href="#">Active</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -114,7 +104,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-        <partial name="_add.cshtml" />
+        <partial name="_add.cshtml" model="@Model.landDto" />
     </div>
 </div>
 @section scripts{
