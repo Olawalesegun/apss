@@ -78,7 +78,7 @@ public interface IConfigurationService
     /// </summary>
     /// <param name="key">The key of the configuration entry</param>
     /// <param name="value">The value to set</param>
-    void Set(string key, string value);
+    void Set(string key, object value);
 
     /// <summary>
     /// Checks for the existence of a key in the configuration dictionary

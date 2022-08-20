@@ -74,8 +74,8 @@ public sealed class AppSettingsConfigurationService : IConfigurationService
         => _config.GetValue(key, defaultValue);
 
     /// <inheritdoc/>
-    public void Set(string key, string value)
-        => _config[key] = value;
+    public void Set(string key, object value)
+        => _config[key] = value.ToString();
 
     /// <inheritdoc/>
     public bool HasKey(string key)
