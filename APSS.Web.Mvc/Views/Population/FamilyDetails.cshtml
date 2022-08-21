@@ -1,0 +1,33 @@
+﻿@model APSS.Web.Dtos.FamilyDto
+@{
+    ViewData["Title"] = "Family Details";
+}
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i><i class="fa-solid fa-people-roof fa-lg"></i><h3>معلومات العائلة </h3></div>        <table class="table user-view-table m-0 t ">
+            <tbody>
+                <tr class="">
+                    <td>إسم العائلة</td>
+                    <td> @Model.Name </td>
+                </tr>
+                <tr>
+                    <td> العنوان</td>
+                    <td>@Model.LivingLocation </td>
+                </tr>
+                <tr>
+                    <td>المستخدم   </td>
+                    <td> @Model.User.Name</td>
+                </tr>
+               
+            </tbody>
+        </table>
+        <a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> الأفراد</a>
+    <br />
+        <div cllass="d-inline pt-2">
+            <button class="btn btn-outline-primary btn-rounded  mx-1"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+        <button  class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
+        <button class="btn btn-outline-danger btn-rounded mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model APSS.Web.Dtos.FamilyIndividualDto
+
+
+        <form class=" mt-3 " >
+            <!-- 2 column puts for the National number and Phome Number-->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Edit Family Individual
+                </h3>
+            </div>
+            <div class=" mb-4">
+                    <div class="form-outline">
+                        <input type="text" id="family_name" asp-for="family" name="family_name" class="form-control" />
+                        <label class="form-label" asp-for="family">Name Family</label>
+                    </div>
+                
+               
+                    <div class="form-outline mt-4">
+                        <input type="text" id="Individual_name" asp-for="Individual" name="Individual_name" class="form-control" />
+                        <label class="form-label" asp-for="Individual"> Name Individual </label>
+                    </div>
+
+                     <div class="form-check">
+                <label class="form-check-label" asp-for="IsProvider">
+               IsProvider
+           </label>
+           <input class="form-check-input" type="checkbox" asp-for="IsProvider" value="" id="flexCheckDefault">
+            </div>
+           <div class="form-check">
+               <label class="form-check-label" asp-for="IsParent">
+              Isparent
+           </label>
+            <input class="form-check-input" asp-for="IsParent" type="checkbox" value="" id="flexCheckChecked" >
+            </div>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" asp-action="EditFamilyIndividual" class="btn btn-primary w-100   mb-4 mt-4"><i class="fa-solid fa-pen-to-square fa-lg"></i>Edit</button>
+        </form>
+    </div>
+</div>
+
