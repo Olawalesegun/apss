@@ -2,7 +2,7 @@
 
 namespace APSS.Web.Dtos;
 
-public class FamilyDto : BaseAuditbleDto
+public class FamilyAddDto : BaseAuditbleDto
 {
     [Required(ErrorMessage = "يجب ادخال اسم العائلة")]
     [Display(Name = "إسم العائلة")]
@@ -12,6 +12,5 @@ public class FamilyDto : BaseAuditbleDto
     [Display(Name = "  عنوان العائلة ")]
     public string LivingLocation { get; set; } = null!;
 
-    [Display(Name = "إسم المستخدم  ")]
     public UserDto User { get; set; } = null!;
 }

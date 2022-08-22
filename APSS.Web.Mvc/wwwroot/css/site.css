@@ -25,6 +25,10 @@ input {
     width: 270px;
 }
 
+.familyicon {
+    margin-left: -2px;
+}
+
 .other-systems div {
     background-color: #1783D2;
     padding: 10px;
@@ -33,6 +37,10 @@ input {
     .other-systems div a {
         color: white;
     }
+
+.form-outline {
+    border-color: aqua;
+}
 
 .other-systems {
     background-color: white;

@@ -1,0 +1,145 @@
+﻿@model IEnumerable<APSS.Web.Dtos.FamilyDto>
+
+@{
+    ViewData["Title"] = "Families";
+}
+
+<partial name="_PupolationNavBar" />
+
+
+
+<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
+
+    <form class="row gx-3 gy-2 align-items-center mb-3 ">
+        <div class="col-sm-6">
+
+            <div class="input-group">
+                <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
+
+                    <i class="fal fa-search " style="color:white"></i>
+                </a>
+
+                <input type="text" class="form-control" id="search" placeholder="Search..." onkeyup="searchTable()">
+
+                <button class="btn btn-outline-secondary dropdown-toggle border border-black-100 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-2 ">
+            <label class="visually-hidden" for="searchby">Search By</label>
+            <select class="form-select " id="searchby">
+                <option selected>Choose search by</option>
+                <option value="1" >Name</option>
+                <option value="2">Id</option>
+                <option value="3">Address</option>
+            </select>
+        </div>
+          <div class="col-sm-3 d-flex   justify-content-end">
+            <a class=" btn btn-primary " role="button" asp-action="AddFamily">
+                <i class="fa-solid fa-plus"></i>
+               إضافة عائلة
+            </a>
+        </div>
+    </form>
+
+    <div class="col-sm-12  ">
+
+        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x ">
+
+            <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
+
+                <thead>
+                    <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
+                        <th style="width:8%;" class=" text-capitalize align-middle" >ID</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">Living Location</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Users</th>
+                        <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                       
+                       
+
+                        @foreach (var item in Model)
+                        {
+                          <tr class="align-top">
+
+                         <td class="text-break text-capitalize align-middle" >@item.Id</td>
+                        <td class="text-break text-capitalize align-middle"> @item.Name</td>
+                        <td class="text-break text-capitalize align-middle">@item.LivingLocation</td>
+                        <td class="text-break text-capitalize align-middle">@item.User.Name</td>
+                        <td class="align-middle center">
+
+                            <div class=" dropend">
+                                <a class="" role="button" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" asp-action="FamilyDetails" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>تفاصيل</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                    <li><a class="dropdown-item" asp-action="DeleteFamily" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li class="">
+                                        <a class="dropdown-item" asp-action="AddIndividual" asp-route-Id="@item.Id">
+                                        <div class="d-flex justify-content-between"> <span>إضافة فرد</span>  <span><i class="fa-solid fa-user-plus"></i> </span> </div></a>
+                                    </li>
+                                    <li class="">
+                                        <a class="dropdown-item" asp-action="UpdateFamily" asp-route-Id="@item.Id">
+                                        <div class="d-flex justify-content-between"> <span> تحديث </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                        }
+                       
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav aria-label="Page navigation example" class="float-left pl-5">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+   
+</div>
+
+
+    <!--canvas add individual-->
+
+
+
+@section scripts{
+<script>
+       $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+    $("#populationManagement").addClass('active');
+    });
+    document.getElementById("nav-system-name").innerHTML="Populatoin Management";
+    document.getElementById("media-system-name").innerHTML="Populatoin Management";
+   
+    $("#Family").AddClass('actives');
+    $("#Individual").removeClass('actives');
+   
+</script>
+}
