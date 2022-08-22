@@ -36,7 +36,11 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> AnimalProduct()
         {
-            return View();
+            var total = new AnimalGroupAndProductDto
+            {
+                AnimalProductList = new List<AnimalProductDto>(),
+            };
+            return View(total);
         }
 
         public async Task<IActionResult> CreateAnimalProduct(int id)
