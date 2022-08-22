@@ -125,11 +125,8 @@
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-action="AnimalDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
                                         <li><a class="dropdown-item btn-link" asp-controller="DataManagement" asp-action="DeleteAnimalGroup"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-controller="DataManagement" asp-action="EditAnimalGroup"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
                                         <li class="">
-                                            @* <a class="dropdown-item text-decoration-none" role="button" data-bs-toggle="offcanvas" data-bs-target="#animal_product">
-
-                                                <div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
-                                                </a>*@
                                             <a class="dropdown-item text-decoration-none" role="button" asp-route-Id="@item.Id" asp-controller="DataManagement" asp-action="CreateAnimalProduct">
 
                                                 <div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>

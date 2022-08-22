@@ -34,7 +34,6 @@ svc.AddScoped<ISurveysService, SurveysService>();
 
 #endregion Services
 
-
 var app = builder.Build();
 
 // Environmen-dependent settings
@@ -52,6 +51,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Population}/{action=GetFamilies}/{id?}");
 
 app.Run();
