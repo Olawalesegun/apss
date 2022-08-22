@@ -1,9 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using APSS.Application.App;
 using APSS.Domain.Repositories;
 using APSS.Domain.Services;
 using APSS.Infrastructure.Repositores.EntityFramework;
-
-using Microsoft.EntityFrameworkCore;
+using APSS.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +23,8 @@ svc.AddDbContext<ApssDbContext>(cfg =>
 svc.AddScoped<IUnitOfWork, ApssUnitOfWork>();
 
 // Services
+svc.AddSingleton<IRandomGeneratorService, SecureRandomGeneratorService>();
+svc.AddSingleton<ICryptoHashService, Argon2iCryptoHashService>();
 svc.AddScoped<ILogsService, DatabaseLogsService>();
 svc.AddScoped<IUsersService, UsersService>();
 svc.AddScoped<IPermissionsService, PermissionsService>();
@@ -33,7 +35,6 @@ svc.AddScoped<IPopulationService, PopulationService>();
 svc.AddScoped<ISurveysService, SurveysService>();
 
 #endregion Services
-
 
 var app = builder.Build();
 
