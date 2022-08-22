@@ -54,6 +54,8 @@ public interface IPopulationService
         long familyId,
         string name,
         string address,
+        string job,
+        string phonNumber,
         IndividualSex sex,
         bool isParent = false,
         bool isProvider = false
