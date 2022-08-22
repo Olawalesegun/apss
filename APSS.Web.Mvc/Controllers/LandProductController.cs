@@ -63,7 +63,7 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: LandProductController/_Add a new landProduct
-        public ActionResult _Add(long landId)
+        public ActionResult XsAdd(long landId)
         {
             var landProductWith = new LandAndLandProduct
             {
