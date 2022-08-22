@@ -24,16 +24,6 @@
                 <option value="3">Address</option>
             </select>
         </div>
-        <div class="col-sm d-flex   d-inline mb-2">
-            <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#animalGroup">
-                <i class="fa-solid fa-plus"></i>
-                Unit
-            </a>
-            <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="">
-                <i class="fa-solid fa-plus"></i>
-                Add
-            </a>
-        </div>
     </form>
 
     <div class="col-sm-12  ">
@@ -71,9 +61,9 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" asp-controller="AccountManagement" asp-action="AccountDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item btn-link" asp-controller="AccountManagement" asp-action="DeleteUser"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-controller="AccountManagement" asp-action="EditUser"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-controller="AccountManagement" asp-action="UserAccounts"><div class="d-flex justify-content-between"> <span>Accounts</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-controller="AccountManagement" asp-action="DeleteAccount"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-controller="AccountManagement" asp-action="EditAccount"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
+                                        @*<li><a class="dropdown-item btn-link" asp-controller="AccountManagement" asp-action="UserAccounts"><div class="d-flex justify-content-between"> <span>Accounts</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>*@
                                     </ul>
                                 </div>
                             </td>

@@ -27,7 +27,7 @@
             </select>
         </div>
         <div class="col-sm d-flex   d-inline mb-2">
-            <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#animalGroup">
+            <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#AddUnit">
                 <i class="fa-solid fa-plus"></i>
                 وحدة
             </a>
@@ -132,13 +132,8 @@
 </div>
 <!-- canvas body for create-->
 @await Html.PartialAsync("_AddAnimalGroup.cshtml",Model.AnimalGroup)
-@*<partial name="_AddAnimalGroup.cshtml", />*@
-<!--
-    canvas for add animal product
--->
-@*<div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-    </div>*@
+
+@await Html.PartialAsync("_AddUnit.cshtml",Model.AnimalProductUnit)
 
 @section scripts{
 <script>
