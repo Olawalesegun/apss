@@ -71,4 +71,25 @@ public static class AccessLevelExtensions
 
         return (AccessLevel)(((uint)self) >> 1);
     }
+
+    /// <summary>
+    /// Gets the roles representation of access level
+    /// </summary>
+    /// <param name="self"></param>
+    /// <returns></returns>
+    public static string ToRolesString(this AccessLevel self)
+    {
+        var roles = new List<string>();
+
+        for (var level = AccessLevel.Farmer; ; level = level.NextLevelUpove())
+        {
+            if (self.HasFlag(level))
+                roles.Add(level.ToString());
+
+            if (level == AccessLevel.Root)
+                break;
+        }
+
+        return String.Join(',', roles);
+    }
 }

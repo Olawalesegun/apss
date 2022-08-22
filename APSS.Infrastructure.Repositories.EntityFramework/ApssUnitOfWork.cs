@@ -105,6 +105,10 @@ public sealed class ApssUnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
     public IRepository<Question> Questions => new Repository<Question, QuestionValidator>(_ctx.Questions);
 
     /// <inheritdoc/>
+    public IRepository<RefreshToken> RefreshTokens
+        => new Repository<RefreshToken, RefreshTokenValidator>(_ctx.RefreshTokens);
+
+    /// <inheritdoc/>
     public IRepository<Season> Sessions => new Repository<Season, SeasonValidator>(_ctx.Sessions);
 
     /// <inheritdoc/>

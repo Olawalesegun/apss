@@ -1,10 +1,13 @@
-﻿using APSS.Domain.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -14,6 +17,7 @@ public class MultipleChoiceQuestionAnswerValidatorTests
     #region Private fields
 
     private readonly MultipleChoiceQuestionAnswerValidator _validator = new();
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
 
@@ -24,13 +28,13 @@ public class MultipleChoiceQuestionAnswerValidatorTests
     {
         var question = new MultipleChoiceQuestion
         {
-            Index = (uint)RandomGenerator.NextInt(0),
-            Text = RandomGenerator.NextString(0xff),
+            Index = (uint)_rndSvc.NextInt32(),
+            Text = _rndSvc.NextString(0xff),
             IsRequired = true,
-            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt(2, 6))
-                .Select(i => new MultipleChoiceAnswerItem { Value = RandomGenerator.NextString(0xff) })
+            CandidateAnswers = Enumerable.Range(2, _rndSvc.NextInt32(2, 6))
+                .Select(i => new MultipleChoiceAnswerItem { Value = _rndSvc.NextString(0xff) })
                 .ToList(),
-            CanMultiSelect = RandomGenerator.NextBool(),
+            CanMultiSelect = _rndSvc.NextBool(),
         };
 
         var multiple = new MultipleChoiceQuestionAnswer
@@ -39,7 +43,7 @@ public class MultipleChoiceQuestionAnswerValidatorTests
             Answers = question.CanMultiSelect
                 ? question
                     .CandidateAnswers
-                    .Take(RandomGenerator.NextInt(2, question.CandidateAnswers.Count))
+                    .Take(_rndSvc.NextInt32(2, question.CandidateAnswers.Count))
                     .ToList()
                 : new List<MultipleChoiceAnswerItem> { question.CandidateAnswers.First() },
         };

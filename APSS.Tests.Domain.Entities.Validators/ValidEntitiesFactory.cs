@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using APSS.Domain.Entities;
 using APSS.Tests.Utils;
 
@@ -8,6 +9,8 @@ namespace APSS.Tests.Domain.Entities.Validators;
 
 public static class ValidEntitiesFactory
 {
+    private static readonly SimpleRandomGeneratorService _rndSvc = new();
+
     /// <summary>
     /// Creates a valid user object
     /// </summary>
@@ -17,7 +20,7 @@ public static class ValidEntitiesFactory
     {
         return new User
         {
-            Name = RandomGenerator.NextString(30),
+            Name = _rndSvc.NextString(30),
             AccessLevel = accessLevel,
             SupervisedBy = accessLevel != AccessLevel.Root
                 ? CreateValidUser(accessLevel.NextLevelUpove())
@@ -34,14 +37,15 @@ public static class ValidEntitiesFactory
     {
         return new Account
         {
-            HolderName = RandomGenerator.NextString(0xff),
-            NationalId = RandomGenerator.NextString(0xff),
-            PasswordHash = String.Empty,
+            HolderName = _rndSvc.NextString(0xff),
+            NationalId = _rndSvc.NextString(0xff),
+            PasswordHash = _rndSvc.NextString(0x7f),
+            PasswordSalt = _rndSvc.NextString(0x7f),
             PhoneNumber = string.Empty,
             SocialStatus = SocialStatus.Unspecified,
             Job = string.Empty,
             Permissions = permissions,
-            User = CreateValidUser(RandomGenerator.NextAccessLevel()),
+            User = CreateValidUser(_rndSvc.NextAccessLevel()),
         };
     }
 
@@ -53,9 +57,9 @@ public static class ValidEntitiesFactory
     {
         return new AnimalGroup
         {
-            Name = RandomGenerator.NextString(0xff),
-            Type = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
+            Name = _rndSvc.NextString(0xff),
+            Type = _rndSvc.NextString(0xff),
+            Quantity = _rndSvc.NextInt32(1),
             OwnedBy = CreateValidUser(AccessLevel.Farmer),
         };
     }
@@ -68,10 +72,10 @@ public static class ValidEntitiesFactory
     {
         return new AnimalProduct
         {
-            Name = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
+            Name = _rndSvc.NextString(0xff),
+            Quantity = _rndSvc.NextInt32(1),
             Unit = CreateValidAnimalProductUnit(),
-            PeriodTaken = new TimeSpan(RandomGenerator.NextLong()),
+            PeriodTaken = new TimeSpan(_rndSvc.NextInt64()),
             Producer = CreateValidAnimalGroup(),
         };
     }
@@ -84,7 +88,7 @@ public static class ValidEntitiesFactory
     {
         return new AnimalProductUnit
         {
-            Name = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
         };
     }
 
@@ -96,8 +100,8 @@ public static class ValidEntitiesFactory
     {
         return new Family
         {
-            Name = RandomGenerator.NextString(0xff),
-            LivingLocation = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
+            LivingLocation = _rndSvc.NextString(0xff),
             AddedBy = CreateValidUser(AccessLevel.Group),
         };
     }
@@ -110,10 +114,10 @@ public static class ValidEntitiesFactory
     {
         return new Individual
         {
-            Name = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
             Sex = IndividualSex.Male,
             DateOfBirth = DateTime.Now,
-            Address = RandomGenerator.NextString(0xff),
+            Address = _rndSvc.NextString(0xff),
             SocialStatus = SocialStatus.Unspecified,
             AddedBy = CreateValidUser(AccessLevel.Group),
         };
@@ -127,11 +131,11 @@ public static class ValidEntitiesFactory
     {
         return new Land
         {
-            Name = RandomGenerator.NextString(0xff),
-            Address = RandomGenerator.NextString(0xff),
-            Area = RandomGenerator.NextLong(),
-            Latitude = RandomGenerator.NextDouble(-90, 90),
-            Longitude = RandomGenerator.NextDouble(-180, 180),
+            Name = _rndSvc.NextString(0xff),
+            Address = _rndSvc.NextString(0xff),
+            Area = _rndSvc.NextInt64(),
+            Latitude = _rndSvc.NextFloat64(-90, 90),
+            Longitude = _rndSvc.NextFloat64(-180, 180),
             IsUsable = true,
             IsUsed = true,
             OwnedBy = CreateValidUser(AccessLevel.Farmer),
@@ -146,17 +150,17 @@ public static class ValidEntitiesFactory
     {
         return new LandProduct
         {
-            CropName = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
-            StoringMethod = RandomGenerator.NextString(0xff),
+            CropName = _rndSvc.NextString(0xff),
+            Quantity = _rndSvc.NextInt32(1),
+            StoringMethod = _rndSvc.NextString(0xff),
             Unit = CreateValidLandProductUnit(),
-            Category = RandomGenerator.NextString(0xff),
-            IrrigationMethod = RandomGenerator.NextString(0xff),
-            IrrigationCount = RandomGenerator.NextDouble(),
+            Category = _rndSvc.NextString(0xff),
+            IrrigationMethod = _rndSvc.NextString(0xff),
+            IrrigationCount = _rndSvc.NextFloat64(),
             IrrigationWaterSource = IrrigationWaterSource.HumanStored,
             IrrigationPowerSource = IrrigationPowerSource.FossileFuel,
-            Fertilizer = RandomGenerator.NextString(0xff),
-            Insecticide = RandomGenerator.NextString(0xff),
+            Fertilizer = _rndSvc.NextString(0xff),
+            Insecticide = _rndSvc.NextString(0xff),
             Producer = CreateValidLand(),
             ProducedIn = CreateValidSeason(),
             HarvestStart = DateTime.Now,
@@ -172,7 +176,7 @@ public static class ValidEntitiesFactory
     {
         return new LandProductUnit
         {
-            Name = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
         };
     }
 
@@ -186,8 +190,8 @@ public static class ValidEntitiesFactory
         {
             Individual = ValidEntitiesFactory.CreateValidIndividual(),
             Family = ValidEntitiesFactory.CreateValidFamily(),
-            IsParent = RandomGenerator.NextBool(),
-            IsProvider = RandomGenerator.NextBool(),
+            IsParent = _rndSvc.NextBool(),
+            IsProvider = _rndSvc.NextBool(),
         };
     }
 
@@ -199,7 +203,7 @@ public static class ValidEntitiesFactory
     {
         return new Season
         {
-            Name = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
             StartsAt = DateTime.Now,
             EndsAt = DateTime.Now
         };
@@ -213,7 +217,7 @@ public static class ValidEntitiesFactory
     {
         return new Log
         {
-            Message = RandomGenerator.NextString(0xff),
+            Message = _rndSvc.NextString(0xff),
             TimeStamp = DateTime.Now,
         };
     }
@@ -226,9 +230,9 @@ public static class ValidEntitiesFactory
     {
         return new ProductExpense
         {
-            Type = RandomGenerator.NextString(0xff),
-            Price = Convert.ToDecimal(RandomGenerator.NextDouble(0, 1_000_000)),
-            SpentOn = RandomGenerator.NextBool()
+            Type = _rndSvc.NextString(0xff),
+            Price = Convert.ToDecimal(_rndSvc.NextFloat64(0, 1_000_000)),
+            SpentOn = _rndSvc.NextBool()
                 ? CreateValidLandProduct()
                 : CreateValidAnimalProduct()
         };
@@ -242,8 +246,8 @@ public static class ValidEntitiesFactory
     {
         return new Skill
         {
-            Name = RandomGenerator.NextString(0xff),
-            Field = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
+            Field = _rndSvc.NextString(0xff),
             BelongsTo = CreateValidIndividual()
         };
     }
@@ -256,8 +260,8 @@ public static class ValidEntitiesFactory
     {
         return new Voluntary
         {
-            Name = RandomGenerator.NextString(0xff),
-            Field = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
+            Field = _rndSvc.NextString(0xff),
             OfferedBy = CreateValidIndividual()
         };
     }
@@ -270,7 +274,7 @@ public static class ValidEntitiesFactory
     {
         return new Survey
         {
-            Name = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
             ExpirationDate = DateTime.Now.Add(validFor),
             CreatedBy = CreateValidUser(AccessLevel.Group),
         };
@@ -284,8 +288,8 @@ public static class ValidEntitiesFactory
     {
         return new LogicalQuestion
         {
-            Index = (uint)RandomGenerator.NextInt(0),
-            Text = RandomGenerator.NextString(0xff),
+            Index = (uint)_rndSvc.NextInt32(0),
+            Text = _rndSvc.NextString(0xff),
             IsRequired = IsRequired
         };
     }
@@ -298,8 +302,8 @@ public static class ValidEntitiesFactory
     {
         return new TextQuestion
         {
-            Index = (uint)RandomGenerator.NextInt(0),
-            Text = RandomGenerator.NextString(0xff),
+            Index = (uint)_rndSvc.NextInt32(0),
+            Text = _rndSvc.NextString(0xff),
             IsRequired = IsRequired
         };
     }
@@ -312,7 +316,7 @@ public static class ValidEntitiesFactory
     {
         return new MultipleChoiceAnswerItem
         {
-            Value = RandomGenerator.NextString(0xff),
+            Value = _rndSvc.NextString(0xff),
         };
     }
 
@@ -324,13 +328,13 @@ public static class ValidEntitiesFactory
     {
         return new MultipleChoiceQuestion
         {
-            Index = (uint)RandomGenerator.NextInt(0),
-            Text = RandomGenerator.NextString(0xff),
+            Index = (uint)_rndSvc.NextInt32(0),
+            Text = _rndSvc.NextString(0xff),
             IsRequired = IsRequired,
-            CandidateAnswers = Enumerable.Range(2, RandomGenerator.NextInt(2, 6))
+            CandidateAnswers = Enumerable.Range(2, _rndSvc.NextInt32(2, 6))
                 .Select(i => CreateValidMultipleChoiceAnswerItem())
                 .ToList(),
-            CanMultiSelect = RandomGenerator.NextBool(),
+            CanMultiSelect = _rndSvc.NextBool(),
         };
     }
 
@@ -343,7 +347,7 @@ public static class ValidEntitiesFactory
         return new LogicalQuestionAnswer
         {
             Question = CreateValidLogicalQuestion(true),
-            Answer = RandomGenerator.NextBool(),
+            Answer = _rndSvc.NextBool(),
         };
     }
 
@@ -356,7 +360,7 @@ public static class ValidEntitiesFactory
         return new TextQuestionAnswer
         {
             Question = CreateValidTextQuestion(true),
-            Answer = RandomGenerator.NextString(0xff),
+            Answer = _rndSvc.NextString(0xff),
         };
     }
 
@@ -374,7 +378,7 @@ public static class ValidEntitiesFactory
             Answers = question.CanMultiSelect
                 ? question
                     .CandidateAnswers
-                    .Take(RandomGenerator.NextInt(2, question.CandidateAnswers.Count))
+                    .Take(_rndSvc.NextInt32(2, question.CandidateAnswers.Count))
                     .ToList()
                 : new List<MultipleChoiceAnswerItem> { question.CandidateAnswers.First() },
         };

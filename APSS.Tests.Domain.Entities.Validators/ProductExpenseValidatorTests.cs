@@ -1,9 +1,11 @@
-﻿using APSS.Domain.Entities;
+﻿using System;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -13,6 +15,7 @@ public class ProductExpenseValidatorTests
     #region Private fields
 
     private readonly ProductExpenseValidator _validator = new();
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
 
@@ -23,7 +26,7 @@ public class ProductExpenseValidatorTests
     {
         var expense = new ProductExpense
         {
-            Price = Convert.ToDecimal(RandomGenerator.NextDouble(0, 1_000_000))
+            Price = Convert.ToDecimal(_rndSvc.NextFloat64(0, 1_000_000))
         };
 
         Assert.IsTrue(_validator.Validate(expense).IsValid);

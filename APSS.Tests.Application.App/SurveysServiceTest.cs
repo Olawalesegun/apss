@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
 using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions;
@@ -6,11 +10,7 @@ using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
 using APSS.Tests.Domain.Entities.Validators;
 using APSS.Tests.Extensions;
-using APSS.Tests.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Xunit;
 
 namespace APSS.Tests.Application.App;
@@ -19,6 +19,7 @@ public sealed class SurveysServiceTest
 {
     #region Private fields
 
+    private readonly IRandomGeneratorService _rndSvc;
     private readonly IUnitOfWork _uow;
     private readonly ISurveysService _surveySvc;
     private readonly IPermissionsService _permissionsSvc;
@@ -28,10 +29,12 @@ public sealed class SurveysServiceTest
     #region Constructors
 
     public SurveysServiceTest(
+        IRandomGeneratorService rndSvc,
         IUnitOfWork uow,
         ISurveysService surveySvc,
         IPermissionsService permissionsSvc)
     {
+        _rndSvc = rndSvc;
         _uow = uow;
         _surveySvc = surveySvc;
         _permissionsSvc = permissionsSvc;
@@ -101,7 +104,7 @@ public sealed class SurveysServiceTest
         bool shouldSucceed = true)
     {
         var account = await _uow.CreateTestingAccountAsync(AccessLevel.Farmer, permissions);
-        var (surveyAccount, survey) = await SurveyAddedTheory(RandomGenerator.NextAccessLevel(min: AccessLevel.Group));
+        var (surveyAccount, survey) = await SurveyAddedTheory(_rndSvc.NextAccessLevel(min: AccessLevel.Group));
 
         var accountUser = account.User;
 
@@ -149,7 +152,7 @@ public sealed class SurveysServiceTest
         var (_, survey) = await SurveyAddedTheory();
 
         var surveyAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(min: AccessLevel.Group),
+            _rndSvc.NextAccessLevel(min: AccessLevel.Group),
             permissions);
 
         survey!.CreatedBy = surveyAccount.User;
@@ -179,10 +182,10 @@ public sealed class SurveysServiceTest
         var account = await _uow.CreateTestingAccountAsync(AccessLevel.Group, PermissionType.Create | PermissionType.Update);
 
         var invalidAddLogicalQuestionTask = _surveySvc.AddLogicalQuestionAsync(
-           account.Id,
-           survey!.Id,
-           templateQuestion.Text,
-           templateQuestion.IsRequired);
+            account.Id,
+            survey!.Id,
+            templateQuestion.Text,
+            templateQuestion.IsRequired);
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await invalidAddLogicalQuestionTask);
 
@@ -199,7 +202,7 @@ public sealed class SurveysServiceTest
         var (_, survey) = await SurveyAddedTheory();
 
         var surveyAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(min: AccessLevel.Group),
+            _rndSvc.NextAccessLevel(min: AccessLevel.Group),
             permissions);
 
         survey!.CreatedBy = surveyAccount.User;
@@ -209,8 +212,8 @@ public sealed class SurveysServiceTest
         var templateQuestion = ValidEntitiesFactory.CreateValidMultipleChoiceQuestion(true);
 
         var candidateAnswers = Enumerable
-            .Range(3, RandomGenerator.NextInt(5, 10))
-            .Select(_ => RandomGenerator.NextString(30))
+            .Range(3, _rndSvc.NextInt32(5, 10))
+            .Select(_ => _rndSvc.NextString(30))
             .ToArray();
 
         var validQuestionTask = _surveySvc.AddMultipleChoiceQuestionAsync(
@@ -236,7 +239,7 @@ public sealed class SurveysServiceTest
         var account = await _uow.CreateTestingAccountAsync(AccessLevel.Group, PermissionType.Update | PermissionType.Create);
 
         var invalidQuestionTask = _surveySvc.AddMultipleChoiceQuestionAsync(
-          account.Id,
+            account.Id,
             survey!.Id,
             templateQuestion.Text,
             templateQuestion.IsRequired,
@@ -258,7 +261,7 @@ public sealed class SurveysServiceTest
         var (_, survey) = await SurveyAddedTheory();
 
         var surveyAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(min: AccessLevel.Group),
+            _rndSvc.NextAccessLevel(min: AccessLevel.Group),
             permissions);
 
         survey!.CreatedBy = surveyAccount.User;
@@ -308,12 +311,12 @@ public sealed class SurveysServiceTest
         var (_, survey) = await SurveyAddedTheory();
 
         var entryAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Governorate),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Governorate),
             PermissionType.Create | PermissionType.Read);
 
         var surveyAccount = await _uow.CreateTestingAccountAboveUserAsync(
             entryAccount.User.Id,
-            RandomGenerator.NextAccessLevel(min: entryAccount.User.AccessLevel.NextLevelUpove()),
+            _rndSvc.NextAccessLevel(min: entryAccount.User.AccessLevel.NextLevelUpove()),
             PermissionType.Create | PermissionType.Update);
 
         survey!.CreatedBy = surveyAccount.User;
@@ -321,11 +324,11 @@ public sealed class SurveysServiceTest
         await _uow.CommitAsync();
 
         var entry = await _surveySvc.CreateSurveyEntryAsync(
-          entryAccount.Id,
-          survey!.Id);
+            entryAccount.Id,
+            survey!.Id);
 
         var questionAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Governorate),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Governorate),
             permissions);
 
         entry.MadeBy = questionAccount.User;
@@ -333,9 +336,9 @@ public sealed class SurveysServiceTest
         await _uow.CommitAsync();
 
         var surveyAccount2 = await _uow.CreateTestingAccountAboveUserAsync(
-           entry.MadeBy.Id,
-           RandomGenerator.NextAccessLevel(min: entry.MadeBy.AccessLevel + 1),
-           PermissionType.Create | PermissionType.Update);
+            entry.MadeBy.Id,
+            _rndSvc.NextAccessLevel(min: entry.MadeBy.AccessLevel + 1),
+            PermissionType.Create | PermissionType.Update);
 
         survey!.CreatedBy = surveyAccount2.User;
         _uow.Surveys.Update(survey);
@@ -371,10 +374,10 @@ public sealed class SurveysServiceTest
         var account = await _uow.CreateTestingAccountAsync(AccessLevel.Farmer, PermissionType.Create | PermissionType.Read | PermissionType.Update);
 
         var invalidAnswerTask = _surveySvc.AnswerLogicalQuestionAsync(
-           account.Id,
-           entry.Id,
-           question.Id,
-           templateAnswer.Answer);
+            account.Id,
+            entry.Id,
+            question.Id,
+            templateAnswer.Answer);
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await invalidAnswerTask);
 
@@ -391,12 +394,12 @@ public sealed class SurveysServiceTest
         var (_, survey) = await SurveyAddedTheory();
 
         var entryAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Governorate),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Governorate),
             PermissionType.Create | PermissionType.Read);
 
         var surveyAccount = await _uow.CreateTestingAccountAboveUserAsync(
             entryAccount.User.Id,
-            RandomGenerator.NextAccessLevel(min: entryAccount.User.AccessLevel + 1),
+            _rndSvc.NextAccessLevel(min: entryAccount.User.AccessLevel + 1),
             PermissionType.Create | PermissionType.Update);
 
         survey!.CreatedBy = surveyAccount.User;
@@ -404,11 +407,11 @@ public sealed class SurveysServiceTest
         await _uow.CommitAsync();
 
         var entry = await _surveySvc.CreateSurveyEntryAsync(
-          entryAccount.Id,
-          survey!.Id);
+            entryAccount.Id,
+            survey!.Id);
 
         var questionAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Governorate),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Governorate),
             permissions);
 
         entry.MadeBy = questionAccount.User;
@@ -416,9 +419,9 @@ public sealed class SurveysServiceTest
         await _uow.CommitAsync();
 
         var surveyAccount2 = await _uow.CreateTestingAccountAboveUserAsync(
-           entry.MadeBy.Id,
-           RandomGenerator.NextAccessLevel(min: entry.MadeBy.AccessLevel + 1),
-           PermissionType.Create | PermissionType.Update);
+            entry.MadeBy.Id,
+            _rndSvc.NextAccessLevel(min: entry.MadeBy.AccessLevel + 1),
+            PermissionType.Create | PermissionType.Update);
 
         survey!.CreatedBy = surveyAccount2.User;
         _uow.Surveys.Update(survey);
@@ -454,10 +457,10 @@ public sealed class SurveysServiceTest
         var account = await _uow.CreateTestingAccountAsync(AccessLevel.Farmer, PermissionType.Create | PermissionType.Read | PermissionType.Update);
 
         var invalidAnswerTask = _surveySvc.AnswerTextQuestionAsync(
-           account.Id,
-           entry.Id,
-           question.Id,
-           templateAnswer.Answer);
+            account.Id,
+            entry.Id,
+            question.Id,
+            templateAnswer.Answer);
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await invalidAnswerTask);
 
@@ -474,12 +477,12 @@ public sealed class SurveysServiceTest
         var (_, survey) = await SurveyAddedTheory();
 
         var entryAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Governorate),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Governorate),
             PermissionType.Create | PermissionType.Read);
 
         var surveyAccount = await _uow.CreateTestingAccountAboveUserAsync(
             entryAccount.User.Id,
-            RandomGenerator.NextAccessLevel(min: entryAccount.User.AccessLevel + 1),
+            _rndSvc.NextAccessLevel(min: entryAccount.User.AccessLevel + 1),
             PermissionType.Create | PermissionType.Update);
 
         survey!.CreatedBy = surveyAccount.User;
@@ -487,11 +490,11 @@ public sealed class SurveysServiceTest
         await _uow.CommitAsync();
 
         var entry = await _surveySvc.CreateSurveyEntryAsync(
-          entryAccount.Id,
-          survey!.Id);
+            entryAccount.Id,
+            survey!.Id);
 
         var questionAccount = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Governorate),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Governorate),
             permissions);
 
         entry.MadeBy = questionAccount.User;
@@ -499,18 +502,18 @@ public sealed class SurveysServiceTest
         await _uow.CommitAsync();
 
         var surveyAccount2 = await _uow.CreateTestingAccountAboveUserAsync(
-           entry.MadeBy.Id,
-           RandomGenerator.NextAccessLevel(min: entry.MadeBy.AccessLevel.NextLevelUpove()),
-           PermissionType.Create | PermissionType.Update);
+            entry.MadeBy.Id,
+            _rndSvc.NextAccessLevel(min: entry.MadeBy.AccessLevel.NextLevelUpove()),
+            PermissionType.Create | PermissionType.Update);
 
         survey!.CreatedBy = surveyAccount2.User;
         _uow.Surveys.Update(survey);
         await _uow.CommitAsync();
 
         var candidateQuestions = Enumerable
-           .Range(3, RandomGenerator.NextInt(5, 10))
-           .Select(_ => RandomGenerator.NextString(30))
-           .ToArray();
+            .Range(3, _rndSvc.NextInt32(5, 10))
+            .Select(_ => _rndSvc.NextString(30))
+            .ToArray();
 
         var templateQuestion = ValidEntitiesFactory.CreateValidMultipleChoiceQuestion(true);
 
@@ -526,8 +529,8 @@ public sealed class SurveysServiceTest
             questionAccount.Id,
             entry.Id,
             question.Id,
-           question.CanMultiSelect? question.CandidateAnswers.Take(RandomGenerator.NextInt(2, candidateQuestions.Length)).Select(a => a.Id).ToArray() :
-           question.CandidateAnswers.Take(1).Select(a => a.Id).ToArray());
+            question.CanMultiSelect ? question.CandidateAnswers.Take(_rndSvc.NextInt32(2, candidateQuestions.Length)).Select(a => a.Id).ToArray() :
+            question.CandidateAnswers.Take(1).Select(a => a.Id).ToArray());
 
         if (!shouldSucceed)
         {
@@ -544,11 +547,11 @@ public sealed class SurveysServiceTest
         var account = await _uow.CreateTestingAccountAsync(AccessLevel.Farmer, PermissionType.Create | PermissionType.Read | PermissionType.Update);
 
         var invalidAnswerTask = _surveySvc.AnswerMultipleChoiceQuestionAsync(
-           account.Id,
-           entry.Id,
-           question.Id,
-           question.CanMultiSelect ? question.CandidateAnswers.Take(RandomGenerator.NextInt(2, candidateQuestions.Length)).Select(a => a.Id).ToArray() :
-           question.CandidateAnswers.Take(1).Select(a => a.Id).ToArray());
+            account.Id,
+            entry.Id,
+            question.Id,
+            question.CanMultiSelect ? question.CandidateAnswers.Take(_rndSvc.NextInt32(2, candidateQuestions.Length)).Select(a => a.Id).ToArray() :
+            question.CandidateAnswers.Take(1).Select(a => a.Id).ToArray());
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await invalidAnswerTask);
 
@@ -559,31 +562,30 @@ public sealed class SurveysServiceTest
     [InlineData(PermissionType.Read, true)]
     [InlineData(PermissionType.Update | PermissionType.Delete | PermissionType.Create, false)]
     public async Task<IQueryBuilder<Survey>?> GetAvaliableSurveysTheory(
-       PermissionType permissions = PermissionType.Read ,
-       bool shouldSucceed = true)
+        PermissionType permissions = PermissionType.Read,
+        bool shouldSucceed = true)
     {
         var (_, parentSurvey) = await SurveyAddedTheory();
         var (_, anotherParentSurvey) = await SurveyAddedTheory();
         var (_, notParentSurvey) = await SurveyAddedTheory();
 
-
         var account = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(max: AccessLevel.Directorate),
+            _rndSvc.NextAccessLevel(max: AccessLevel.Directorate),
             permissions);
 
         var parentAccount = await _uow.CreateTestingAccountAboveUserAsync(
-           account.User.Id,
-           RandomGenerator.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove(), max: AccessLevel.Governorate),
-           PermissionType.Create | PermissionType.Update);
+            account.User.Id,
+            _rndSvc.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove(), max: AccessLevel.Governorate),
+            PermissionType.Create | PermissionType.Update);
 
         var anotherParentAccount = await _uow.CreateTestingAccountAboveUserAsync(
-           parentAccount.User.Id,
-           RandomGenerator.NextAccessLevel(min: parentAccount.User.AccessLevel.NextLevelUpove()),
-           PermissionType.Create | PermissionType.Update);
-       
+            parentAccount.User.Id,
+            _rndSvc.NextAccessLevel(min: parentAccount.User.AccessLevel.NextLevelUpove()),
+            PermissionType.Create | PermissionType.Update);
+
         var notParentAccount = await _uow.CreateTestingAccountAsync(
-           RandomGenerator.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove()),
-           PermissionType.Create | PermissionType.Update);
+            _rndSvc.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove()),
+            PermissionType.Create | PermissionType.Update);
 
         parentSurvey!.CreatedBy = parentAccount.User;
         _uow.Surveys.Update(parentSurvey);
@@ -593,12 +595,11 @@ public sealed class SurveysServiceTest
         _uow.Surveys.Update(notParentSurvey);
         await _uow.CommitAsync();
 
-
         var surveysTask = _surveySvc.GetAvailableSurveysAsync(account.Id);
 
         if (!shouldSucceed)
         {
-            await Assert.ThrowsAsync<InvalidPermissionsExceptions>(async () => await surveysTask );
+            await Assert.ThrowsAsync<InvalidPermissionsExceptions>(async () => await surveysTask);
             return null;
         }
 
@@ -607,7 +608,7 @@ public sealed class SurveysServiceTest
         Assert.True(await surveys.ContainsAsync(parentSurvey));
         Assert.True(await surveys.ContainsAsync(anotherParentSurvey));
         Assert.False(await surveys.ContainsAsync(notParentSurvey));
-        
+
         return surveys;
     }
 
@@ -615,16 +616,16 @@ public sealed class SurveysServiceTest
     [InlineData(PermissionType.Read, true)]
     [InlineData(PermissionType.Update | PermissionType.Delete | PermissionType.Create, false)]
     public async Task<IQueryBuilder<Survey>?> GetSurveysTheory(
-       PermissionType permissions = PermissionType.Read,
-       bool shouldSucceed = true)
+        PermissionType permissions = PermissionType.Read,
+        bool shouldSucceed = true)
     {
         var (_, survey) = await SurveyAddedTheory();
         var (_, secondSurvey) = await SurveyAddedTheory();
 
         var account = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(min: AccessLevel.Group, max: AccessLevel.Presedint),
-            permissions );
-       
+            _rndSvc.NextAccessLevel(min: AccessLevel.Group, max: AccessLevel.Presedint),
+            permissions);
+
         survey!.CreatedBy = account.User;
         _uow.Surveys.Update(survey);
         await _uow.CommitAsync();
@@ -641,13 +642,12 @@ public sealed class SurveysServiceTest
 
         var surveys = await surveysTask;
         var secondSurveys = await secondSurveysTask;
-       
+
         await foreach (var s in surveys.AsAsyncEnumerable())
-         Assert.Equal(s.Id, survey.Id);
+            Assert.Equal(s.Id, survey.Id);
 
         await foreach (var s in secondSurveys.AsAsyncEnumerable())
             Assert.Null(s);
-
 
         return surveys;
     }
@@ -656,17 +656,15 @@ public sealed class SurveysServiceTest
     [InlineData(PermissionType.Read, true)]
     [InlineData(PermissionType.Update | PermissionType.Delete | PermissionType.Create, false)]
     public async Task<IQueryBuilder<SurveyEntry>?> GetSurveyEntriesTheory(
-       PermissionType permissions = PermissionType.Read,
-       bool shouldSucceed = true)
+        PermissionType permissions = PermissionType.Read,
+        bool shouldSucceed = true)
     {
         var (_, surveyEntry) = await SurveyEntryAddedTheory();
         var (_, secondSurveyEntry) = await SurveyEntryAddedTheory();
         var (_, falseSurveyEntry) = await SurveyEntryAddedTheory();
 
-
-
         var account = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(min: AccessLevel.Group),
+            _rndSvc.NextAccessLevel(min: AccessLevel.Group),
             permissions);
 
         surveyEntry!.MadeBy = account.User;
@@ -674,7 +672,6 @@ public sealed class SurveysServiceTest
         secondSurveyEntry!.MadeBy = account.User;
         _uow.SurveyEntries.Update(secondSurveyEntry);
         await _uow.CommitAsync();
-
 
         var entriesTask = _surveySvc.GetSurveyEntriesAsync(account.Id);
 
@@ -700,24 +697,24 @@ public sealed class SurveysServiceTest
     [InlineData(PermissionType.Delete, true)]
     [InlineData(PermissionType.Update | PermissionType.Read | PermissionType.Create, false)]
     public async Task RemoveSurveyTheory(
-       PermissionType permissions = PermissionType.Delete,
-       bool shouldSucceed = true)
+        PermissionType permissions = PermissionType.Delete,
+        bool shouldSucceed = true)
     {
         var (_, survey) = await SurveyAddedTheory();
         var (_, secondSurvey) = await SurveyAddedTheory();
         var (_, fourthSurvey) = await SurveyAddedTheory();
 
         var account = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(min: AccessLevel.Group, max: AccessLevel.Governorate),
+            _rndSvc.NextAccessLevel(min: AccessLevel.Group, max: AccessLevel.Governorate),
             permissions);
 
         var parentAccount = await _uow.CreateTestingAccountAboveUserAsync(
-           account.User.Id,
-           account.User.AccessLevel.NextLevelUpove(),
-           permissions);
+            account.User.Id,
+            account.User.AccessLevel.NextLevelUpove(),
+            permissions);
 
         var notParentAccount = await _uow.CreateTestingAccountAsync(
-             RandomGenerator.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove(), max: AccessLevel.Presedint),
+            _rndSvc.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove(), max: AccessLevel.Presedint),
             PermissionType.Delete);
 
         await _uow.CommitAsync();
@@ -732,10 +729,10 @@ public sealed class SurveysServiceTest
 
         if (!shouldSucceed)
         {
-            await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => 
-                    await _surveySvc.RemoveSurveyAsync(account.Id, survey!.Id));
             await Assert.ThrowsAsync<InsufficientPermissionsException>(async () =>
-                    await _surveySvc.RemoveSurveyAsync(parentAccount.Id, secondSurvey!.Id));
+                      await _surveySvc.RemoveSurveyAsync(account.Id, survey!.Id));
+            await Assert.ThrowsAsync<InsufficientPermissionsException>(async () =>
+                      await _surveySvc.RemoveSurveyAsync(parentAccount.Id, secondSurvey!.Id));
 
             return;
         }
@@ -746,21 +743,18 @@ public sealed class SurveysServiceTest
 
         Assert.False(await _uow.Surveys.Query().ContainsAsync(survey!));
 
-
         Assert.True(await _uow.Surveys.Query().ContainsAsync(secondSurvey!));
 
         await _surveySvc.RemoveSurveyAsync(parentAccount.Id, secondSurvey!.Id);
 
         Assert.False(await _uow.Surveys.Query().ContainsAsync(secondSurvey!));
 
-
         Assert.True(await _uow.Surveys.Query().ContainsAsync(fourthSurvey!));
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () =>
-                    await _surveySvc.RemoveSurveyAsync(notParentAccount.Id, fourthSurvey!.Id));
+                     await _surveySvc.RemoveSurveyAsync(notParentAccount.Id, fourthSurvey!.Id));
 
         Assert.True(await _uow.Surveys.Query().ContainsAsync(fourthSurvey!));
-
 
         return;
     }
@@ -769,24 +763,24 @@ public sealed class SurveysServiceTest
     [InlineData(PermissionType.Update, true)]
     [InlineData(PermissionType.Delete | PermissionType.Read | PermissionType.Create, false)]
     public async Task<Survey?> SetSurveyActiveStatusTheory(
-      PermissionType permissions = PermissionType.Delete,
-      bool shouldSucceed = true)
+        PermissionType permissions = PermissionType.Delete,
+        bool shouldSucceed = true)
     {
         var (_, survey) = await SurveyAddedTheory();
         var (_, secondSurvey) = await SurveyAddedTheory();
         var (_, thirdSurvey) = await SurveyAddedTheory();
 
         var account = await _uow.CreateTestingAccountAsync(
-            RandomGenerator.NextAccessLevel(min: AccessLevel.Group, max: AccessLevel.Governorate),
+            _rndSvc.NextAccessLevel(min: AccessLevel.Group, max: AccessLevel.Governorate),
             permissions);
 
         var parentAccount = await _uow.CreateTestingAccountAboveUserAsync(
-           account.User.Id,
-           account.User.AccessLevel.NextLevelUpove(),
-           permissions);
+            account.User.Id,
+            account.User.AccessLevel.NextLevelUpove(),
+            permissions);
 
         var notParentAccount = await _uow.CreateTestingAccountAsync(
-             RandomGenerator.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove(), max: AccessLevel.Presedint),
+            _rndSvc.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove(), max: AccessLevel.Presedint),
             PermissionType.Delete);
 
         await _uow.CommitAsync();
@@ -818,7 +812,6 @@ public sealed class SurveysServiceTest
             return null;
         }
 
-
         var updated = await updateTask;
 
         Assert.True(updated.IsActive == false);
@@ -831,9 +824,6 @@ public sealed class SurveysServiceTest
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await thirdUpdateTask);
         Assert.True(thirdupdated.IsActive == false);
-
-
-
 
         return updated;
     }
@@ -850,61 +840,47 @@ public sealed class SurveysServiceTest
     //    var (_, thirdSurvey) = await SurveyAddedTheory();
     //    var (_, toBeSurvey) = await SurveyAddedTheory();
 
-    //    var account = await _uow.CreateTestingAccountAsync(
-    //        RandomGenerator.NextAccessLevel(min: AccessLevel.Group, max: AccessLevel.Governorate),
-    //        permissions);
+    // var account = await _uow.CreateTestingAccountAsync( _rndSvc.NextAccessLevel(min:
+    // AccessLevel.Group, max: AccessLevel.Governorate), permissions);
 
-    //    var parentAccount = await _uow.CreateTestingAccountAboveUserAsync(
-    //       account.User.Id,
-    //       account.User.AccessLevel.NextLevelUpove(),
-    //       permissions);
+    // var parentAccount = await _uow.CreateTestingAccountAboveUserAsync( account.User.Id,
+    // account.User.AccessLevel.NextLevelUpove(), permissions);
 
-    //    var notParentAccount = await _uow.CreateTestingAccountAsync(
-    //         RandomGenerator.NextAccessLevel(min: account.User.AccessLevel.NextLevelUpove(), max: AccessLevel.Presedint),
-    //        PermissionType.Delete);
+    // var notParentAccount = await _uow.CreateTestingAccountAsync( _rndSvc.NextAccessLevel(min:
+    // account.User.AccessLevel.NextLevelUpove(), max: AccessLevel.Presedint), PermissionType.Delete);
 
-    //    await _uow.CommitAsync();
+    // await _uow.CommitAsync();
 
-    //    survey!.CreatedBy = account.User;
-    //    secondSurvey!.CreatedBy = account.User;
-    //    thirdSurvey!.CreatedBy = account.User;
-    //    _uow.Surveys.Update(survey!);
-    //    _uow.Surveys.Update(secondSurvey!);
-    //    _uow.Surveys.Update(thirdSurvey!);
-    //    await _uow.CommitAsync();
+    // survey!.CreatedBy = account.User; secondSurvey!.CreatedBy = account.User;
+    // thirdSurvey!.CreatedBy = account.User; _uow.Surveys.Update(survey!);
+    // _uow.Surveys.Update(secondSurvey!); _uow.Surveys.Update(thirdSurvey!); await _uow.CommitAsync();
 
-    //    Assert.True(survey!.IsActive == true);
-    //    Assert.True(secondSurvey!.IsActive == false);
-    //    Assert.True(thirdSurvey!.IsActive == false);
+    // Assert.True(survey!.IsActive == true); Assert.True(secondSurvey!.IsActive == false);
+    // Assert.True(thirdSurvey!.IsActive == false);
 
-    //    var updateTask = _surveySvc.SetSurveyActiveStatusAsync(account.Id, survey!.Id, false);
-    //    var secondUpdateTask = _surveySvc.SetSurveyActiveStatusAsync(parentAccount.Id, secondSurvey!.Id, true);
-    //    var thirdUpdateTask = _surveySvc.SetSurveyActiveStatusAsync(notParentAccount.Id, thirdSurvey!.Id, true);
+    // var updateTask = _surveySvc.SetSurveyActiveStatusAsync(account.Id, survey!.Id, false); var
+    // secondUpdateTask = _surveySvc.SetSurveyActiveStatusAsync(parentAccount.Id, secondSurvey!.Id,
+    // true); var thirdUpdateTask = _surveySvc.SetSurveyActiveStatusAsync(notParentAccount.Id,
+    // thirdSurvey!.Id, true);
 
-    //    if (!shouldSucceed)
-    //    {
-    //        await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await updateTask);
-    //        await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await secondUpdateTask);
+    // if (!shouldSucceed) { await Assert.ThrowsAsync<InsufficientPermissionsException>(async () =>
+    // await updateTask); await Assert.ThrowsAsync<InsufficientPermissionsException>(async () =>
+    // await secondUpdateTask);
 
-    //        return null;
-    //    }
+    // return null; }
 
+    // var updated = await updateTask;
 
-    //    var updated = await updateTask;
+    // Assert.True(updated.IsActive == false);
 
-    //    Assert.True(updated.IsActive == false);
+    // var secondUpdated = await secondUpdateTask;
 
-    //    var secondUpdated = await secondUpdateTask;
+    // Assert.True(secondUpdated.IsActive == true);
 
-    //    Assert.True(secondUpdated.IsActive == true);
+    // var thirdupdated = await updateTask;
 
-    //    var thirdupdated = await updateTask;
-
-    //    await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await thirdUpdateTask);
-    //    Assert.True(thirdupdated.IsActive == false);
-
-
-
+    // await Assert.ThrowsAsync<InsufficientPermissionsException>(async () => await
+    // thirdUpdateTask); Assert.True(thirdupdated.IsActive == false);
 
     //    return updated;
     //}

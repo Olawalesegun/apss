@@ -31,6 +31,20 @@ public static class QueryBuilderExtensions
     }
 
     /// <summary>
+    /// An extension to <see cref="IQueryBuilder{T}"/> that allows asynchronously getting items by
+    /// id. `null` is returned if no items has the id <see cref="id"/>
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the entity of the builder</typeparam>
+    /// <param name="self">The query builder</param>
+    /// <param name="id">The id to look for</param>
+    /// <returns>A modified query builder</returns>
+    public static Task<TEntity?> FindOrNullAsync<TEntity>(this IQueryBuilder<TEntity> self, long id)
+        where TEntity : AuditableEntity
+    {
+        return self.FirstOrNullAsync(i => i.Id == id);
+    }
+
+    /// <summary>
     /// An extension to asynchrnously check for an item's existence
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>

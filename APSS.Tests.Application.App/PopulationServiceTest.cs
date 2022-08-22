@@ -1,4 +1,8 @@
-﻿using APSS.Domain.Entities;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions;
 using APSS.Domain.Repositories.Extensions.Exceptions;
@@ -6,10 +10,6 @@ using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
 using APSS.Tests.Domain.Entities.Validators;
 using APSS.Tests.Extensions;
-using APSS.Tests.Utils;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 using Xunit;
 
@@ -19,6 +19,7 @@ public sealed class PopulationServiceTest : IDisposable
 {
     #region Private fields
 
+    private readonly IRandomGeneratorService _rndSvc;
     private readonly IUnitOfWork _uow;
     private readonly IPopulationService _populationSvc;
 
@@ -26,8 +27,9 @@ public sealed class PopulationServiceTest : IDisposable
 
     #region Constructors
 
-    public PopulationServiceTest(IUnitOfWork uow, IPopulationService populationSvc)
+    public PopulationServiceTest(IRandomGeneratorService rndSvc, IUnitOfWork uow, IPopulationService populationSvc)
     {
+        _rndSvc = rndSvc;
         _uow = uow;
         _populationSvc = populationSvc;
     }
@@ -58,8 +60,8 @@ public sealed class PopulationServiceTest : IDisposable
 
         var addFamilyTask = _populationSvc.AddFamilyAsync(
             account.Id,
-           templateFamily.Name,
-           templateFamily.LivingLocation);
+            templateFamily.Name,
+            templateFamily.LivingLocation);
 
         if (!shouldSucceed)
         {
@@ -220,7 +222,7 @@ public sealed class PopulationServiceTest : IDisposable
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
             _populationSvc.RemoveFamilyAsync(otherAccount.Id, family!.Id)
-        );
+                                                                  );
 
         var removeFamilyTask = _populationSvc.RemoveFamilyAsync(account.Id, family!.Id);
 
@@ -240,8 +242,8 @@ public sealed class PopulationServiceTest : IDisposable
     [InlineData(PermissionType.Update, false)]
     [InlineData(PermissionType.Read, false)]
     public async Task IndividualRemovedTheory(
-       PermissionType permission,
-       bool shouldSucceed)
+        PermissionType permission,
+        bool shouldSucceed)
     {
         var (account, individual) = await IndividualAddedTheory(PermissionType.Create | permission, true);
 
@@ -251,7 +253,7 @@ public sealed class PopulationServiceTest : IDisposable
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
             _populationSvc.RemoveIndividualAsync(otherAccount.Id, individual!.Id)
-        );
+                                                                  );
 
         var removeIndividualTask = _populationSvc.RemoveIndividualAsync(account.Id, individual!.Id);
 
@@ -271,8 +273,8 @@ public sealed class PopulationServiceTest : IDisposable
     [InlineData(PermissionType.Create, false)]
     [InlineData(PermissionType.Read, false)]
     public async Task SkillRemovedTheory(
-       PermissionType permission,
-       bool shouldSucceed)
+        PermissionType permission,
+        bool shouldSucceed)
     {
         var (account, skill) = await SkillAddedTheory(PermissionType.Create | PermissionType.Update | permission, true);
 
@@ -282,7 +284,7 @@ public sealed class PopulationServiceTest : IDisposable
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
             _populationSvc.RemoveSkillAsync(otherAccount.Id, skill!.Id)
-        );
+                                                                  );
 
         var removeSkillTask = _populationSvc.RemoveSkillAsync(account.Id, skill!.Id);
 
@@ -302,8 +304,8 @@ public sealed class PopulationServiceTest : IDisposable
     [InlineData(PermissionType.Create, false)]
     [InlineData(PermissionType.Read, false)]
     public async Task VoluntaryRemovedTheory(
-       PermissionType permission,
-       bool shouldSucceed)
+        PermissionType permission,
+        bool shouldSucceed)
     {
         var (account, voluntary) = await VoluntaryAddedTheory(
             PermissionType.Create | PermissionType.Update | permission, true);
@@ -315,7 +317,7 @@ public sealed class PopulationServiceTest : IDisposable
 
         await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
             _populationSvc.RemoveVoluntaryAsync(otherAccount.Id, voluntary!.Id)
-        );
+                                                                  );
 
         var removeVoluntaryTask = _populationSvc.RemoveVoluntaryAsync(account.Id, voluntary!.Id);
 
@@ -344,12 +346,12 @@ public sealed class PopulationServiceTest : IDisposable
 
         var account = await _uow.CreateTestingAccountForUserAsync(familyAccount.User.Id, permission);
 
-        var name = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var living = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
+        var name = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var living = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
 
         var updateFamilyTask = _populationSvc
             .UpdateFamilyAsync(account.Id, family!.Id,
-                    f => { f.Name = name; f.LivingLocation = living; });
+                f => { f.Name = name; f.LivingLocation = living; });
 
         if (!shouldSucceed)
         {
@@ -363,7 +365,7 @@ public sealed class PopulationServiceTest : IDisposable
         await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
         _populationSvc
             .UpdateFamilyAsync(otherAccount.Id, family!.Id,
-                    f => { f.Name = name; f.LivingLocation = living; }));
+                f => { f.Name = name; f.LivingLocation = living; }));
 
         var familynew = await updateFamilyTask;
         Assert.True(await _uow.Families.Query().ContainsAsync(familynew));
@@ -382,7 +384,7 @@ public sealed class PopulationServiceTest : IDisposable
     [InlineData(PermissionType.Delete, false)]
     [InlineData(PermissionType.Read, false)]
     public async Task individualUpdatedTheory(PermissionType permission = PermissionType.Update,
-       bool shouldSucceed = true)
+        bool shouldSucceed = true)
     {
         var (individualAccount, individual) = await IndividualAddedTheory();
 
@@ -390,14 +392,14 @@ public sealed class PopulationServiceTest : IDisposable
 
         var account = await _uow.CreateTestingAccountForUserAsync(individualAccount.User.Id, permission);
 
-        var name = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var job = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var phone = RandomGenerator.NextString(RandomGenerator.NextInt(9, 15));
-        var address = RandomGenerator.NextString(RandomGenerator.NextInt(10, 30), RandomStringOptions.Mixed);
+        var name = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var job = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var phone = _rndSvc.NextString(_rndSvc.NextInt32(9, 15));
+        var address = _rndSvc.NextString(_rndSvc.NextInt32(10, 30), RandomStringOptions.Mixed);
 
         var updateIndividualTask = _populationSvc
             .UpdateIndividualAsync(account.Id, individual!.Id,
-                    i =>
+                i =>
                     {
                         i.Name = name;
                         i.Job = job;
@@ -417,7 +419,7 @@ public sealed class PopulationServiceTest : IDisposable
         await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
         _populationSvc
             .UpdateIndividualAsync(otherAccount.Id, individual!.Id,
-                    i =>
+                i =>
                     {
                         i.Name = name;
                         i.Job = job;
@@ -450,13 +452,13 @@ public sealed class PopulationServiceTest : IDisposable
 
         Assert.True(await _uow.Skills.Query().ContainsAsync(skill!));
 
-        var name = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var field = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var description = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
+        var name = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var field = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var description = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
 
         var updateSkillTask = _populationSvc
             .UpdateSkillAsync(account.Id, skill!.Id,
-                    s =>
+                s =>
                     {
                         s.Name = name;
                         s.Field = field;
@@ -475,7 +477,7 @@ public sealed class PopulationServiceTest : IDisposable
         await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
         _populationSvc
             .UpdateSkillAsync(otherAccount.Id, skill!.Id,
-                    s =>
+                s =>
                     {
                         s.Name = name;
                         s.Field = field;
@@ -503,16 +505,16 @@ public sealed class PopulationServiceTest : IDisposable
     public async Task VoluntaryUpdatedTheory(PermissionType permission = PermissionType.Update)
     {
         var (account, voluntary) = await VoluntaryAddedTheory(
-                                PermissionType.Create | PermissionType.Update | permission, true);
+                                   PermissionType.Create | PermissionType.Update | permission, true);
 
         Assert.True(await _uow.Volantaries.Query().ContainsAsync(voluntary!));
 
-        var name = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
-        var field = RandomGenerator.NextString(RandomGenerator.NextInt(5, 15), RandomStringOptions.Alpha);
+        var name = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
+        var field = _rndSvc.NextString(_rndSvc.NextInt32(5, 15), RandomStringOptions.Alpha);
 
         var updateVoluntaryTask = _populationSvc
             .UpdateVoluntaryAsync(account.Id, voluntary!.Id,
-                    s =>
+                s =>
                     {
                         s.Name = name;
                         s.Field = field;
@@ -530,7 +532,7 @@ public sealed class PopulationServiceTest : IDisposable
         await Assert.ThrowsAsync<InsufficientPermissionsException>(() =>
         _populationSvc
             .UpdateVoluntaryAsync(otherAccount.Id, voluntary!.Id,
-                    s =>
+                s =>
                     {
                         s.Name = name;
                         s.Field = field;
@@ -548,10 +550,10 @@ public sealed class PopulationServiceTest : IDisposable
 
     [Theory]
     [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-               | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
+                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
                 PermissionType.Read, true)]
     [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-               | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
+                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
                 PermissionType.Update | PermissionType.Create | PermissionType.Delete, false)]
     [InlineData(AccessLevel.Farmer, PermissionType.Full, false)]
     public async Task GetIndividualOfFamlyTheory(AccessLevel accessLevel,
@@ -589,10 +591,10 @@ public sealed class PopulationServiceTest : IDisposable
 
     [Theory]
     [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-               | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
+                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
                 PermissionType.Read, true)]
     [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-               | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
+                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
                 PermissionType.Update | PermissionType.Create | PermissionType.Delete, false)]
     [InlineData(AccessLevel.Farmer, PermissionType.Full, false)]
     public async Task GetSkillOfIndividualTheory(AccessLevel accessLevel,
@@ -630,10 +632,10 @@ public sealed class PopulationServiceTest : IDisposable
 
     [Theory]
     [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-               | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
+                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
                 PermissionType.Read, true)]
     [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-               | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
+                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
                 PermissionType.Update | PermissionType.Create | PermissionType.Delete, false)]
     [InlineData(AccessLevel.Farmer, PermissionType.Full, false)]
     public async Task GetVoluntaryOfIndividualTheory(AccessLevel accessLevel,
