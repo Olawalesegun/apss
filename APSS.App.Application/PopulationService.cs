@@ -51,6 +51,8 @@ public sealed class PopulationService : IPopulationService
         long familyId,
         string name,
         string address,
+        string job,
+        string phonNumber,
         IndividualSex sex,
         bool isParent = false,
         bool isProvider = false)
@@ -62,6 +64,8 @@ public sealed class PopulationService : IPopulationService
             Name = name,
             Address = address,
             Sex = sex,
+            Job = job,
+            PhoneNumber = phonNumber,
             AddedBy = account.User,
         };
 
