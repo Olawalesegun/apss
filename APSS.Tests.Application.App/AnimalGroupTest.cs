@@ -197,7 +197,7 @@ namespace APSS.Tests.Application.App
 
             var templateProductUnit = ValidEntitiesFactory.CreateValidLandProductUnit();
 
-            var productUnitTask = _animal.CreateAnimalProductUnits(account.Id, templateProductUnit.Name);
+            var productUnitTask = _animal.CreateAnimalProductUnitAsync(account.Id, templateProductUnit.Name);
 
             if (!shouldSuccess)
             {

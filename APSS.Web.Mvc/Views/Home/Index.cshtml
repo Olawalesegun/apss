@@ -1,8 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model APSS.Web.Mvc.Models.AnimalGroup
+@{
+    ViewData["Title"] = "DashBoard Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section scripts{
+<script>
+    $(document).ready(function(){
+     $(".sidebar ul li.active").removeClass('active');
+      $("#dashBoard").addClass('active');
+    });
+</script>
+}
+`

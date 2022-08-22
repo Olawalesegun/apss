@@ -1,160 +1,192 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - APSS</title>
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+          -moz-text-size-adjust href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    @*-ms-flex-bottomk rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">*@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="icon" href="~/css/all.css" />
+    <link rel="icon" href="~/css/main.css" />
+    <link rel="icon" href="~/css/icons.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="~/MDB/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />*@
+    <link rel="stylesheet" href="~/MDB/css/mdb.rtl.min.css" />
 </head>
-<body>
+<body onload="myFunction()">
 
-    <div class="main-container d-flex h-100 ">
+    <!-- main div  -->
+    <div class="main-container d-flex vh-100 ">
         <!-- start sidebar  -->
-        <div class="sidebar shadow-sm   sticky-top navbar-nav-scroll overflow-sctoll vh-100 " id="side_nav" style="position:fixed;">
+        <div class="sidebar  overflow-scroll   " id="side_nav">
 
-            <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between mt-2 ">
-                <h1 class="fs-4"><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom">SA</span> <span class=" T-Color-custom">Scan App</span></h1>
+            <div class="header-box px-2 pt-3  d-flex justify-content-between mt-2 ">
+                <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom"><img src="~/resources/profile2.png" style="width:50px;height:50px" /></span> <span class=" T-Color-custom" style="font-size:18px">المسح الزراعي</span></h1>
                 <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
             </div>
-            <ul class="list-unstyle px-2">
-                <li class="active"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+            <span class="T-Color-custom mb-2 mx-3" style="font-size:18px">الاتحاد التعاوني الزراعي</span>
+            <br />
+            <hr />
+            <ul class="list-unstyle px-2 ">
+                <li class="active" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
+                <li class="" id="accountManagement"><a asp-action="Index" asp-controller="AccountManagement" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
 
-                <li class=""><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
-                <li class=""><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
+                <li class="" id="dataManagement"><a asp-action="Index" asp-controller="DataManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
+                <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
             </ul>
 
             <hr class="mx-2">
             <ul class="list-unstyled px-2">
                 <li class="">
-
                     <a href="#" class="text-decoration-none  px-3 py-2 d-block ">
-                        <i class="fal fa-list fa-lg"></i>
+                        <i class="fa-solid fa-gear px-2 fa-lg"></i>
                         Settings
                     </a>
                 </li>
 
                 <li class="">
-                    <a href="#" class="text-decoration-none px-3 py-2 d-flex justify-content-between">
-                        <span><i class="bi bi-bell-fill fa-lg"></i> Notification</span>
+                    <a class="text-decoration-none px-3 py-2 d-flex justify-content-between">
+                        <span><i class="bi bi-bell-fill fa-lg px-2"></i> Notification</span>
                         <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
                     </a>
                 </li>
             </ul>
-
-            <!-- other system bar -->
-
             <hr>
 
-            <div class="accordion m-1 " id="parent">
-                <div class="accordion-item">
-                    <h4 class="accordion-hearder" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="#collapseOne">
-                            other system
-                        </button>
-                    </h4>
-                    <div id="collapseOne" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingOne">
-                        <div class="collapse-body">
-                            <ul class="list-unstyle list px-2">
-                                <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+            <div class="sidebarSystem">
+                <div class="menu">
 
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h4 class="accordion-hearder" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="#collapseTwo">
-                            other system 2
-                        </button>
-                    </h4>
-                    <div id="collapseTwo" class="accordion-collaspse collapse " data-bs-parent="#parent" aria-labelledby="headingTwo">
-                        <div class="collapse-body">
-                            <ul class="list-unstyle list px-2">
-                                <li class="active list-item"><a href="" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-home fa-lg px-2"></i> Dashboard</a></li>
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 py-2 my-1 d-block"><i class="fal fa-list px-2 fa-lg"></i> Account Management</a></li>
+                    <div class="item ">
 
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="fas fa-envelope-open-text px-2 fa-lg"></i> Data Management</a></li>
-                                <li class="list-item"><a href="#" class="text-decoration-none px-3 my-1 py-2 d-block"><i class="bi bi-question-square-fill px-2 fa-lg"></i> survey Management</a></li>
-                            </ul>
+                        <a href="#sub" id="drops" class="  dropdown-toggole px-2 py-1 my-1 d-inline  drop d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
+                            <span>الانظمة الاخراء</span>
+                            <i class="fa fa-angle-left  rotate dropdown " style="padding-top:10px" aria-hidden="true"></i>
+                        </a>
+
+                        <div class="sub-menu collapse" id="sub">
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 1</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 2</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 3</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 4</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 5</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 6</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 7</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 8</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 9</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 10</a>
+                            <a asp-action="" asp-controller="" class="text-decoration-none sub-item px-2 py-1 my-1 "><i class="fa-solid fa-house px-1 fa-sm"></i> system 11</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- start content -->
-        <div class="content postion-absolute offset-sm-2 " id="maintContent">
+        <!-- start nav bar -->
+        <div class="content overflow-scroll " id="maintContent">
 
             <nav class="navbar navbar-expand-md navbar-light main-bg-color shadow-sm ">
                 <div class="container-fluid">
                     <!-- Media Top Bar setting -->
-                    <div class="d-flex justify-content-between d-md-none d-block w-100">
-                        <!-- media top bar -->
-                        <button class="btn  btn-link text-decoration-none px-1 py-0 open-btn " onclick=""><i class="fas fa-stream  fs-1 "></i></button>
-                        <a href="#" class="navbar-brand fs-4">Scan System</a>
-                        <div class="d-flex">
+                    <div class="d-flex justify-content-between d-md-none d-block w-100 ">
 
-                            <div id="date-time" class=" mx-2 pt-2 fw-bold text-info">
+                        <!-- media top bar -->
+
+                        <div id="open-btn" class=" d-flex justify-content-between ">
+                            <button class="btn px-0  btn-link  open-btn "><i class="fas fa-stream fs-1  "></i></button>
+
+                            <a href="#" class=" text-sm-start overflow-scroll py-1    text-primary  " id="media-system-name" style="word-wrap:break-word">
+                                Scan System
+                            </a>
+                        </div>
+                        <div class="d-flex ">
+
+                            <div class=" ">
+
+                                <div class="dropdown mt-1" id="data-mange">
+                                    <a role="button" class="btn btn-link text-decoration-none  dropdown-toggle px-1" data-bs-toggle="dropdown">
+                                        menu
+                                    </a>
+                                    <ul class="dropdown-menu" id="">
+                                        <li class="py-3  ">
+
+                                            <div class="d-flex justify-content-between media-dropdown">
+
+                                                <a class="dropdown-item " href="#">
+                                                    <span class="mt-2"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
+                                                    Last Account
+                                                </a>
+                                            </div>
+                                            <hr class="m-0">
+                                        </li>
+                                        <li class="pt-0 ">
+                                            <div class="d-flex justify-content-between media-dropdown">
+                                                <a class="dropdown-item  " href="#">
+                                                    <span class="mt-2"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
+                                                    Add Account
+                                                </a>
+                                            </div>
+                                            <hr class="m-0">
+                                        </li>
+
+                                        <li class=" mx-sm-2">
+                                            <div class="d-flex justify-content-between media-dropdown">
+
+                                                <a class="dropdown-item" href="#">
+                                                    <span class="mt-2"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
+                                                    Users
+                                                </a>
+                                            </div>
+                                            <hr class="m-0">
+                                        </li>
+
+                                        <li class="  pb-3">
+                                            <div class="d-flex justify-content-between media-dropdown">
+
+                                                <a class="dropdown-item" href="#">
+                                                    <span class="mt-2"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
+                                                    Add  User
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
-                            <div class="pt-2">
+                            <div class="pt-2 px-1">
                                 <a href="#" class="text-decoration-none ">
                                     <i class="fal fa-bell fs-1 "></i>
                                 </a>
                             </div>
-                            <div class="mx-3 dropstart">
-
-                                <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
-                                    <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
-                                    <ul class="dropdown-menu">
-                                        <li>
-
-                                            <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
-                                                <span>  Logout </span>
-                                                <span class="">
-                                                    <i class="bi bi-box-arrow-left ">
-                                                    </i>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item d-flex justify-content-between p-3" href="#">
-                                                <span>  Setting</span>
-                                                <span><i class="bi bi-info-circle "></i></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <div class=" dropstart">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
+                                    @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
                                 </a>
-                                <br>
+                                <ul class="dropdown-menu ml-5">
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-
-                    <!-- <button class="navbar-toggler p-1 mt-1 " id="" type="" data-bs-toggle="collapse" data-bs-target="#media_collapse" aria-controls="media_collapse" aria-expanded="false" aria-label="Toggle navigation">
-                      <i class="fas fa-stream"></i>
-                    </button> -->
-                    <!-- Top bar setting -->
                     <div class="collapse navbar-collapse" id="media_collapse">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
+                        <h3 class="" id="nav-system-name">
 
-                                <h3>
-                                    Scan System
-                                </h3>
+                            Scan System
+                        </h3>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item align-content-end ml-1">
                             </li>
                         </ul>
+
                         <div class="d-flex">
 
                             <div class="pt-2">
@@ -162,66 +194,75 @@
                                     <i class="fal fa-bell  fs-sm-1"></i>
                                 </a>
                             </div>
-                            <div class="mx-3 dropstart">
+                            <div class=" mx-3 dropstart">
+                                <a class="" href="#" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
 
-                                <a href="#" class="text-decoration-none rounded-circle  " id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false" style="height: 35px !important;width:35px !important">
-                                    <img src="image/user.jpg" alt="Avatar Logo" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
-                                    <ul class="dropdown-menu">
-                                        <li>
-
-                                            <a class="dropdown-item  d-flex justify-content-between p-3 " href="#">
-                                                <span>  Logout </span>
-                                                <span class="">
-                                                    <i class="bi bi-box-arrow-left ">
-                                                    </i>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item d-flex justify-content-between p-3" href="#">
-                                                <span>  Setting</span>
-                                                <span><i class="bi bi-info-circle "></i></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
                                 </a>
-                                <br>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                                    <li><a asp-controller="AccountManagement" asp-action="AccountDetails" class="dropdown-item p-3 d-flex justify-content-between"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- main body -->
-            <div class="dashboard-content container  mb-2 ">
+            <div class="dashboard-content container px-0 mx-0 ">
 
-                <br>
+                <main class="col-lg-12 mx-auto mx-0 px-0 ">
+                    <header class="d-flex align-items-center   "></header>
 
-                <main class="col-lg-12 mx-auto  ">
-                    <header class="d-flex align-items-center pb-3  "></header>
-
-                    <div class="container">
-                        <main role="main" class="mt-2">
+                    <div class="container mx-0 px-1">
+                        <main role="main" class="mt-1">
                             @RenderBody()
                         </main>
                     </div>
                 </main>
             </div>
         </div>
+
+        <!-- model-->
+
+        <div class="modal" tabindex="-1" id="form-model">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-
+    @*<footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script type="text/javascript" src="MDB/js/mdb.min.js"></script>
-    <!-- Custom scripts -->
-    <script src="~/js/site.js"></script>
+    <script src="~/js/modelFunction.js" asp-append-version="true"></script>
+
+    <script>
+              $(".open-btn").on('click',function()
+              {
+                  $(".sidebar").addClass('active');
+              });
+               $(".close-btn").on('click',function()
+              {
+                  $(".sidebar").removeClass('active');
+              });
+                $("#drops").on('click',function(){
+               $('.rotate').toggleClass('down');
+              });
+
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required:         false)
 </body>

@@ -2,39 +2,40 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-
-$(".sidebar ul li").on('click', function () {
+/*$(".sidebar ul li").on('click', function () {
     $(".sidebar ul li.active").removeClass('active');
     $(this).addClass('active');
-});
-$(".open-btn").on('click', function () {
-    $(".sidebar").addClass('active');
-    $(".open-btn").addClass('hide_menu');
-}); $(".close-btn").on('click', function () {
-    $(".sidebar").removeClass('active');
-    $(".open-btn").removeClass('hide_menu');
-});
-//hiden sidebar when chooce any item from sidebar
-$(".sidebar ul li").on('click', function () {
-    $(".sidebar").removeClass('active');
-});
-//hiden sidebar when click on any other plays
-$("content").on('click', function () {
-    $(".sidebar").removeClass('active');
-    $(".open-btn").removeClass('hide_menu');
-});
-$(".navbar-toggler").on('click', function () {
-    $(".sidebar").removeClass('active');
-    $(".open-btn").removeClass('hide_menu');
-});
-$(".sidebar ul li").on('click', function () {
-    $("navbar-toggler").addClass('toggle_menu');
-    $(".open-btn").removeClass('hide_menu');
-}); $(document).ready(function () {
-    $('#dtBasicExample').DataTable();
+});*/
+/*
+ model
+
+ */
+
+showInPopup = (url, title) => {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (res) {
+            $('#form-modal .modal-body').html(res);
+            $('#form-modal .modal-title').html(title);
+            $('#form-modal').modal('show');
+            // to make popup draggable
+        }
+    })
+}
+
+$(document).ready(function () {
+    /* $('#dtBasicExample').DataTable();*/
     $('.dataTables_length').addClass('bs-select');
 });
-document.getElementById("focus").focus();
+/*document.getElementById("focus").focus();*/
+
+/*$('#sandbox-container .input-group.date').datepicker({
+    language: "ar"
+});
+$("#sandbox-container-p .input-group.date-p").datepicker({
+    language: "ar"
+});*/
 
 const notchedOutline = new MDCNotchedOutline(document.querySelector('.mdc-notched-outline'));
 function myFunction() {
@@ -75,18 +76,6 @@ const interval = setInterval(() => {
     // Display the date and time on the screen using div#date-time
     document.getElementById('date-time').innerHTML = dateTime;
 }, 1000);
-
-function otherSystem() {
-    var othersystem = document.getElementById("system1");
-    var iconro = document.getElementsByClassName("rotate");
-    if (othersystem.style.display == "none") {
-        othersystem.style.display = "block";
-        iconro.classList.add("rotation");
-    }
-    else
-        othersystem.style.display = "none";
-    iconro.classList.remove("rotation");
-}
 
 function searchTable() {
     // Declare variables

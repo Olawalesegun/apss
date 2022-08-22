@@ -1,0 +1,54 @@
+﻿@model APSS.Web.Dtos.AnimalGroupAndProductDto
+@{
+    ViewData["Title"] = "Animal Details";
+}
+
+<div class="card mt-2">
+    <div class="d-inline">
+    </div>
+    <div class="card-body">
+        <div class="d-flex ">
+
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>معلومات الحيوان</h3>
+        </div>
+        <table class="table user-view-table m-0 t ">
+            <tbody>
+                <tr class="">
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.AnimalProducts.Name)</label></td>
+                    <td> @Model.AnimalProducts.Name</td>
+                </tr>
+                <tr>
+                    <td> <label>@Html.DisplayNameFor(m => m.AnimalProducts.Quantity);</label></td>
+                    <td>@Model.AnimalProducts.Quantity </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.AnimalProducts.Unit)</label>  </td>
+                    <td> @Model.AnimalProducts.Unit</td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.AnimalProducts.CreatedAt)</label>  </td>
+                    <td>
+                        @Model.AnimalProducts.CreatedAt
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.AnimalProducts.ModifiedAt)</label>  </td>
+                    <td>
+                        @Model.AnimalProducts.ModifiedAt
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div cllass="d-inline pt-2">
+                            <a class="btn btn-primary-danger btn-rounded  text-primary mx-1 pr-1 my-2 " asp-controller="DataManagement" asp-action="EditAnimalProduct"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
+                            <a class="btn  btn-link-danger btn-rounded text-danger mx-1 my-2 "> <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
+                            <a id="III" class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1"  asp-controller="DataManagement" asp-action="AllAnimalProducts"> <i class="fa-solid fa-dollar mx-1 "></i><span class="">  اضافة تكلفة </span> </a>
+                            <a id="III" class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1"  asp-controller="DataManagement" asp-action="AnimalDetails"> <i class="fa-solid fa-back mx-1 "></i><span class=""> رجوع </span> </a>
+                         </div>
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        </div>
+</div>

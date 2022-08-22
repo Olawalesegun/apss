@@ -1,0 +1,46 @@
+﻿@model APSS.Web.Dtos.AnimalProductDto
+@{
+    ViewData["Title"] = "Animal Product Detials";
+}
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:4px"></i> <h3>معلومات المنتج</h3></div>
+
+        <table class="table user-view-table m-0 t ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th>@Html.DisplayNameFor(m=>m.Name)</th>
+                    <td> @Model.Name</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.Quantity)</th>
+                    <td> @Model.Quantity</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
+                    <td> @Model.PeriodTaken</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                    <td> @Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                    <td> @Model.ModifiedAt</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div cllass="d-inline pt-2">
+            <a class="btn btn-outline-primary btn-rounded  mx-1 my-2" asp-controller="DataManagement" asp-action="AnimalProduct"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </a>
+            <a class="btn btn-outline-primary btn-rounded  mx-1 my-2" data-bs-toggle="offcanvas" data-bs-target="#AddProductExpense"><i class="fa-solid fa-plus mx-2"></i><span>اضافة تكلفة</span> </a>
+            <a class="btn btn-outline-dark btn-rounded mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="DataManagement" asp-action="EditAnimalProduct"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </a>
+            <a class="btn btn-outline-danger btn-rounded mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="DataManagement" asp-action="DeleteAnimalProduct"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </a>
+        </div>
+
+        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
+    </div>
+</div>
+
+@await Html.PartialAsync("_CreateProductExpense.cshtml")
