@@ -1,104 +1,71 @@
-﻿@model APSS.Web.Dtos.IndividualDto   
-<form class=" mt-3 ">
-            <!-- 2 column puts for the National number and Phome Number-->
-            <div class="center d-flex justify-content-center mb-3 ">
-                <h3 class="text-decoration-underline">
-                   Individual Information
-                </h3>
-            </div>
+﻿@model APSS.Web.Dtos.IndividualAddDto
+
+<div class="container-fluid px-3 py-3  shadow-sm">
+    <div class="col-sm-6">
+        <div class="d-flex justify-content-center">
+            <h4 style="border-bottom :2px darkgray solid;">اضافة فرد</h4>
+        </div>
+<form class=" mt-3 " method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-4">
             <!-- Text input for individual name-->
-            <div class="form-outline mb-4">
-                <input type="text" id="individual_name" name="individual_name" asp-for="Name" class="form-control" />
-                <label class="form-label" asp-for="Name">Name</label>
+            <div class="form-outline mt-4">
+                <input type="text" id="individual_name"  asp-for="Name" class="form-control" />
+                <label class="form-label" asp-for="Name"></label>
             </div>
+            <span asp-validation-for="Name" class="text-danger mb-4"></span>
             <!-- Text input for job -->
-            <div class="form-outline mb-4">
-                <input type="text" id="individual_job" asp-for="Job" name="individual_job" class="form-control" />
-                <label class="form-label" for="individual_job" asp-for="Job">Job</label>
+            <div class="form-outline mt-4">
+                <input type="text" id="individual_job" asp-for="Job"  class="form-control" />
+                <label class="form-label" for="individual_job" asp-for="Job"></label>
             </div> 
+            <span asp-validation-for="Job" class="text-danger mb-4"></span>
 
              <!-- Text input for phonenumber -->
-              <div class="form-outline mb-4">
-                <input type="tel" id="individual_phone" name="individual_phone" asp-for="PhonNumber" class="form-control" />
-                <label class="form-label" for="individual_phone" asp-for="PhonNumber">Phone Number</label>
+              <div class="form-outline mt-4">
+                <input type="tel" id="individual_phone" asp-for="PhonNumber" class="form-control" />
+                <label class="form-label" for="individual_phone" asp-for="PhonNumber"> </label>
             </div> 
+            <span asp-validation-for="PhonNumber" class="text-danger mb-4"></span>
             
-             <!-- Text input for NationalId -->
-              <div class="form-outline mb-4">
-                <input type="number" id="individual_NationalId" name="individual_NationalId" class="form-control" asp-for="NationalId" />
-                <label class="form-label" for="individual_NationalId" asp-for="NationalId">NationalId</label>
-            </div> 
-
              <!-- Text input for Address -->
-              <div class="form-outline mb-4">
-                <input type="text" id="individual_Address" name="individual_Address" class="form-control" asp-for="Address" />
-                <label class="form-label" for="individual_Address" asp-for="Address">Address</label>
+              <div class="form-outline mt-4">
+                <input type="text" id="individual_Address"  class="form-control" asp-for="Address" />
+                <label class="form-label" for="individual_Address" asp-for="Address"></label>
             </div> 
-
-             <!-- Text input for DateOfBirth -->
-              <div class="form-outline datepicker input-group.date-p mb-4">
-                  <input type="date" id="sandbox-container-p" name="indvidual_birth_date" asp-for="DateOfBirth" class="form-control" />
-                  <label class="form-label" for="indvidual_birth_date" asp-for="DateOfBirth">Birth Date</label>
-               </div>
-
+            <span asp-validation-for="Address" class="text-danger mb-4"></span>
+             
+                         <!-- Text input for Family -->
             <div class=" form-outline mb-4">
-              <input class="form-control" list="browsers" name="browser" id="browser" asp-for="Family" value="@Model.Family.Name">
-             @*<datalist id="browsers">
-               <option value="Edge"/>
-               <option value="Firefox"/>
-              <option value="Chrome"/>
-              <option value="Opera"/>
-              <option value="Safari"/>
-            </datalist>
-*@
-              <label  class="form-label" asp-for="Family">Family</label>
-            </div>
-           <!-- Gender input -->
-            <div class="form-check mb-2">
+              <input class="form-control" type="text"    asp-for="Family">
 
-                <h5 class="inline" >Gender:</h5>
-            </div>
-            <div class="form-check form-check-inline ">
-
-                <input class="form-check-input hiden" asp-for="Sex" type="radio" name="individual_gender" id="female" value="female" checked />
-                <label class="form-check-label" asp-for="Sex">Female</label>
-            </div>
-
-            <div class="form-check form-check-inline ">
-                <input class="form-check-input" type="radio" value="" id="male" name="individual_gender" />
-                <label class="form-check-label" asp-for="Sex"> Male </label>
-            </div>
-
-            <!-- Social Status input -->
-            <div class="form-check mb-2">
-
-                <h5 class="inline">Status:</h5>
-            </div>
-            <div class="form-check form-check-inline">
-
-                <input class="form-check-input hiden" asp-for="SocialStatus" type="radio" name="individual_SocialStatus" id="Marrid" value="Marrid" checked />
-                <label class="form-check-label" asp-for="SocialStatus">Marrid</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" asp-for="SocialStatus" type="radio" value="" id="Unmarried" name="individual_SocialStatus" />
-                <label class="form-check-label" for="Unmarried"> Unmarr</label>
+              <label  class="form-label" asp-for="Family"></label>
             </div>
           
-              
-           @* <div class="form-check">
-                <label class="form-check-label" for="flexCheckDefault" asp-for="">
-               IsProvider
-           </label>
-           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <!-- Gender input -->
+            <div class="form-check mb-2">
+<label asp-for="Sex"></label>
             </div>
-           <div class="form-check">
-               <label class="form-check-label" for="flexCheckChecked">
-              Isparent
-           </label>
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
-            </div>*@
+            <div class="form-check form-check-inline ">
 
-                   <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4 mt-4" asp-action="AddIndividual">Add <i class="fa-solid fa-plus fa-lg"></i></button>
+                <input class="form-check-input " asp-for="Sex" type="radio" value="male" checked />
+                <label class="form-check-label" asp-for="Sex">ذكر</label>
+            </div>
+            <span asp-validation-for="Sex" class="text-danger mb-4"></span>
+
+                         <!-- Text input for Sex -->
+
+            <div class="form-check form-check-inline ">
+                <input class="form-check-input" type="radio" asp-for="Sex" value="" id="female" />
+                <label class="form-check-label" asp-for="Sex"> أنثى </label>
+            </div>
+            <span asp-validation-for="Sex" class="text-danger mb-4" ></span>
+            </div>
+
+        <div class="d-inline">
+        <button class="btn btn-primary mt-4 mx-1" asp-action="AddIndividual"> <i class="fa-solid fa-plus mx-2"></i><span>إضافة</span>  </button>
+        <button class="btn btn-danger mt-4 mx-1" asp-action="GetIndividuals"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+        </div>  
         </form>
+        </div>
+        </div>

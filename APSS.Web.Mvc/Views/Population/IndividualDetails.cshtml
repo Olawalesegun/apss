@@ -1,8 +1,6 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model APSS.Web.Dtos.IndividualDto;
 @{
-    ViewData["Title"] = "Animal Product Detials";
+    ViewData["Title"] = "معلومات الفرد";
 }
 
 <div class="card mt-2">
@@ -11,60 +9,65 @@
 
         <table class="table user-view-table m-0 t ">
             <tbody style="font-size:14px">
+                  <tr class="">
+                    <td>الرقم </td>
+                    <td> @Model.Id</td>
+                </tr>
                 <tr class="">
-                    <td>اسم </td>
-                    <td> حمود</td>
+                    <td>الإسم </td>
+                    <td> @Model.Name</td>
                 </tr>
                 <tr>
                     <td>العمل </td>
-                    <td>شغال</td>
+                    <td>@Model.Job</td>
                 </tr>
                 <tr>
                     <td>العنوان   </td>
-                    <td> بيتهم</td>
+                    <td> @Model.Address</td>
                 </tr>
                 <tr>
-                    <td>رقم الباقة   </td>
-                    <td>0387268</td>
+                    <td>رقم البطاقة   </td>
+                    <td>@Model.NationalId</td>
                 </tr>
                 <tr>
                     <td>العائلة  </td>
-                    <td>واحد </td>
+                    <td>@Model.Family </td>
                 </tr>
                 <tr>
                     <td>الهاتف   </td>
-                    <td>77777</td>
+                    <td>@Model.PhonNumber</td>
                 </tr>
                 <tr>
                     <td>الجنس   </td>
-                    <td>رجال</td>
+                    <td>@Model.Sex</td>
                 </tr>
                 <tr>
                     <td>الحالة الإجتماعية  </td>
-                    <td>منكوب  </td>
+                    <td>@Model.SocialStatus  </td>
                 </tr>
                 <tr>
                     <td>المستخدم   </td>
-                    <td><span class="">الابار </span></td>
+                    <td><span class="">@Model.User </span></td>
                 </tr>
                 <tr>
                     <td>  تاريخ الإضافة </td>
-                    <td><span class="">تاريخ الإظافة  </span></td>
+                    <td><span class="">@Model.CreatedAt  </span></td>
                 </tr>
                 <tr>
                     <td>   اخر تعديل في   </td>
-                    <td><span class="">مدري </span></td>
+                    <td><span class="">@Model.ModifiedAt </span></td>
                 </tr>
               
             </tbody>
         </table>
-        <a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> المهارات </a>
-        <a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التطوعات </a>
+        
+        <a class="btn text-primary shadow-0 btn-link text-decoration-none" asp-action="GetSkill" asp-route-Id="@Model.Id" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> المهارات </a>
+        <a class="btn text-primary shadow-0 btn-link text-decoration-none" asp-action="GetVoluntary" asp-route-Id="@Model.Id" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التطوعات </a>
          <br />
         <div cllass="d-inline pt-2">
-            <button class="btn btn-outline-primary btn-rounded  mx-1"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
-        <button  class="btn btn-outline-dark btn-rounded mx-1"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
-        <button class="btn btn-outline-danger btn-rounded mx-1"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
+        <button class="btn btn-outline-primary btn-rounded  mx-1" asp-action="GetIndividuals"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+        <button  class="btn btn-outline-dark btn-rounded mx-1" asp-action="UpdateIndividual" asp-route-Id="@Model.Id"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </button>
+        <button class="btn btn-outline-danger btn-rounded mx-1" asp-action="DeleteIndividual" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </button>
         </div>
     </div>
     <hr class="border-light m-0">

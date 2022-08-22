@@ -1,7 +1,6 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<APSS.Web.Dtos.VoluntaryDto>
 @{
+    ViewData["Title"] = "Voluntary";
 }
 <div class="col-sm-12  ">
 
@@ -11,32 +10,21 @@
 
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Name Voluntary</th>                     
-                        <th style="width:30%;" class=" text-capitalize align-middle">Field</th>
+                        <th style="width:8%;" class=" text-capitalize align-middle">الرقم</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">إسم التطوع</th>                     
+                        <th style="width:30%;" class=" text-capitalize align-middle">المتطوع</th>                     
+                        <th style="width:30%;" class=" text-capitalize align-middle">مجال التطوع</th>
                         <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach (var item in Model)
+                    {
                     <tr class="align-top">
-                        @{
-                            List<string> ls = new List<string>
-                            {
-                                "اسم  التطوع",
-                                "مدبر",
-                                " المجال",
-                                "مدري"
-                            };
-                        }
-                       
-                        @await Html.PartialAsync("EditVoluntary.cshtml")
-                        @await Html.PartialAsync("../DataManagement/_ConfirmDelete.cshtml",ls)
-                        <td class="text-break text-capitalize align-middle">1</td>
-                        <td class="text-break text-capitalize align-middle"> John</td>
-                        <td class="text-break text-capitalize align-middle">
-                          any field
-                        </td>
-                        
+                        <td class="text-break text-capitalize align-middle">@item.Id</td>
+                        <td class="text-break text-capitalize align-middle">@item.Name</td>
+                        <td class="text-break text-capitalize align-middle">@item.NameIndividual</td>
+                        <td class="text-break text-capitalize align-middle">@item.Field</td>
                         <td class="align-middle center">
 
                             <div class=" dropend">
@@ -45,15 +33,23 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ConfirmDelete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                  <li><a class="dropdown-item" asp-action="VoluntaryDetials" asp-route-Id="@item.Id">
+                                      <div class="d-flex justify-content-between"> <span>تفاصيل</span>  <span><i class="fa-solid fa-info"></i> </span> 
+                                          </div> </a></li>
+                                    <li><a class="dropdown-item" asp-action="DeleteVoluntary" asp-route-Id="@item.Id">
+                                        <div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span>
+                                            </div></a></li>
                                         <li class="">
-                                        <a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#EditVoluntary">
-                                        <div class="d-flex justify-content-between"> <span>Update  Voluntary</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
+                                        <a class="dropdown-item" asp-action="UpdateVoluntary" asp-route-Id="@item.Id">
+                                        <div class="d-flex justify-content-between"> <span>تحديث</span>  <span>
+                                            <i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
                                     </li>
+
                                 </ul>
                             </div>
                         </td>
                     </tr>
+                    }
                 </tbody>
             </table>
         </div>
