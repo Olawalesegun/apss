@@ -3,7 +3,8 @@
 public class LandProductDto : ProductDto
 {
     public string StoringMethod { get; set; } = null!;
-    public IEnumerable<LandProductUnitDto> Unit { get; set; } = new List<LandProductUnitDto>();
+    public LandProductUnitDto Unit { get; set; } = new LandProductUnitDto();
+    public IEnumerable<LandProductUnitDto> Units { get; set; } = new List<LandProductUnitDto>();
 
     public long UnitId { get; set; }
     public double Quantity { get; set; }

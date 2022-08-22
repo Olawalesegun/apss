@@ -7,22 +7,26 @@ namespace APSS.Web.Mvc.Controllers
     {
         public IActionResult Index()
         {
-            var landProductList = new LandAndLandProduct
-            {
-                landDto = new LandDto { Name = "land1", Id = 1, Address = "djskhao" },
-                LandList = new List<LandDto>
+            var LandList = new List<LandDto>
                 {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao"},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2"}
-                },
-                ProductList = new List<LandProductDto>
+                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
+                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
+                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
+                };
+            var ProductList = new List<LandProductDto>
                 {
-                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash" },
-                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="farouq" },
-                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="ayman" },
-                }
-            };
-            return View(landProductList);
+                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[0] },
+                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[1] },
+                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[2] },
+                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[0] },
+                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[1] },
+                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[2] },
+                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[0] },
+                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[1] },
+                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[2] },
+                };
+            return View(ProductList);
         }
 
         // GET: LandProduc  tController/Add a new landProduct
@@ -35,7 +39,7 @@ namespace APSS.Web.Mvc.Controllers
                     new SeasonDto { Name = "season2", CreatedAt = DateTime.Now, Id = 2 },
                     new SeasonDto { Name = "season3", CreatedAt = DateTime.Now, Id = 3 },
                 },
-                Unit = new List<LandProductUnitDto>
+                Units = new List<LandProductUnitDto>
                 {
                     new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},
                     new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},
@@ -74,7 +78,7 @@ namespace APSS.Web.Mvc.Controllers
                     new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },
                     new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },
                 },
-                    Unit = new List<LandProductUnitDto>
+                    Units = new List<LandProductUnitDto>
                 {
                     new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},
                     new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},
@@ -101,31 +105,35 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        public ActionResult Details(long landProductId)
+        public ActionResult Details(long Id)
         {
-            return View();
+            var ProductList = new List<LandProductDto>
+                {
+                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash" },
+                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="farouq" },
+                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="ayman" },
+                };
+            var landProduct = ProductList.Where(i => i.Id == Id).FirstOrDefault();
+            return View(landProduct);
         }
 
         // GET: LandController/Update landProduct
         public ActionResult Update(long Id)
         {
-            var landProductList = new LandAndLandProduct
-            {
-                landDto = new LandDto { Name = "land1", Id = 1, Address = "djskhao" },
-                LandList = new List<LandDto>
+            var ProductList = new List<LandProductDto>
                 {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao"},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2"}
-                },
-                ProductList = new List<LandProductDto>
-                {
-                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash" },
-                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="farouq" },
-                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="ayman" },
-                }
-            };
+                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash"},
+                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash" },
+                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash" },
+                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq" },
+                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq" },
+                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq"},
+                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman" },
+                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman" },
+                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman" },
+                };
 
-            LandProductDto landProduct = landProductList.ProductList.Where(p => p.Id == Id).First();
+            LandProductDto landProduct = ProductList.Where(p => p.Id == Id).First();
             return View(landProduct);
         }
 
@@ -145,24 +153,33 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: LandController/Delete  landProduct
-        public ActionResult Delete(long landProductId)
+        public ActionResult Delete(long Id)
         {
-            return View();
+            var ProductList = new List<LandProductDto>
+                {
+                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash" },
+                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="farouq" },
+                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="ayman" },
+                };
+            var landProduct = ProductList.Where(i => i.Id == Id).FirstOrDefault();
+            return View(landProduct);
         }
 
         // POST: LandController/Delete landProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete()
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeletePost(long Id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var ProductList = new List<LandProductDto>
+                {
+                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash" },
+                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="farouq" },
+                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="ayman" },
+                };
+            var landProduct = ProductList.Where(i => i.Id == Id).FirstOrDefault();
+            ProductList.Remove(landProduct!);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: LandController/Get landProduct
@@ -180,17 +197,35 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: LandController/Get landProducts
-        public ActionResult GetLandProducts(long landId)
+        public ActionResult GetLandProducts(long Id)
         {
-            return View();
-        }
-
-        // POST: LandController/Get landProducts
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetLandProducts()
-        {
-            return View();
+            var LandList = new List<LandDto>
+                {
+                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
+                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
+                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
+                };
+            var ProductList = new List<LandProductDto>
+                {
+                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[0] },
+                    new LandProductDto{CropName="pro1", Id=2, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[1] },
+                    new LandProductDto{CropName="pro1", Id=3, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[2] },
+                    new LandProductDto{CropName="pro2", Id=4, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[0] },
+                    new LandProductDto{CropName="pro2", Id=5, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[1] },
+                    new LandProductDto{CropName="pro2", Id=6, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[2] },
+                    new LandProductDto{CropName="pro3", Id=7, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[0] },
+                    new LandProductDto{CropName="pro3", Id=8, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[1] },
+                    new LandProductDto{CropName="pro3", Id=9, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[2] },
+                };
+            if (LandList.Count >= Id)
+            {
+                return View(ProductList.Where(l => l.Producer.Id == Id).ToList());
+            }
+            else
+            {
+                return View("ErrorPage", "Out of range");
+            }
         }
     }
 }

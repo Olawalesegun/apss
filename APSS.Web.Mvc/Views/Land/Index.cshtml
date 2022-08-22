@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.LandAndProductUnit
+﻿@model IEnumerable<APSS.Web.Dtos.LandDto>
 
 @await Html.PartialAsync("_dataNavBar")
 
@@ -25,11 +25,15 @@
             </select>
         </div>
         <div class="col-sm d-flex   d-inline mb-2">
-            <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#land">
+            <a class=" btn btn-primary mx-2" role="button" asp-controller="Season" asp-action="Index">
                 <i class="fa-solid fa-plus"></i>
                 Unit
             </a>
-            <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#land">
+            <a class=" btn btn-primary mx-2" role="button" asp-controller="LandProductUnit" asp-action="Index">
+                <i class="fa-solid fa-plus"></i>
+                Unit
+            </a>
+            <a class=" btn btn-primary " role="button" asp-action="add">
                 <i class="fa-solid fa-plus"></i>
                 Add
             </a>
@@ -52,7 +56,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.LandList)
+                    @foreach (var item in Model!)
                     {
                         <tr>
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
@@ -66,9 +70,9 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="Land" asp-action="Details" ><div class="d-flex justify-content-between"><i class="fa-solid fa-info"></i> Details </div></a></li>
-                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="LandProduct" asp-action="add" ><div class="d-flex justify-content-between"><i class="fa-solid fa-plus mx-2"></i> Add Product </div></a></li>
-                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="Land" asp-action="Update" ><div class="d-flex justify-content-between"><i class="fa-solid fa-pen-to-square mx-2"> </i> Update </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="Land" asp-action="Details"><div class="d-flex justify-content-between"><i class="fa-solid fa-info"></i> Details </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="LandProduct" asp-action="add"><div class="d-flex justify-content-between"><i class="fa-solid fa-plus mx-2"></i> Add Product </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="Land" asp-action="Update"><div class="d-flex justify-content-between"><i class="fa-solid fa-pen-to-square mx-2"> </i> Update </div></a></li>
                                         <li><a class="dropdown-item" asp-controller="Land" asp-action="Delete" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-trash-can mx-2"></i> Delete </div></a></li>
                                         <li><a class="dropdown-item" href="#">Active</a></li>
                                     </ul>
@@ -98,15 +102,15 @@
         </ul>
     </nav>
 </div>
-<div class="offcanvas offcanvas-end" id="land">
+@*<div class="offcanvas offcanvas-end" id="land">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Land Add</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    <h5 class="offcanvas-title">Land Add</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-        <partial name="_add.cshtml" model="@Model.landDto" />
+    <partial name="_add.cshtml" model="@Model.landDto" />
     </div>
-</div>
+    </div>*@
 @section scripts{
 <script>
      document.getElementById("nav-system-name").innerHTML="Data Management";

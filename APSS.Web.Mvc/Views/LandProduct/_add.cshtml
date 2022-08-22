@@ -19,7 +19,7 @@
             </div>
             <div class="col-sm-6 mt-3 flex-column form-group d-flex">
                 <label asp-for="Unit" class="form-label textOverflow"> </label>
-                <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model.Unit,"Id","Name"))">
+                <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model.Units,"Id","Name"))">
                     <option selected>ls</option>
                 </select>
             </div>

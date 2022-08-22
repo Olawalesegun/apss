@@ -7,6 +7,8 @@
             </div>
             <form class="form-card" method="post" asp-controller="LandProduct" asp-action="Add">
                 <input type="hidden" asp-for="ProducerId" />
+                <input type="hidden" asp-for="SeasonId" />
+                <input type="hidden" asp-for="UnitId" />
                 <div asp-validation-summary="ModelOnly"></div>
                 <!-- row 1 -->
                 <div class="row justify-content-between  ">
@@ -18,7 +20,7 @@
                     </div>
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
                         <label asp-for="Unit" class="form-label textOverflow"> Select Product Unit</label>
-                        <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model.Unit,"Id","Name"))">
+                        <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model.Units,"Id","Name"))">
                             <option selected>Select Product Unit</option>
                         </select>
                     </div>
@@ -90,10 +92,10 @@
                     </div>
                     <!-- 2 -->
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <label asp-for="Unit"></label>
-                        <select asp-for="UnitId" asp-items="@(new SelectList(Model.Unit, "Id", "Name"))">
-                            <option></option>
-                        </select>
+                        <div class="form-outline form-group" id="">
+                            <input type="text" asp-for="Category" class="form-control" />
+                            <label asp-for="Category" class="form-label"></label>
+                        </div>
                     </div>
                 </div>
                 <!-- row 6 -->

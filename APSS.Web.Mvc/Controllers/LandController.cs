@@ -7,25 +7,14 @@ namespace APSS.Web.Mvc.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            LandAndProductUnit landAndUnit = new LandAndProductUnit
-            {
-                landDto = new LandDto { Name = "land1", Id = 1, Address = "djskhao" },
-                LandList = new List<LandDto>
+            var LandList = new List<LandDto>
                 {
                     new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
                     new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
                     new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                },
-                ProductUnitDto = new LandProductUnitDto { Name = "P1", Id = 1 },
-                ProductUnitList = new List<LandProductUnitDto>
-                {
-                    new LandProductUnitDto{Name ="P1", Id=1},
-                    new LandProductUnitDto{Name ="P2", Id=2}
-                }
-            };
-            List<LandDto> landDto = new List<LandDto>();
+                };
 
-            return View(landAndUnit);
+            return View(LandList);
         }
 
         // GET: LandController/Add a new land
@@ -38,7 +27,7 @@ namespace APSS.Web.Mvc.Controllers
         // POST: LandController/Add a new land
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(IFormCollection collection)
+        public ActionResult Add(LandDto newLand)
         {
             try
             {
@@ -52,23 +41,19 @@ namespace APSS.Web.Mvc.Controllers
 
         public ActionResult Details(long Id)
         {
-            var landAndProduct = new LandAndLandProduct
-            {
-                landDto = new LandDto { Name = "land1", Id = 1, Address = "djskhao" },
-                LandList = new List<LandDto>
+            var LandList = new List<LandDto>
                 {
                     new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
                     new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
                     new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                }
-            };
+                };
 
-            landAndProduct.landDto = landAndProduct.LandList.Where(i => i.Id == Id).First();
-            landAndProduct.landDto.OwnedBy = new UserDto
+            LandDto land = LandList.Where(i => i.Id == Id).First();
+            land.OwnedBy = new UserDto
             {
                 Name = "Farouq"
             };
-            return View(landAndProduct);
+            return View(land);
         }
 
         // GET: LandController/Update land
@@ -105,15 +90,29 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: LandController/Delete  land
-        public ActionResult Delete(long landId)
+        public ActionResult Delete(long Id)
         {
-            return View();
+            var LandList = new List<LandDto>
+                {
+                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
+                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
+                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                };
+
+            LandDto land = LandList.Where(i => i.Id == Id).First();
+            land.OwnedBy = new UserDto
+            {
+                Name = "Farouq"
+            };
+
+            return View(land);
         }
 
         // POST: LandController/Delete land
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(long landId, IFormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeletePost(long Id)
         {
             try
             {
