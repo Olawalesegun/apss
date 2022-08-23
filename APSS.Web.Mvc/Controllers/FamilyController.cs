@@ -8,7 +8,12 @@ namespace APSS.Web.Mvc.Controllers
         // GET: FamilyController/GetFamilies
         public ActionResult GetFamilies()
         {
-            return View();
+            var families = new List<FamilyDto>
+            {
+              new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now },
+              new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now },
+            };
+            return View(families);
         }
 
         // GET: FamilyController/FamilyDetails/5
