@@ -1,0 +1,38 @@
+﻿@model APSS.Web.Dtos.AccountDto
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف المستخدم</h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th>@Html.DisplayNameFor(m=>m.HolderName)</th>
+                    <td> @Model.HolderName</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.PhoneNumber)</th>
+                    <td> @Model.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.NationalId)</th>
+                    <td> @Model.NationalId</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.Job)</th>
+                    <td> @Model.Job</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.SocialStatus)</th>
+                    <td> @Model.SocialStatus</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  " asp-controller="AccountManagement" asp-action="ConfirmDeleteAccount">تأكيد</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="AccountManagement" asp-action="Index">رجوع</a>
+        </div>
+
+        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
+    </div>
+</div>

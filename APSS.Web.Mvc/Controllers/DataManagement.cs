@@ -43,6 +43,25 @@ namespace APSS.Web.Mvc.Controllers
             return View(total);
         }
 
+        public async Task<IActionResult> AddUnit(long Id)
+        {
+            var animalUnit = new AnimalProductUnitDto();
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUnit(AnimalProductUnitDto unit)
+        {
+            var animalUnit = new AnimalProductUnitDto();
+            if (ModelState.IsValid)
+            {
+                BadRequest("Index");
+            }
+
+            return View();
+        }
+
         public async Task<IActionResult> CreateAnimalProduct(int id)
         {
             List<AnimalProductUnitDto> animalProductUnit = new List<AnimalProductUnitDto>
