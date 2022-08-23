@@ -30,7 +30,7 @@
             <!-- Submit button -->
             <div class="d-inline">
                 <button class="btn btn-primary mt-4 mx-1" asp-controller="Voluntary" asp-action="AddVoluntary"> <i class="fa-solid fa-plus mx-2"></i><span>إضافة</span>  </button>
-                <button class="btn btn-danger mt-4 mx-1" asp-controller="Individual" asp-action="GetIndividuals"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+                <button class="btn btn-danger mt-4 mx-1" asp-controller="Voluntary" asp-action="GetVoluntaries" asp-route-Id="@Model.Individual.Id"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
             </div>
         </form>
     </div>
