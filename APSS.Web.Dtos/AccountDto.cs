@@ -20,7 +20,7 @@ namespace APSS.Web.Dtos
         /// Gets or sets the password hash of the user
         /// </summary>
         [Required(ErrorMessage = "يجب ادخال كلمة السر")]
-        [Display(Name = "كلمة السر")]
+        [Display(Name = "كلمة المرور")]
         public string PasswordHash { get; set; } = null!;
 
         /// <summary>
@@ -66,18 +66,19 @@ namespace APSS.Web.Dtos
         /// </summary>
 
         [Display(Name = "القراة")]
-        public string? ReadPermission { get; set; }
+        public PermissionType? ReadPermission { get; set; }
 
         [Display(Name = "الكتابة")]
-        public string? WritePermission { get; set; }
+        public bool? WritePermission { get; set; }
 
         [Display(Name = "التعديل")]
-        public string? UpdatePermission { get; set; }
+        public bool? UpdatePermission { get; set; }
 
         [Display(Name = "الحذف")]
-        public string? DeletePermission { get; set; }
+        public bool? DeletePermission { get; set; }
 
-        public long? UserId { get; set; }
+        public PermissionType Permissions { get; set; }
+        public long UserId { get; set; }
 
         /// <summary>
         /// Gets or set the current active status of the account
@@ -86,6 +87,15 @@ namespace APSS.Web.Dtos
         [Display(Name = "نشط")]
         public bool IsActive { get; set; } = false;
     }
+}
+
+public enum PermissionType
+{
+    Read = 1,
+    Delete = 2,
+    Update = 4,
+    Create = 8,
+    Full = Read | Delete | Update | Create,
 }
 
 public enum SocialStatus
