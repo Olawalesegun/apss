@@ -1,0 +1,58 @@
+﻿@model APSS.Web.Dtos.IndividualAddDto
+
+<div class="container-fluid px-3 py-3  mx-4 my-1">
+    <div class="col-sm-6">
+        <div class="d-flex justify-content-center">
+            <h4 >اضافة فرد</h4>
+        </div>
+        <form class=" mt-3 " method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-4">
+                <!-- Text input for individual name-->
+                <div class="mt-4">
+                    <span class="text-danger">*</span>
+                    <label class="form-label" asp-for="Name"></label>
+                    <input type="text" id="individual_name" asp-for="Name" class="form-control" />
+                </div>
+                <span asp-validation-for="Name" class="text-danger "></span>
+
+                <!-- Text input for Address -->
+                <div class="mt-4">
+                    <span class="text-danger">*</span>
+                    <label class="form-label" for="individual_Address" asp-for="Address"></label>
+                    <input type="text" id="individual_Address" class="form-control" asp-for="Address" />
+                </div>
+                <span asp-validation-for="Address" class="text-danger mb-4"></span>
+
+                <!-- Text input for Family -->
+                <div class=" mt-4">
+                    <span class="text-danger">*</span>
+                    <label class="form-label" asp-for="Family"></label>
+                    <input class="form-control" type="text" value="@Model.Family.Name" asp-for="Family">
+                </div>
+
+                <!-- Gender input -->
+                <div class="form-check mt-4">
+                    <span class="text-danger">*</span>
+                    <label asp-for="Sex" class="mt-4"></label>
+                </div>
+                <div class="form-check form-check-inline ">
+
+                    <input class="form-check-input " asp-for="Sex" type="radio" value="male" />
+                    <label class="form-check-label" asp-for="Sex">ذكر</label>
+                </div>
+
+                <div class="form-check form-check-inline ">
+                    <input class="form-check-input" type="radio" asp-for="Sex" value="" id="female" />
+                    <label class="form-check-label" asp-for="Sex"> أنثى </label>
+                </div>
+                <span asp-validation-for="Sex" class="text-danger"></span>
+            </div>
+
+            <div class="d-inline">
+                <button class="btn btn-primary mt-4 mx-1" asp-controller="Individual" asp-action="AddIndividual"> <i class="fa-solid fa-plus mx-2"></i><span>إضافة</span>  </button>
+                <button class="btn btn-danger mt-4 mx-1" asp-controller="Individual" asp-action="GetIndividuals"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+            </div>
+        </form>
+    </div>
+</div>
