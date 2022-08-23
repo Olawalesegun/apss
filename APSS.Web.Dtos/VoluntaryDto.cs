@@ -12,5 +12,5 @@ public class VoluntaryDto : BaseAuditbleDto
     [Required(ErrorMessage = "يجب إدخال مجال التطوع")]
     public string Field { get; set; } = null!;
 
-    public IndividualDto NameIndividual { get; set; } = null!;
+    public IndividualDto Individual { get; set; } = null!;
 }
