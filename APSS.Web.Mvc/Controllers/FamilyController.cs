@@ -1,25 +1,43 @@
-﻿using APSS.Web.Dtos;
+﻿using APSS.Application.App;
+using APSS.Domain.Entities;
+using APSS.Web.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers
 {
     public class FamilyController : Controller
     {
+        private readonly UserDto _userDto;
+        private List<FamilyDto> families;
+
+        public FamilyController()
+        {
+            _userDto = new UserDto
+            {
+                Id = 1,
+                Name = "aden",
+                AccessLevel = AccessLevel.Root,
+                userStatus = UserStatus.Active,
+            };
+
+            families = new List<FamilyDto>
+            {
+              new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
+              new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
+            };
+        }
+
         // GET: FamilyController/GetFamilies
         public ActionResult GetFamilies()
         {
-            var families = new List<FamilyDto>
-            {
-              new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now },
-              new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now },
-            };
             return View(families);
         }
 
         // GET: FamilyController/FamilyDetails/5
         public ActionResult FamilyDetails(int id)
         {
-            return View();
+            var family = families.Find(f => f.Id == id);
+            return View(family);
         }
 
         // GET: FamilyController/GetFamilyIndividuals/5
