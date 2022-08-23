@@ -6,13 +6,13 @@ namespace APSS.Web.Mvc.Controllers
     public class IndividualController : Controller
     {
         // GET: Individual/GetIndividuals
-        public ActionResult GetIndividuals()
+        public IActionResult GetIndividuals()
         {
             return View();
         }
 
         // GET: IndividualController/AddIndividual/5
-        public ActionResult AddIndividual(int id)
+        public IActionResult AddIndividual(int id)
         {
             return View();
         }
@@ -20,27 +20,29 @@ namespace APSS.Web.Mvc.Controllers
         // POST: IndividualController/AddIndividual
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddIndividual(IndividualAddDto individual)
+        public IActionResult AddIndividual(IndividualAddDto individual)
         {
             return View(individual);
         }
 
         // Get: IndividualController/UpdateIndividual/5
-        public ActionResult UpdateIndividual(int id)
+        public IActionResult UpdateIndividual(int id)
         {
-            return View("EditIndividual");
+            var individual = new IndividualDto();
+
+            return View("EditIndividual", individual);
         }
 
         // POST: IndividualController/UpdateIndividual/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateIndividual(int id, IndividualDto individual)
+        public IActionResult UpdateIndividual(int id, IndividualDto individual)
         {
             return View("EditIndividual");
         }
 
         // GET: IndividualController/DeleteIndividual/5
-        public ActionResult DeleteIndividual(int id)
+        public IActionResult DeleteIndividual(int id)
         {
             return View(nameof(GetIndividuals));
         }
@@ -48,7 +50,7 @@ namespace APSS.Web.Mvc.Controllers
         // GET: IndividualController/DeleteIndividual/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteIndividual(int id, IndividualDto individualDto)
+        public IActionResult DeleteIndividual(int id, IndividualDto individualDto)
         {
             return View(nameof(GetIndividuals));
         }
