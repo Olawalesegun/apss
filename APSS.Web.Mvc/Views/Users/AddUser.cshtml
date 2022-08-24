@@ -1,0 +1,41 @@
+﻿@model APSS.Web.Dtos.UserDto
+<div class="container-fluid">
+    <div class="d-flex  col-sm-12 col-lg-6 mx-lg-4 mx-sm-2">
+        <form class=" mt-3 " asp-controller="Users" asp-action="AddUser">
+            <div asp-validation-summary="ModelOnly"></div>
+            <!-- 2 column puts for the National number and Phome Number-->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class="">
+                    اضافة منطقة جديدة
+                </h3>
+            </div>
+            <!-- Text input for user name-->
+            <div class="mb-4 ">
+                <span class="text-danger fw-bold">*</span>
+                <label class="form-label" asp-for="Name"></label>
+                <input type="text" id="user_name" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-check-inline ">
+                <h5 class="inline">
+                    <span class="text-danger">*</span>
+                    <label asp-for="userStatus"></label>
+                </h5>
+            </div>
+            <!--used -->
+            @foreach (var item in Enum.GetValues(typeof(APSS.Web.Dtos.UserStatusDto)))
+            {
+                <div class="form-check form-check-inline  ">
+                    <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@Convert.ToInt32(item)" />
+                    <label class="form-check-label">@item.ToString()</label>
+                </div>
+            }
+            <div class="mb-4">
+
+                <button type="submit" class="btn btn-primary  mb-4 mt-4">اضافة</button>
+            </div>
+            <!-- Submit button -->
+        </form>
+    </div>
+</div>
