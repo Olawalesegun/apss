@@ -1,0 +1,29 @@
+﻿@model APSS.Web.Dtos.UserDto
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف المستخدم</h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th>@Html.DisplayNameFor(m=>m.Name)</th>
+                    <td> @Model.Name</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.AccessLevel)</th>
+                    <td> @Model.AccessLevel</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                    <td> @Model.ModifiedAt</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  " asp-controller="Users" asp-action="ConfirmDeleteUser">تأكيد</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="Users" asp-action="Index">رجوع</a>
+        </div>
+
+        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
+    </div>
+</div>
