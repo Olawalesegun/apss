@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APSS.Web.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers
 {
@@ -6,7 +7,14 @@ namespace APSS.Web.Mvc.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var seasonList = new List<SeasonDto>
+            {
+                new SeasonDto { Id = 1, Name ="Season1", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 2, Name ="Season2", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 3, Name ="Season3", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 4, Name ="Season4", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+            };
+            return View(seasonList);
         }
 
         // GET: SeasonController/Add a new Season
@@ -18,7 +26,7 @@ namespace APSS.Web.Mvc.Controllers
         // POST: SeasonController/Add a new Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(IFormCollection collection)
+        public ActionResult Add(SeasonDto season)
         {
             try
             {
@@ -31,15 +39,23 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: SeasonController/Update Season
-        public ActionResult Update(long seasonId)
+        public ActionResult Update(long Id)
         {
-            return View();
+            var seasonList = new List<SeasonDto>
+            {
+                new SeasonDto { Id = 1, Name ="Season1", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 2, Name ="Season2", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 3, Name ="Season3", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 4, Name ="Season4", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+            };
+
+            return View(seasonList.Where(i => i.Id == Id).First());
         }
 
         // POST: SeasonController/Update Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(long seasonId, IFormCollection collection)
+        public ActionResult Update(SeasonDto season)
         {
             try
             {
@@ -52,15 +68,23 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: SeasonController/Delete  Season
-        public ActionResult Delete(long seasonId)
+        public ActionResult Delete(long Id)
         {
-            return View();
+            var seasonList = new List<SeasonDto>
+            {
+                new SeasonDto { Id = 1, Name ="Season1", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 2, Name ="Season2", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 3, Name ="Season3", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 4, Name ="Season4", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+            };
+
+            return View(seasonList.Where(i => i.Id == Id).First());
         }
 
         // POST: SeasonController/Delete Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(long seasonId, IFormCollection collection)
+        public ActionResult Delete(SeasonDto season)
         {
             try
             {
@@ -73,29 +97,7 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: SeasonController/Get Season
-        public ActionResult GetLand(long seasonId)
-        {
-            return View();
-        }
-
-        // POST: SeasonController/Get Season
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetLand(long seasonId, IFormCollection collection)
-        {
-            return View();
-        }
-
-        // GET: SeasonController/Get Seasons
-        public ActionResult GetLands()
-        {
-            return View();
-        }
-
-        // POST: SeasonController/Get Seasons
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetLands(IFormCollection collection)
+        public ActionResult GetSeason(long Id)
         {
             return View();
         }

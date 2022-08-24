@@ -12,6 +12,7 @@ namespace APSS.Web.Mvc.Controllers
                     new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
                     new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
                     new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
                 };
 
             return View(LandList);
@@ -46,6 +47,7 @@ namespace APSS.Web.Mvc.Controllers
                     new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
                     new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
                     new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
                 };
 
             LandDto land = LandList.Where(i => i.Id == Id).First();

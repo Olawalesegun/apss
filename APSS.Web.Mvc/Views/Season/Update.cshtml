@@ -1,24 +1,25 @@
-﻿@{
+﻿@model APSS.Web.Dtos.SeasonDto
+@{
     ViewData["title"] = "Update Season Page";
 }
 <form class=" mt-3 ">
     <!--  column puts for the Land Product Expense Type -->
     <div class="center d-flex justify-content-center mb-3 ">
         <h3 class=" ">
-            Update Season Information
+            Season Information
         </h3>
     </div>
     <div class="form-outline mb-4">
-        <input type="text" id="season" name="season" class="form-control" />
-        <label class="form-label" for="season">Season Name</label>
+        <input type="text" asp-for="Name" class="form-control" />
+        <label class="form-label" asp-for="Name"></label>
     </div>
     <div class="form-outline mb-4">
-        <input type="datetime" id="startAt" name="startAt" class="form-control" />
-        <label class="form-label" for="startAt">starts At</label>
+        <input type="datetime" asp-for="StartsAt" class="form-control" />
+        <label class="form-label" asp-for="StartsAt"></label>
     </div>
     <div class="form-outline mb-4">
-        <input type="datetime" id="endAt" name="endAt" class="form-control" />
-        <label class="form-label" for="endAt">Ends At</label>
+        <input type="datetime" asp-for="EndsAt" class="form-control" />
+        <label class="form-label" asp-for="EndsAt"></label>
     </div>
     <!-- Submit button -->
     <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>

@@ -1,54 +1,9 @@
-﻿@{
+﻿@model IEnumerable<APSS.Web.Dtos.SeasonDto>
+@{
     ViewData["title"] = "Season Management Page";
 }
 
-<nav class="navbar navbar-expand-lg shadow-sm pb-0 pt-2  mt-2 " id="season-manage">
-    <div class="container-fluid">
-
-        <div class="collapse navbar-collapse" id="data-management">
-            <ul class="navbar-nav me-auto  pb-0 mb-lg-0">
-                <li class="nav-item pb-2 ">
-
-                    <div class="d-flex justify-content-between">
-
-                        <a class="nav-link " href="#">
-                            <span class="mt-2"><i class="fa-solid fa-money-bill-wheat"></i></span>
-                            Recent Seasons
-                        </a>
-                    </div>
-                </li>
-                @*<li class="nav-item mx-sm-2 pb-2">
-                    <div class="d-flex justify-content-between">
-                    <a class="nav-link  text-decoration-none" href="#">
-                    <span class="mt-2"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
-                    Add Account
-                    </a>
-                    </div>
-                    </li>*@
-                <li class="nav-item mx-sm-2 pb-2 ">
-                    <div class="d-flex justify-content-between">
-
-                        <a class="nav-link" href="#">
-                            <span class="mt-2"><i class="fa-solid fa-money-bill-wheat"></i></span>
-                            Seasons
-                        </a>
-                    </div>
-                </li>
-
-                <li class="nav-item mx-sm-2 pb-2 ">
-                    <div class="d-flex justify-content-between">
-
-                        <a class="nav-link" role="button" type="button" asp-action="Add">
-                            <span class="mt-2"><i class="fa-solid fa-money-bill-wheat"></i></span>
-                            Add Season
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+@await Html.PartialAsync("_dataNavBar")
 <div class="container-fluid  border p-2  col-ms-12  mt-0  rounded ml-2 " id="">
 
     <form class="row gx-3 gy-2 align-items-center mb-3 ">
@@ -83,176 +38,39 @@
 
                 <thead>
                     <tr class="header">
-                        <th style="width:10%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Start At</th>
+                        <th style="width:5%;" class=" text-capitalize align-middle">ID</th>
+                        <th style="width:15%;" class=" text-capitalize align-middle">Name</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">Start At</th>
                         <th style="width:20%;" class=" text-capitalize align-middle">Ends At</th>
-                        <th style="width:5%;" class=" text-capitalize align-middle">Function</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">Created At</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">Modified At</th>
+                        <th style="max-width:5%;" class=" text-capitalize align-middle">خيارات </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-break text-capitalize align-middle">1</td>
-                        <td class="text-break text-capitalize align-middle"> John</td>
-                        <td class="text-break text-capitalize align-middle">Doe</td>
-                        <td class="text-break text-capitalize align-middle">
-                            john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
-                        </td>
-                        <td class="align-middle center">
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
+                    @foreach (var item in Model!)
+                    {
+                        <tr>
+                            <td class="text-break text-capitalize align-middle">@item.Id</td>
+                            <td class="text-break text-capitalize align-middle">@item.Name</td>
+                            <td class="text-break text-capitalize align-middle">@item.StartsAt</td>
+                            <td class="text-break text-capitalize align-middle">@item.EndsAt</td>
+                            <td class="text-break text-capitalize align-middle">@item.CreatedAt</td>
+                            <td class="text-break text-capitalize align-middle">@item.ModifiedAt</td>
+                            <td class="align-middle center">
+                                <div class=" dropend">
+                                    <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="Season" asp-action="Update" asp-route-id="">Update</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Season" asp-action="Delete" asp-route-id="">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Update</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">i</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>goo</td>
-                        <td>moe</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                            <div class=" dropend">
-                                <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Details</a></li>
-                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                    <li><a class="dropdown-item" href="#">Active</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>
-                        </td>
-                    </tr>
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Season" asp-action="Update" asp-route-id="@item.Id">Update</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Season" asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -275,3 +93,13 @@
         </ul>
     </nav>
 </div>
+@section scripts{
+<script>
+     document.getElementById("nav-system-name").innerHTML="Data Management";
+    document.getElementById("media-system-name").innerHTML="Data Management";
+       $("#landProducts").removeClass('actives');
+       $("#animalGroups").removeClass('actives');
+    $("#animalProducts").removeClass('actives');
+    $("#lands").addClass('actives');
+</script>
+}

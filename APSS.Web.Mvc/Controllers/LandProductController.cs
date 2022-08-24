@@ -209,14 +209,14 @@ namespace APSS.Web.Mvc.Controllers
             var ProductList = new List<LandProductDto>
                 {
                     new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[0] },
-                    new LandProductDto{CropName="pro1", Id=2, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[1] },
-                    new LandProductDto{CropName="pro1", Id=3, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[2] },
-                    new LandProductDto{CropName="pro2", Id=4, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[0] },
-                    new LandProductDto{CropName="pro2", Id=5, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[1] },
-                    new LandProductDto{CropName="pro2", Id=6, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[2] },
-                    new LandProductDto{CropName="pro3", Id=7, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[0] },
-                    new LandProductDto{CropName="pro3", Id=8, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[1] },
-                    new LandProductDto{CropName="pro3", Id=9, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[2] },
+                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[1] },
+                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[2] },
+                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[0] },
+                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[3] },
+                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[2] },
+                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[3] },
+                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[3] },
+                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[2] },
                 };
             if (LandList.Count >= Id)
             {

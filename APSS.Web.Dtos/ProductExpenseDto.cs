@@ -18,7 +18,7 @@ namespace APSS.Web.Dtos
         [Display(Name = "التكلفة")]
         public decimal Price { get; set; }
 
-        public int ProductId { get; set; }
+        public long ProductId { get; set; }
 
         public ProductDto SpentOn { get; set; } = null!;
     }
