@@ -1,12 +1,12 @@
 ﻿@model APSS.Web.Dtos.ProductExpenseDto
 @{
-    ViewData["title"] = "Add Product Expense Page";
+    ViewData["title"] = "صفحة إضافة تكلفة ";
 }
 <form class=" mt-3 " method="post" asp-action="add">
     <!--  column puts for the Land Product Expense Type -->
     <div class="center d-flex justify-content-center mb-3 ">
         <h3 class=" ">
-            Land Product Expense Information
+            تفاصيل التكلفة
         </h3>
     </div>
     <div class="form-outline mb-4">
@@ -19,5 +19,5 @@
         <label class="form-label" asp-for="Price"></label>
     </div>
     <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">Add</button>
+    <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">إضافة</button>
 </form>

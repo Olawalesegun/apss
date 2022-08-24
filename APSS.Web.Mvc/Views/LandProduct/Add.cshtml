@@ -3,7 +3,7 @@
     <div class="row d-flex justify-content-start">
         <div class="col-xl-7 col-lg-8 col-md-9 col-11  shadow-sm pb-3">
             <div class="d-flex  justify-content-center pb-4 pt-4">
-                <div class=""> <h3 class="text-decoration-underline textOverflow ">Add New Land Product</h3></div>
+                <div class=""> <h3 class="text-decoration-underline textOverflow ">إضافة منتج جديد</h3></div>
             </div>
             <form class="form-card" method="post" asp-controller="LandProduct" asp-action="Add">
                 <input type="hidden" asp-for="ProducerId" />
@@ -14,14 +14,14 @@
                 <div class="row justify-content-between  ">
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
                         <label asp-for="Seasons" class="form-label textOverflow"> Select Season</label>
-                        <select class="form-select" asp-for="SeasonId" asp-items="@(new SelectList(Model.Seasons,"Id","Name"))">
-                            <option selected>Select Season</option>
+                        <select class="form-select" asp-for="SeasonId" asp-items="@(new SelectList(Model?.Seasons,"Id","Name"))">
+                            <option selected>تحديد الموسم</option>
                         </select>
                     </div>
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
                         <label asp-for="Unit" class="form-label textOverflow"> Select Product Unit</label>
-                        <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model.Units,"Id","Name"))">
-                            <option selected>Select Product Unit</option>
+                        <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model?.Units,"Id","Name"))">
+                            <option selected>تحديد وحدة المنتج</option>
                         </select>
                     </div>
                 </div>
@@ -111,8 +111,8 @@
                     <!-- 2 -->
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex ">
                         <div class="form-outline form-group" id="">
-                            <input type="text" name="irrigationMethod" class="form-control" id="irrigationMethod" placeholder="">
-                            <label for="irrigationMethod" class="form-label">Irrigation Method </label>
+                            <input type="text" class="form-control" asp-for="IrrigationMethod">
+                            <label asp-for="IrrigationMethod" class="form-label"></label>
                         </div>
                     </div>
                 </div>
@@ -121,39 +121,39 @@
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
 
                         <div class="form-check-inline ">
-                            <h5 class="label-inline textOverflow">Government Funded:</h5>
+                            <h5 class="label-inline textOverflow"><label asp-for="IsGovernmentFunded"></label></h5>
                         </div>
                         <!--used -->
                         <div class="form-check   ">
-                            <input class="form-check-input hiden" type="radio" name="isGovernmentFunded" id="isGovernmentFunded" value="true" />
-                            <label class="form-check-label" for="isGovernmentFunded">Yes</label>
+                            <input class="form-check-input hiden" type="radio" asp-for="IsGovernmentFunded" value="true" />
+                            <label class="form-check-label" asp-for="IsGovernmentFunded">نعم</label>
                         </div>
                         <!--unused -->
                         <div class="form-check ">
-                            <input class="form-check-input" type="radio" value="false" id="isnotGovernmentFunded" name="isGovernmentFunded" checked />
-                            <label class="form-check-label" for="isnotGovernmentFunded"> False </label>
+                            <input class="form-check-input" type="radio" value="false" asp-for="IsGovernmentFunded" checked />
+                            <label class="form-check-label" asp-for="IsGovernmentFunded"> لا </label>
                         </div>
                     </div>
                     <!-- 2 -->
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
                         <div class="form-check-inline ">
-                            <h5 class="label-inline textOverflow">has Greenhouse:</h5>
+                            <h5 class="label-inline textOverflow"><label asp-for="HasGreenhouse"></label></h5>
                         </div>
                         <!--used -->
                         <div class="form-check form-check-inline offset-xl-5">
-                            <input class="form-check-input hiden" type="radio" name="hasGreenhouse" id="hasGreenhouse" value="true" />
-                            <label class="form-check-label" for="hasGreenhouse">Yes</label>
+                            <input class="form-check-input hiden" type="radio" asp-for="HasGreenhouse" value="true" />
+                            <label class="form-check-label" asp-for="HasGreenhouse">نعم</label>
                         </div>
                         <!--unused -->
                         <div class="form-check form-check-inline offset-xl-5">
-                            <input class="form-check-input" type="radio" value="false" id="nothasGreenhouse" name="hasGreenhouse" checked />
-                            <label class="form-check-label" for="nothasGreenhouse"> No </label>
+                            <input class="form-check-input" type="radio" value="false" asp-for="HasGreenhouse" checked />
+                            <label class="form-check-label" asp-for="HasGreenhouse"> لا </label>
                         </div>
                     </div>
                 </div>
                 <!-- row 9 -->
                 <div class="row justify-content-between   mt-3"></div>
-                <button class="btn btn-primary  "><i class="fa-solid fa-plus"></i>Add</button>
+                <button class="btn btn-primary  "><i class="fa-solid fa-plus"></i>إضافة</button>
             </form>
         </div>
     </div>

@@ -4,7 +4,7 @@
         <form class=" mt-3 align-items-center " method="post" asp-action="add">
             <div class="center d-flex justify-content-center mb-3 ">
                 <h3 class=" ">
-                    Add New Land
+                    إضافة أرض جديدة
                 </h3>
             </div>
             <div class="form-outline mb-3">
@@ -33,38 +33,38 @@
             </div>    <!-- IsUsable input -->
             <div class="form-check-inline">
 
-                <h5 class="inline">IsUsable:</h5>
+                <h5 class="inline"><label asp-for="IsUsed"></label></h5>
             </div>
             <div class="form-check form-check-inline">
 
-                <input class="form-check-input hiden" type="radio" name="isUsable" id="yes" value="true" checked />
-                <label class="form-check-label" for="yes">Yes</label>
+                <input class="form-check-input hiden" type="radio" value="true" checked />
+                <label class="form-check-label" asp-for="IsUsed">نعم</label>
             </div>
 
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" value="false" id="no" name="isUsable" />
-                <label class="form-check-label" for="no"> No </label>
+                <input class="form-check-input" type="radio" value="false" />
+                <label class="form-check-label" asp-for="IsUsed"> لا </label>
             </div>
 
             <br />
             <!-- IsUsed input -->
             <div class="form-check-inline">
 
-                <h5 class="inline"> IsUsed: </h5>
+                <h5 class="inline"> <label asp-for="IsUsable"> </label> </h5>
             </div>
             <div class="form-check form-check-inline">
 
                 <input class="form-check-input hiden" type="radio" asp-for="IsUsable" value="true" checked />
-                <label class="form-check-label" asp-for="IsUsable">Yes</label>
+                <label class="form-check-label" asp-for="IsUsable">نعم</label>
             </div>
 
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" asp-for="IsUsable" value="false" />
-                <label class="form-check-label" asp-for="IsUsable"> No </label>
+                <label class="form-check-label" asp-for="IsUsable"> لا </label>
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mt-4 col-2">Add</button>
+            <button type="submit" class="btn btn-primary btn-block mt-4 col-2">إضافة</button>
         </form>
     </div>
 </div>

@@ -61,18 +61,19 @@ namespace APSS.Web.Mvc.Controllers
         // GET: LandController/Update land
         public ActionResult Update(long Id)
         {
-            var landAndProduct = new LandAndLandProduct
-            {
-                landDto = new LandDto { Name = "land1", Id = 1, Address = "djskhao" },
-                LandList = new List<LandDto>
+            var LandList = new List<LandDto>
                 {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123, Latitude=123, Longitude=456, IsUsable=false, IsUsed=false},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321, Latitude=123, Longitude=456, IsUsable=false, IsUsed=false},
-                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555, Latitude=123, Longitude=456, IsUsable=false, IsUsed=false},
-                }
-            };
+                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
+                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
+                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
+                };
 
-            LandDto land = landAndProduct.LandList.Where(i => i.Id == Id).First();
+            LandDto land = LandList.Where(i => i.Id == Id).First();
+            land.OwnedBy = new UserDto
+            {
+                Name = "Farouq"
+            };
             return View(land);
         }
 

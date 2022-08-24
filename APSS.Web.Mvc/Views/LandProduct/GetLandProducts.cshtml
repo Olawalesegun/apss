@@ -16,25 +16,17 @@
                 </span>
                 <span class="form-outline " style="width:83%;padding-top:0px">
                     <input type="search" class="form-control" id="search" onkeyup="searchTable()">
-                    <label class="form-label">Search</label>
+                    <label class="form-label">بحث ...</label>
                 </span>
-                @*<button class="btn btn-outline-secondary dropdown-toggle border border-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Order By</button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    </ul>*@
             </div>
         </div>
         <div class="col-sm-2  ">
 
             <select class="form-select " id="searchby">
-                <option selected>Choose search by</option>
-                <option value="1">Name</option>
-                <option value="2">Id</option>
-                <option value="3">Address</option>
+                <option selected>بحث عن طريق </option>
+                <option value="1">@Html.DisplayNameFor(n => n.CropName)</option>
+                <option value="2">@Html.DisplayNameFor(i => i.Id)</option>
+                <option value="3">@Html.DisplayNameFor(a => a.Category)</option>
             </select>
         </div>
     </form>
@@ -47,11 +39,11 @@
 
                 <thead>
                     <tr class="header">
-                        <th style="width:10%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Harvest Start</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Harvest End</th>
-                        <th style="width:5%;" class=" text-capitalize align-middle">Function</th>
+                        <th style="width:10%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(i => i.Id)</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(n => n.CropName)</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(h => h.HarvestStart)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(h => h.HarvestEnd)</th>
+                        <th style="width:5%;" class=" text-capitalize align-middle">خيارات</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,11 +62,11 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Details" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-info"></i> Details </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-pen-to-square mx-2"></i> Update </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="add" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-plus mx-2"></i> Add Expense </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-trash-can mx-2"></i> Delete </div></a></li>
-                                        <li><a class="dropdown-item" href="#">Active</a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Details" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-info"></i> التفاصيل </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-pen-to-square mx-2"></i> تعديل </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="add" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-plus mx-2"></i>إضافة تكلفة  </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><i class="fa-solid fa-trash-can mx-2"></i> حذف </div></a></li>
+                                        <li><a class="dropdown-item" href="#">تفعيل /إلغاء</a></li>
                                     </ul>
                                 </div>
                             </td>

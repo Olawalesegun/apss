@@ -2,38 +2,38 @@
 
 <div class="card mt-2">
     <div class="card-body">
-        <div class="d-flex "><h5>تأكيد حذف الارض</h5> </div>
+        <div class="d-flex "><h5>تأكيد حذف المنتج</h5> </div>
         <table class="table user-view-table m-0  ">
             <tbody style="font-size:14px">
                 <tr>
                     <td>@Html.DisplayNameFor(i => i.Id)</td>
-                    <td>@Model.Id</td>
+                    <td>@Model?.Id</td>
                 </tr>
                 <tr class="">
                     <td>@Html.DisplayNameFor(c => c.CropName)</td>
-                    <td>@Model.CropName</td>
+                    <td>@Model?.CropName</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(c => c.Category)</td>
-                    <td>@Model.Category</td>
+                    <td>@Model?.Category</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(q => q.Quantity)</td>
-                    <td>@Model.Quantity</td>
+                    <td>@Model?.Quantity</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(f => f.Fertilizer)</td>
-                    <td>@Model.Fertilizer</td>
+                    <td>@Model?.Fertilizer</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(h => h.HarvestStart)</td>
-                    <td>@Model.HarvestStart</td>
+                    <td>@Model?.HarvestStart</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(h => h.HarvestEnd)</td>
-                    <td>@Model.HarvestEnd</td>
+                    <td>@Model?.HarvestEnd</td>
                 </tr>
-                @if (@Model.HasGreenhouse == true)
+                @if (@Model?.HasGreenhouse == true)
                 {
                     <tr>
                         <td>@Html.DisplayNameFor(h => h.HasGreenhouse)</td>
@@ -49,29 +49,29 @@
                 }
                 <tr>
                     <td>@Html.DisplayNameFor(i => i.Insecticide)</td>
-                    <td>@Model.Insecticide</td>
+                    <td>@Model?.Insecticide</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(i => i.IrrigationCount)</td>
-                    <td>@Model.IrrigationCount</td>
+                    <td>@Model?.IrrigationCount</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(i => i.IrrigationMethod)</td>
-                    <td>@Model.IrrigationMethod</td>
+                    <td>@Model?.IrrigationMethod</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(i => i.IrrigationPowerSource)</td>
-                    <td>@Model.IrrigationPowerSource</td>
+                    <td>@Model?.IrrigationPowerSource</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(i => i.IrrigationWaterSource)</td>
-                    <td>@Model.IrrigationWaterSource</td>
+                    <td>@Model?.IrrigationWaterSource</td>
                 </tr>
                 <tr>
                     <td>@Html.DisplayNameFor(s => s.StoringMethod)</td>
-                    <td>@Model.StoringMethod</td>
+                    <td>@Model?.StoringMethod</td>
                 </tr>
-                @if (@Model.IsGovernmentFunded == true)
+                @if (@Model?.IsGovernmentFunded == true)
                 {
                     <tr>
                         <td>@Html.DisplayNameFor(h => h.HasGreenhouse)</td>
@@ -85,23 +85,23 @@
                         <td>It is not</td>
                     </tr>
                 }
-                @*<tr>
+                <tr>
                     <td>@Html.DisplayNameFor(p => p.ProducedIn)</td>
-                    <td>@Model.ProducedIn.Name</td>
-                    </tr>
-                    <tr>
+                    <td>@Model?.ProducedIn.Name</td>
+                </tr>
+                <tr>
                     <td>@Html.DisplayNameFor(p => p.Producer)</td>
-                    <td>@Model.Producer.Name</td>
-                    </tr>
-                    <tr>
+                    <td>@Model?.Producer.Name</td>
+                </tr>
+                <tr>
                     <td>@Html.DisplayNameFor(p => p.AddedBy)</td>
-                    <td>@Model.AddedBy.Name</td>
-                    </tr>*@
+                    <td>@Model?.AddedBy.Name</td>
+                </tr>
             </tbody>
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="LandProduct" asp-action="Delete" asp-route-Id="@Model.Id">تأكيد</a>
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-controller="LandProduct" asp-action="Delete">تأكيد</a>
             <a class="btn btn-primary btn-rounded mx-3" asp-controller="LandProduct" asp-action="Index">رجوع</a>
         </div>
 

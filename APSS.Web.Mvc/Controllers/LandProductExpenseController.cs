@@ -37,8 +37,8 @@ namespace APSS.Web.Mvc.Controllers
                 new ProductExpenseDto{Type = "type7", Id = 7, Price = 2134, SpentOn = ProductList[4]},
                 new ProductExpenseDto{Type = "type8", Id = 8, Price = 2134, SpentOn = ProductList[5]},
                 new ProductExpenseDto{Type = "type9", Id = 9, Price = 2134, SpentOn = ProductList[6]},
-                new ProductExpenseDto{Type = "type10", Id = 9, Price = 2134, SpentOn = ProductList[7]},
-                new ProductExpenseDto{Type = "type11", Id = 9, Price = 2134, SpentOn = ProductList[8]},
+                new ProductExpenseDto{Type = "type10", Id = 10, Price = 2134, SpentOn = ProductList[7]},
+                new ProductExpenseDto{Type = "type11", Id = 11, Price = 2134, SpentOn = ProductList[8]},
             };
             return View(productExpenses.Where(i => i.SpentOn.Id == Id));
         }

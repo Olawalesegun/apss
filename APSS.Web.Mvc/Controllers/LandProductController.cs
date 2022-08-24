@@ -69,31 +69,28 @@ namespace APSS.Web.Mvc.Controllers
         // GET: LandProductController/_Add a new landProduct
         public ActionResult XsAdd(long landId)
         {
-            var landProductWith = new LandAndLandProduct
+            var landProductDto = new LandProductDto
             {
-                landProductDto = new LandProductDto
-                {
-                    Seasons = new List<SeasonDto> {
+                Seasons = new List<SeasonDto> {
                     new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },
                     new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },
                     new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },
                 },
-                    Units = new List<LandProductUnitDto>
+                Units = new List<LandProductUnitDto>
                 {
                     new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},
                     new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},
                     new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},
                 }
-                }
             };
 
-            return View(landProductWith);
+            return View(landProductDto);
         }
 
         // POST: LandController/_Add a new landProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult _Add(LandProductAndSeasonAndUnit landProduct, IFormCollection collection)
+        public ActionResult _Add(LandProductDto landProduct, IFormCollection collection)
         {
             try
             {
