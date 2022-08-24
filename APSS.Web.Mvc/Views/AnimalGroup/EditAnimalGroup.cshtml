@@ -1,0 +1,78 @@
+﻿@model APSS.Web.Dtos.AnimalGroupDto
+
+<div class="container-fluid">
+    <div class="col-sm-5 d-flex">
+        <form class=" mt-3 " method="post" id="EditAnimalGroup">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <!-- 2 column puts for the type  and quantity of animal-->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Add New Animal Group
+                </h3>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="animal_type" asp-for="Type" class="form-control" />
+                        <label class="form-label" asp-for="Type"></label>
+                        <span asp-validation-for="Type" style="" class="text-danger col-sm-8 "></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="number" id="Quentity" asp-for="Quantity" class="form-control" />
+                        <label class="form-label" asp-for="Quantity"></label>
+                        <span asp-validation-for="Quantity" class="text-danger col-sm-8 "></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gender input -->
+            <div class="form-check-inline">
+
+                <h5 class="inline">Gender:</h5>
+            </div>
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input hiden" asp-for="Sex" type="radio" name="Sex" value="Male" checked />
+                <label class="form-check-label" asp-for="Sex">Male</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" asp-for="Sex" type="radio" value="Female" name="Sex" id="male" />
+                <label class="form-check-label" asp-for="Sex"> Femal </label>
+            </div>
+
+            <div class="form-check form-check-inline">
+
+                <input class="form-check-input" asp-for="Sex" type="radio" value="other" name="Sex" id="other" />
+                <label class="form-check-label" asp-for="Sex"> Other </label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" onclick="EditAnimalGroup()" class="btn btn-primary  mb-4 mt-4">Add</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function EditAnimalGroup() {
+        var data = $("#EditAnimalGroup").serialize();
+        console.log(data);
+        $.ajax({
+            type: 'POST',
+            url: '/AnimalGroup/EditAnimalGroup',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+            data: data,
+            success: function (result) {
+               alert('Successfully received Data ');
+                console.log(result);
+            },
+            error: function () {
+               alert('Failed to receive the Data');
+                console.log('Failed ');
+            }
+        })
+    }
+</script>
