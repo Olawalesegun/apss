@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - APSS</title>
     <link rel="stylesheet"
           -moz-text-size-adjust href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
@@ -17,7 +18,6 @@
     <link rel="icon" href="~/css/main.css" />
     <link rel="icon" href="~/css/icons.css" />
     <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
-    <link rel="stylesheet" href="~/MDB/bootstrap.min.css" />
     @*<link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />*@
     <link rel="stylesheet" href="~/MDB/css/mdb.rtl.min.css" />
 </head>
@@ -36,11 +36,11 @@
             <br />
             <hr />
             <ul class="list-unstyle px-2 ">
-                <li class="active" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> Dashboard</a></li>
-                <li class="" id="accountManagement"><a asp-action="Index" asp-controller="AccountManagement" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> Account Management</a></li>
+                <li class="active" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> الصفحة الرئيسية</a></li>
+                <li class="" id="accountManagement"><a asp-action="Index" asp-controller="Users" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> ادارة الموظفين </a></li>
 
-                <li class="" id="dataManagement"><a asp-action="Index" asp-controller="AnimalGroup" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
-                <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
+                <li class="" id="dataManagement"><a asp-action="Index" asp-controller="AnimalGroup" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> ادارة البيانات </a></li>
+                <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> إدارة الاستبيانات </a></li>
             </ul>
 
             <hr class="mx-2">
@@ -48,13 +48,13 @@
                 <li class="">
                     <a href="#" class="text-decoration-none  px-3 py-2 d-block ">
                         <i class="fa-solid fa-gear px-2 fa-lg"></i>
-                        Settings
+                        الاعدادات
                     </a>
                 </li>
 
                 <li class="">
                     <a class="text-decoration-none px-3 py-2 d-flex justify-content-between">
-                        <span><i class="bi bi-bell-fill fa-lg px-2"></i> Notification</span>
+                        <span><i class="bi bi-bell-fill fa-lg px-2"></i> الاشعارات</span>
                         <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
                     </a>
                 </li>
@@ -91,7 +91,7 @@
         <!-- start nav bar -->
         <div class="content overflow-scroll " id="maintContent">
 
-            <nav class="navbar navbar-expand-md navbar-light main-bg-color shadow-sm ">
+            <nav class="navbar navbar-expand-lg  navbar-light main-bg-color shadow-sm ">
                 <div class="container-fluid">
                     <!-- Media Top Bar setting -->
                     <div class="d-flex justify-content-between d-md-none d-block w-100 ">
@@ -102,69 +102,17 @@
                             <button class="btn px-0  btn-link  open-btn "><i class="fas fa-stream fs-1  "></i></button>
 
                             <a href="#" class=" text-sm-start overflow-scroll py-1    text-primary  " id="media-system-name" style="word-wrap:break-word">
-                                Scan System
+                                المسح الزراعي
                             </a>
                         </div>
                         <div class="d-flex ">
-
-                            <div class=" ">
-
-                                <div class="dropdown mt-1" id="data-mange">
-                                    <a role="button" class="btn btn-link text-decoration-none  dropdown-toggle px-1" data-bs-toggle="dropdown">
-                                        menu
-                                    </a>
-                                    <ul class="dropdown-menu" id="">
-                                        <li class="py-3  ">
-
-                                            <div class="d-flex justify-content-between media-dropdown">
-
-                                                <a class="dropdown-item " href="#">
-                                                    <span class="mt-2"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
-                                                    Last Account
-                                                </a>
-                                            </div>
-                                            <hr class="m-0">
-                                        </li>
-                                        <li class="pt-0 ">
-                                            <div class="d-flex justify-content-between media-dropdown">
-                                                <a class="dropdown-item  " href="#">
-                                                    <span class="mt-2"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
-                                                    Add Account
-                                                </a>
-                                            </div>
-                                            <hr class="m-0">
-                                        </li>
-
-                                        <li class=" mx-sm-2">
-                                            <div class="d-flex justify-content-between media-dropdown">
-
-                                                <a class="dropdown-item" href="#">
-                                                    <span class="mt-2"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
-                                                    Users
-                                                </a>
-                                            </div>
-                                            <hr class="m-0">
-                                        </li>
-
-                                        <li class="  pb-3">
-                                            <div class="d-flex justify-content-between media-dropdown">
-
-                                                <a class="dropdown-item" href="#">
-                                                    <span class="mt-2"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
-                                                    Add  User
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
 
                             <div class="pt-2 px-1">
                                 <a href="#" class="text-decoration-none ">
                                     <i class="fal fa-bell fs-1 "></i>
                                 </a>
                             </div>
-                            <div class=" dropstart">
+                            <div class=" dropstart pt-2 px-1">
                                 <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
@@ -180,7 +128,7 @@
                     <div class="collapse navbar-collapse" id="media_collapse">
                         <h3 class="" id="nav-system-name">
 
-                            Scan System
+                            المسح الزراعي
                         </h3>
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item align-content-end ml-1">
@@ -198,8 +146,6 @@
                                 <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
-
-                                    @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
@@ -210,6 +156,7 @@
                     </div>
                 </div>
             </nav>
+            <partial name="_Notification" />
             <!-- main body -->
             <div class="dashboard-content  px-0 mx-0 ">
 
@@ -225,45 +172,29 @@
             </div>
         </div>
 
-        <!-- model-->
+        <!-- model-->        @*<footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/modelFunction.js" asp-append-version="true"></script>
 
-        <div class="modal" tabindex="-1" id="form-model">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @*<footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/modelFunction.js" asp-append-version="true"></script>
-
-    <script>
+        @section  scripts{
+        <script>
               $(".open-btn").on('click',function()
               {
-                  $(".sidebar").addClass('active');
+                 $(".sidebar").addClass('active');
               });
-               $(".close-btn").on('click',function()
+              $(".close-btn").on('click',function()
               {
                   $(".sidebar").removeClass('active');
-              });
+            });
                 $("#drops").on('click',function(){
-               $('.rotate').toggleClass('down');
-              });
+                $('.rotate').toggleClass('down');
+               });
+        </script>
+        }
 
-        });
-    </script>
-
-    @await RenderSectionAsync("Scripts", required:         false)
+        @await RenderSectionAsync("Scripts", required:         false)
 </body>
 </html>
