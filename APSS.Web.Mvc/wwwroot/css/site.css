@@ -67,8 +67,11 @@ hr.h-color {
 
 .sidebar li a {
     color: #829AB1;
-    font-weight: 600;
     padding: 15px;
+    font-size: 18px !important;
+    font-family: 'Tajawal';
+    /*font-family: "Times New Roman", Times, serif;*/
+    /*  font-family: Arial, Helvetica, sans-serif;*/
 }
 
 @media(max-width:768px) {
@@ -118,6 +121,12 @@ hr.h-color {
     .form-outline #search {
         width: 100% !important;
     }
+
+    .my-custom-scrollbar {
+        position: relative;
+        height: 80%;
+        overflow: auto;
+    }
 }
 
 #media-system-name {
@@ -125,21 +134,7 @@ hr.h-color {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-/*@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
-    #side_nav {
-        margin-left: 0;
-        min-height: 100vh;
-        z-index: 1;
-    }
 
-    .content {
-        margin-left: 22.0%;
-    }
-
-    #account-manage {
-        display: none;
-    }
-}*/
 #side_nav.active {
     margin-right: 0;
 }
@@ -209,7 +204,7 @@ input[type="password"]{
 /* thable style */
 .my-custom-scrollbar {
     position: relative;
-    height: 400px;
+    height: 80%;
     overflow: auto;
 }
 
@@ -442,13 +437,17 @@ div.scrollmenu {
     margin-right: 0;
 }
 
-    div.scrollmenu a {
-        display: inline-block;
-        color: black;
-        text-align: center;
-        padding: 14px;
-        text-decoration: none;
-    }
+.nav-style {
+    line-height: 35px;
+}
+
+div.scrollmenu a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
 
 .MediaActive {
     border-bottom: 2px #1C74B4 solid;
@@ -569,6 +568,10 @@ div.scrollmenu {
         left: 0px;
         top: 0px;
     }
+}
+
+input[type="search"] {
+    border-radius: 5px 0 0 5px
 }
 
 @keyframes animatebottom {
