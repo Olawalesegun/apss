@@ -8,7 +8,7 @@ public sealed class UserDto : BaseAuditbleDto
     /// <summary>
     /// Gets or stes the name of the user
     /// </summary>
-    [Required(ErrorMessage = "يجب ادخال اسم المستخدم")]
+    [Required(ErrorMessage = "يجب ادخال اسم المنطقة")]
     [Display(Name = "اسم المستخدم")]
     public string Name { get; set; } = null!;
 
@@ -32,7 +32,8 @@ public sealed class UserDto : BaseAuditbleDto
     [Display(Name = "موقف")]
     public string? Terminated { get; set; }
 
-    public UserStatus userStatus { get; set; }
+    [Display(Name = " حالة المنطقة")]
+    public APSS.Domain.Entities.UserStatus userStatus { get; set; }
 
     /// <summary>
     /// Gets or sets the supervisor
