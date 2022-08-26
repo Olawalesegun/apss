@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
 using APSS.Application.App;
@@ -71,6 +72,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseAuthentication();
+
+// Cookie policies
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    Secure = CookieSecurePolicy.Always,
+});
 
 app.MapControllerRoute(
     name: "default",
