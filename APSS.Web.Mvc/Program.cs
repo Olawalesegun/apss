@@ -25,6 +25,8 @@ svc.AddScoped<IUnitOfWork, ApssUnitOfWork>();
 // Services
 svc.AddSingleton<IRandomGeneratorService, SecureRandomGeneratorService>();
 svc.AddSingleton<ICryptoHashService, Argon2iCryptoHashService>();
+svc.AddSingleton<IConfigurationService, AppSettingsConfigurationService>();
+svc.AddScoped<IAuthService, JwtAuthService>();
 svc.AddScoped<ILogsService, DatabaseLogsService>();
 svc.AddScoped<IUsersService, UsersService>();
 svc.AddScoped<IPermissionsService, PermissionsService>();
