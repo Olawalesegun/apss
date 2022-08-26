@@ -58,13 +58,24 @@ svc.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 });
 
 // Authorization
-svc.AddSingleton<IAuthorizationHandler, ShouldHavePermissionsRequirementHandler>();
+svc.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
 
 svc.AddAuthorization(options =>
 {
+    var registerAccessLevelPolicy = (AccessLevel accessLevel) =>
+    {
+        options.AddPolicy(accessLevel.ToString(), policy =>
+        {
+            policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim(ClaimTypes.Role);
+            policy.Requirements.Add(new AccessLevelRequirement(accessLevel));
+        });
+    };
+
     var registerPermissionPolicy = (PermissionType permission) =>
     {
-        options.AddPolicy(permission.GetPermissionValues().First(), policy =>
+        options.AddPolicy(permission.ToString(), policy =>
         {
             policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
             policy.RequireAuthenticatedUser();
@@ -74,6 +85,14 @@ svc.AddAuthorization(options =>
     };
 
     // policies
+    registerAccessLevelPolicy(AccessLevel.Root);
+    registerAccessLevelPolicy(AccessLevel.Presedint);
+    registerAccessLevelPolicy(AccessLevel.Governorate);
+    registerAccessLevelPolicy(AccessLevel.Directorate);
+    registerAccessLevelPolicy(AccessLevel.District);
+    registerAccessLevelPolicy(AccessLevel.Village);
+    registerAccessLevelPolicy(AccessLevel.Group);
+    registerAccessLevelPolicy(AccessLevel.Farmer);
     registerPermissionPolicy(PermissionType.Create);
     registerPermissionPolicy(PermissionType.Read);
     registerPermissionPolicy(PermissionType.Update);
