@@ -1,0 +1,26 @@
+﻿@model APSS.Web.Dtos.AnimalProductUnitDto
+<div class="container-fluid">
+    <div class="d-flex  col-sm-12 col-lg-6 mx-lg-4 mx-sm-2">
+        <form class=" mt-3 " asp-controller="Units" asp-action="EditUnit">
+            <div asp-validation-summary="ModelOnly"></div>
+            <!-- 2 column puts for the National number and Phome Number-->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class="">
+                    اضافة وحدة جديدة
+                </h3>
+            </div>
+            <!-- Text input for user name-->
+            <div class="mb-4 ">
+                <span class="text-danger fw-bold">*</span>
+                <label class="form-label" asp-for="Name"></label>
+                <input type="text" id="user_name" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <button type="submit" class="btn btn-primary  mb-4 mt-4">اضافة</button>
+            <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">الغاء</a>
+            </div>
+            <!-- Submit button -->
+        </form>
+    </div>
+</div>
