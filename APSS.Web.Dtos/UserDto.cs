@@ -9,7 +9,7 @@ public sealed class UserDto : BaseAuditbleDto
     /// Gets or stes the name of the user
     /// </summary>
     [Required(ErrorMessage = "يجب ادخال اسم المنطقة")]
-    [Display(Name = "اسم المستخدم")]
+    [Display(Name = "اسم المنطقة")]
     public string Name { get; set; } = null!;
 
     /// <summary>
