@@ -1,0 +1,89 @@
+﻿@model IEnumerable<APSS.Web.Dtos.ProductExpenseDto>
+@await Html.PartialAsync("_dataNavBar")
+<div class="container-fluid  border p-2    col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
+    <form class="row d-flex justify-content-start d-inline mb-3 ">
+        <div class=" mb-2 col-sm col-lg-6  d-flex">
+            <button type="button" class="btn btn-primary search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+            <input type="search" class="form-control" id="search" onkeyup="searchTable()" placeholder="بحث..." />
+        </div>
+    </form>
+
+    <div class="col-sm-12  ">
+
+        <div class=" my-3 bg-light table-rsponsive  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
+
+            <table class="table table-hover table-responsive table-bordered   table-striped mb-0 " id="myTable">
+
+                <thead>
+                    <tr class="header  bg-fixed border border-bottom fw-bold">
+                        <th style="width:8%;" class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
+                        <th style="width:30%;" class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Type)</th>
+                        <th style="width:10%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Price)</th>
+                        <th style="width:10%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                        <th style="width:10%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                        <th style="width:10%;" class="fw-bold align-middle">تفاصيل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr class="align-top">
+
+                            <td class=" align-middle">@item.Id</td>
+                            <td class=" align-middle"> @item.Type</td>
+                            <td class=" align-middle">@item.Price</td>
+                            <td class=" align-middle">
+                                @item.CreatedAt
+                            </td>
+                            <td class=" align-middle">
+                                @item.ModifiedAt
+                            </td>
+                            <td class="align-middle center">
+
+                                <div class=" dropend">
+                                    <a class="" role="button" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" asp-controller="ProductExpense" asp-action="DeleteExpense"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li class="">
+                                            <a class="dropdown-item " asp-controller="ProductExpense" asp-action="EditExpense">
+                                                <div class="d-flex justify-content-between"> <span>تعدل </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class=" my-1 col-sm col-lg-2 d-flex alogn-content-center">
+            <a class="btn btn-dark  bg-white text-muted shadow-0 " style="font-size:24px;" onClick="history.go(-1); return false;"><i class="fa-solid fa-arrow-right"></i><span></span> رجوع </a>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
+    });
+     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
+    document.getElementById("media-system-name").innerHTML=" ادارة الموظفين";
+
+       $("#animalProducts").addClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+
+       $("#animalGroups").removeClass('actives');
+       $("#confirmation").removeClass('actives');
+</script>
+    }
