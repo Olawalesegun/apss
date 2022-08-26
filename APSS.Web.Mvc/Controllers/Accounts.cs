@@ -62,6 +62,7 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> AccountDetails(long id)
         {
             AccountDto accountDto = new AccountDto();
+            accountDto.User = new UserDto();
             return View(accountDto);
         }
 
@@ -112,8 +113,12 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> UserAccounts(long id)
         {
-            var accountDto = new List<AccountDto>();
-            return View(accountDto);
+            var account = new List<AccountDto>();
+            account.Add(new AccountDto { HolderName = "محمد", Id = 1, NationalId = "1212", PhoneNumber = "7777777777", CreatedAt = new DateTime().AddDays(30) });
+            account.Add(new AccountDto { HolderName = "محمد", Id = 1, NationalId = "1212", PhoneNumber = "7777777777", CreatedAt = new DateTime().AddDays(30) });
+            account.Add(new AccountDto { HolderName = "محمد", Id = 1, NationalId = "1212", PhoneNumber = "7777777777", CreatedAt = new DateTime().AddDays(30) });
+
+            return View(account);
         }
     }
 }
