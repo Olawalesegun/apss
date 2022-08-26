@@ -12,5 +12,10 @@ namespace APSS.Web.Dtos
     {
         [Display(Name = "اسم الوحدة")]
         public string Name { get; set; } = null!;
+
+        public static implicit operator uint(AnimalProductUnitDto v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
