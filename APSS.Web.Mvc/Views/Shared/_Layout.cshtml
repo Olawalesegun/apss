@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/resources/planting.png">
     <title>@ViewData["Title"] - APSS</title>
     <link rel="stylesheet"
           -moz-text-size-adjust href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -17,6 +18,7 @@
     <link rel="icon" href="~/css/all.css" />
     <link rel="icon" href="~/css/main.css" />
     <link rel="icon" href="~/css/icons.css" />
+
     <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css" />
     @*<link rel="stylesheet" href="~/MDB/css/mdb.min.css.map" />*@
     <link rel="stylesheet" href="~/MDB/css/mdb.rtl.min.css" />
@@ -29,14 +31,14 @@
         <div class="sidebar  overflow-scroll   " id="side_nav">
 
             <div class="header-box px-2 pt-3  d-flex justify-content-between mt-2 ">
-                <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom"><img src="~/resources/profile2.png" style="width:50px;height:50px" /></span> <span class=" T-Color-custom" style="font-size:18px">المسح الزراعي</span></h1>
+                <h1 class="fs-4 "><span class=" bg-white  rounded shadow p-3 m-2 T-Color-custom"><img src="~/resources/planting.png" style="width:50px;height:50px" /></span> <span class=" T-Color-custom" style="font-size:18px">المسح الزراعي</span></h1>
                 <button class="btn btn-link text-decoration-none d-block d-md-none  close-btn px-1 py-0 "><i class="fa-solid fa-circle-chevron-left fs-3 text-dark"></i></button>
             </div>
             <span class="T-Color-custom mb-2 mx-3" style="font-size:18px">الاتحاد التعاوني الزراعي</span>
             <br />
             <hr />
             <ul class="list-unstyle px-2 ">
-                <li class="active" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> الصفحة الرئيسية</a></li>
+                <li class="" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> الصفحة الرئيسية</a></li>
                 <li class="" id="accountManagement"><a asp-action="Index" asp-controller="Users" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> ادارة الموظفين </a></li>
 
                 <li class="" id="dataManagement"><a asp-action="Index" asp-controller="AnimalGroup" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> ادارة البيانات </a></li>
@@ -91,7 +93,7 @@
         <!-- start nav bar -->
         <div class="content overflow-scroll " id="maintContent">
 
-            <nav class="navbar navbar-expand-lg  navbar-light main-bg-color shadow-sm ">
+            <nav class="navbar navbar-expand-lg navbar-expand-md  navbar-light main-bg-color shadow-sm ">
                 <div class="container-fluid">
                     <!-- Media Top Bar setting -->
                     <div class="d-flex justify-content-between d-md-none d-block w-100 ">
@@ -171,9 +173,10 @@
                 </main>
             </div>
         </div>
-
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <!-- model-->        @*<footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
