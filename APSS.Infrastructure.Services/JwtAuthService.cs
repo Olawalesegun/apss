@@ -50,11 +50,9 @@ public sealed class JwtAuthService : IAuthService
         if (account is null || !await _cryptoHashSvc.VerifyAsync(password, account.PasswordHash, account.PasswordSalt))
             throw new InvalidAccountIdOrPasswordException();
 
-        if (await _uow.RefreshTokens.Query().FirstOrNullAsync(
-            r => r.Owner.Id == account.Id &&
-            r.UniqueIdentifier == deviceInfo.UniqueIdentifier &&
-            r.ValidUntil > DateTime.Now)
-            is var token && token is not null)
+        if (await _uow.RefreshTokens.Query()
+                  .FirstOrNullAsync(r => r.Owner.Id == account.Id &&
+                                         r.ValidUntil > DateTime.Now) is var token && token is not null)
         {
             token.LastLogin = DateTime.Now;
 
@@ -74,12 +72,11 @@ public sealed class JwtAuthService : IAuthService
         var refreshToken = new RefreshToken
         {
             Owner = account,
-            Token = JwtUtils.GenerateRefereshToken(_settings),
-            UniqueIdentifier = deviceInfo.UniqueIdentifier,
-            LastIpAddress = deviceInfo.LastIpAddress,
+            Value = JwtUtils.GenerateRefereshToken(_settings),
+            LastIpAddress = info.LastIpAddress,
             LastLogin = DateTime.Now,
-            HostName = deviceInfo.HostName,
-            DeviceName = deviceInfo.DeviceName,
+            HostName = info.UserAgent,
+            Agent = info.UserAgent,
             ValidUntil = DateTime.Now.Add(_settings.RefreshTokenValidity),
         };
 
@@ -93,8 +90,7 @@ public sealed class JwtAuthService : IAuthService
     public async Task<bool> IsTokenValidAsync(long accountId, string token, string uniqueId)
         => await _uow.RefreshTokens.Query().AnyAsync(
             r => r.Owner.Id == accountId &&
-            r.Token == token &&
-            r.UniqueIdentifier == uniqueId &&
+            r.Value == token &&
             r.ValidUntil > DateTime.Now);
 
     /// <inheritdoc/>
@@ -102,8 +98,7 @@ public sealed class JwtAuthService : IAuthService
     {
         var refreshToken = await _uow.RefreshTokens.Query().FirstAsync(r =>
             r.Owner.Id == accountId &&
-            r.Token == token &&
-            r.UniqueIdentifier == uniqueId);
+            r.Value == token);
 
         _uow.RefreshTokens.Remove(refreshToken);
         await _uow.CommitAsync();
