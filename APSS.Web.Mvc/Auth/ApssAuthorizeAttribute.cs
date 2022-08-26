@@ -5,8 +5,12 @@ namespace APSS.Web.Mvc.Auth;
 
 public sealed class ApssAuthorizedAttribute : AuthorizeAttribute
 {
-    public ApssAuthorizedAttribute(PermissionType permissions)
+    public ApssAuthorizedAttribute(AccessLevel accessLevel, PermissionType permissions)
     {
-        Policy = String.Join(',', permissions.GetPermissionValues());
+        var policies = permissions
+            .GetPermissionValues()
+            .Append(accessLevel.ToString());
+
+        Policy = string.Join(',', policies);
     }
 }
