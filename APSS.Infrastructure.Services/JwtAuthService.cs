@@ -43,7 +43,7 @@ public sealed class JwtAuthService : IAuthService
     public async Task<(Account, RefreshToken)> SignInAsync(
         long accountId,
         string password,
-        LoginDeviceInfo deviceInfo)
+        LoginInfo info)
     {
         var account = await _uow.Accounts.Query().FindOrNullAsync(accountId);
 

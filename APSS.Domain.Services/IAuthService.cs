@@ -13,7 +13,7 @@ public interface IAuthService
     /// <returns>The created refresh token</returns>
     /// <exception cref="InvalidUsernameOrPasswordException"></exception>
     /// <exception cref="MaxSessionsCountExceeded"></exception>
-    Task<(Account, RefreshToken)> SignInAsync(long accountId, string password, LoginDeviceInfo deviceInfo);
+    Task<(Account, RefreshToken)> SignInAsync(long accountId, string password, LoginInfo deviceInfo);
 
     /// <summary>
     /// Asynchronously checks if a token is valid or not
@@ -43,13 +43,8 @@ public interface IAuthService
     Task<string> RefreshAsync(string refreshToken, string accessToken, string uniqueIdentifier);
 }
 
-public sealed class LoginDeviceInfo
+public sealed class LoginInfo
 {
-    /// <summary>
-    /// Gets or sets the device unique identifier
-    /// </summary>
-    public string UniqueIdentifier { get; set; } = null!;
-
     /// <summary>
     /// Gets or sets the last ip address that used the token
     /// </summary>
@@ -58,10 +53,10 @@ public sealed class LoginDeviceInfo
     /// <summary>
     /// Gets or sets the device name of the device that uses the token
     /// </summary>
-    public string? DeviceName { get; set; }
+    public string? HostName { get; set; }
 
     /// <summary>
     /// Gets or sets the hostname of the device that uses the token
     /// </summary>
-    public string? HostName { get; set; }
+    public string? UserAgent { get; set; }
 }
