@@ -9,7 +9,7 @@ public class VoluntaryController : Controller
     private readonly UserDto _userDto;
     private readonly List<FamilyDto> families;
     private readonly List<IndividualDto> individuals;
-    private List<VoluntaryDto> voluntaries;
+    private readonly List<VoluntaryDto> voluntaries;
 
     public VoluntaryController()
     {
@@ -94,7 +94,7 @@ public class VoluntaryController : Controller
     // GET: VoluntaryController/DeleteVoluntary/5
     public ActionResult DeleteVoluntary(int id)
     {
-        return View();
+        return RedirectToAction(nameof(GetVoluntaries), voluntaries);
     }
 
     // POST: VoluntaryController/DeleteVoluntary/5
@@ -102,6 +102,6 @@ public class VoluntaryController : Controller
     [ValidateAntiForgeryToken]
     public ActionResult DeleteVoluntary(int id, VoluntaryDto voluntaryDto)
     {
-        return RedirectToAction(nameof(GetVoluntaries));
+        return RedirectToAction(nameof(GetVoluntaries), voluntaries);
     }
 }
