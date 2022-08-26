@@ -57,10 +57,10 @@
                 <label class="form-check-label" asp-for="IsActive">  </label>
             </div>
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary w-100 mb-4 mt-4">اضافة</button>
+            <button type="submit" class="btn btn-primary w-25 mb-4 mt-4">اضافة</button>
+            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">الغاء</a>
         </form>
     </div>
-</div>
 </div>
 
 @section scripts{
@@ -84,7 +84,10 @@
     $("#users").removeClass('actives');
        $("#lands").removeClass('actives');
        $("#landProducts").removeClass('actives');
-
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+        $("#userMedia").removeClass('actives');
          $("#accounts").addClass('actives');
+         $("#accountMedia").addClass('actives');
 </script>
 }
