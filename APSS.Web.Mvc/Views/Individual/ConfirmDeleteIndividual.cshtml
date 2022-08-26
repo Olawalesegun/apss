@@ -1,0 +1,68 @@
+﻿@model APSS.Web.Dtos.IndividualDto
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف فرد  </h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th>@Html.DisplayNameFor(i=>i.Id)</th>
+                    <td> @Model.Id</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(i=>i.Name)</th>
+                    <td> @Model.Name</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(i=>i.Address)</th>
+                    <td> @Model.Address</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(i=>i.Family.Name)</th>
+                    <td> @Model.Family.Name</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(i=>i.Job)</th>
+                    <td> @Model.Job</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(i=>i.PhonNumber)</th>
+                    <td> @Model.PhonNumber</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(i=>i.NationalId)</th>
+                    <td> @Model.NationalId</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(i=>i.Sex)</th>
+                    <td> @Model.Sex</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(i=>i.SocialStatus)</th>
+                    <td> @Model.SocialStatus</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(i=>i.User)</th>
+                    <td> @Model.User</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(i=>i.DateOfBirth)</th>
+                    <td> @Model.DateOfBirth</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(i=>i.CreatedAt)</th>
+                    <td> @Model.CreatedAt</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(i=>i.ModifiedAt)</th>
+                    <td> @Model.ModifiedAt</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="Individual" asp-action="DeleteIndividual">تأكيد</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="Individual" asp-action="GetIndividuals">رجوع</a>
+        </div>
+    </div>
+</div>
