@@ -1,40 +1,88 @@
 ﻿@model APSS.Web.Dtos.UserDto
+@await Html.PartialAsync("_accountNavBar")
 <div class="container-fluid ">
-    <div class="col-sm-5">
+    <div class="col-sm-5 mx-sm-2 mx-lg-4">
         <form class=" mt-3 " method="post" asp-controller="Users" asp-action="EditUser">
+            <div asp-validation-summary="ModelOnly"></div>
             <!-- 2 column puts for the National number and Phome Number-->
             <div class="center d-flex justify-content-center mb-3  " style="line-height:35px;">
-                <h3 class="" style="border-bottom:2px #3A6A59 solid">
-                    تعديل المستخدم
+                <h3 class="">
+                    تعديل بيانات المنطقة
                 </h3>
             </div>
             <!-- Text input for user name-->
-            <div class="form-outline mb-4 ">
-                <input type="text" id="user_name" asp-for="Name" class="form-control" />
+            <div class=" mb-4 ">
+                <span class="text-danger fw-bold">*</span>
                 <label class="form-label" asp-for="Name"></label>
+                <input type="text" id="user_name" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
             </div>
 
-            <div class=" ">
-                <h5 class="inline">حالة المستخدم:</h5>
+            <div class="d-inline">
+                <h5 class="inline">
+                    <span class="text-danger">*</span>
+                    <label asp-for="userStatus"></label>
+                </h5>
             </div>
-            <div class="d-inline d-flex justify-content-between">
+            <!--used -->
+            @foreach (var item in Enum.GetValues(typeof(APSS.Web.Dtos.UserStatusDto)))
+            {
+                <div class="form-check form-check-inline  ">
+                    <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@Convert.ToInt32(item)" />
+                    <label class="form-check-label">@item.ToString()</label>
+                </div>
+            }
+
+            @*<div class=" ">
+                <h5 class="inline">حالة المنطقة:</h5>
+                </div>
+                <div class="d-inline d-flex justify-content-between">
                 <!--used -->
                 <div class="form-check-inline  ">
-                    <input class="form-check-input hiden" name="userstatus" type="radio" asp-for="userStatus" value="Active" />
-                    <label class="form-check-label" asp-for="Active"></label>
+                <input class="form-check-input hiden" name="userstatus" type="radio" asp-for="userStatus" value="Active" />
+                <label class="form-check-label" asp-for="Active"></label>
                 </div>
                 <!--unused -->
                 <div cl ass=" form-check px-2">
-                    <input class="form-check-input" type="radio" name="userstatus" value="Inactive" asp-for="userStatus" />
-                    <label class="form-check-label" asp-for="Inactive">  </label>
+                <input class="form-check-input" type="radio" name="userstatus" value="Inactive" asp-for="userStatus" />
+                <label class="form-check-label" asp-for="Inactive">  </label>
                 </div>
                 <div cl ass="form-check  px-2">
-                    <input class="form-check-input" type="radio" name="userstatus" value="Terminated" asp-for="userStatus " />
-                    <label class="form-check-label" asp-for="Terminated">  </label>
+                <input class="form-check-input" type="radio" name="userstatus" value="Terminated" asp-for="userStatus " />
+                <label class="form-check-label" asp-for="Terminated">  </label>
                 </div>
+                </div>*@
+            <div class="">
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary w-25 my-4">تعديل</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link  w-25 my-4 mx-2" style="background-color:#DCEEFB">الغاء</a>
             </div>
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary w-100 mb-4 mt-4">تعديل</button>
         </form>
     </div>
 </div>
+
+@section scripts{
+<script>
+        $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+    $("#accountManagement").addClass('active');
+    });
+
+     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
+    document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
+    $(".scrollmenu a").on('click',function(){
+        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+
+    });
+    $(".manage-ment ul li a").on('click',function(){
+        $(".scrollmenu a.actives").removeClass('actives');
+        $("#accounts").addClass('actives');
+
+    });
+    $(".scrollmenu ul li a").on('click',function(){
+        $(".scrollmenu ul li a.actives").removeClass('actives');
+        $("#accounts").addClass('actives');
+    });
+    $("#userMedia").addClass("actives")
+</script>
+}
