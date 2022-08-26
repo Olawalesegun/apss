@@ -10,6 +10,15 @@
             <input type="search" class="form-control" id="search" onkeyup="searchTable()" placeholder="بحث..." />
         </div>
 
+        <div class="col-sm-2 col-lg-1 mb-2 ">
+
+            <select class="form-select " id="searchby">
+                <option selected>20</option>
+                <option value="1">40</option>
+                <option value="2">80</option>
+                <option value="3">100</option>
+            </select>
+        </div>
         <div class="col-sm col-lg-2 mb-2 ">
 
             <select class="form-select " id="searchby">
@@ -105,7 +114,10 @@
     $("#users").removeClass('actives');
        $("#lands").removeClass('actives');
        $("#landProducts").removeClass('actives');
-
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+        $("#userMedia").removeClass('actives');
          $("#accounts").addClass('actives');
+         $("#accountMedia").addClass('actives');
 </script>
 }

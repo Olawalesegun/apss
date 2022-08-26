@@ -74,8 +74,12 @@
                         <input class="form-check-input" type="radio" value="true" asp-for="IsActive" />
                         <label class="form-check-label" asp-for="IsActive">  </label>
                     </div>
+                    <br />
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary w-100 mb-4 mt-4">تعديل</button>
+                    <div>
+                        <button type="submit" class="btn btn-primary w-25 mb-4 mt-4">تعديل</button>
+                        <a onClick="history.go(-1); return false;" class="btn btn-link my-4 w-25 mx-3" style="background-color:#DCEEFB">الغاء</a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -103,7 +107,10 @@
     $("#users").removeClass('actives');
        $("#lands").removeClass('actives');
        $("#landProducts").removeClass('actives');
-
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+        $("#userMedia").removeClass('actives');
          $("#accounts").addClass('actives');
+         $("#accountMedia").addClass('actives');
 </script>
 }
