@@ -12,20 +12,18 @@
             <div class=" mb-4">
 
                 <div class=" mt-4">
-                    <span class="text-danger">*</span>
-                    <label class="form-label" asp-for="Name"></label>
-                    <input type="text"  asp-for="Name" class="form-control" />
+                    <label class="form-label" for="name_skill" asp-for="Name">Name</label>
+                    <input type="text" id="name_skill" asp-for="Name" class="form-control" />
                 </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
                 <div class=" mt-4">
-                    <label class="form-label" asp-for="Description"></label>
-                    <textarea  asp-for="Description" class="form-control"></textarea>
+                    <label class="form-label" asp-for="Description">Description</label>
+                    <textarea type="text" id="descriptionskill" asp-for="Description" class="form-control"></textarea>
                 </div>
 
                 <div class=" mt-4">
-                    <span class="text-danger">*</span>
                     <label class="form-label" asp-for="Field"></label>
-                    <input type="text"  asp-for="Field" class="form-control" />
+                    <input type="number" id="fieldskill" asp-for="Field" class="form-control" />
                 </div>
                 <span asp-validation-for="Field" class="text-danger"></span>
 
@@ -34,7 +32,7 @@
 
             <!-- Submit button -->
             <div class="d-inline">
-                <button class="btn btn-primary mt-4 mx-1" asp-controller="Skill" asp-action="AddSkill" asp-route-Id="@Model.Individual.Id"> <i class="fa-solid fa-plus mx-2"></i><span>إضافة</span>  </button>
+                <button class="btn btn-primary mt-4 mx-1" asp-controller="Skill" asp-action="AddSkill"> <i class="fa-solid fa-plus mx-2"></i><span>إضافة</span>  </button>
                 <button class="btn btn-danger mt-4 mx-1" asp-controller="Skill" asp-action="GetSkills" asp-route-Individual.Id="@Model.Individual.Id"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
             </div>
         </form>

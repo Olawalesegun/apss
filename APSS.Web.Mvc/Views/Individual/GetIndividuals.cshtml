@@ -46,13 +46,13 @@
 
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Name</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Job</th>
+                        <th style="width:3%;" class=" text-capitalize align-middle">ID</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">Name</th>
+                        <th style="width:10%;" class=" text-capitalize align-middle">Job</th>
                         <th style="width:8%;" class=" text-capitalize align-middle">Gender</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Phone Number</th>
+                        <th style="width:15%;" class=" text-capitalize align-middle">Phone Number</th>
                         <th style="width:15%;" class=" text-capitalize align-middle">Address</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">User</th>
+                        <th style="width:10%;" class=" text-capitalize align-middle">User</th>
                         <th style="width:10%;" class=" text-capitalize align-middle">Action</th>
                     </tr> 
                 </thead>
@@ -60,13 +60,13 @@
                     
                         @foreach (var item in Model)
                         {<tr class="align-top">
-                             <td  class="text-break text- text-capitalize">@item.Id</td>
-                        <td  class="text-break text-capitalize  "> @item.Name</td>
-                        <td class="text-break text-capitalize ">@item.Job</td>
-                        <td  class="text-break text-capitalize ">@item.Sex</td> 
-                        <td  class="text-break text-capitalize ">@item.PhonNumber</td> 
-                        <td  class="text-break text-capitalize ">@item.Address</td> 
-                        <td class="text-break text-capitalize a ">@item.User!.Name</td>
+                             <td  class="text-break text- text-capitalize align-middle">@item.Id</td>
+                        <td  class="text-break text-capitalize align-middle"> @item.Name</td>
+                        <td class="text-break text-capitalize align-middle">@item.Job</td>
+                        <td  class="text-break text-capitalize align-middle">@item.Sex</td> 
+                        <td  class="text-break text-capitalize align-middle">@item.PhonNumber</td> 
+                        <td  class="text-break text-capitalize align-middle">@item.Address</td> 
+                        <td class="text-break text-capitalize align-middle">@item.User</td>
                         <td class="text-break align-middle center">
 
                             <div class=" dropend">
@@ -75,23 +75,23 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" asp-controller="Individual" asp-action="IndividualDetails" asp-route-Id="@item.Id">
+                                    <li><a class="dropdown-item" asp-action="IndividualDetails" asp-route-Id="@item.Id">
                                         <div class="d-flex justify-content-between"> <span>تفاصل</span>  <span><i class="fa-solid fa-info"></i> </span>
                                             </div> </a>
                                         </li>
-                                    <li><a class="dropdown-item" asp-controller="Individual" asp-action="ConfirmDeleteIndividual" asp-route-Id="@item.Id" >
+                                    <li><a class="dropdown-item" asp-action="DeleteIndividual" asp-route-Id="@item.Id" data-bs-toggle="modal" data-bs-target="#ConfirmDelete">
                                         <div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> 
                                             </div></a></li>
                                     <li class="">
-                                        <a class="dropdown-item" asp-controller="Individual" asp-action="UpdateIndividual" asp-route-Id="@item.Id">
+                                        <a class="dropdown-item" aasp-action="تحديث" asp-route-Id="@item.Id">
                                         <div class="d-flex justify-content-between"> <span>تحديث</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
                                     </li>
                                     <li class="">
-                                        <a class="dropdown-item" asp-controller="Skill" asp-action="AddSkill" asp-route-Id="@item.Id">
+                                        <a class="dropdown-item" asp-action="AddSkill" asp-route-Id="@item.Id">
                                         <div class="d-flex justify-content-between"> <span>إضافة مهارة</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
                                     </li>
                                      <li class="">
-                                        <a class="dropdown-item" asp-controller="Voluntary" asp-action="AddVoluntary" asp-route-Id="@item.Id">
+                                        <a class="dropdown-item" asp-action="AddVoluntary" asp-route-Id="@item.Id">
                                         <div class="d-flex justify-content-between"> <span>إضافة تطوع</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
                                     </li>
                                    

@@ -1,23 +1,23 @@
-﻿@model APSS.Web.Dtos.SkillDto
+﻿@model APSS.Web.Dtos.SkillDto;
 <div class="container-fluid px-3 py-3 mx-4 my-1">
     <div class="col-sm-6">
         <div class="d-flex justify-content-center">
             <h4> تحديث مهارة الفرد</h4>
         </div>
-        <form class=" mt-3 " method="post">
+        <form class=" mt-3 ">
             <!-- 2 column puts for the National number and Phome Number-->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class=" mb-4">
 
-                <div class="mt-4">
+                <div class="">
                     <span class="text-danger">*</span>
                     <label class="form-label" asp-for="Name"></label>
-                    <input type="text"  asp-for="Name"  class="form-control" value="@Model.Name" />
+                    <input type="text" id="name_skill" asp-for="Name" name="name_skill" class="form-control" value="@Model.Name" />
                 </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
 
-                <div class=" mt-4">
+                <div class=" mb-4">
                     <label class="form-label" for="descriptionskill" asp-for="Description"></label>
                     <textarea type="text" id="descriptionskill" asp-for="Description" data="@Model.Description" class="form-control"></textarea>
                 </div>
@@ -25,7 +25,7 @@
                 <div class=" mt-4">
                     <span class="text-danger">*</span>
                     <label class="form-label" asp-for="Field"></label>
-                    <input type="text"  asp-for="Field" value="@Model.Field" class="form-control" />
+                    <input type="number" id="fieldskill" asp-for="Field" value="@Model.Field" class="form-control" />
                 </div>
                 <span asp-validation-for="Field" class="text-danger"></span>
             </div>
@@ -33,7 +33,7 @@
             <!-- Submit button -->
             <div class="d-inline">
                 <button class="btn btn-primary mt-4 mx-1" asp-controller="Skill" asp-action="UpdateSkill"> <i class="fa-solid fa-pen-to-square mx-2"></i><span>تحديث</span>  </button>
-                <button class="btn btn-danger mt-4 mx-1" asp-controller="Skill" asp-action="GetSkills" ><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+                <button class="btn btn-danger mt-4 mx-1" asp-controller="Skill" asp-action="GetSkills" asp-route-Id="@Model.Individual.Id"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
             </div>
         </form>
     </div>

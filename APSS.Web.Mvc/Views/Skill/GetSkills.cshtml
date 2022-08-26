@@ -37,9 +37,9 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" asp-controller="Skill" asp-action="ConfirmDeleteSkill" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li><a class="dropdown-item" asp-action="DeleteSkill" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     <li class="">
-                                        <a class="dropdown-item" asp-controller="Skill" asp-action="UpdateSkill" asp-route-Id="@item.Id">
+                                        <a class="dropdown-item" asp-action="EditSkill" asp-route-Id="@item.Id">
                                             <div class="d-flex justify-content-between"> <span>تحديث</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
                                         </a>
                                     </li>

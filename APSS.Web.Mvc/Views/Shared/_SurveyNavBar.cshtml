@@ -15,10 +15,10 @@
             <div class="d-flex justify-content-end">
                 <ul class="navbar-nav me-auto  my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item ">
-                        <a class="nav-link pt-3 actives  fw-bold   " id="surveys" aria-current="page" asp-controller="Survey" asp-action="GetSurveys">الإستبيانات<span><i class="fa-solid fa-file-circle-question px-1 fa-lg"></i></span></a>
+                        <a class="nav-link pt-3 actives  fw-bold   " id="surveys" aria-current="page" asp-controller="SurveysManagement" asp-action="GetSurveys">Surveys<span><i class="fa-solid fa-file-circle-question px-1 fa-lg"></i></span></a>
                     </li>
                     <li class="nav-item  ">
-                        <a class="nav-link  pt-3 fw-bold "  asp-controller="SurveyEntry" asp-action="GetSurveyEntries">إجابات الإستبيانات <span><i class="fa-solid fa-file-circle-check fa-lg"></i></span></a>
+                        <a class="nav-link  pt-3 fw-bold " id="surveysEntry" asp-controller="SurveysManagement" asp-action="GetSurveysEntry">SurveysEntry <span><i class="fa-solid fa-file-circle-check fa-lg"></i></span></a>
                     </li>
      
                 </ul>
@@ -28,7 +28,7 @@
 </nav>
 <script>
    
-    document.getElementById("nav-system-name").innerHTML="إدارة الإستبيان";
-    document.getElementById("media-system-name").innerHTML="إدارة الإستبيان ";
+    document.getElementById("nav-system-name").innerHTML="Survey Management";
+    document.getElementById("media-system-name").innerHTML="Survey Management";
   
 
