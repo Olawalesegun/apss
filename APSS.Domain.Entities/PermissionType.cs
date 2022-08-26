@@ -22,17 +22,13 @@ public static class PermissionTypeExtensions
     /// <returns></returns>
     public static IEnumerable<string> GetPermissionValues(this PermissionType permissions)
     {
-        if (permissions.HasFlag(PermissionType.Read))
-            yield return "read";
-
-        if (permissions.HasFlag(PermissionType.Delete))
-            yield return "delete";
-
-        if (permissions.HasFlag(PermissionType.Update))
-            yield return "update";
-
-        if (permissions.HasFlag(PermissionType.Create))
-            yield return "create";
+        return new[]
+        {
+            PermissionType.Create,
+            PermissionType.Read,
+            PermissionType.Update,
+            PermissionType.Delete
+        }.Where(p => permissions.HasFlag(p)).Select(p => p.ToString());
     }
 
     /// <summary>
