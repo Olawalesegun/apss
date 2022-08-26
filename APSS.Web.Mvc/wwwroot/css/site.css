@@ -121,12 +121,6 @@ hr.h-color {
     .form-outline #search {
         width: 100% !important;
     }
-
-    .my-custom-scrollbar {
-        position: relative;
-        height: 80%;
-        overflow: auto;
-    }
 }
 
 #media-system-name {
@@ -204,7 +198,7 @@ input[type="password"]{
 /* thable style */
 .my-custom-scrollbar {
     position: relative;
-    height: 80%;
+    height: 500px;
     overflow: auto;
 }
 
@@ -572,6 +566,19 @@ div.scrollmenu a {
 
 input[type="search"] {
     border-radius: 5px 0 0 5px
+}
+
+.confirm-data {
+    border-right: 3px red solid !important;
+    border-left: 3px red solid !important;
+    border-top: 1px red solid !important;
+    border-bottom: 1px red solid !important;
+}
+
+tr td a.confrim-link div span:hover {
+    text-decoration: underline blue;
+    padding-right: 15px;
+    transition: ease-out 0.3s;
 }
 
 @keyframes animatebottom {
