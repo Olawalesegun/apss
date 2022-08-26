@@ -1,0 +1,37 @@
+﻿@model APSS.Web.Dtos.SurveyDto
+<div class="container-fluid px-3 py-3  mx-4 my-1">
+    <div class="col-sm-6">
+        <div class="d-flex justify-content-center">
+            <h4 >اضافة الإستبيان</h4>
+        </div>
+
+        <form class=" mt-3 ">
+           
+            <!-- survey Name -->
+            <div class="mt-4 ">
+                <span class="text-danger">*</span>
+                <label class="form-label" asp-for="Name"></label>
+                <input type="text" asp-for="Name"   class="form-control" />
+            </div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <!-- post and end survey date -->
+                    <div class=" datepicker input-group.date">
+                        <span class="text-danger">*</span>
+                        <label class="form-label" asp-for="ExpirationDate"></label>
+                        <input type="date" asp-for="ExpirationDate" class="form-control" />
+                    </div>
+                    <span asp-validation-for="ExpirationDate"></span>
+
+            <!-- Text input survey description-->
+            <div class=" mt-4">
+                <label class="form-label"  asp-for="IsActive"></label>
+                <input type="checkbox" asp-for="IsActive"  class="form-control"/>
+            </div>
+
+                        <div >
+                <button class="btn btn-primary mt-4 mx-1" asp-controller="Survey" asp-action="AddSurvey"> <i class="fa-solid fa-plus mx-2"></i><span>إضافة</span>  </button>
+                <button class="btn btn-danger mt-4 mx-1" asp-controller="Survey" asp-action="GetSurveys"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+            </div>
+        </form>
+        </div>
+        </div>
