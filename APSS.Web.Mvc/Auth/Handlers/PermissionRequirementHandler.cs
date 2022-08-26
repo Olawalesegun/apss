@@ -4,15 +4,12 @@ using APSS.Web.Mvc.Auth.Requirements;
 
 namespace APSS.Web.Mvc.Auth.Handlers;
 
-public class PermissionRequirementHandler
-{
-}
-
-public abstract class ShouldHavePermissionsRequirementHandler<R>
-    : AuthorizationHandler<R> where R : ShouldHavePermissionsRequirement
+public sealed class ShouldHavePermissionsRequirementHandler : AuthorizationHandler<PermissionRequirement>
 {
     /// <inheritdoc/>
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, R requirement)
+    protected override Task HandleRequirementAsync(
+        AuthorizationHandlerContext context,
+        PermissionRequirement requirement)
     {
         if (context.User.Claims.
                     FirstOrDefault(c => c.Type == CustomClaims.Permissions) is var permissionsStr
