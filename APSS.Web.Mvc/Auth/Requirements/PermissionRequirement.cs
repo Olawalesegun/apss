@@ -4,11 +4,11 @@ using APSS.Domain.Entities;
 
 namespace APSS.Web.Mvc.Auth.Requirements;
 
-public abstract class ShouldHavePermissionsRequirement : IAuthorizationRequirement
+public sealed class PermissionRequirement : IAuthorizationRequirement
 {
     private readonly PermissionType _permissions;
 
-    public ShouldHavePermissionsRequirement(PermissionType permission)
+    public PermissionRequirement(PermissionType permission)
         => _permissions = permission;
 
     public PermissionType Permission => _permissions;
