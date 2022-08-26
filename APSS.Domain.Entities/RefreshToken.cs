@@ -21,9 +21,9 @@ public sealed class RefreshToken : AuditableEntity
     public DateTime LastLogin { get; set; }
 
     /// <summary>
-    /// Gets or sets the device name of the device that uses the token
+    /// Gets or sets the hostname of the device that uses the token
     /// </summary>
-    public string? DeviceName { get; set; }
+    public string? HostName { get; set; }
 
     /// <summary>
     /// Gets or sets the hostname of the device that uses the token
