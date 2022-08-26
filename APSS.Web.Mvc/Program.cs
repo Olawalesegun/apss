@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+
 using APSS.Application.App;
 using APSS.Domain.Repositories;
 using APSS.Domain.Services;
 using APSS.Infrastructure.Repositores.EntityFramework;
 using APSS.Infrastructure.Services;
+using APSS.Web.Mvc.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,17 @@ svc.AddScoped<ILandService, LandService>();
 svc.AddScoped<IPopulationService, PopulationService>();
 svc.AddScoped<ISurveysService, SurveysService>();
 
+// Auth service
+svc.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddCookie(options =>
+{
+    var settings = builder.Configuration.GetSection("AuthSettings").Get<AuthSettings>();
+
+    options.ExpireTimeSpan = settings.CookieExpiration;
+    options.SlidingExpiration = settings.SlidingExpiration;
+    options.AccessDeniedPath = "/Forbidden/";
+});
+
 #endregion Services
 
 var app = builder.Build();
@@ -51,7 +65,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
+
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
