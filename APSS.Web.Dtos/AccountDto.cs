@@ -34,7 +34,7 @@ namespace APSS.Web.Dtos
         /// Gets or sets the phone number of the user
         /// </summary>
 
-        [Display(Name = "رقم التلفوت")]
+        [Display(Name = "رقم التلفون")]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the job of the user
         /// </summary>
-        [Display(Name = "الوضيفة")]
+        [Display(Name = "الوظيفة")]
         public string? Job { get; set; }
 
         /// <summary>
