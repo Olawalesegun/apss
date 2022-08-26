@@ -34,13 +34,17 @@ namespace APSS.Web.Mvc.Controllers
             return View(total);
         }
 
-        public async Task<IActionResult> AnimalProduct()
+        public async Task<IActionResult> AddAnimalGroup()
         {
-            var total = new AnimalGroupAndProductDto
-            {
-                AnimalProductList = new List<AnimalProductDto>(),
-            };
-            return View(total);
+            var animalGroup = new AnimalGroupDto();
+            ViewBag.Gender = new AnimalSexDto();
+            return View(animalGroup);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAnimalGroup(AnimalGroupDto animal)
+        {
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> AddUnit(long Id)
@@ -74,15 +78,9 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> AnimalDetails(int id)
         {
-            AnimalGroupAndProductDto animalGroupDto = new AnimalGroupAndProductDto();
-
+            //AnimalGroupDto animalGroupDto = new AnimalGroupDto();
+            var animalGroupDto = animal.Where(a => a.Id == id).FirstOrDefault();
             return View(animalGroupDto);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> AddAnimalGroup(AnimalGroupDto animal)
-        {
-            return View();
         }
 
         public async Task<IActionResult> DeleteAnimalGroup(int id)
