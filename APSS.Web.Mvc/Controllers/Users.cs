@@ -65,7 +65,8 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> UserDetials(int id)
         {
-            return View();
+            var user = _userDtos.Where(m => m.Id == id).FirstOrDefault();
+            return View(user);
         }
 
         public async Task<IActionResult> UsersIndex()
