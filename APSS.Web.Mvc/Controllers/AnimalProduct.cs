@@ -84,11 +84,38 @@ namespace APSS.Web.Mvc.Controllers
             AnimalGroupAndProductDto animalGroupProductDto = new AnimalGroupAndProductDto();
             AnimalProductDto animalproducts = new AnimalProductDto();
             animalGroupProductDto.AnimalProducts = animalproducts;
-            if (!true)
-            {
-                RedirectToAction("AnimalDetails");
-            }
+
             return View(animalGroupProductDto);
+        }
+
+        public async Task<IActionResult> ListProductExpense(long id)
+        {
+            var expense = new List<ProductExpenseDto>();
+            expense.Add(new ProductExpenseDto { Id = 1, Type = "شراء", Price = 10000 });
+            return View(expense);
+        }
+
+        public async Task<IActionResult> EditProductExpense(long id)
+        {
+            var expense = new ProductExpenseDto();
+            return View(expense);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProductExpense(ProductExpenseDto expense)
+        {
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeleteProductExpense(int id)
+        {
+            var expense = new ProductExpenseDto();
+            return View(expense);
+        }
+
+        public async Task<IActionResult> ConfirmDeleteProductExpense(ProductExpenseDto expense)
+        {
+            return RedirectToAction("Index");
         }
     }
 }
