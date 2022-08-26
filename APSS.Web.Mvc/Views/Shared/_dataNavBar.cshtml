@@ -4,18 +4,13 @@
 @{
 }
 
-<nav class="navbar navbar-expand-lg navbar-expand-md  py-0  rounded my-1 mx-0 shadow data-navbar">
+<nav class="navbar navbar-expand-lg navbar-expand-md  py-0  my-1  mx-0 shadow-sm data-navbar">
     <div class="container-fluid mx-0  ">
-        @* <a class="navbar-brand " href="#">Management:</a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>*@
         <div class="d-flex justify-content-between d-md-none d-block w-100 mx-0 ">
 
             <div class="scrollmenu w-100 ">
                 <a id="animalMedia" class="MediaActive" asp-controller="AnimalGroup" asp-action="Index">الحيوانات</a>
-                <a id="animalProductMedia" class="" asp-controller="AnimalGroup" asp-action="AnimalProduct"> منتجات الحيوانات </a>
+                <a id="animalProductMedia" class="" asp-controller="AnimalProduct" asp-action="Index"> منتجات الحيوانات </a>
                 <a id="" class="" asp-controller="Land" asp-action="Index"> الاراضي </a>
                 <a id="" class="" asp-controller="LandProducts" asp-action="Index"> منتجات الاراضي </a>
             </div>
@@ -35,6 +30,12 @@
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link pt-3  fw-bold " id="landProducts" asp-controller="LandProduct" asp-action="Index">منتجات الاراضي</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link pt-3  fw-bold " id="confirmation" asp-controller="Confirmation" asp-action="Index"> تأكيد البيانات</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link pt-3  fw-bold " id="units" asp-controller="Units" asp-action="Index"> الوحدات </a>
                     </li>
                 </ul>
             </div>
