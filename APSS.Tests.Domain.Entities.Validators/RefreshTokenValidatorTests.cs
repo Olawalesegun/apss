@@ -26,7 +26,7 @@ public class RefreshTokenValidatorTests
     {
         var refreshToken = new RefreshToken
         {
-            Token = _rndSvc.NextString(0xff),
+            Value = _rndSvc.NextString(0xff),
             LastLogin = DateTime.Now.Subtract(TimeSpan.FromSeconds(_rndSvc.NextInt32(0))),
             ValidUntil = DateTime.Now.Add(TimeSpan.FromSeconds(_rndSvc.NextInt32(1))),
         };
@@ -39,14 +39,14 @@ public class RefreshTokenValidatorTests
     {
         var refreshToken = new RefreshToken
         {
-            Token = string.Empty,
+            Value = string.Empty,
             LastLogin = DateTime.Now.Add(TimeSpan.FromSeconds(_rndSvc.NextInt32(0))),
             ValidUntil = DateTime.Now.Subtract(TimeSpan.FromSeconds(_rndSvc.NextInt32(1))),
         };
 
         var result = _validator.TestValidate(refreshToken);
 
-        result.ShouldHaveValidationErrorFor(r => r.Token);
+        result.ShouldHaveValidationErrorFor(r => r.Value);
         result.ShouldHaveValidationErrorFor(r => r.LastLogin);
         result.ShouldHaveValidationErrorFor(r => r.ValidUntil);
     }
