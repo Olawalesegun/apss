@@ -58,29 +58,26 @@ svc.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 });
 
 // Authorization
-svc.AddSingleton<IAuthorizationHandler, ShouldHaveCreatePermissionRequirementHandler>();
-svc.AddSingleton<IAuthorizationHandler, ShouldHaveReadPermissionRequirementHandler>();
-svc.AddSingleton<IAuthorizationHandler, ShouldHaveUpdatePermissionRequirementHandler>();
-svc.AddSingleton<IAuthorizationHandler, ShouldHaveDeletePermissionRequirementHandler>();
+svc.AddSingleton<IAuthorizationHandler, ShouldHavePermissionsRequirementHandler>();
 
 svc.AddAuthorization(options =>
 {
-    var registerPermissionPolicy = (PermissionType name, IAuthorizationRequirement requirement) =>
+    var registerPermissionPolicy = (PermissionType permission) =>
     {
-        options.AddPolicy(name.GetPermissionValues().First(), policy =>
+        options.AddPolicy(permission.GetPermissionValues().First(), policy =>
         {
             policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
             policy.RequireAuthenticatedUser();
             policy.RequireClaim(ClaimTypes.Role);
-            policy.Requirements.Add(requirement);
+            policy.Requirements.Add(new PermissionRequirement(permission));
         });
     };
 
     // policies
-    registerPermissionPolicy(PermissionType.Create, new ShouldHaveCreatePermissionRequirement());
-    registerPermissionPolicy(PermissionType.Read, new ShouldHaveReadPermissionRequirement());
-    registerPermissionPolicy(PermissionType.Update, new ShouldHaveUpdatePermissionRequirement());
-    registerPermissionPolicy(PermissionType.Delete, new ShouldHaveDeletePermissionRequirement());
+    registerPermissionPolicy(PermissionType.Create);
+    registerPermissionPolicy(PermissionType.Read);
+    registerPermissionPolicy(PermissionType.Update);
+    registerPermissionPolicy(PermissionType.Delete);
 });
 
 builder.Services.AddScoped<TokenValidationEvent>();

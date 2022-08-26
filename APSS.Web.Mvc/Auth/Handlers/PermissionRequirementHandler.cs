@@ -4,7 +4,7 @@ using APSS.Web.Mvc.Auth.Requirements;
 
 namespace APSS.Web.Mvc.Auth.Handlers;
 
-public sealed class ShouldHavePermissionsRequirementHandler : AuthorizationHandler<PermissionRequirement>
+public sealed class PermissionRequirementHandler : AuthorizationHandler<PermissionRequirement>
 {
     /// <inheritdoc/>
     protected override Task HandleRequirementAsync(
