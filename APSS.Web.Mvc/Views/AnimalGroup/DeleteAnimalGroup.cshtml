@@ -30,7 +30,7 @@
         <br />
         <div class=" d-inline pt-2">
             <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="AnimalGroup" asp-action="ConfirmDeleteAnimalGroup">تأكيد</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-controller="AnimalGroup" asp-action="Index">رجوع</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link my-4 w-25 mx-3" style="background-color:#DCEEFB">الغاء</a>
         </div>
 
         @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@

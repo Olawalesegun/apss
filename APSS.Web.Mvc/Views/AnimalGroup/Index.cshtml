@@ -7,17 +7,22 @@
 <div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 " id="table">
 
     <form class="row d-flex justify-content-between  d-inline mb-3 ">
-        <div class=" mb-2 col-sm  d-flex">
+        <div class=" mb-3 col-sm  d-flex">
             <button type="button" class="btn btn-primary search-btn">
                 <i class="fas fa-search"></i>
             </button>
-            <div class="form-outline w-100 search-input">
                 <input type="search" class="form-control" id="search" onkeyup="searchTable()" />
-                <label class="form-label">بحث</label>
-            </div>
         </div>
+        <div class="col-sm-2 col-lg-1 mb-2 ">
 
-        <div class="col-sm mb-2 ">
+            <select class="form-select " id="searchby">
+                <option selected>20</option>
+                <option value="1">40</option>
+                <option value="2">80</option>
+                <option value="3">100</option>
+            </select>
+        </div>
+        <div class="col-sm mb-3 ">
 
             <select class="form-select " id="searchby">
                 <option selected>البحث بواسكة</option>
@@ -26,12 +31,12 @@
                 <option value="3">Address</option>
             </select>
         </div>
-        <div class="col-sm d-flex   d-inline mb-2">
+        <div class="col-sm d-flex   d-inline mb-3   ">
             <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#AddUnit">
                 <i class="fa-solid fa-plus"></i>
                 وحدة
             </a>
-            <a class=" btn btn-primary " role="button" data-bs-toggle="offcanvas" data-bs-target="#animalGroup">
+            <a class=" btn btn-primary " role="button" asp-controller="AnimalGroup" asp-action="AddAnimalGroup">
                 <i class="fa-solid fa-plus"></i>
                 حيوان
             </a>
@@ -53,36 +58,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @*
-                        <tr class="align-top">
-                        @await Html.PartialAsync("_CreateAnimalProduct.cshtml")
-
-                        @await Html.PartialAsync("_productDetails.cshtml")
-                        <td class="text-break text-capitalize align-middle">1 </td>
-                        <td class="text-break text-capitalize align-middle"> John</td>
-                        <td class="text-break text-capitalize align-middle">Doe</td>
-                        <td class="text-break text-capitalize align-middle">
-                        john@example.comjohn@example.comjohn@example.comjohn@example.comjohn@example.com
-                        </td>
-                        <td class="align-middle center">
-                        <div class=" dropend">
-                        <a class="" href="#" id="dropdownMenuLink"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" asp-action="AnimalDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                        <li><button class="dropdown-item btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></button></li>
-                        <li class="">
-                        <a class="dropdown-item text-decoration-none" role="button" data-bs-toggle="offcanvas" data-bs-target="#animal_product">
-
-                        <div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
-                        </a>
-                        </li>
-                        </ul>
-                        </div>
-                        </td>
-                        </tr>*@
 
                     @foreach (var item in Model.AnimalGroupDtos)
                     {
@@ -119,12 +94,22 @@
             </table>
         </div>
     </div>
+        <div class="d-flex container justify-content-center">
+        <div class=" col-sm-12 px-sm-2 col-lg-4 col-md-4">
+            <ul class="pagination d-flex justify-content-between">
+                <li class="page-item"><a class="page-link" href="#">السابق</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">التالي</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 <!-- canvas body for create-->
-@await Html.PartialAsync("_AddAnimalGroup.cshtml",Model.AnimalGroup)
-
-@await Html.PartialAsync("_AddUnit.cshtml",Model.AnimalProductUnit)
-
 @section scripts{
 <script>
 
@@ -132,13 +117,14 @@
     $(".sidebar ul li.active").removeClass('active');
      $("#dataManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="Data Management";
-    document.getElementById("media-system-name").innerHTML="Data Management";
+     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
+    document.getElementById("media-system-name").innerHTML=" ادارة الموظفين";
 
        $("#animalProducts").removeClass('actives');
        $("#lands").removeClass('actives');
        $("#landProducts").removeClass('actives');
-
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
        $("#animalGroups").addClass('actives');
 </script>
     }

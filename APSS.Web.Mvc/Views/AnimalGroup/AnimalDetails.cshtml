@@ -1,4 +1,5 @@
-﻿@model APSS.Web.Dtos.AnimalGroupAndProductDto
+﻿@model APSS.Web.Dtos.AnimalGroupDto
+
 @{
     ViewData["Title"] = "Animal Details";
 }
@@ -14,29 +15,27 @@
         <table class="table user-view-table m-0 t ">
             <tbody>
                 <tr class="">
-                    <td class="label"><label>@Html.DisplayNameFor(m => m.AnimalGroup.Type)</label></td>
-                    <td> دغاغة</td>
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.Type)</label></td>
+                    <td>@Model.Type </td>
                 </tr>
                 <tr>
-                    <td> <label>@Html.DisplayNameFor(m => m.AnimalGroup.Quantity);</label></td>
-                    <td>12 </td>
+                    <td> <label>@Html.DisplayNameFor(m => m.Quantity);</label></td>
+                    <td>@Model.Quantity  </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.Sex)</label>  </td>
-                    <td> --</td>
+                    <td><label>@Html.DisplayNameFor(m => m.Sex)</label>  </td>
+                    <td> @Model.Sex </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.CreatedAt)</label>  </td>
+                    <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>
                     <td>
-                        @{
-                            DateTime date = new DateTime();
-                        } @date
+                        @Model.CreatedAt
                     </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.ModifiedAt)</label>  </td>
+                    <td><label>@Html.DisplayNameFor(m => m.ModifiedAt)</label>  </td>
                     <td>
-                        @date
+                        @Model.ModifiedAt
                     </td>
                 </tr>
                 <tr></tr>
@@ -44,10 +43,11 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a id="III" class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1 " asp-controller="AnimalGroup" asp-action="Index"><i class="fa-solid fa-angle px-1"></i><span class="">رجوع </span> </a>
-            <a class="btn btn-primary-danger btn-rounded  text-primary mx-1 pr-1 my-2 " asp-controller="AnimalGroup" asp-action="EditAnimalGroup"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
-            <a class="btn  btn-link-danger btn-rounded text-danger mx-1 my-2 " asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.AnimalGroup.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
-            <a id="III" class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="AnimalProduct" asp-action="AllAnimalProducts"><i class="fa-solid fa-angle-down"></i><span class="">المنتجات </span> </a>
+            <a id="III" class="btn btn-outline-dark   my-2 bg-white text-dark text-decoration-none mx-1 " onClick="history.go(-1); return false;"><i class="fa-solid fa-arrow-right px-1"></i><span class="">رجوع </span> </a>
+            <a class="btn btn-outline-primary   text-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="AddAnimalGroup"> <i class="fa-solid fa-plus mx-1 "> </i><span>اضافة منتج</span> </a>
+            <a class="btn btn-outline-primary   text-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
+            <a class="btn  btn-outline-link  text-danger mx-1 my-2 " asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
+            <a id="III" class="btn btn-outline-dark   my-2 bg-white text-dark text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="AnimalProduct" asp-action="AllAnimalProducts"><i class="fa-solid fa-angle-down"></i><span class="">المنتجات </span> </a>
         </div>
     </div>
 </div>
