@@ -9,7 +9,7 @@ namespace APSS.Web.Mvc.Controllers
         public IActionResult Index()
         {
             TempData["Action"] = "Accounts";
-            TempData["success"] = "success";
+            TempData["success"] = "تم اضافة الموظف بنجاح";
 
             var account = new List<AccountDto>();
             account.Add(new AccountDto { HolderName = "محمد", Id = 1, NationalId = "1212", PhoneNumber = "7777777777", CreatedAt = new DateTime().AddDays(30) });
