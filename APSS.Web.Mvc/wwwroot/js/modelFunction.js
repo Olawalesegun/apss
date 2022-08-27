@@ -81,3 +81,13 @@ function showPage() {
 $("#drops").on('click', function () {
     $('.rotate').toggleClass('down');
 });
+
+$(document).ready(function () {
+    $('.toast').toast('show');
+    $("#myBtn").click(function () {
+        $('.toast').toast({
+            delay: 10000,
+            showNotification: true,
+        });
+    });
+});
