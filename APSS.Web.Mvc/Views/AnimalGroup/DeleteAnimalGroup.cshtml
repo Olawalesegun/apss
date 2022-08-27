@@ -1,5 +1,5 @@
 ﻿@model APSS.Web.Dtos.AnimalGroupDto
-
+@await Html.PartialAsync("_dataNavBar")
 <div class="card mt-2">
     <div class="card-body">
         <div class="d-flex "><h5>تأكيد حذف الحيوان</h5> </div>
@@ -36,3 +36,22 @@
         @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
     </div>
 </div>
+
+@section scripts{
+<script>
+
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
+    });
+     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
+    document.getElementById("media-system-name").innerHTML=" ادارة الموظفين";
+
+       $("#animalProducts").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+       $("#animalGroups").addClass('actives');
+</script>
+    }

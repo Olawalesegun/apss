@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Animal Details";
 }
+@await Html.PartialAsync("_dataNavBar")
 
 <div class="card mt-2">
     <div class="d-inline">
@@ -47,7 +48,26 @@
             <a class="btn btn-outline-primary   text-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="AddAnimalGroup"> <i class="fa-solid fa-plus mx-1 "> </i><span>اضافة منتج</span> </a>
             <a class="btn btn-outline-primary   text-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
             <a class="btn  btn-outline-link  text-danger mx-1 my-2 " asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
-            <a id="III" class="btn btn-outline-dark   my-2 bg-white text-dark text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="AnimalProduct" asp-action="AllAnimalProducts"><i class="fa-solid fa-angle-down"></i><span class="">المنتجات </span> </a>
+            <a id="III" class="btn btn-outline-dark   my-2 bg-white text-dark text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="AnimalProduct" asp-action="AllAnimalProducts"><span class="">المنتجات </span> </a>
         </div>
     </div>
 </div>
+
+@section scripts{
+<script>
+
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
+    });
+     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
+    document.getElementById("media-system-name").innerHTML=" ادارة الموظفين";
+
+       $("#animalProducts").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+       $("#animalGroups").addClass('actives');
+</script>
+    }
