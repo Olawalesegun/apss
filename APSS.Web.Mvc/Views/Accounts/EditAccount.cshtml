@@ -1,10 +1,14 @@
 ﻿@model APSS.Web.Dtos.AccountDto
  @await Html.PartialAsync("_requiredStyle.cshtml")
-<div class="container">
-    <div class="row d-flex justify-content-start">
-        <div class="col-lg-8 col-sm-11 px-sm-2 mx-lg-4">
-            <div class="d-flex  justify-content-center  pt-4">
-                <form class=" mt-2 w-100" method="post" asp-controller="Accounts" asp-action="EditAccount">
+ <style>
+     input{
+         input, select {
+    border-radius: 30px 0 0 3px !important;
+}
+     }
+ </style>
+ <div class="col-lg-8 col-sm-12   col-md-10 mx-lg-4  d-flex px-0">
+                <form class="row  mt-2   needs-validation " method="post" asp-controller="Accounts" asp-action="EditAccount"  novalidate>
                     <div asp-validation-summary="ModelOnly"></div>
                     <input type="hidden" asp-for="UserId" />
                     <!-- 2 column puts for the National number and Phome Number-->
@@ -14,48 +18,89 @@
                         </h3>
                     </div>
                     <!-- Text input for account name-->
-                    <div class=" row d-flex mt-3 justify-content-between">
-                        <div class="col-sm-6  flex-column form-group d-inline ">
-                            <span class="text-danger fw-bold">*</span>
+                    <div class=" row d-flex  justify-content-between mx-1">
+                        <div class="col-sm-6 mt-4 flex-column form-group   position-relative">
+                            <div class="input-group">
+                               <span class="input-group-text">
+                                   <i class="fa-solid fa-user"></i>
+                               </span>
+                         <div class="form-floating col">
+                            <input type="text" id="account-name" asp-for="HolderName" placeholder="Holder Name" class="form-control w-100 " required />
                             <label class="form-label" asp-for="HolderName"></label>
-                            <input type="text" id="account-name" asp-for="HolderName" class="form-control" />
-                            <span asp-validation-for="HolderName" class="text-danger"></span>
+                             <div class="invalid-tooltip ">
+                                يجب ادخال اسم الموظف
+                             </div>
+                            </div>
+                            </div>
                         </div>
-                        <div class="col-sm-6  flex-column form-group d-inline">
-                            <span class="text-danger fw-bold">*</span>
+                         <div class="col-sm-6 mt-4 flex-column form-group  d-flex    position-relative">
+                             <div class="input-group">
+                                 <span class="input-group-text">
+                                       <i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i>
+                                 </span>
+                              <div class="form-floating col">
+                            <input type="password" id="id_password" asp-for="PasswordHash" placeholder="Password" class="form-control " required />
                             <label class="form-label" asp-for="PasswordHash"></label>
-                            <input type="password" id="account-passwor" asp-for="PasswordHash" class="form-control d-inline" />
-                            <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                             <div class="invalid-tooltip">
+                                يجب ادخال كلمة الرور
+                            </div>
+                            </div>
+                            </div>
                         </div>
                     </div>
                     <!-- Text input for AccessLevel -->
-                    <div class="row d-flex mt-3 justify-content-between">
-                        <div class="col-sm-6  flex-column form-group d-flex">
-                            <label class="form-label" asp-for="NationalId"></label>
-                            <input type="text" id="account-passwor" asp-for="NationalId" class="form-control d-inline" />
-                            <span asp-validation-for="NationalId" class="text-danger"></span>
+                    <div class="row d-flex  justify-content-between mx-1 ">
+                        <div class="col-sm-6 mt-4 flex-column form-group has-validation d-flex  ">
+                            <div class="input-group"><span class="input-group-text">
+                                <i class="fa-solid fa-cards-blank"></i>
+                                </span>
+                            <div class="form-floating col">
+                            <input type="text" id="account-nationalID" asp-for="NationalId" placeholder="National ID" class="form-control d-inline " />
+                            <label class="form-label" id="valid" asp-for="NationalId"></label>
                         </div>
-                        <div class="col-sm-6  flex-column form-group d-flex">
+                        </div>
+                        </div>
+                        <div class="col-sm-6 mt-4 flex-column form-group d-flex  ">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-phone-flip"></i></span>
+                            <div class="form-floating col">
+                            <input type="text" id="account-phonenumber" asp-for="PhoneNumber" placeholder="phoneNumber" class="form-control d-inline" />
                             <label class="form-label" asp-for="PhoneNumber"></label>
-                            <input type="text" id="account-passwor" asp-for="PhoneNumber" class="form-control d-inline" />
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
+                           </div>
+                            </div>
                     </div>
-                    <div class="mt-3">
+                    <div class="row mx-1">
+                    <div class="mt-4  ">
+                        <div class="input-group">
+                            <span class="input-group-text">Job</span>
+                            <div class="form-floating col">
+                        <input type="text" id="account-job" asp-for="Job" placeholder="job" class="form-control d-inline" />
                         <label class="form-label" asp-for="Job"></label>
-                        <input type="text" id="account-passwor" asp-for="Job" class="form-control d-inline" />
-                        <span asp-validation-for="Job" class="text-danger"></span>
+                        </div>
+                        </div>
+                     </div>
                     </div>
-                    <div class="row d-flex mt-3 justify-content-between">
-                        <div class=" col-sm-6   flex-column form-group d-flex">
-                            <label class="select-label mb-2" asp-for="SocialStatus"></label>
+                    <div class="row d-flex justify-content-between mx-1 ">
+                        <div class=" col-sm-6  mt-4  flex-column form-group d-flex  ">
+                            <div class="input-group">
+                                <span class="input-group-text">social</span>
+                                <div class="form-floating col">
                             <select class="form-select" asp-for="SocialStatus" asp-items="@ViewBag.socialstatus"></select>
+                            <label class="select-label mb-2" asp-for="SocialStatus"></label>
                         </div>
-                        <div class=" col-sm-6   flex-column form-group d-flex ">
-                            <label class="select-label mb-2" asp-for="Permissions">الصلاحيات</label>
+                        </div>
+                            </div>
+                        <div class=" col-sm-6  mt-4  flex-column form-group d-flex  ">
+                            <div class="input-group">
+                                <span class="input-group-text">الصلاحيات</span>
+                                <div class="form-floating col">
                             <select class="form-select" asp-for="Permissions" asp-items="@ViewBag.permission"></select>
+                            <label class="select-label mb-2" asp-for="Permissions">الصلاحيات</label>
                         </div>
                     </div>
+                    </div>
+                </div>
 
                     <!-- account Permission -->
                     @*  <div class="form-check-inline">
@@ -67,24 +112,21 @@
                         <input class="form-check-input" type="checkbox" value="delete" id="delete" asp-for="DeletePermission" />
                         <label class="form-check-label" asp-for="DeletePermission">  </label>
                         </div>*@
-                    <div class="d-flex justify-content-start mt-3">
+                    <div class="row d-flex mt-3 mx-2  justify-content-between">
+                        <div class="col-10  ">
                         <h5>حالة الحساب </h5>
-                    </div>
-                    <div class="form-check form-check-inline  ">
                         <input class="form-check-input" type="radio" value="true" asp-for="IsActive" />
                         <label class="form-check-label" asp-for="IsActive">  </label>
+                        </div>
                     </div>
                     <br />
                     <!-- Submit button -->
-                    <div>
-                        <button type="submit" class="btn btn-primary w-25 mb-4 mt-4">تعديل</button>
-                        <a onClick="history.go(-1); return false;" class="btn btn-link my-4 w-25 mx-3" style="background-color:#DCEEFB">الغاء</a>
+                    <div class="row mx-2 mb-4">
+                        <button type="submit" class="btn btn-primary w-25  ">تعديل</button>
+                        <a onClick="history.go(-1); return false;" class="btn btn-link   w-25 mx-3" style="background-color:#DCEEFB">الغاء</a>
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-</div>
 
 @section scripts{
 <script>

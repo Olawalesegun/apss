@@ -2,12 +2,12 @@
  @await Html.PartialAsync("_requiredStyle.cshtml")
 
 <div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
-    <form class="row d-flex justify-content-start d-inline mb-3 ">
+    <form class="row d-flex justify-content-start d-inline mb-3 " method="post" asp-controller="Accounts" asp-action="Index">
         <div class=" mb-2 col-sm col-lg-6  d-flex">
-            <button type="button" class="btn btn-primary search-btn">
+            <button type="submit" class="btn btn-primary search-btn" asp-action="Index">
                 <i class="fas fa-search"></i>
             </button>
-            <input type="search" class="form-control" id="search" onkeyup="searchTable()" placeholder="بحث..." />
+            <input type="search" class="form-control" id="search" name="searchString" onkeyup="searchTable()" placeholder="بحث..." />
         </div>
 
         <div class="col-sm-2 col-lg-1 mb-2 ">
@@ -21,11 +21,12 @@
         </div>
         <div class="col-sm col-lg-2 mb-2 ">
 
-            <select class="form-select " id="searchby">
-                <option selected>Choose search by</option>
-                <option value="1">Name</option>
-                <option value="2">Id</option>
-                <option value="3">Address</option>
+            <select class="form-select " id="searchby" name="searchBy">
+                <option selected>بحث بواسطة</option>
+                <option value="1">الاسم</option>
+                <option value="2">الرقم</option>
+                <option value="3">رقم التلفون</option>
+                <option value="4">رقم البطاقة</option>
             </select>
         </div>
     </form>
@@ -112,10 +113,6 @@
 
     });
     $("#users").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
         $("#userMedia").removeClass('actives');
          $("#accounts").addClass('actives');
          $("#accountMedia").addClass('actives');
