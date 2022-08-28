@@ -13,7 +13,7 @@
                 <input type="search" id="form1" class="form-control" />
             </div>
         </div>
-        <div class="col-sm-2 col-lg-1 mb-2 ">
+        <div class="col-sm-2 col-lg-1 mb-3 ">
 
             <select class="form-select " id="searchby">
                 <option selected>20</option>
@@ -36,6 +36,12 @@
                 <option value="9">Nine</option>
                 <option value="10">Ten</option>
             </select>
+        </div>
+        <div class="col-sm d-flex   d-inline mb-3   ">
+            <a class=" btn btn-primary mx-2" role="button" asp-controller="Units" asp-action="AddUnit">
+                <i class="fa-solid fa-plus"></i>
+                وحدة
+            </a>
         </div>
     </form>
 
@@ -76,9 +82,9 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" asp-controller="Units" asp-action="DeleteUnit"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Units" asp-action="DeleteUnit"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li class="">
-                                            <a class="dropdown-item " asp-controller="Units" asp-action="EditUnit">
+                                            <a class="dropdown-item " asp-route-id="@item.Id" asp-controller="Units" asp-action="EditUnit">
                                                 <div class="d-flex justify-content-between"> <span>تعدل </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
                                             </a>
                                         </li>
