@@ -93,10 +93,6 @@ hr.h-color {
     #loader {
         left: 65% !important;
     }
-
-    .form-outline #search {
-        width: 100% !important;
-    }
 }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -116,10 +112,6 @@ hr.h-color {
 
     #loader {
         left: 65% !important;
-    }
-
-    .form-outline #search {
-        width: 100% !important;
     }
 }
 
@@ -260,11 +252,6 @@ nav ul li div a {
 
 #box1, #box2, #box3, #box, #box4, #box5, #box6, #box7, #box8, #box9, #AddIcon {
     display: none;
-}
-
-input, select, .form-outline {
-    /*background-color: #EFF3F7 !important;*/
-    /* background-color: #F3F4F4 !important;*/
 }
 
 .textOverflow {
@@ -450,11 +437,6 @@ div.scrollmenu a {
     transition: 0.3s ease;
 }
 
-/*search button style*/
-.search-btn {
-    border-radius: 0 5px 5px 0 !important;
-}
-
 /* setting for doading style*/
 #table {
     display: none;
@@ -565,7 +547,7 @@ div.scrollmenu a {
 }
 
 input[type="search"] {
-    border-radius: 5px 0 0 5px
+    border-radius: 3px 0 0 3px
 }
 
 .confirm-data {
@@ -581,6 +563,18 @@ tr td a.confrim-link div span:hover {
     transition: ease-out 0.3s;
 }
 
+a.btn-link {
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    padding: 0 !important;
+}
+
+    .dropdown-menu li a {
+        line-height: 35px;
+    }
+
 @keyframes animatebottom {
     from {
         bottom: -100px;
@@ -591,3 +585,4 @@ tr td a.confrim-link div span:hover {
         bottom: 0;
         opacity: 1
     }
+}
