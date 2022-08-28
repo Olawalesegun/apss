@@ -170,16 +170,10 @@ public interface IUnitOfWork : IDisposable, IAsyncDisposable
     /// <summary>
     /// Asynchronously commits changes to data backend
     /// </summary>
+    /// <param name="tx">Optional transaction to be used for saving</param>
     /// <param name="cancellationToken">The task cancellation token</param>
     /// <returns>The affected records count</returns>
-    Task<int> CommitAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Asynchronously commits changes to data backend
-    /// </summary>
-    /// <param name="cancellationToken">The task cancellation token</param>
-    /// <returns>The affected records count</returns>
-    Task<int> CommitAsync(IAsyncDatabaseTransaction transaction, CancellationToken cancellationToken = default);
+    Task<int> CommitAsync(IAsyncDatabaseTransaction? tx = null, CancellationToken cancellationToken = default);
 
     #endregion Public Methods
 }

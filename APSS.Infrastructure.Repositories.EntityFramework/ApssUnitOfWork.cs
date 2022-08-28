@@ -145,19 +145,20 @@ public sealed class ApssUnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
         => new AsyncDatabaseTransaction(await _ctx.Database.BeginTransactionAsync(cancellationToken));
 
     /// <inheritdoc/>
-    public Task<int> CommitAsync(CancellationToken cancellationToken = default)
-        => _ctx.SaveChangesAsync(cancellationToken);
-
-    /// <inheritdoc/>
     public async Task<int> CommitAsync(
-        IAsyncDatabaseTransaction transaction,
-        CancellationToken cancellationToken = default)
+        IAsyncDatabaseTransaction? tx,
+        CancellationToken cancellationToken)
     {
-        var ret = await CommitAsync(cancellationToken);
+        if (tx is not null)
+        {
+            var ret = await _ctx.SaveChangesAsync(cancellationToken);
 
-        await transaction.CommitAsync(cancellationToken);
+            await tx.CommitAsync(cancellationToken);
 
-        return ret;
+            return ret;
+        }
+
+        return await _ctx.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
