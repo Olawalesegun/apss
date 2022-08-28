@@ -44,6 +44,7 @@ svc.AddScoped<IAnimalService, AnimalService>();
 svc.AddScoped<ILandService, LandService>();
 svc.AddScoped<IPopulationService, PopulationService>();
 svc.AddScoped<ISurveysService, SurveysService>();
+svc.AddTransient<ISetupService, SetupService>();
 
 // Auth service
 svc.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
