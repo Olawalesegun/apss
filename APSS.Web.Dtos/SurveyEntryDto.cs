@@ -8,5 +8,5 @@ public class SurveyEntryDto : BaseAuditbleDto
 
     public SurveyDto Survey { get; set; } = null!;
 
-    public ICollection<QuestionAnswer> Answers { get; set; } = new List<QuestionAnswer>();
+    public TypeAnswerDto Answers { get; set; } = null!;
 }
