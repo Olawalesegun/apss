@@ -32,14 +32,14 @@ public interface IAccountsService
     /// This method should only be used internally, since it overrides the system's internal
     /// security validatoin mechanisms. The created account will be owned by the user identified by <see cref="userId"/>
     /// </summary>
-    /// <param name="userId">The id of the user to add the account for</param>
+    /// <param name="owner">The user to use as the owner of the account</param>
     /// <param name="holderName">The name of the holder of the account</param>
     /// <param name="password">The password of the account</param>
     /// <param name="permissions">The permissions of the account</param>
     /// <param name="tx">An optional transaction object</param>
     /// <returns>The created account object</returns>
     Task<Account> CreateUncheckedAsync(
-        long userId,
+        User owner,
         string holderName,
         string password,
         PermissionType permissions,

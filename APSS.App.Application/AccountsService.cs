@@ -59,16 +59,14 @@ public sealed class AccountsService : IAccountsService
     }
 
     /// <inheritdoc/>
-    public async Task<Account> CreateUncheckedAsync(
-        long userId,
+    public Task<Account> CreateUncheckedAsync(
+        User owner,
         string holderName,
         string password,
         PermissionType permissions,
         IAsyncDatabaseTransaction? tx)
     {
-        var user = await _uow.Users.Query().FindAsync(userId);
-
-        return await DoCreateAsync(user, user, holderName, password, permissions, tx);
+        return DoCreateAsync(owner, owner, holderName, password, permissions, tx);
     }
 
     /// <inheritdoc/>

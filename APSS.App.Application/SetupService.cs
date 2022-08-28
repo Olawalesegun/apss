@@ -40,7 +40,7 @@ public sealed class SetupService : ISetupService
         if (!await CanSetupAsync())
             throw new SystemAlreadySetupException();
 
-        var root = new User
+        var rootUser = new User
         {
             Id = 0,
             Name = "Root User",
@@ -50,10 +50,10 @@ public sealed class SetupService : ISetupService
 
         await using var tx = await _uow.BeginTransactionAsync();
 
-        _uow.Users.Add(root);
+        _uow.Users.Add(rootUser);
 
         return await _accountsSvc.CreateUncheckedAsync(
-            root.Id,
+            rootUser,
             holderName,
             password,
             PermissionType.Full,
