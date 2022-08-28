@@ -34,15 +34,14 @@ public class AuthController : Controller
     #region Public Methods
 
     [HttpGet]
-    public IActionResult SignIn()
-        => View("SignIn", new SignInForm());
+    public IActionResult SignIn() => View(nameof(SignIn));
 
-    [HttpPost("SignIn")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SignIn([FromForm] SignInForm form, [FromQuery] string? returnUrl)
     {
         if (!ModelState.IsValid)
-            return View(form);
+            return View(nameof(SignIn), form);
 
         var deviceInfo = new LoginInfo
         {
