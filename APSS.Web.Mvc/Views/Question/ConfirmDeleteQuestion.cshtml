@@ -1,1 +1,36 @@
-﻿
+﻿@model APSS.Web.Dtos.QuestionDto
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف سؤال  </h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th>@Html.DisplayNameFor(q=>q.Index)</th>
+                    <td> @Model.Index</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(q=>q.Text)</th>
+                    <td> @Model.Text</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(q=>q.QuestionType)</th>
+                    <td> @Model.QuestionType</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(q=>q.IsRequired)</th>
+                    <td> @Model.IsRequired</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(q=>q.Survey.Name)</th>
+                    <td> @Model.Survey.Name</td>
+                </tr>
+           </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="Question" asp-action="Deletequestion">تأكيد</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="Question" asp-action="GetQuestions">رجوع</a>
+        </div>
+    </div>
+</div>
