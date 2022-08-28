@@ -143,6 +143,7 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HolderName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NationalId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SocialStatus = table.Column<int>(type: "int", nullable: false),
@@ -296,6 +297,33 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                         name: "FK_Surveys_Users_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LastIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastLogin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HostName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Agent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ValidUntil = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OwnerId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_Accounts_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -689,6 +717,11 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                 column: "SurveyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_OwnerId",
+                table: "RefreshTokens",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Skills_BelongsToId",
                 table: "Skills",
                 column: "BelongsToId");
@@ -722,9 +755,6 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Accounts");
-
-            migrationBuilder.DropTable(
                 name: "FamilyIndividuals");
 
             migrationBuilder.DropTable(
@@ -735,6 +765,9 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductExpenses");
+
+            migrationBuilder.DropTable(
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "Skills");
@@ -756,6 +789,9 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "Individuals");
