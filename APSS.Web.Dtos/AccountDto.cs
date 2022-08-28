@@ -12,8 +12,8 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the name of the peron who holds this account
         /// </summary>
-        [Required(ErrorMessage = "يجب ادخال اسم المستخدم")]
-        [Display(Name = "اسم المستخدم")]
+        [Required(ErrorMessage = "يجب ادخال اسم الموظف")]
+        [Display(Name = "اسم الموظف")]
         public string HolderName { get; set; } = null!;
 
         /// <summary>
@@ -26,29 +26,28 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the national id of the user
         /// </summary>
-        [Required(ErrorMessage = "يجب ادخال رقم البطاقة")]
+
         [Display(Name = "رقم البطاقة")]
         public string? NationalId { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number of the user
         /// </summary>
-        [Required(ErrorMessage = "يجب ادخال رقم التلفون")]
-        [Display(Name = "رقم التلفوت")]
+
+        [Display(Name = "رقم التلفون")]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the social status of the user
         /// </summary>
-        [Required(ErrorMessage = "يجب اختيار الحالة الاجتماعية ")]
+
         [Display(Name = "الحالة الاجتماعية")]
         public SocialStatus SocialStatus { get; set; } = SocialStatus.Unspecified;
 
         /// <summary>
         /// Gets or sets the job of the user
         /// </summary>
-        [Required(ErrorMessage = "يجب ادخال الوضيفة ")]
-        [Display(Name = "الوضيفة")]
+        [Display(Name = "الوظيفة")]
         public string? Job { get; set; }
 
         /// <summary>
@@ -64,18 +63,6 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the permissions of the account
         /// </summary>
-
-        [Display(Name = "القراة")]
-        public PermissionType? ReadPermission { get; set; }
-
-        [Display(Name = "الكتابة")]
-        public bool? WritePermission { get; set; }
-
-        [Display(Name = "التعديل")]
-        public bool? UpdatePermission { get; set; }
-
-        [Display(Name = "الحذف")]
-        public bool? DeletePermission { get; set; }
 
         public PermissionType Permissions { get; set; }
         public long UserId { get; set; }

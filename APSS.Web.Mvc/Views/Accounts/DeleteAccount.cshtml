@@ -1,0 +1,67 @@
+﻿@model APSS.Web.Dtos.AccountDto
+ @await Html.PartialAsync("_requiredStyle.cshtml")
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف الموظف</h5> </div>
+        <table class="table user-view-table  m-0 table-borderless ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th style="width:30%">@Html.DisplayNameFor(m=>m.HolderName)</th>
+                    <td> @Model.HolderName</td>
+                </tr>
+                <tr>
+                    <th style="width:30%">@Html.DisplayNameFor(m=>m.PhoneNumber)</th>
+                    <td> @Model.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <th style="width:30%">@Html.DisplayNameFor(m=>m.NationalId)</th>
+                    <td> @Model.NationalId</td>
+                </tr>
+                <tr>
+                    <th style="width:30%">@Html.DisplayNameFor(m=>m.Job)</th>
+                    <td> @Model.Job</td>
+                </tr>
+                <tr>
+                    <th style="width:30%">@Html.DisplayNameFor(m=>m.SocialStatus)</th>
+                    <td> @Model.SocialStatus</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline mx-4 ">
+            <a class="btn btn-danger   " asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="ConfirmDeleteAccount"> <span></span> تأكيد</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link  mx-3" style="background-color:#DCEEFB">الغاء</a>
+        </div>
+
+        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
+    </div>
+</div>
+
+@section scripts{
+<script>
+        $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+    $("#accountManagement").addClass('active');
+    });
+     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
+      document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
+
+    $(".scrollmenu a").on('click',function(){
+        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+
+    });
+    $(".manage-ment ul li a").on('click',function(){
+        $(".scrollmenu a.actives").removeClass('actives');
+        $("#animalGroups").addClass('actives');
+
+    });
+    $("#users").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+        $("#userMedia").removeClass('actives');
+         $("#accounts").addClass('actives');
+         $("#accountMedia").addClass('actives');
+</script>
+}
