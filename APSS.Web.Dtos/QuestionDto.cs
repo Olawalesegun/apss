@@ -1,6 +1,6 @@
 ﻿namespace APSS.Web.Dtos
 {
-    public class QuestionDto
+    public class QuestionDto : BaseAuditbleDto
     {
         public uint Index { get; set; }
 
@@ -11,5 +11,7 @@
         public SurveyDto Survey { get; set; } = null!;
 
         public QuestionTypeDto QuestionType { get; set; }
+        public ICollection<MultipleChoiceAnswerItemDto>? CandidateAnswers { get; set; }
+        public bool CanMultiSelect { get; set; } = false;
     }
 }
