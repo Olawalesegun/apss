@@ -9,14 +9,14 @@ namespace APSS.Application.App;
 
 public sealed class AccountsService : IAccountsService
 {
-    private const int PASSWORD_SALT_LENGTH = 0x7F;
-
     #region Fields
 
-    private readonly IRandomGeneratorService _rndSvc;
+    private const int PASSWORD_SALT_LENGTH = 0x7F;
+
     private readonly ICryptoHashService _cryptoHashSvc;
-    private readonly IUnitOfWork _uow;
     private readonly IPermissionsService _permissionsSvc;
+    private readonly IRandomGeneratorService _rndSvc;
+    private readonly IUnitOfWork _uow;
 
     #endregion Fields
 
@@ -51,27 +51,24 @@ public sealed class AccountsService : IAccountsService
         PermissionType permissions)
     {
         var superAccount = await _permissionsSvc
-            .ValidatePermissionsAsync(superUserAccountId, userId, PermissionType.Create);
+            .ValidatePermissionsAsync(superUserAccountId, userId, PermissionType.Create | permissions);
 
         var user = await _uow.Users.Query().FindAsync(userId);
 
-        var passwordSalt = _rndSvc.NextBytes(PASSWORD_SALT_LENGTH).ToArray();
-        var passwordHash = await _cryptoHashSvc.HashAsync(Encoding.UTF8.GetBytes(password), passwordSalt);
+        return await DoCreateAsync(user, superAccount.User, holderName, password, permissions);
+    }
 
-        var account = new Account
-        {
-            User = user,
-            HolderName = holderName,
-            PasswordHash = Convert.ToBase64String(passwordHash),
-            PasswordSalt = Convert.ToBase64String(passwordSalt),
-            Permissions = permissions,
-            AddedBy = superAccount.User,
-        };
+    /// <inheritdoc/>
+    public async Task<Account> CreateUncheckedAsync(
+        long userId,
+        string holderName,
+        string password,
+        PermissionType permissions,
+        IAsyncDatabaseTransaction? tx)
+    {
+        var user = await _uow.Users.Query().FindAsync(userId);
 
-        _uow.Accounts.Add(account);
-        await _uow.CommitAsync();
-
-        return account;
+        return await DoCreateAsync(user, user, holderName, password, permissions, tx);
     }
 
     /// <inheritdoc/>
@@ -117,4 +114,36 @@ public sealed class AccountsService : IAccountsService
     }
 
     #endregion Public Methods
+
+    #region Private Methods
+
+    private async Task<Account> DoCreateAsync(
+        User owner,
+        User addedBy,
+        string holderName,
+        string password,
+        PermissionType permissions,
+        IAsyncDatabaseTransaction? tx = null)
+    {
+        var passwordSalt = _rndSvc.NextBytes(PASSWORD_SALT_LENGTH).ToArray();
+        var passwordHash = await _cryptoHashSvc.HashAsync(Encoding.UTF8.GetBytes(password), passwordSalt);
+
+        var account = new Account
+        {
+            User = owner,
+            HolderName = holderName,
+            PasswordHash = Convert.ToBase64String(passwordHash),
+            PasswordSalt = Convert.ToBase64String(passwordSalt),
+            Permissions = permissions,
+            AddedBy = addedBy,
+        };
+
+        _uow.Accounts.Add(account);
+
+        await _uow.CommitAsync(tx);
+
+        return account;
+    }
+
+    #endregion Private Methods
 }
