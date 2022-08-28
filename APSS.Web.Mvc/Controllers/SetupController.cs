@@ -24,7 +24,7 @@ public class SetupController : Controller
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> Setup([FromForm] SetupForm form)
+    public async Task<IActionResult> Index([FromForm] SetupForm form)
     {
         if (!ModelState.IsValid)
             return View(form);
