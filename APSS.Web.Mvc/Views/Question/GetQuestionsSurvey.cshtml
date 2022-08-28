@@ -1,4 +1,5 @@
 ﻿
+@model IEnumerable<APSS.Web.Dtos.QuestionDto>
 <partial name="_SurveyNavBar" />
 
 <!--table-->
@@ -45,26 +46,27 @@
 
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Text</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle"> Type</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle"> Isrequerd</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">Survey</th>
+                        <th style="width:8%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Text)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle"> @Html.DisplayNameFor(m=>m.IsRequired)</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.QuestionType)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle"> @Html.DisplayNameFor(m=>m.Survey.Name)</th>
                         <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        
+                    
                     <tr class="align-top">
               
-                        <td class="text-break text-capitalize align-middle">1</td>
-                        <td class="text-break text-capitalize align-middle"> John</td>
-                        <td class="text-break text-capitalize align-middle">Doe</td>
-                        <td class="text-break text-capitalize align-middle">
-                            john@example.com
-                        </td>
-                        <td class="text-break text-capitalize align-middle">
-                            j.com
-                        </td>
+                        <td class="text-break text-capitalize align-middle">@item.Id</td>
+                        <td class="text-break text-capitalize align-middle"> @item.Text</td>
+                        <td class="text-break text-capitalize align-middle">@item.IsRequired</td>
+                        <td class="text-break text-capitalize align-middle">@item.QuestionType </td>
+                        <td class="text-break text-capitalize align-middle">@item.Survey.Name</td>
                         <td class="align-middle center">
 
                             <div class=" dropend">
@@ -73,16 +75,18 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" asp-action="ConfirmDeleteQuestion"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li><a class="dropdown-item" asp-controller="Question" asp-action="QuestionDetails"><div class="d-flex justify-content-between"> <span>تفاصيل</span>  <span><i class="fa-solid fa-info"></i> </span> </div></a></li>
+                                    <li><a class="dropdown-item" asp-controller="Question" asp-action="ConfirmDeleteQuestion"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                  
                                     <li class="">
                                         <a class="dropdown-item" asp-action="EditQuestion" asp-controller="Question">
-                                        <div class="d-flex justify-content-between"> <span>تحديث السؤال</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
+                                        <div class="d-flex justify-content-between"> <span>تحديث </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
                                     </li>
                                 </ul>
                             </div>
                         </td>
                     </tr>
+                    }
                 </tbody>
             </table>
         </div>
