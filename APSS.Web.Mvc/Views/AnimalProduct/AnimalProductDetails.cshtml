@@ -33,7 +33,7 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a class="btn btn-outline-dark   mx-1 my-2" onClick="history.go(-1); return false;"><i class="fa-solid fa-arrow-right mx-2"></i><span>رجوع</span>  </a>
+            <a class="btn btn-outline-dark   mx-1 my-2" asp-controller="AnimalProduct" asp-action="Index"><i class="fa-solid fa-arrow-right mx-2"></i><span>رجوع</span>  </a>
             <a class="btn btn-outline-primary   mx-1 my-2" asp-controller="ProductExpense" asp-action="AddExpense"><i class="fa-solid fa-plus mx-2"></i><span>اضافة تكلفة</span> </a>
             <a class="btn btn-outline-primary   mx-1 my-2" asp-route-id="@Model.Id" asp-controller="ProductExpense" asp-action="Index"><i class=""></i><span>  جميع التكاليف</span> </a>
             <a class="btn btn-outline-primary  mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="AnimalProduct" asp-action="EditAnimalProduct"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </a>
