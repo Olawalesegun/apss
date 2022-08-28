@@ -20,14 +20,11 @@
                     <label class="form-label" asp-for="@question.Text"></label>
                 @if (question.QuestionType == QuestionTypeDto.TextQuestion)
                     {                
-                        @Model.Answers.TextQuestionAnswer!.Question=@question
-
                         <input type="text"  asp-for="@Model.Answers.TextQuestionAnswer!.Answer"  class="form-control" />
                   
                 }
                @if (question.QuestionType == QuestionTypeDto.LogicalQuestion)
                 {
-                          @Model.Answers.LogicalQuestionAnswer!.Question=@question
 
                     <input type="radio"  asp-for="@Model.Answers.LogicalQuestionAnswer!.Answer" value="true"  class="form-control" />
                     <label>نعم</label>
@@ -38,7 +35,6 @@
                  
                 @if (question.QuestionType == QuestionTypeDto.MultipleChoiceQuestion)
                     {
-                          @Model.Answers.MultipleChoiceQuestionAnswer!.Question=@question
 
                         @foreach (var value in question.CandidateAnswers!)
                         {
