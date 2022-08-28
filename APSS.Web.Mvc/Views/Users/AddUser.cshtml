@@ -32,13 +32,13 @@
                 </h5>
             </div>
             <!--used -->
-            @foreach (var item in Enum.GetValues(typeof(APSS.Web.Dtos.UserStatusDto)))
-            {
-                <div class="form-check form-check-inline mx-1 ">
-                    <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@Convert.ToInt32(item)" />
-                    <label class="form-check-label">@item.ToString()</label>
-                </div>
-            }
+            @*@foreach (var item in Enum.GetValues(typeof(APSS.Web.Dtos.UserStatusDto)))
+                {
+                    <div class="form-check form-check-inline mx-1 ">
+                        <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@Convert.ToInt32(item)" />
+                        <label class="form-check-label">@item.ToString()</label>
+                    </div>
+                }*@
             <div class="mb-4">
 
                 <button type="submit" class="btn btn-primary w-25 mb-4 mt-4">اضافة</button>

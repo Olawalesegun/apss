@@ -36,7 +36,7 @@
                          <div class="col-sm-6 mt-4 flex-column form-group  d-flex    position-relative">
                              <div class="input-group">
                                  <span class="input-group-text">
-                                       <i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i>
+                                       <i class="fa-solid fa-key"></i>
                                  </span>
                               <div class="form-floating col">
                             <input type="password" id="id_password" asp-for="PasswordHash" placeholder="Password" class="form-control " required />
@@ -45,6 +45,7 @@
                                 يجب ادخال كلمة الرور
                             </div>
                             </div>
+                              <div class="input-group-text" ><i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i></div>
                             </div>
                         </div>
                     </div>
@@ -52,7 +53,7 @@
                     <div class="row d-flex  justify-content-between mx-1 ">
                         <div class="col-sm-6 mt-4 flex-column form-group has-validation d-flex  ">
                             <div class="input-group"><span class="input-group-text">
-                                <i class="fa-solid fa-cards-blank"></i>
+                                <i class="fa-solid fa-id-card"></i>
                                 </span>
                             <div class="form-floating col">
                             <input type="text" id="account-nationalID" asp-for="NationalId" placeholder="National ID" class="form-control d-inline " />
@@ -73,7 +74,7 @@
                     <div class="row mx-1">
                     <div class="mt-4  ">
                         <div class="input-group">
-                            <span class="input-group-text">Job</span>
+                            <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
                             <div class="form-floating col">
                         <input type="text" id="account-job" asp-for="Job" placeholder="job" class="form-control d-inline" />
                         <label class="form-label" asp-for="Job"></label>
@@ -121,9 +122,9 @@
                     </div>
                     <br />
                     <!-- Submit button -->
-                    <div class="row mx-2 mb-4">
-                        <button type="submit" class="btn btn-primary w-25  ">تعديل</button>
+                    <div class="row mx-2 justify-content-end mb-4">
                         <a onClick="history.go(-1); return false;" class="btn btn-link   w-25 mx-3" style="background-color:#DCEEFB">الغاء</a>
+                        <button type="submit" class="btn btn-primary w-25  ">تعديل</button>
                     </div>
                 </form>
             </div>
