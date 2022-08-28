@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace APSS.Web.Dtos;
 
-public class MultipleChoiceQuestionDto : QuestionDto
+public class MultipleChoiceQuestionDto
 {
-    /// <summary>
-    /// Gets or sets the collection of possible answers to this question
-    /// </summary>
-    public ICollection<string> CandidateAnswers { get; set; } = null!;
+    public ICollection<MultipleChoiceAnswerItemDto> CandidateAnswers { get; set; } = null!;
 
-    /// <summary>
-    /// Gets or sets whether multiple answers can be selected at a time
-    /// </summary>
     public bool CanMultiSelect { get; set; } = false;
 }
