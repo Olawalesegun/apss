@@ -10,8 +10,8 @@
         <div class="d-flex justify-content-between d-md-none d-block w-100 mx-0 ">
 
             <div class="scrollmenu w-100  scrollmenu">
-                <a asp-controller="Users" asp-action="Index" class="styles actives" id="userMedia">المناطق</a>
-                <a asp-controller="Accounts" asp-action="Index" class="" id="accountMedia"> الموظفين </a>
+                     <a asp-controller="Users" asp-action="Index" class="styles actives" id="userMedia">المناطق</a>
+                     <a asp-controller="Accounts" asp-action="Index" class="" id="accountMedia"> الموظفين </a>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
         </div>
     </div>
 </nav>
-
+@section secripts{
 <script>
 
       $(".manage-ment  ul li a").on('click',function(){
@@ -49,3 +49,4 @@
       document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
       document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
 </script>
+}
