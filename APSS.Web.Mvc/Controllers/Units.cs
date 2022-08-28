@@ -29,6 +29,23 @@ namespace APSS.Web.Mvc.Controllers
             return View(unit);
         }
 
+        public async Task<IActionResult> AddUnit()
+        {
+            var productUnit = new AnimalProductUnitDto();
+            return View(productUnit);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUnit(AnimalProductUnitDto animalProductUnitDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(animalProductUnitDto);
+        }
+
         public async Task<IActionResult> EditUnit(long id)
         {
             var uints = new AnimalProductUnitDto();
@@ -43,9 +60,10 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> DeleteUnit(long id)
         {
-            var uints = listUnit.Where(u => u.Id == id).FirstOrDefault();
+            var units = new AnimalProductUnitDto();
+            units = listUnit.Where(u => u.Id == id).FirstOrDefault();
 
-            return View(uints);
+            return View(units);
         }
 
         [HttpPost]

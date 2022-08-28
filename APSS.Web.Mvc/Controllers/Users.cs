@@ -36,6 +36,27 @@ namespace APSS.Web.Mvc.Controllers
             return View(userDto);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(string searchString, string searchBy)
+        {
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.Trim();
+                var result = new List<UserDto>();
+                if (searchBy == "2")
+                {
+                    result = _userDtos.Where(u => u.Id == Convert.ToInt64(searchString)).ToList();
+                    return View(result);
+                }
+                else
+                {
+                    result = _userDtos.Where(u => u.Name.Contains(searchString)).ToList();
+                }
+            }
+            var user = new List<User>();
+            return View(user);
+        }
+
         public async Task<IActionResult> AddUser()
         {
             var userDto = new UserDto();

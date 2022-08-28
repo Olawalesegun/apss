@@ -5,10 +5,26 @@ namespace APSS.Web.Mvc.Controllers
 {
     public class AnimalProduct : Controller
     {
+        private IEnumerable<AnimalProductDto> product;
+
+        public AnimalProduct()
+        {
+            product = new List<AnimalProductDto>
+            {
+                new AnimalProductDto{Id=1, Name ="product 1",Quantity=10,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
+                new AnimalProductDto{Id=2, Name ="one 1",Quantity=13,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
+                new AnimalProductDto{Id=3, Name ="two 1",Quantity=18,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
+                new AnimalProductDto{Id=4, Name ="one 1",Quantity=16,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
+                new AnimalProductDto{Id=5, Name ="product 2",Quantity=33,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
+                new AnimalProductDto{Id=6, Name ="product 3",Quantity=155,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
+                new AnimalProductDto{Id=7, Name ="product 5",Quantity=177,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
+                new AnimalProductDto{Id=8, Name ="product 0",Quantity=100,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
+            };
+        }
+
         public IActionResult Index()
         {
-            var animalProduct = new List<AnimalProductDto>();
-            animalProduct.Add(new AnimalProductDto { Name = "product", Id = 1, Quantity = 10, CreatedAt = new DateTime() });
+            var animalProduct = product;
             return View(animalProduct);
         }
 
@@ -27,7 +43,39 @@ namespace APSS.Web.Mvc.Controllers
                 ProducerId = id,
             };
 
-            return RedirectToAction("Index");
+            return View(animalProductDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string searchString, string searchBy)
+        {
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.Trim();
+                if (searchBy == "2")
+                {
+                    List<AnimalProductDto> response = new List<AnimalProductDto>();
+                    response = product.Where(p => p.Id == Convert.ToInt32(searchString)).ToList();
+                    return View(response);
+                }
+                else if (searchBy == "2")
+                {
+                    List<AnimalProductDto> response = new List<AnimalProductDto>();
+                    response = product.Where(p => p.Quantity == Convert.ToInt32(searchString)).ToList();
+                    return View(response);
+                }
+                else
+                {
+                    List<AnimalProductDto> response = new List<AnimalProductDto>();
+                    response = product.Where(p => p.Name.Contains(searchString)).ToList();
+                    return View(response);
+                }
+            }
+
+            ViewBag.SearchResult = "ليس هناك نتائج عن " + searchString;
+
+            var result = new List<AnimalProductDto>();
+            return View(result);
         }
 
         public async Task<IActionResult> AnimalProductdetails(int Id)
