@@ -44,7 +44,7 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a id="III" class="btn btn-outline-dark   my-2 bg-white text-dark text-decoration-none mx-1 " onClick="history.go(-1); return false;"><i class="fa-solid fa-arrow-right px-1"></i><span class="">رجوع </span> </a>
+            <a id="III" class="btn btn-outline-dark   my-2 bg-white text-dark text-decoration-none mx-1 " asp-controller="AnimalGroup" asp-action="Index"><i class="fa-solid fa-arrow-right px-1"></i><span class="">رجوع </span> </a>
             <a class="btn btn-outline-primary   text-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="AddAnimalGroup"> <i class="fa-solid fa-plus mx-1 "> </i><span>اضافة منتج</span> </a>
             <a class="btn btn-outline-primary   text-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
             <a class="btn  btn-outline-link  text-danger mx-1 my-2 " asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
