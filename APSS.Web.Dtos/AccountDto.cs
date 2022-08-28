@@ -1,4 +1,5 @@
-﻿using System;
+﻿using APSS.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -74,22 +75,4 @@ namespace APSS.Web.Dtos
         [Display(Name = "نشط")]
         public bool IsActive { get; set; } = false;
     }
-}
-
-public enum PermissionType
-{
-    Read = 1,
-    Delete = 2,
-    Update = 4,
-    Create = 8,
-    Full = Read | Delete | Update | Create,
-}
-
-public enum SocialStatus
-{
-    Unspecified,
-    Unmarried,
-    Married,
-    Divorced,
-    Widowed,
 }
