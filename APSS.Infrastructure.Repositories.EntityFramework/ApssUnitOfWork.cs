@@ -146,8 +146,8 @@ public sealed class ApssUnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
 
     /// <inheritdoc/>
     public async Task<int> CommitAsync(
-        IAsyncDatabaseTransaction? tx,
-        CancellationToken cancellationToken)
+        IAsyncDatabaseTransaction? tx = null,
+        CancellationToken cancellationToken = default)
     {
         if (tx is not null)
         {
