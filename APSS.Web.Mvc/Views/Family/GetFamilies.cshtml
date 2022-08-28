@@ -83,7 +83,7 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <li><a class="dropdown-item" asp-controller="Family" asp-action="FamilyDetails" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>تفاصيل</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item" asp-controller="Family" asp-action="DeleteFamily" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="Family" asp-action="ConfirmDeleteFamily" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li class="">
                                             <a class="dropdown-item" asp-controller="Individual" asp-action="AddIndividual" asp-route-Id="@item.Id">
                                                 <div class="d-flex justify-content-between"> <span>إضافة فرد</span>  <span><i class="fa-solid fa-user-plus"></i> </span> </div>

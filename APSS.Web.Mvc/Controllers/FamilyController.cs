@@ -8,7 +8,9 @@ namespace APSS.Web.Mvc.Controllers
     public class FamilyController : Controller
     {
         private readonly UserDto _userDto;
-        private List<FamilyDto> families;
+        private readonly List<FamilyDto> families;
+        private readonly List<IndividualDto> individuals;
+        private readonly List<FamilyIndividualDto> familyIndividuals;
 
         public FamilyController()
         {
@@ -25,29 +27,42 @@ namespace APSS.Web.Mvc.Controllers
               new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
               new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
             };
+
+            individuals = new List<IndividualDto>
+            {
+                new IndividualDto{Id=54, Name="ali",Address="mareb",Family=families.First(),User=_userDto},
+                new IndividualDto{Id=534, Name="salih",Address="mareb",Family=families.Last(),User=_userDto}
+            };
+
+            familyIndividuals = new List<FamilyIndividualDto>
+            {
+                new FamilyIndividualDto{Id=54,Individual=individuals.First(),Family=families.First(),IsParent=true,IsProvider=true},
+                new FamilyIndividualDto{Id=54,Individual=individuals.Last(),Family=families.Last(),IsParent=true,IsProvider=true},
+            };
         }
 
         // GET: FamilyController/GetFamilies
-        public ActionResult GetFamilies()
+        public IActionResult GetFamilies()
         {
             return View(families);
         }
 
         // GET: FamilyController/FamilyDetails/5
-        public ActionResult FamilyDetails(int id)
+        public IActionResult FamilyDetails(int id)
         {
             var family = families.Find(f => f.Id == id);
             return View(family);
         }
 
         // GET: FamilyController/GetFamilyIndividuals/5
-        public ActionResult GetFamilyIndividuals(int id)
+        public IActionResult GetFamilyIndividuals(int id)
         {
-            return View();
+            var individualoffamily = familyIndividuals.Where(f => f.Family.Id == id);
+            return View(individualoffamily.ToList());
         }
 
         // GET: FamilyController/AddFamily
-        public ActionResult AddFamily()
+        public IActionResult AddFamily()
         {
             return View();
         }
@@ -55,41 +70,56 @@ namespace APSS.Web.Mvc.Controllers
         // POST: FamilyController/AddFamily
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddFamily(FamilyAddDto family)
+        public IActionResult AddFamily(FamilyAddDto family)
         {
             return View(family);
         }
 
         // GET: FamilyController/EditFamily/5
-        public ActionResult UpdateFamily(int id)
+        public IActionResult UpdateFamily(int id)
         {
-            return View("Editfamily");
+            var family = families.Find(f => f.Id == id);
+            return View("Editfamily", family);
         }
 
         // POST: FamilyController/EditFamily/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateFamily(int id, FamilyDto family)
+        public IActionResult UpdateFamily(int id, FamilyDto family)
         {
-            return View("Editfamily");
+            return View("Editfamily", family);
         }
 
         // POST: FamilyController/UpdateFamilyIndividuals/5
-        public ActionResult UpdateFamilyIndividuals(int id)
+        public IActionResult UpdateFamilyIndividual(int id)
         {
-            return View("EditeFamilyIndividual");
+            var newfamilyindividual = familyIndividuals.Find(f => f.Id == id);
+            return View(newfamilyindividual);
         }
 
         // POST: FamilyController/EditFamilyIndividual/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateFamilyIndividuals(int id, FamilyIndividualDto newfamilyIndividual)
+        public IActionResult UpdateFamilyIndividuals(int id, FamilyIndividualDto newfamilyIndividual)
         {
-            return View("EditFamilyIndividual");
+            return View("EditFamilyIndividual", newfamilyIndividual);
         }
 
         // GET: FamilyController/DeleteFamily/5
-        public ActionResult DeleteFamily(int id)
+        public IActionResult ConfirmDeleteFamily(int id)
+        {
+            var family = families.Find(f => f.Id == id);
+            return View(family!);
+        }
+
+        public IActionResult ConfirmDeleteFamilyIndividual(int id)
+        {
+            var individualoffamily = familyIndividuals.Find(f => f.Id == id);
+            return View(individualoffamily!);
+        }
+
+        // GET: FamilyController/DeleteFamily/5
+        public IActionResult DeleteFamily(int id)
         {
             return RedirectToAction(nameof(GetFamilies));
         }
@@ -97,21 +127,21 @@ namespace APSS.Web.Mvc.Controllers
         // POST: FamilyController/DeleteFamily/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteFamily(int id, FamilyDto familyDto)
+        public IActionResult DeleteFamily(int id, FamilyDto familyDto)
         {
-            return View(nameof(GetFamilies));
+            return RedirectToAction(nameof(GetFamilies));
         }
 
         // GET: FamilyController/DeleteFamilyIndividual/5
-        public ActionResult DeleteFamilyIndividual(int id)
+        public IActionResult DeleteFamilyIndividual(int id)
         {
-            return View();
+            return RedirectToAction(nameof(GetFamilyIndividuals));
         }
 
         // POST: FamilyController/DeleteFamilyIndividual/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteFamilyIndividual(int id, FamilyIndividualDto familyIndividualDto)
+        public IActionResult DeleteFamilyIndividual(int id, FamilyIndividualDto familyIndividualDto)
         {
             return RedirectToAction(nameof(GetFamilyIndividuals));
         }
