@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +20,10 @@
     <ProjectReference Include="..\APSS.Infrastructure.Repositories.EntityFramework\APSS.Infrastructure.Repositories.EntityFramework.csproj" />
     <ProjectReference Include="..\APSS.Tests.Infrastructure.Services\APSS.Tests.Infrastructure.Services.csproj" />
     <ProjectReference Include="..\APSS.Web.Dtos\APSS.Web.Dtos.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Filters\" />
   </ItemGroup>
 
 </Project>
