@@ -16,28 +16,13 @@ namespace APSS.Web.Mvc.Controllers
 
         public IActionResult Index()
         {
-            AnimalGroup animal = new AnimalGroup();
-            animal = new AnimalGroup()
-            {
-                Id = 1,
-                Type = "dog",
-                Quantity = 100,
-                Sex = "male"
-            };
-            return View(animal);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Privacy(AnimalGroup animalGroup)
+        public IActionResult Privacy()
         {
-            if (animalGroup != null)
-                return RedirectToAction("Index", "DataManagement");
-            else
-            {
-                return RedirectToAction("Index", "DataManagement");
-            }
-
-            return View(animalGroup);
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

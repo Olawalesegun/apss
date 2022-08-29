@@ -182,22 +182,22 @@ namespace APSS.Tests.Application.App
         }
 
         [Theory]
-        [InlineData(AccessLevel.Farmer, PermissionType.Create, true)]
-        [InlineData(AccessLevel.Farmer, PermissionType.Read | PermissionType.Delete | PermissionType.Update, false)]
+        [InlineData(AccessLevel.Root, PermissionType.Create, true)]
+        [InlineData(AccessLevel.Root, PermissionType.Read | PermissionType.Delete | PermissionType.Update, false)]
         [InlineData(AccessLevel.Group, PermissionType.Create, false)]
         [InlineData(AccessLevel.Governorate, PermissionType.Create, false)]
         [InlineData(AccessLevel.Directorate, PermissionType.Create, false)]
         [InlineData(AccessLevel.Village, PermissionType.Create, false)]
         [InlineData(AccessLevel.District, PermissionType.Create, false)]
         public async Task<AnimalProductUnit?> AnimalProductUnitAddedTheory(
-            AccessLevel accessLevel = AccessLevel.Farmer,
+            AccessLevel accessLevel = AccessLevel.Root,
             PermissionType permissionType = PermissionType.Create, bool shouldSuccess = true)
         {
             var account = await _uow.CreateTestingAccountAsync(accessLevel, permissionType);
 
-            var templateProductUnit = ValidEntitiesFactory.CreateValidLandProductUnit();
+            var templateProductUnit = ValidEntitiesFactory.CreateValidAnimalProductUnit();
 
-            var productUnitTask = _animal.CreateAnimalProductUnits(account.Id, templateProductUnit.Name);
+            var productUnitTask = _animal.CreateAnimalProductUnitAsync(account.Id, templateProductUnit.Name);
 
             if (!shouldSuccess)
             {
@@ -333,7 +333,7 @@ namespace APSS.Tests.Application.App
             PermissionType permissionType = PermissionType.Create, bool ShouldSuccess = true)
         {
             var unit = await AnimalProductUnitAddedTheory();
-            var account = await _uow.CreateTestingAccountAsync(AccessLevel.Farmer, permissionType);
+            var account = await _uow.CreateTestingAccountAsync(AccessLevel.Root, permissionType);
 
             var name = RandomGenerator.NextString(RandomGenerator.NextInt(10, 20), RandomStringOptions.Alpha);
 

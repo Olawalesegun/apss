@@ -14,5 +14,6 @@ namespace APSS.Web.Dtos
         public int ProductId { get; set; }
         public AnimalProductDto AnimalProducts { get; set; } = new AnimalProductDto();
         public IEnumerable<AnimalProductDto> AnimalProductList { get; set; } = new List<AnimalProductDto>();
+        public AnimalProductUnitDto? AnimalProductUnit { get; set; }
     }
 }

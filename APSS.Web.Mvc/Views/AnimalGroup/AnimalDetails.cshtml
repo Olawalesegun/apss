@@ -1,0 +1,73 @@
+﻿@model APSS.Web.Dtos.AnimalGroupDto
+
+@{
+    ViewData["Title"] = "Animal Details";
+}
+@await Html.PartialAsync("_dataNavBar")
+
+<div class="card mt-2">
+    <div class="d-inline">
+    </div>
+    <div class="card-body">
+        <div class="d-flex ">
+
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Animal Information </h3>
+        </div>
+        <table class="table user-view-table m-0 t ">
+            <tbody>
+                <tr class="">
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.Type)</label></td>
+                    <td>@Model.Type </td>
+                </tr>
+                <tr>
+                    <td> <label>@Html.DisplayNameFor(m => m.Quantity);</label></td>
+                    <td>@Model.Quantity  </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.Sex)</label>  </td>
+                    <td> @Model.Sex </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>
+                    <td>
+                        @Model.CreatedAt
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.ModifiedAt)</label>  </td>
+                    <td>
+                        @Model.ModifiedAt
+                    </td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <br />
+        <div cllass="d-inline pt-2">
+            <a id="III" class="btn btn-outline-dark   my-2  text-decoration-none mx-1 " asp-controller="AnimalGroup" asp-action="Index"><i class="fa-solid fa-arrow-left px-1"></i><span class="">Back </span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="AddAnimalGroup"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Product</span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
+            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
+            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="AnimalProduct" asp-action="AllAnimalProducts"><span class="">Products </span> </a>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
+    });
+     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
+    document.getElementById("media-system-name").innerHTML=" ادارة الموظفين";
+
+       $("#animalProducts").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+       $("#animalGroups").addClass('actives');
+</script>
+    }
