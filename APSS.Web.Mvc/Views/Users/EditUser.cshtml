@@ -31,32 +31,32 @@
             </div>
             <!--used -->
            @* @foreach (var item in Enum.GetValues(typeof(APSS.Web.Dtos.UserStatusDto)))
-            {
-                <div class="form-check form-check-inline  ">
-                    <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@Convert.ToInt32(item)" />
-                    <label class="form-check-label">@item.ToString()</label>
-                </div>
-            }*@
+                {
+                    <div class="form-check form-check-inline  ">
+                        <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@Convert.ToInt32(item)" />
+                        <label class="form-check-label">@item.ToString()</label>
+                    </div>
+                }*@
 
             @*<div class=" ">
-                <h5 class="inline">حالة المنطقة:</h5>
-                </div>
-                <div class="d-inline d-flex justify-content-between">
-                <!--used -->
-                <div class="form-check-inline  ">
-                <input class="form-check-input hiden" name="userstatus" type="radio" asp-for="userStatus" value="Active" />
-                <label class="form-check-label" asp-for="Active"></label>
-                </div>
-                <!--unused -->
-                <div cl ass=" form-check px-2">
-                <input class="form-check-input" type="radio" name="userstatus" value="Inactive" asp-for="userStatus" />
-                <label class="form-check-label" asp-for="Inactive">  </label>
-                </div>
-                <div cl ass="form-check  px-2">
-                <input class="form-check-input" type="radio" name="userstatus" value="Terminated" asp-for="userStatus " />
-                <label class="form-check-label" asp-for="Terminated">  </label>
-                </div>
-                </div>*@
+                    <h5 class="inline">حالة المنطقة:</h5>
+                    </div>
+                    <div class="d-inline d-flex justify-content-between">
+                    <!--used -->
+                    <div class="form-check-inline  ">
+                    <input class="form-check-input hiden" name="userstatus" type="radio" asp-for="userStatus" value="Active" />
+                    <label class="form-check-label" asp-for="Active"></label>
+                    </div>
+                    <!--unused -->
+                    <div cl ass=" form-check px-2">
+                    <input class="form-check-input" type="radio" name="userstatus" value="Inactive" asp-for="userStatus" />
+                    <label class="form-check-label" asp-for="Inactive">  </label>
+                    </div>
+                    <div cl ass="form-check  px-2">
+                    <input class="form-check-input" type="radio" name="userstatus" value="Terminated" asp-for="userStatus " />
+                    <label class="form-check-label" asp-for="Terminated">  </label>
+                    </div>
+                    </div>*@
             <div class="">
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary w-25 my-4">تعديل</button>
