@@ -1,37 +1,41 @@
 ﻿@using APSS.Web.Dtos
 @model APSS.Web.Dtos.QuestionDto
-
+    @await Html.PartialAsync("_SurveyNavBar")
 
 <div class="card mt-2">
+    <div class="d-inline">
+    </div>
     <div class="card-body">
-        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:4px"></i> <h3>معلومات الشخص</h3></div>
+        <div class="d-flex ">
 
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Question Information </h3>
+        </div>
         <table class="table user-view-table m-0 t ">
-            <tbody style="font-size:14px">
-                  <tr class="">
-                    <td>@Html.DisplayNameFor(q=>q.Id) </td>
-                    <td> @Model.Id</td>
-                </tr>
+            <tbody>
                 <tr class="">
-                    <td>@Html.DisplayNameFor(q=>q.Text) </td>
-                    <td> @Model.Text</td>
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.Id)</label></td>
+                    <td>@Model.Id </td>
                 </tr>
                 <tr>
-                    <td>@Html.DisplayNameFor(q=>q.Index) </td>
-                    <td>@Model.Index</td>
+                    <td> <label>@Html.DisplayNameFor(m => m.Text);</label></td>
+                    <td>@Model.Text  </td>
                 </tr>
                 <tr>
-                    <td>@Html.DisplayNameFor(q=>q.QuestionType)   </td>
-                    <td> @Model.QuestionType</td>
+                    <td><label>@Html.DisplayNameFor(m => m.Index)</label>  </td>
+                    <td> @Model.Index </td>
                 </tr>
-                @if (Model.QuestionType==QuestionTypeDto.MultipleChoiceQuestion)
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.IsRequired)</label>  </td>
+                    <td> @Model.IsRequired </td>
+                </tr>
+                 @if (Model.QuestionType==QuestionTypeDto.MultipleChoiceQuestion)
                 {
                  <tr>
-                    <td>@Html.DisplayNameFor(q=>q.CanMultiSelect)   </td>
+                    <td><label>@Html.DisplayNameFor(q=>q.CanMultiSelect)  </label> </td>
                     <td>@Model.CanMultiSelect</td>
                  </tr>
               <tr>
-                <td>@Html.DisplayNameFor(q=>q.CandidateAnswers)</td>
+                <td><label>@Html.DisplayNameFor(q=>q.CandidateAnswers)</label></td>
                 <td>
 
                    @foreach (var item in Model.CandidateAnswers!)
@@ -44,29 +48,44 @@
               </tr>
                    
                 }
-
                 <tr>
-                    <td>Html.DisplayNameFor(q=>q.Survey)  </td>
-                    <td>@Model.Survey.Name</td>
-                </tr>
-
-                 <tr>
-                    <td>@Html.DisplayNameFor(q=>q.CreatedAt) </td>
-                    <td><span class="">@Model.CreatedAt  </span></td>
+                    <td><label>@Html.DisplayNameFor(m => m.Survey)</label>  </td>
+                    <td> @Model.Survey.Name </td>
                 </tr>
                 <tr>
-                    <td>   @Html.DisplayNameFor(q=>q.ModifiedAt)   </td>
-                    <td><span class="">@Model.ModifiedAt </span></td>
+                    <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>
+                    <td>
+                        @Model.CreatedAt
+                    </td>
                 </tr>
-              
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.ModifiedAt)</label>  </td>
+                    <td>
+                        @Model.ModifiedAt
+                    </td>
+                </tr>
+                <tr></tr>
             </tbody>
         </table>
-        
-         <div cllass="d-inline pt-2">
-            <a class="btn btn-primary-danger btn-rounded  text-primary mx-1 pr-1 my-2 " asp-controller="Question" asp-action="EditQuestion" asp-route-Id="@Model.Id"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
-            <a class="btn  btn-link-danger btn-rounded text-danger mx-1 my-2 " asp-controller="Question" asp-action="ConfirmDeleteQuestion" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
-            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1 " asp-controller="Question" asp-action="GetQuestionsSurvey"><i class="fa-solid fa-share px-1"></i><span class="">Cancel </span> </a>
+        <br />
+        <div cllass="d-inline pt-2">
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Question" asp-action="EditQuestion"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
+            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="Quetion" asp-action="ConfirmDeletequestion" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
         </div>
     </div>
-    <hr class="border-light m-0">
 </div>
+
+@section scripts{
+<script>
+          $(document).ready(function() {
+            $(".sidebar ul li.active").removeClass('active');
+            $("#populationManagement").addClass('active');
+        });
+        document.getElementById("nav-system-name").innerHTML = "Populatoin Management";
+        document.getElementById("media-system-name").innerHTML = "Populatoin Management";
+
+        $("#survey").AddClass('actives');
+        $("#serveyentry").removeClass('actives');
+</script>
+}
