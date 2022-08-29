@@ -1,0 +1,15 @@
+﻿@using APSS.Web.Mvc.Filters
+
+@{
+    var unhandledErrors = ExceptionHandlingFilter<Exception>.UNHANDLED_ERRORS;
+}
+
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState.ContainsKey(unhandledErrors))
+{
+    @foreach (var error in ViewData.ModelState[unhandledErrors].Errors)
+    {
+        <div class="alert alert-danger" role="alert">
+            @(error.ErrorMessage ?? error.Exception?.Message ?? "Unknown error")
+        </div>
+    }
+}
