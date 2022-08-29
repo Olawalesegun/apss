@@ -2,7 +2,7 @@
 
 <div class="card mt-2">
     <div class="card-body">
-        <div class="d-flex "><h5>تأكيد حذف التطوع  </h5> </div>
+        <div class="d-flex "><h5>Confirm Delete Voluntary</h5> </div>
         <table class="table user-view-table m-0  ">
             <tbody style="font-size:14px">
                 <tr class="">
@@ -18,7 +18,7 @@
                     <td> @Model.Field</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(s=>s.Individual.Name)</th>
+                    <th>@Html.DisplayNameFor(s=>s.Individual)</th>
                     <td> @Model.Individual.Name</td>
                 </tr>
                  <tr>
@@ -33,8 +33,8 @@
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Voluntary" asp-action="DeleteVoluntary">تأكيد</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-route-id="@Model.Individual.Id" asp-controller="Voluntary" asp-action="GetVoluntaries">رجوع</a>
+            <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Voluntary" asp-action="DeleteVoluntary">Confirm</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-route-id="@Model.Individual.Id" asp-controller="Voluntary" asp-action="GetVoluntaries">Cancel</a>
         </div>
     </div>
 </div>
