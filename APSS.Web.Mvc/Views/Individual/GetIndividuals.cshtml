@@ -46,13 +46,13 @@
 
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Name</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Job</th>
-                        <th style="width:8%;" class=" text-capitalize align-middle">Gender</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Phone Number</th>
-                        <th style="width:15%;" class=" text-capitalize align-middle">Address</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">User</th>
+                        <th style="width:8%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(i=>i.Id)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(i=>i.Name)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(i=>i.Job)</th>
+                        <th style="width:8%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(i=>i.Sex)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle"> @Html.DisplayNameFor(i=>i.PhonNumber)</th>
+                        <th style="width:15%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(i=>i.Address)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(i=>i.User)</th>
                         <th style="width:10%;" class=" text-capitalize align-middle">Action</th>
                     </tr> 
                 </thead>
@@ -76,23 +76,23 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li><a class="dropdown-item" asp-controller="Individual" asp-action="IndividualDetails" asp-route-Id="@item.Id">
-                                        <div class="d-flex justify-content-between"> <span>تفاصل</span>  <span><i class="fa-solid fa-info"></i> </span>
+                                        <div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span>
                                             </div> </a>
                                         </li>
                                     <li><a class="dropdown-item" asp-controller="Individual" asp-action="ConfirmDeleteIndividual" asp-route-Id="@item.Id" >
-                                        <div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> 
+                                        <div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> 
                                             </div></a></li>
                                     <li class="">
                                         <a class="dropdown-item" asp-controller="Individual" asp-action="UpdateIndividual" asp-route-Id="@item.Id">
-                                        <div class="d-flex justify-content-between"> <span>تحديث</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
+                                        <div class="d-flex justify-content-between"> <span>Edit</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
                                     </li>
                                     <li class="">
                                         <a class="dropdown-item" asp-controller="Skill" asp-action="AddSkill" asp-route-Id="@item.Id">
-                                        <div class="d-flex justify-content-between"> <span>إضافة مهارة</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
+                                        <div class="d-flex justify-content-between"> <span>Add Skill </span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
                                     </li>
                                      <li class="">
                                         <a class="dropdown-item" asp-controller="Voluntary" asp-action="AddVoluntary" asp-route-Id="@item.Id">
-                                        <div class="d-flex justify-content-between"> <span>إضافة تطوع</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
+                                        <div class="d-flex justify-content-between"> <span> Add Voluntary</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
                                     </li>
                                    
                                 </ul>
