@@ -7,7 +7,7 @@
         <!-- 2 column puts for the National number and Phome Number-->
         <div class="center d-flex justify-content-center mb-2 ">
             <h3 class="text-muted">
-                اضافة موظف
+               Add New Employee
             </h3>
         </div>
 
@@ -22,7 +22,7 @@
                     <input type="text" id="account-name" asp-for="HolderName" placeholder="Holder Name" class="form-control " required />
                     <label class="form-label" asp-for="HolderName"></label>
                     <div class="invalid-tooltip ">
-                        يجب ادخال اسم الموظف
+                        Please Enter Empoyee Name
                     </div>
                 </div>
             </div>
@@ -34,10 +34,10 @@
                             <i class="fa-solid fa-key"></i>
                         </span>
                 <div class="form-floating col">
-                    <input type="password" id="id_password" name="password" asp-for="PasswordHash" placeholder="Password" class="form-control " required />
+                    <input type="password" id="id_password" name="password" min="8" asp-for="PasswordHash" placeholder="Password" class="form-control " required />
                     <label class="form-label" asp-for="PasswordHash"></label>
                     <div class="invalid-tooltip">
-                        يجب ادخال كلمة الرور
+                       Please Enter Strongr Password
                     </div>
                 </div>
                  <div class="input-group-text"><i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i></div>
@@ -47,16 +47,16 @@
             <div class="input-group">
                 <span class="input-group-text">
 
-                    الصلاحيات
+                    Permission
                 </span>
                 <div class="form-floating col ">
                     <select class="form-select" asp-for="Permissions" asp-items="@ViewBag.permission" required>                </select>
-                    <label class="select-label">الصلاحيات</label>
+                    <label class="select-label">Permission</label>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-start col">
-            <h5>حالة الحساب </h5>
+            <h5>Employee status </h5>
         </div>
         <div class="form-check form-check-inline mx-3 ">
             <input class="form-check-input" type="checkbox" value="true" id="delete" asp-for="IsActive" />
@@ -65,8 +65,8 @@
         <div>
             <div class="row d-flex justify-content-end">
             <!-- Submit b        utton -->
-            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 mt-4 mx-3" style="background-color:#DCEEFB">    الغاء</a>
-            <button type="submit" class="btn btn-primary w-25  mt-4">اضافة        </button>
+            <button type="submit" class="btn btn-primary w-25  mt-4">Add        </button>
+            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 mt-4 mx-3" style="background-color:#DCEEFB"> Cancel</a>
         </div>
         </div>
     </form>

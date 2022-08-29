@@ -97,7 +97,7 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> AddAnimalGroup()
         {
             var animalGroup = new AnimalGroupDto();
-            ViewBag.Gender = new AnimalSexDto();
+            ViewBag.Gender = new AnimalSex();
             return View(animalGroup);
         }
 

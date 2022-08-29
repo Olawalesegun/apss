@@ -7,7 +7,7 @@
             <!-- 2 column puts for the type  and quantity of animal-->
             <div class="center d-flex justify-content-center mb-3 ">
                 <h3 class=" ">
-                    اضافة حيوان
+                    Add New Animal
                 </h3>
             </div>
             <div class="mb-4">
@@ -44,7 +44,7 @@
                     </h5>
                 </div>
 
-                @foreach (var item in Enum.GetValues(typeof(APSS.Web.Dtos.AnimalSexDto)))
+                @foreach (var item in Enum.GetValues(typeof(APSS.Domain.Entities.AnimalSex)))
                 {
                     <div class="form-check col ">
                         <input class="form-check-input " type="radio" asp-for="Sex" id="female" value="@Convert.ToInt32(item)" checked />
@@ -66,8 +66,8 @@
                 </div>*@
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary w-25 my-4 mx-3">اضافة</button>
-            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">الغاء</a>
+            <button type="submit" class="btn btn-primary w-25 my-4 mx-3">Add </button>
+            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
         </form>
     </div>
 

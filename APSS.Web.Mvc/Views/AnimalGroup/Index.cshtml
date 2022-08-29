@@ -8,10 +8,12 @@
 
     <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="AnimalGroup" asp-action="Index" method="post">
         <div class=" mb-3 col-sm  d-flex">
-            <button type="submit" class="btn btn-primary search-btn">
+            <div class="input-group">
+            <button type="submit" class="btn btn-primary ">
                 <i class="fas fa-search"></i>
             </button>
-            <input type="search" class="form-control" id="search" name="searchString" onkeyup="searchTable()" />
+            <input type="search" class="form-control" id="search" placeholder="Search..." name="searchString" onkeyup="searchTable()" />
+        </div>
         </div>
         <div class="col-sm-2 col-lg-1 mb-2 ">
 
@@ -25,21 +27,21 @@
         <div class="col-sm mb-3 ">
 
             <select class="form-select " id="searchby" name="searchBy">
-                <option selected>البحث بواسكة</option>
-                <option value="1">النوع</option>
-                <option value="2">الرقم</option>
-                <option value="3">الكمية</option>
-                <option value="4">الجنس</option>
+                <option selected>Search By </option>
+                <option value="1">Type</option>
+                <option value="2">Number</option>
+                <option value="3">Quantity</option>
+                <option value="4">Sex</option>
             </select>
         </div>
         <div class="col-sm d-flex   d-inline mb-3   ">
             <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#AddUnit">
                 <i class="fa-solid fa-plus"></i>
-                وحدة
+                Unit
             </a>
             <a class=" btn btn-primary " role="button" asp-controller="AnimalGroup" asp-action="AddAnimalGroup">
                 <i class="fa-solid fa-plus"></i>
-                حيوان
+                Animal
             </a>
         </div>
     </form>
@@ -56,11 +58,11 @@
 
                 <thead class="table-light">
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th style="width:8%;" class=" fw-bold align-middle"> ارقم</th>
-                        <th style="width:30%;" class="fw-bold align-middle">النوع</th>
-                        <th style="width:20%;" class="fw-bold align-middle">الكمية</th>
-                        <th style="width:30%;" class="fw-bold align-middle">الجنس</th>
-                        <th style="width:0%;" class="fw-bold align-middle">Action</th>
+                        <th class=" fw-bold align-middle"> ID</th>
+                        <th  class="fw-bold align-middle">Type</th>
+                        <th  class="fw-bold align-middle">Quantity</th>
+                        <th  class="fw-bold align-middle">sex</th>
+                        <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,14 +105,14 @@
     <div class="d-flex container justify-content-center">
         <div class=" col-sm-12 px-sm-2 col-lg-4 col-md-4">
             <ul class="pagination d-flex justify-content-between">
-                <li class="page-item"><a class="page-link" href="#">السابق</a></li>
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item active"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">4</a></li>
                 <li class="page-item"><a class="page-link" href="#">5</a></li>
                 <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">التالي</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
         </div>
     </div>

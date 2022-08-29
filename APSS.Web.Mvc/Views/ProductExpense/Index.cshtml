@@ -2,7 +2,7 @@
 @await Html.PartialAsync("_dataNavBar")
 <div class="container-fluid  border p-2    col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
     <form class="row d-flex justify-content-start d-inline mb-3 ">
-        <div class=" mb-2 col-sm col-lg-6  d-flex">
+        <div class=" mb-2 col-sm col-lg-6  d-flex input-group">
             <button type="button" class="btn btn-primary search-btn">
                 <i class="fas fa-search"></i>
             </button>
@@ -18,12 +18,12 @@
 
                 <thead>
                     <tr class="header  bg-fixed border border-bottom fw-bold">
-                        <th style="width:8%;" class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
-                        <th style="width:30%;" class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Type)</th>
-                        <th style="width:10%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Price)</th>
-                        <th style="width:10%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
-                        <th style="width:10%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
-                        <th style="width:10%;" class="fw-bold align-middle">تفاصيل</th>
+                        <th class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
+                        <th  class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Type)</th>
+                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Price)</th>
+                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                        <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>

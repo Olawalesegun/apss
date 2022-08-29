@@ -3,7 +3,7 @@
 <div class="container-fluid px-3 py-3 mx-sm-2   mx-lg-4 my-1">
     <div class="col-sm-6 col-lg-5">
         <div class="d-flex justify-content-center">
-            <h4 style="">تعديل تكلفة</h4>
+            <h4 style="">Edit Expense </h4>
         </div>
         <form class="" onsubmit="" method="Post" asp-controller="ProductExpense" asp-action="AddExpense">
             <div asp-validation-summary="ModelOnly"></div>
@@ -27,8 +27,8 @@
                 </div>
             </div>
             <div class="row justify-content-between   my-4"></div>
-            <button class="btn btn-primary w-25 "> <span>تعديل</span></button>
-            <a asp-route-id="@Model.ProductId" asp-controller="ProductExpense" asp-action="Index" class="btn btn-link w-25  mx-2" style="background-color:#DCEEFB">الغاء</a>
+            <button class="btn btn-primary w-25 "> <span>Edit</span></button>
+            <a asp-route-id="@Model.ProductId" asp-controller="ProductExpense" asp-action="Index" class="btn btn-link w-25  mx-2" style="background-color:#DCEEFB">Cancel</a>
         </form>
     </div>
 </div>

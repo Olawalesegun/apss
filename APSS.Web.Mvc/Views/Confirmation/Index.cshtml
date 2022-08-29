@@ -3,10 +3,12 @@
 <div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
     <form class="row d-flex justify-content-start d-inline mb-3 ">
         <div class=" mb-2 col-sm col-lg-6  d-flex">
+            <div class="input-group">
             <button type="button" class="btn btn-primary search-btn">
                 <i class="fas fa-search"></i>
             </button>
-            <input type="search" class="form-control" id="search" onkeyup="searchTable()" placeholder="بحث..." />
+            <input type="search" class="form-control" id="search" onkeyup="searchTable()" placeholder="Search..." />
+        </div>
         </div>
     </form>
 
@@ -18,11 +20,11 @@
 
                 <thead>
                     <tr class="header  bg-fixed border border-bottom fw-bold">
-                        <th style="width:8%;" class=" fw-bold align-middle">الرقم</th>
-                        <th style="width:30%;" class=" fw-bold align-middle">الاسم</th>
-                        <th style="width:10%;" class="fw-bold align-middle">الكمية</th>
-                        <th style="width:10%;" class="fw-bold align-middle">تاريخ الانشاء</th>
-                        <th style="width:10%;" class="fw-bold align-middle">تفاصيل</th>
+                        <th  class=" fw-bold align-middle">ID</th>
+                        <th  class=" fw-bold align-middle">Name</th>
+                        <th class="fw-bold align-middle">Quantity</th>
+                        <th  class="fw-bold align-middle"> Create Date</th>
+                        <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>

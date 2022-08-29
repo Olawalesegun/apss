@@ -7,7 +7,7 @@
             <!-- 2 column puts for the National number and Phome Number-->
             <div class="center d-flex justify-content-center mb-3  " style="line-height:35px;">
                 <h3 class="">
-                    تعديل بيانات المنطقة
+                    Edit Area Information
                 </h3>
             </div>
             <!-- Text input for user name-->
@@ -18,7 +18,7 @@
                 <input type="text" id="user_name" placeholder="Name" asp-for="Name" class="form-control" required />
                 <label class="" asp-for="Name"></label>
                   <div class="invalid-tooltip">
-                     يجب ادخال اسم المنطقة
+                     Please Enter Area Name
                    </div>
             </div>
             </div>
@@ -59,8 +59,8 @@
                     </div>*@
             <div class="">
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary w-25 my-4">تعديل</button>
-                <a onClick="history.go(-1); return false;" class="btn btn-link  w-25 my-4 mx-2" style="background-color:#DCEEFB">الغاء</a>
+                <button type="submit" class="btn btn-primary w-25 my-4">Edit</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link  w-25 my-4 mx-2" style="background-color:#DCEEFB">Cancel</a>
             </div>
         </form>
     </div>
@@ -73,8 +73,8 @@
     $("#accountManagement").addClass('active');
     });
 
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-    document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
+     document.getElementById("nav-system-name").innerHTML="Employees Management ";
+    document.getElementById("media-system-name").innerHTML="Employees Management";
     $(".scrollmenu a").on('click',function(){
         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
 
