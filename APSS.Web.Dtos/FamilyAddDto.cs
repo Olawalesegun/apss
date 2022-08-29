@@ -4,13 +4,14 @@ namespace APSS.Web.Dtos;
 
 public class FamilyAddDto : BaseAuditbleDto
 {
-    [Required(ErrorMessage = "يجب ادخال اسم العائلة")]
-    [Display(Name = "إسم العائلة")]
+    [Required(ErrorMessage = "Faild Name is requird")]
+    [Display(Name = "Name")]
     public string Name { get; set; } = null!;
 
-    [Required(ErrorMessage = " يجب ادخال عنوان سكن العائلة")]
-    [Display(Name = "  عنوان العائلة ")]
+    [Required(ErrorMessage = "Field Address is required")]
+    [Display(Name = "Address")]
     public string LivingLocation { get; set; } = null!;
 
+    [Display(Name = "Employee")]
     public UserDto User { get; set; } = null!;
 }

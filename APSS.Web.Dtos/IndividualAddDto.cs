@@ -5,20 +5,22 @@ namespace APSS.Web.Dtos;
 
 public class IndividualAddDto : BaseAuditbleDto
 {
-    [Display(Name = "  :إسم الفرد")]
-    [Required(ErrorMessage = "يجب إدخال إسم الفرد")]
+    [Display(Name = "Name")]
+    [Required(ErrorMessage = "Field Name is required")]
     public string Name { get; set; } = null!;
 
-    [Display(Name = "  :الجنس ")]
-    [Required(ErrorMessage = "يجب إدخال جنس الفرد")]
+    [Display(Name = "Gender")]
+    [Required(ErrorMessage = "Field Gender is required")]
     public IndividualSex Sex { get; set; }
 
-    [Display(Name = " :العنوان ")]
-    [Required(ErrorMessage = "يجب إدخال العنوان ")]
+    [Display(Name = "Address")]
+    [Required(ErrorMessage = "Field Address is required")]
     public string Address { get; set; } = null!;
 
-    [Display(Name = "  :إسم العائلة")]
+    [Display(Name = "Family")]
+    [Required(ErrorMessage = "Field Family is required")]
     public FamilyDto Family { get; set; } = null!;
 
+    [Display(Name = "User")]
     public UserDto User { get; set; } = null!;
 }
