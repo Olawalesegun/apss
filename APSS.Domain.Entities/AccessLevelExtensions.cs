@@ -1,4 +1,8 @@
-﻿namespace APSS.Domain.Entities;
+﻿using System.Text.RegularExpressions;
+
+using APSS.Domain.Entities.Util;
+
+namespace APSS.Domain.Entities;
 
 public static class AccessLevelExtensions
 {
@@ -73,23 +77,19 @@ public static class AccessLevelExtensions
     }
 
     /// <summary>
-    /// Gets the roles representation of access level
+    /// Gets levels as an enumerable
     /// </summary>
     /// <param name="self"></param>
     /// <returns></returns>
-    public static string ToRolesString(this AccessLevel self)
+    public static IEnumerable<AccessLevel> AsEnumerable(this AccessLevel self)
     {
-        var roles = new List<string>();
-
-        for (var level = AccessLevel.Farmer; ; level = level.NextLevelUpove())
+        if (self == AccessLevel.Root)
         {
-            if (self.HasFlag(level))
-                roles.Add(level.ToString());
-
-            if (level == AccessLevel.Root)
-                break;
+            yield return self;
+            yield break;
         }
 
-        return String.Join(',', roles);
+        foreach (var level in self.GetSetValues())
+            yield return level;
     }
 }
