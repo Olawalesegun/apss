@@ -41,7 +41,7 @@
         <div class="col-sm-3 d-flex   justify-content-end">
             <a class=" btn btn-primary " role="button" asp-controller="Family" asp-action="AddFamily">
                 <i class="fa-solid fa-plus"></i>
-                إضافة عائلة
+                 Add Family
             </a>
         </div>
     </form>
@@ -54,10 +54,10 @@
 
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Name</th>
-                        <th style="width:20%;" class=" text-capitalize align-middle">Living Location</th>
-                        <th style="width:10%;" class=" text-capitalize align-middle">Users</th>
+                        <th style="width:8%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(f=>f.Id)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(f=>f.Name)</th>
+                        <th style="width:20%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(f=>f.LivingLocation)</th>
+                        <th style="width:10%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(f=>f.User)</th>
                         <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
                     </tr>
                 </thead>
@@ -82,16 +82,16 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" asp-controller="Family" asp-action="FamilyDetails" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>تفاصيل</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item" asp-controller="Family" asp-action="ConfirmDeleteFamily" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="Family" asp-action="FamilyDetails" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                        <li><a class="dropdown-item" asp-controller="Family" asp-action="ConfirmDeleteFamily" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li class="">
                                             <a class="dropdown-item" asp-controller="Individual" asp-action="AddIndividual" asp-route-Id="@item.Id">
-                                                <div class="d-flex justify-content-between"> <span>إضافة فرد</span>  <span><i class="fa-solid fa-user-plus"></i> </span> </div>
+                                                <div class="d-flex justify-content-between"> <span> Add Individual</span>  <span><i class="fa-solid fa-user-plus"></i> </span> </div>
                                             </a>
                                         </li>
                                         <li class="">
                                             <a class="dropdown-item" asp-controller="Family" asp-action="UpdateFamily" asp-route-Id="@item.Id">
-                                                <div class="d-flex justify-content-between"> <span> تحديث </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
+                                                <div class="d-flex justify-content-between"> <span> Edit </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
                                             </a>
                                         </li>
                                     </ul>

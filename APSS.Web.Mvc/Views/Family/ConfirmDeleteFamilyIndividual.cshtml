@@ -2,7 +2,7 @@
 
 <div class="card mt-2">
     <div class="card-body">
-        <div class="d-flex "><h5>تأكيد حذف فرد من العائلة</h5> </div>
+        <div class="d-flex "><h5> Confirm Delete for Family of Indiviudal</h5> </div>
         <table class="table user-view-table m-0  ">
             <tbody style="font-size:14px">
                 <tr class="">
@@ -29,10 +29,9 @@
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="Family" asp-action="DeleteFamilyIndividual">تأكيد</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-controller="Family" asp-action="GetFamilies">رجوع</a>
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="Family" asp-action="DeleteFamilyIndividual">Confirm</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="Family" asp-action="GetFamilies">Cancel</a>
         </div>
 
-        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
     </div>
 </div>
