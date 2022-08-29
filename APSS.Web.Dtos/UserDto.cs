@@ -8,31 +8,30 @@ public sealed class UserDto : BaseAuditbleDto
     /// <summary>
     /// Gets or stes the name of the user
     /// </summary>
-    [Required(ErrorMessage = "يجب ادخال اسم المنطقة")]
-    [Display(Name = "اسم المنطقة")]
+    [Required(ErrorMessage = "Area Name is Required")]
+    [Display(Name = "Area Name")]
     public string Name { get; set; } = null!;
 
     /// <summary>
     /// Gets or stes the access level of the user
     /// </summary>
-    [Required(ErrorMessage = "يجب اختبار مستوى الوصول ")]
-    [Display(Name = "مستوى الوصول")]
+    [Display(Name = "Access Level")]
     public AccessLevel AccessLevel { get; set; }
 
     /// <summary>
     /// Gets or sets the user status
     /// </summary>
 
-    [Display(Name = " نشط")]
+    [Display(Name = " Active")]
     public string? Active { get; set; }
 
-    [Display(Name = " غير نشط")]
+    [Display(Name = " Inactive")]
     public string? Inactive { get; set; }
 
-    [Display(Name = "موقف")]
+    [Display(Name = "Termint")]
     public string? Terminated { get; set; }
 
-    [Display(Name = " حالة المنطقة")]
+    [Display(Name = "Area Status")]
     public APSS.Domain.Entities.UserStatus userStatus { get; set; }
 
     /// <summary>

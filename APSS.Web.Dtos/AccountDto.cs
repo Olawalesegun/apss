@@ -13,42 +13,42 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the name of the peron who holds this account
         /// </summary>
-        [Required(ErrorMessage = "يجب ادخال اسم الموظف")]
-        [Display(Name = "اسم الموظف")]
+        [Required(ErrorMessage = "Employe Name is Required")]
+        [Display(Name = "Name")]
         public string HolderName { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the password hash of the user
         /// </summary>
-        [Required(ErrorMessage = "يجب ادخال كلمة السر")]
-        [Display(Name = "كلمة المرور")]
+        [Required(ErrorMessage = "Passwor is Required")]
+        [Display(Name = "Password")]
         public string PasswordHash { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the national id of the user
         /// </summary>
 
-        [Display(Name = "رقم البطاقة")]
+        [Display(Name = "Namtional Id")]
         public string? NationalId { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number of the user
         /// </summary>
 
-        [Display(Name = "رقم التلفون")]
+        [Display(Name = "Phoen Number ")]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the social status of the user
         /// </summary>
 
-        [Display(Name = "الحالة الاجتماعية")]
+        [Display(Name = "Social Status")]
         public SocialStatus SocialStatus { get; set; } = SocialStatus.Unspecified;
 
         /// <summary>
         /// Gets or sets the job of the user
         /// </summary>
-        [Display(Name = "الوظيفة")]
+        [Display(Name = "Job")]
         public string? Job { get; set; }
 
         /// <summary>
@@ -64,15 +64,16 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the permissions of the account
         /// </summary>
-
+        [Display(Name = "Permissions")]
         public PermissionType Permissions { get; set; }
+
         public long UserId { get; set; }
 
         /// <summary>
         /// Gets or set the current active status of the account
         /// </summary>
 
-        [Display(Name = "نشط")]
+        [Display(Name = "Active")]
         public bool IsActive { get; set; } = false;
     }
 }
