@@ -27,7 +27,14 @@ public static class ClaimsPrincipalExtensions
         => GetClaimValue(self, ClaimTypes.NameIdentifier);
 
     /// <summary>
-    /// Gets the roles from a claims principal
+    /// Gets the permissions from a claims principal
+    /// </summary>
+    public static PermissionType GetPermissions(this ClaimsPrincipal self)
+    {
+        return GetClaimValue(self, CustomClaims.Permissions).Split(',')
+            .Select(p => Enum.Parse<PermissionType>(p))
+            .Aggregate((lhs, rhs) => lhs | rhs);
+    }
     /// </summary>
     public static IEnumerable<string> Permissions(this ClaimsPrincipal self)
         => GetClaimValue(self, CustomClaims.Permissions).Split(',');
