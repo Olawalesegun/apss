@@ -35,6 +35,15 @@ public static class ClaimsPrincipalExtensions
             .Select(p => Enum.Parse<PermissionType>(p))
             .Aggregate((lhs, rhs) => lhs | rhs);
     }
+
+    /// <summary>
+    /// Gets the access level from a claims principal
+    /// </summary>
+    public static AccessLevel GetAccessLevel(this ClaimsPrincipal self)
+        => Enum.Parse<AccessLevel>(self.GetClaimValue(ClaimTypes.Role));
+
+    /// <summary>
+    /// Gets whether a user is in an access level or not
     /// </summary>
     public static IEnumerable<string> Permissions(this ClaimsPrincipal self)
         => GetClaimValue(self, CustomClaims.Permissions).Split(',');
