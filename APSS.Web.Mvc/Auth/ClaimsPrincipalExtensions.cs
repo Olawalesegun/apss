@@ -2,6 +2,8 @@
 
 using Microsoft.IdentityModel.Tokens;
 
+using APSS.Domain.Entities;
+
 namespace APSS.Web.Mvc.Auth;
 
 public static class ClaimsPrincipalExtensions
@@ -45,8 +47,11 @@ public static class ClaimsPrincipalExtensions
     /// <summary>
     /// Gets whether a user is in an access level or not
     /// </summary>
-    public static IEnumerable<string> Permissions(this ClaimsPrincipal self)
-        => GetClaimValue(self, CustomClaims.Permissions).Split(',');
+    /// <param name="self"></param>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public static bool IsInLevel(this ClaimsPrincipal self, AccessLevel level)
+        => self.IsInRole(Enum.GetName(level)!);
 
     #endregion Public Methods
 
@@ -59,7 +64,7 @@ public static class ClaimsPrincipalExtensions
     /// <param name="claimKey"></param>
     /// <returns></returns>
     /// <exception cref="SecurityTokenException"></exception>
-    private static string GetClaimValue(ClaimsPrincipal claims, string claimKey)
+    private static string GetClaimValue(this ClaimsPrincipal claims, string claimKey)
     {
         var value = claims.Claims.FirstOrDefault(c => c.Type == claimKey)?.Value;
 
