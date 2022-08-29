@@ -4,7 +4,7 @@
     <div class="row d-flex ">
         <div class="col-xl-7  col-md-9 col-12 border rounded shadow-sm  p-2">
             <div class="d-flex  justify-content-center pb-4 pt-4">
-                <div class=""> <h3 class="text-decoration-underline ">تحديث سؤال </h3></div>
+                <div class=""> <h3 class="text-decoration-underline ">Update Question  </h3></div>
             </div>
             <form class="" method="post" >
 
@@ -39,7 +39,7 @@
                         
                         <div class=" col-6" id="box1">
                             <div class=" form-group" id="">
-                            <label  class="form-label" > الإختيار  </label>
+                            <label  class="form-label" > Selection  </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
                         </div>
                         </div>
@@ -51,10 +51,10 @@
 
                 <div class="d-inline">
                 <button class="btn btn-primary mt-4 mx-1" asp-controller="Question" asp-action="EditQuestion"> 
-                    <i class="fa-solid fa-pen-to-square fa-lg mx-2"></i><span>تحديث</span> 
+                    <i class="fa-solid fa-pen-to-square fa-lg mx-2"></i><span>Edit</span> 
                 </button>
                 <button class="btn btn-danger mt-4 mx-1" asp-controller="Question" asp-action="GetQuestionsSurvey">
-                    <i class="fa-solid fa-share mx-2"></i><span>رجوع</span>
+                    <i class="fa-solid fa-share mx-2"></i><span>Cancel</span>
                 </button>
             </div>
 

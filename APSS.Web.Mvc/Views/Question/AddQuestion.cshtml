@@ -4,7 +4,7 @@
     <div class="row d-flex ">
         <div class="col-xl-7  col-md-9 col-12 border rounded shadow-sm  p-2">
             <div class="d-flex  justify-content-center pb-4 pt-4">
-                <div class=""> <h3 class="text-decoration-underline ">إضافة سؤال </h3></div>
+                <div class=""> <h3 class="text-decoration-underline "> Add Question </h3></div>
             </div>
             <form class="" method="post" asp-action="AddQuestion">
 
@@ -37,7 +37,7 @@
                         <!--1-->
                     <div class=" col-6" id="box1">
                         <div class=" form-group" id="">
-                            <label  class="form-label" >الإختيار الأول </label>
+                            <label  class="form-label" > Selection one </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
                         </div>
                     </div>
@@ -45,14 +45,14 @@
                     <!--2-->
                     <div class=" col-6" id="box2">
                         <div class=" form-group" id="">
-                            <label  class="form-label" >الإختيار الثاني </label>
+                            <label  class="form-label" >Selection Two </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
                         </div>
                     </div>
                          <!--3-->
                          <div class=" col-6" id="box3">
                         <div class=" form-group" id="">
-                            <label  class="form-label" >الإختيار الرابع </label>
+                            <label  class="form-label" >Selection three  </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" >
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                          <!--4-->
                     <div class=" col-6" id="box4">
                         <div class=" form-group" id="">
-                            <label  class="form-label" >الإختيار الرابع </label>
+                            <label  class="form-label" > Selection Four </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
                         </div>
                     </div>
@@ -68,28 +68,28 @@
                          <!--5-->
                     <div class=" col-6" id="box5">
                         <div class=" form-group" id="">
-                            <label  class="form-label" >الإختيار الخامس </label>
+                            <label  class="form-label" > Selection five </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
                         </div>
                     </div>
                          <!--6-->
                     <div class=" col-6" id="box6">
                         <div class=" form-group" id="">
-                            <label  class="form-label" >الإختيار السادس </label>
+                            <label  class="form-label" > Selection six </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
                         </div>
                     </div>
                          <!--7-->
                     <div class=" col-6" id="box7">
                         <div class=" form-group" id="">
-                            <label  class="form-label" >الإختيار السابع </label>
+                            <label  class="form-label" > Selection seven </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
                         </div>
                     </div>
                          <!--8-->
                     <div class=" col-6" id="box8">
                         <div class=" form-group" id="">
-                            <label  class="form-label" >الإختيار الثامن </label>
+                            <label  class="form-label" > Selection Eghit </label>
                             <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
                         </div>
                     </div>
@@ -99,7 +99,9 @@
                    </div>
 
                 <div class="mt-4"></div>
-                <button class="btn btn-primary" asp-action="AddQuestion" asp-controller="َQuestion"><i class="fa-solid fa-plus"></i>إضافة</button>
+                <button class="btn btn-primary" asp-action="AddQuestion" asp-controller="َQuestion"><i class="fa-solid fa-plus"></i>Add</button>
+               <button class="btn btn-danger mt-4 mx-1" asp-controller="Question" asp-action="GetQuestionsSurvey"><i class="fa-solid fa-share mx-2"></i><span>Cancel</span>  </button>
+
             </form>
         </div>
     </div>
