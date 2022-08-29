@@ -71,7 +71,7 @@ namespace APSS.Web.Mvc.Controllers
             var perm = new List<SelectListItem>();
             perm.Add(new SelectListItem { Text = "اختار الصلاحيات", Value = "" });
 
-            foreach (PermissionType permission in Enum.GetValues(typeof(PermissionType)))
+            /*foreach (PermissionType permission in Enum.GetValues(typeof(PermissionType)))
             {
                 perm.Add(new SelectListItem { Text = Enum.GetName(typeof(PermissionType), permission), Value = permission.ToString() });
             }
@@ -84,7 +84,7 @@ namespace APSS.Web.Mvc.Controllers
                 permision.Add(permission);
             }
 
-            ViewBag.permission = perm;
+            ViewBag.permission = perm;*/
 
             return View(account);
         }
@@ -141,18 +141,6 @@ namespace APSS.Web.Mvc.Controllers
         {
             var social = new List<SelectListItem>();
 
-            foreach (PermissionType socialState in Enum.GetValues(typeof(SocialStatus)))
-            {
-                social.Add(new SelectListItem { Text = Enum.GetName(typeof(SocialStatus), socialState), Value = socialState.ToString() });
-            }
-            ViewBag.socialstatus = social;
-            var perm = new List<SelectListItem>();
-
-            foreach (PermissionType permission in Enum.GetValues(typeof(PermissionType)))
-            {
-                perm.Add(new SelectListItem { Text = Enum.GetName(typeof(PermissionType), permission), Value = permission.ToString() });
-            }
-            ViewBag.permission = perm;
             var account = new AccountDto();
             return View(account);
         }
