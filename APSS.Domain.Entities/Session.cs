@@ -1,9 +1,9 @@
 ﻿namespace APSS.Domain.Entities;
 
 /// <summary>
-/// A class to represent a user refresh token
+/// A class to represent a user session
 /// </summary>
-public sealed class RefreshToken : AuditableEntity
+public sealed class Session : AuditableEntity
 {
     /// <summary>
     /// Gets or sets the last ip address that used the token
@@ -28,7 +28,7 @@ public sealed class RefreshToken : AuditableEntity
     /// <summary>
     /// Gets or sets the token string
     /// </summary>
-    public string Value { get; set; } = null!;
+    public string Token { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the expiration date of the token
