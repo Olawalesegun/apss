@@ -22,7 +22,7 @@ public class TokenValidationEvent : CookieAuthenticationEvents
             var id = long.Parse(accountPrincipal.Claims.First(c => c.Type == CustomClaims.Id).Value);
             var token = accountPrincipal.Claims.First(c => c.Type == CustomClaims.Token).Value;
 
-            if (string.IsNullOrEmpty(token) || !await _authSvc.IsTokenValidAsync(id, token, ""))
+            if (string.IsNullOrEmpty(token) || !await _authSvc.IsTokenValidAsync(id, token))
                 throw new Exception(); // to be changed!
         }
         catch (Exception)

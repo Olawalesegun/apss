@@ -1,11 +1,8 @@
-﻿using Microsoft.IdentityModel.Tokens;
-
-using APSS.Domain.Entities;
+﻿using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions;
 using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
-using APSS.Infrastructure.Services.Jwt;
 
 namespace APSS.Infrastructure.Services;
 
@@ -13,10 +10,11 @@ public sealed class JwtAuthService : IAuthService
 {
     #region Fields
 
+    private readonly TokenSettings _settings = new();
+
     private readonly ICryptoHashService _cryptoHashSvc;
     private readonly IRandomGeneratorService _rndSvc;
     private readonly IUnitOfWork _uow;
-    private readonly AuthSettings _settings = new();
 
     #endregion Fields
 
@@ -28,7 +26,7 @@ public sealed class JwtAuthService : IAuthService
         ICryptoHashService cryptoHashSvc,
         IUnitOfWork uow)
     {
-        configSvc.Bind(nameof(AuthSettings), _settings);
+        configSvc.Bind("TokenSettings", _settings);
 
         _rndSvc = rndSvc;
         _cryptoHashSvc = cryptoHashSvc;
@@ -40,10 +38,7 @@ public sealed class JwtAuthService : IAuthService
     #region Public Methods
 
     /// <inheritdoc/>
-    public async Task<(Account, RefreshToken)> SignInAsync(
-        long accountId,
-        string password,
-        LoginInfo info)
+    public async Task<(Account, RefreshToken)> SignInAsync(long accountId, string password, LoginInfo info)
     {
         var account = await _uow.Accounts.Query().FindOrNullAsync(accountId);
 
@@ -72,12 +67,12 @@ public sealed class JwtAuthService : IAuthService
         var refreshToken = new RefreshToken
         {
             Owner = account,
-            Value = JwtUtils.GenerateRefereshToken(_settings),
+            Value = _rndSvc.NextString(_settings.TokenLength),
             LastIpAddress = info.LastIpAddress,
             LastLogin = DateTime.Now,
             HostName = info.UserAgent,
             Agent = info.UserAgent,
-            ValidUntil = DateTime.Now.Add(_settings.RefreshTokenValidity),
+            ValidUntil = DateTime.Now.Add(_settings.ExpireTimeSpan),
         };
 
         _uow.RefreshTokens.Add(refreshToken);
@@ -87,14 +82,14 @@ public sealed class JwtAuthService : IAuthService
     }
 
     /// <inheritdoc/>
-    public async Task<bool> IsTokenValidAsync(long accountId, string token, string uniqueId)
+    public async Task<bool> IsTokenValidAsync(long accountId, string token)
         => await _uow.RefreshTokens.Query().AnyAsync(
             r => r.Owner.Id == accountId &&
             r.Value == token &&
             r.ValidUntil > DateTime.Now);
 
     /// <inheritdoc/>
-    public async Task SignOutAsync(long accountId, string token, string uniqueId)
+    public async Task SignOutAsync(long accountId, string token)
     {
         var refreshToken = await _uow.RefreshTokens.Query().FirstAsync(r =>
             r.Owner.Id == accountId &&
@@ -107,24 +102,24 @@ public sealed class JwtAuthService : IAuthService
     /// <inheritdoc/>
     public async Task<string> RefreshAsync(string refreshToken, string accessToken, string uniqueIdentifier)
     {
-        if (!JwtUtils.ValidateRefreshToken(refreshToken, _settings) ||
-            !JwtUtils.ValidateToken(accessToken,
-                                    _settings.TokenIssuer,
-                                    _settings.TokenAudience,
-                                    _settings.AccessTokenSecret,
-                                    false))
-        {
-            throw new SecurityTokenException("invalid refresh and/or access token");
-        }
-
-        var accessPrincipal = JwtUtils.GetPrincipalFromExpiredToken(accessToken, _settings);
-        var user = await _uow.Accounts.Query().FindAsync(accessPrincipal.GetId());
-
-        if (!await IsTokenValidAsync(user.Id, refreshToken, uniqueIdentifier))
-            throw new SecurityTokenException("invalid refresh token");
-
-        return JwtUtils.GenerateAccessToekn(user, _settings);
+        throw new NotImplementedException();
     }
+}
 
-    #endregion Public Methods
+public sealed class TokenSettings
+{
+    /// <summary>
+    /// Gets or sets the length of generated tokens
+    /// </summary>
+    public int TokenLength { get; set; }
+
+    /// <summary>
+    /// Gets or sets the maximum sessions count
+    /// </summary>
+    public int MaxSessionsCount { get; set; }
+
+    /// <summary>
+    /// Gets or sets the expiration time span of the token
+    /// </summary>
+    public TimeSpan ExpireTimeSpan { get; set; }
 }
