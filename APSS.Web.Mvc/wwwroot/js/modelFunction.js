@@ -80,26 +80,24 @@ function showPage() {
 
 $("#drops").on('click', function () {
     $('.rotate').toggleClass('down');
+    $('.drops').addClass('active');
 });
 
 $(document).ready(function () {
     $('.toast').toast('show');
     $("#myBtn").click(function () {
         $('.toast').toast({
-            delay: 10000,
+            delay: 5000,
             showNotification: true,
         });
     });
 });
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
     'use strict'
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.querySelectorAll('.needs-validation')
 
-    // Loop over them and prevent submission
     Array.prototype.slice.call(forms)
         .forEach(function (form) {
             form.addEventListener('submit', function (event) {
@@ -123,4 +121,8 @@ togglePassword.addEventListener('click', function (e) {
     password.setAttribute('type', type);
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
+});
+const page = document.querySelector('.page-link');
+page.addEventListener('click', function (e) {
+    this.addClass('active');
 });

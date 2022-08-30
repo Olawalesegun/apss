@@ -148,8 +148,8 @@ namespace APSS.Web.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> EditAccount(AccountDto account)
         {
-            TempData["Action"] = "الموظفين";
-            TempData["success"] = "تم تعديل الموظف بنجاح";
+            TempData["Action"] = "Employees";
+            TempData["success"] = "Edit Employee is succesfully";
 
             return RedirectToAction("Index");
         }
@@ -163,5 +163,49 @@ namespace APSS.Web.Mvc.Controllers
 
             return View(account);
         }
+    }
+}
+
+public class Pager
+{
+    public int TotalItem { get; private set; }
+    public int CorrentPage { get; private set; }
+    public int PagrSize { get; private set; }
+    public int TotalPages { get; set; }
+    public int StartPage { get; set; }
+    public int EndPage { get; set; }
+
+    public Pager()
+    {
+    }
+
+    public Pager(int totalItem, int page, int pageSize = 10)
+    {
+        int totalPage = (int)System.Math.Ceiling((decimal)totalItem / (decimal)pageSize);
+        int correntPage = page;
+
+        int startPage = correntPage - 5;
+        int endPage = correntPage + 4;
+
+        if (startPage < 0)
+        {
+            endPage = endPage - (startPage - 1);
+            startPage = 1;
+        }
+        if (endPage > totalPage)
+        {
+            endPage = totalPage;
+            if (endPage > pageSize)
+            {
+                startPage = endPage - 9;
+            }
+        }
+
+        TotalItem = totalItem;
+        CorrentPage = correntPage;
+        PagrSize = pageSize;
+        StartPage = startPage;
+        EndPage = endPage;
+        TotalPages = totalPage;
     }
 }
