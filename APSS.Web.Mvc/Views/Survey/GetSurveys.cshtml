@@ -1,74 +1,75 @@
 ﻿@model IEnumerable<APSS.Web.Dtos.SurveyDto>
 <partial name="_SurveyNavBar" />
 
-<!--table-->
+<div class="aling" id="loader"></div>
 
-<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
+<div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 " id="table">
 
-    <form class="row gx-3 gy-2 align-items-center mb-3 ">
-        <div class="col-sm-6">
-
+    <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="Survey" asp-action="GetSurveys" method="post">
+        <div class=" mb-3 col-sm  d-flex">
             <div class="input-group">
-                <a href="#" class="input-group-text text-decoration-none" style="background-color:#1B73B3">
-
-                    <i class="fal fa-search " style="color:white"></i>
-                </a>
-
-                <input type="text" class="form-control" id="search" placeholder="Search..." onkeyup="searchTable()">
-
-                <button class="btn btn-outline-secondary dropdown-toggle border border-black-100 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                </ul>
-            </div>
+            <button type="submit" class="btn btn-primary ">
+                <i class="fas fa-search"></i>
+            </button>
+            <input type="search" class="form-control" id="search" placeholder="Search..." name="searchString" onkeyup="searchTable()" />
         </div>
-        <div class="col-sm-2 ">
-            <label class="visually-hidden" for="searchby">Search By</label>
+        </div>
+        <div class="col-sm-2 col-lg-1 mb-2 ">
+
             <select class="form-select " id="searchby">
-                <option selected>Choose search by</option>
-                <option value="1">Name</option>
-                <option value="2">Id</option>
-                <option value="3">Address</option>
+                <option selected>20</option>
+                <option value="1">40</option>
+                <option value="2">80</option>
+                <option value="3">100</option>
             </select>
         </div>
-          <div class="col-sm-3 d-flex   justify-content-end">
-            <a class=" btn btn-primary " asp-action="AddSurvey" asp-controller="Survey">
+        <div class="col-sm mb-3 ">
+
+            <select class="form-select " id="searchby" name="searchBy">
+                <option selected>Search By </option>
+                <option value="1">@Html.DisplayNameFor(s=>s.Id)</option>
+                <option value="2">@Html.DisplayNameFor(s=>s.Name)</option>
+                <option value="3">@Html.DisplayNameFor(s=>s.ExpirationDate)</option>
+                <option value="4">@Html.DisplayNameFor(s=>s.CreatedBy)</option>
+            </select>
+        </div>
+        <div class="col-sm d-flex   d-inline mb-3   ">
+            <a class=" btn btn-primary " role="button" asp-controller="Survey" asp-action="AddSurvey">
                 <i class="fa-solid fa-plus"></i>
-               Add Survey 
+                Survey
             </a>
         </div>
     </form>
 
     <div class="col-sm-12  ">
 
-        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x ">
+        @if (ViewBag.SearchResult != null)
+        {
+            <span class="text-danger">@ViewBag.SearchResult</span>
+        }
 
-            <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
-
+        <div class=" mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar" id="">
+            <table class="table table-hover table-responsive table-bordered   table-striped  " id="sortTable">
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th style="width:8%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
+                        <th style="width:8%;"  class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
                         <th style="width:30%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
                         <th style="width:20%;" class=" text-capitalize align-middle"> @Html.DisplayNameFor(m=>m.ExpirationDate)</th>
                         <th style="width:20%;" class=" text-capitalize align-middle"> @Html.DisplayNameFor(m=>m.CreatedBy)</th>
                         <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
                     </tr>
-                </thead>
+                <thead class="table-light">
                 <tbody>
                     @foreach (var item in Model)
                     {
                         
                     
-                    <tr class="align-top">
+                    <tr>
                         
-                        <td class="text-break text-capitalize align-middle">@item.Id</td>
-                        <td class="text-break text-capitalize align-middle"> @item.Name</td>
-                        <td class="text-break text-capitalize align-middle">@item.ExpirationDate</td>
-                        <td class="text-break text-capitalize align-middle">@item.CreatedBy</td>
+                        <td class="fw-bold align-middle">@item.Id</td>
+                        <td class="fw-bold align-middle"> @item.Name</td>
+                        <td class="fw-bold align-middle">@item.ExpirationDate</td>
+                        <td class="fw-bold align-middle">@item.CreatedBy</td>
                         
                         <td class="align-middle center">
 
@@ -97,23 +98,20 @@
             </table>
         </div>
     </div>
-    <nav aria-label="Page navigation example" class="float-left pl-5">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+      <div class="d-flex container justify-content-center">
+        <div class=" col-sm-12 px-sm-2 col-lg-4 col-md-4">
+            <ul class="pagination d-flex justify-content-between">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 
@@ -124,8 +122,8 @@
     $(".sidebar ul li.active").removeClass('active');
     $("#surveyManagement").addClass('active');
     });
-    document.getElementById("nav-system-name").innerHTML="إدارة الإستبيان";
-    document.getElementById("media-system-name").innerHTML="إدارة الإستبيان ";
+    document.getElementById("nav-system-name").innerHTML="Survey Management";
+    document.getElementById("media-system-name").innerHTML="Survey Management ";
    
     $("#surveys").AddClass('actives');
     $("#surveysEntry").removeClass('actives');
