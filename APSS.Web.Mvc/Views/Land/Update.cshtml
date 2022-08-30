@@ -1,69 +1,110 @@
 ﻿@model APSS.Web.Dtos.LandDto
 <div class="container-fluid">
-    <div class="d-flex">
-        <form class=" mt-3 align-items-center " method="post" asp-controller="Land" asp-action="Update">
-            <div class="d-flex justify-content-center">
-                <h5 class="">تعديل بيانات الارض</h5>
+    <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
+        <form class=" mt-3 align-items-center needs-validation" method="post" asp-action="Update" novalidate>
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Update land
+                </h3>
             </div>
-            <div class="form-outline mb-4">
-                <input type="text" asp-for="Name" class="form-control" />
-                <label class="form-label" asp-for="Name"></label>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="text" asp-for="Name" class="form-control" placeholder=" " />
+                        <label class="form-label" asp-for="Name"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-outline mb-4">
-                <input type="number" asp-for="Area" class="form-control" />
-                <label class="form-label" asp-for="Area"></label>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="number" asp-for="Area" class="form-control" placeholder="" />
+                        <label class="form-label" asp-for="Area"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Area"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- Text input for longitude-->
-            <div class="form-outline  mb-4">
-                <input type="number" asp-for="Longitude" class="form-control" />
-                <label class="form-label" asp-for="Longitude"></label>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="number" asp-for="Longitude" class="form-control" placeholder="" />
+                        <label class="form-label" asp-for="Longitude"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Longitude"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- Text input for latitude-->
-            <div class="form-outline mb-4">
-                <input type="number" asp-for="Latitude" class="form-control" />
-                <label class="form-label" asp-for="Latitude"></label>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="number" asp-for="Latitude" class="form-control" placeholder="" />
+                        <label class="form-label" asp-for="Latitude"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Latitude"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Text input address-->
-            <div class="form-outline mb-4">
-                <input type="text" asp-for="Address" class="form-control" />
-                <label class="form-label" asp-for="Address"></label>
-            </div>            <!-- IsUsable input -->
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="text" asp-for="Address" class="form-control" placeholder="" />
+                        <label class="form-label" asp-for="Address"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Address"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- IsUsable input -->
             <div class="form-check-inline">
 
-                <h5 class="inline"><label asp-for="IsUsable"></label></h5>
+                <h5 class="inline"><label asp-for="IsUsed"></label></h5>
             </div>
             <div class="form-check form-check-inline">
 
-                <input class="form-check-input hiden" type="radio" asp-for="IsUsable " value=true />
-                <label class="form-check-label" asp-for="IsUsable">نعم</label>
+                <input class="form-check-input hiden" type="radio" value="true" checked />
+                <label class="form-check-label" asp-for="IsUsed">Yes</label>
             </div>
 
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" asp-for="IsUsable" value=false />
-                <label class="form-check-label" asp-for="IsUsable"> لا </label>
+                <input class="form-check-input" type="radio" value="false" />
+                <label class="form-check-label" asp-for="IsUsed"> No </label>
             </div>
 
             <br />
             <!-- IsUsed input -->
             <div class="form-check-inline">
 
-                <h5 class="inline"> <label asp-for="IsUsed"></label> </h5>
+                <h5 class="inline"> <label asp-for="IsUsable"> </label> </h5>
             </div>
             <div class="form-check form-check-inline">
 
-                <input class="form-check-input hiden" type="radio" asp-for="IsUsed" value="true" />
-                <label class="form-check-label" asp-for="IsUsed">نعم</label>
+                <input class="form-check-input hiden" type="radio" asp-for="IsUsable" value="true" checked />
+                <label class="form-check-label" asp-for="IsUsable">Yes</label>
             </div>
 
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" value="false" asp-for="IsUsed" />
-                <label class="form-check-label" asp-for="IsUsed"> لا </label>
+                <input class="form-check-input" type="radio" asp-for="IsUsable" value="false" />
+                <label class="form-check-label" asp-for="IsUsable"> No </label>
             </div>
-            <br />
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary  mt-4 ">اضافة</button>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary btn-block">Update</button>
+            </div>
         </form>
     </div>
 </div>

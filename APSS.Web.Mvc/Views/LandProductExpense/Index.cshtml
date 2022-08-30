@@ -1,24 +1,30 @@
 ﻿@model IEnumerable<APSS.Web.Dtos.ProductExpenseDto>
-@await Html.PartialAsync("_dataNavBar")
-<div class="container-fluid  border p-2  col-ms-12  mt-0  rounded ml-2 " id="">
+<partial name="_dataNavBar" />
+<div class="aling" id="loader"></div>
 
-    <form class="row gx-3 gy-2 align-items-center mb-3 ">
-        <div class="col-sm-6">
-            <label class="visually-hidden" for="search"></label>
+<div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 needs-validation " id="table">
+    <form class="row d-flex justify-content-between  d-inline mb-3 ">
+        <div class=" mb-3 col-sm  d-flex">
             <div class="input-group">
-                <a href="#" class="input-group-text " style="background-color:#1B73B3">
-                    <div class=" ">
-                        <i class="fal fa-search" style="color:white"></i>
-                    </div>
-                </a>
-                <input type="text" class="form-control" placeholder="بحث ..." id="search" onkeyup="searchTable()">
-                <!-- <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"> -->
+                <button type="submit" class="btn btn-primary ">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input type="search" class="form-control" id="search" placeholder="Search..." name="searchString" onkeyup="searchTable()" required />
             </div>
         </div>
-        <div class="col-sm-2">
-            <label class="visually-hidden" for="specificSizeSelect">Search By</label>
-            <select class="form-select" id="specificSizeSelect">
-                <option selected>إختر طريقة البحث</option>
+        <div class="col-sm-2 col-lg-1 mb-2 ">
+
+            <select class="form-select " id="searchby">
+                <option selected>20</option>
+                <option value="1">40</option>
+                <option value="2">80</option>
+                <option value="3">100</option>
+            </select>
+        </div>
+        <div class="col-sm mb-3 ">
+
+            <select class="form-select " id="searchby" name="searchBy">
+                <option selected>Search By</option>
                 <option value="1">@Html.DisplayNameFor(t => t.Type)</option>
                 <option value="2">@Html.DisplayNameFor(i => i.Id)</option>
                 <option value="3">@Html.DisplayNameFor(p => p.Price)</option>
@@ -28,17 +34,15 @@
 
     <div class="col-sm-12  ">
 
-        <div class="container mt-3 bg-light table-responsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
-
-            <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
+        <div class=" mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar" id="">
+            <table class="table table-hover table-responsive table-bordered   table-striped  " id="sortTable">
 
                 <thead>
-                    <tr class="header">
-                        <th style="width:10%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(i => i.Id)</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(t => t.Type)</th>
-                        <th style="width:30%;" class=" text-capitalize align-middle">@Html.DisplayNameFor(p => p.Price)</th>
-                        @*<th style="width:20%;" class=" text-capitalize align-middle">Spent On</th>*@
-                        <th style="width:5%;" class=" text-capitalize align-middle">خيارات</th>
+                    <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(i => i.Id)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(t => t.Type)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.Price)</th>
+                        <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +52,6 @@
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
                             <td class="text-break text-capitalize align-middle">@item.Type</td>
                             <td class="text-break text-capitalize align-middle">@item.Price</td>
-                            @*<td class="text-break text-capitalize align-middle">@item.SpentOn.</td>*@
                             <td class="align-middle center">
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"
@@ -56,10 +59,9 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Details" asp-route-id="@item.Id">التفاصيل</a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Update" asp-route-id="@item.Id">تعديل</a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Delete" asp-route-id="@item.Id">حذف</a></li>
-                                        <li><a class="dropdown-item" href="#">تفعيل /إلغاء</a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Details" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     </ul>
                                 </div>
                             </td>
