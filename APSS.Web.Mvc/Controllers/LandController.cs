@@ -30,18 +30,24 @@ namespace APSS.Web.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add(LandDto newLand)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                return View();
+                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
+            //try
+            //{
+            //    if (ModelState.IsValid)
+            //    {
+            //        return RedirectToAction(nameof(Index));
+            //    }
+            //    return View();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
         public ActionResult Details(long Id)
