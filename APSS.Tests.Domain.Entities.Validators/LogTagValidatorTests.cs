@@ -1,8 +1,9 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -12,6 +13,7 @@ public class LogTagValidatorTests
     #region Private fields
 
     private readonly LogTagValidator _validator = new();
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
 
@@ -22,7 +24,7 @@ public class LogTagValidatorTests
     {
         var logTag = new LogTag
         {
-            Value = RandomGenerator.NextString(0xff)
+            Value = _rndSvc.NextString(0xff)
         };
 
         Assert.IsTrue(_validator.Validate(logTag).IsValid);

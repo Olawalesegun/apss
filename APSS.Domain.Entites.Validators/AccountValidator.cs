@@ -20,5 +20,13 @@ public sealed class AccountValidator : Validator<Account>
             .NotEmpty()
             .When(u => u.NationalId is not null)
             .WithMessage("account national ID cannot be empty");
+
+        RuleFor(u => u.PasswordHash)
+            .NotEmpty()
+            .WithMessage("account password hash cannot be empty");
+
+        RuleFor(u => u.HolderName)
+            .NotEmpty()
+            .WithMessage("account password salt cannot be empty");
     }
 }

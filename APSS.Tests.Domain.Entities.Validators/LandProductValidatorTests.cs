@@ -1,8 +1,10 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -12,6 +14,7 @@ public class LandProductValidatorTests
     #region Private fields
 
     private readonly LandProductValidator _validator = new();
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
 
@@ -22,9 +25,9 @@ public class LandProductValidatorTests
     {
         var landProduct = new LandProduct
         {
-            CropName = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
-            HarvestStart = System.DateTime.Now ,
+            CropName = _rndSvc.NextString(0xff),
+            Quantity = _rndSvc.NextInt32(1),
+            HarvestStart = System.DateTime.Now,
             HarvestEnd = System.DateTime.Now.AddHours(2),
         };
 

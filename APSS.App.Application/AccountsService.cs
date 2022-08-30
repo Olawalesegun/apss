@@ -1,10 +1,9 @@
-﻿using APSS.Domain.Entities;
+﻿using System.Text;
+
+using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions;
 using APSS.Domain.Services;
-
-using System.Security.Cryptography;
-using System.Text;
 
 namespace APSS.Application.App;
 
@@ -12,7 +11,11 @@ public sealed class AccountsService : IAccountsService
 {
     #region Fields
 
+    private const int PASSWORD_SALT_LENGTH = 0x7F;
+
+    private readonly ICryptoHashService _cryptoHashSvc;
     private readonly IPermissionsService _permissionsSvc;
+    private readonly IRandomGeneratorService _rndSvc;
     private readonly IUnitOfWork _uow;
 
     #endregion Fields
@@ -23,8 +26,14 @@ public sealed class AccountsService : IAccountsService
     /// Default constructor
     /// </summary>
     /// <param name="permissionsSvc">The permissions managment service</param>
-    public AccountsService(IUnitOfWork uow, IPermissionsService permissionsSvc)
+    public AccountsService(
+        IRandomGeneratorService rndSvc,
+        ICryptoHashService cryptoHashSvc,
+        IUnitOfWork uow,
+        IPermissionsService permissionsSvc)
     {
+        _rndSvc = rndSvc;
+        _cryptoHashSvc = cryptoHashSvc;
         _uow = uow;
         _permissionsSvc = permissionsSvc;
     }
@@ -32,20 +41,6 @@ public sealed class AccountsService : IAccountsService
     #endregion Public Constructors
 
     #region Public Methods
-
-    /// <summary>
-    /// Computes the sha256 hash of a string
-    /// </summary>
-    /// <param name="password">The password to hash</param>
-    /// <returns>The hash</returns>
-    public static string HashPassword(string password)
-    {
-        using var sha256 = SHA256.Create();
-
-        var hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-        return String.Join(string.Empty, hashBytes.Select(b => b.ToString("x2")));
-    }
 
     /// <inheritdoc/>
     public async Task<Account> CreateAsync(
@@ -56,23 +51,22 @@ public sealed class AccountsService : IAccountsService
         PermissionType permissions)
     {
         var superAccount = await _permissionsSvc
-            .ValidatePermissionsAsync(superUserAccountId, userId, PermissionType.Create);
+            .ValidatePermissionsAsync(superUserAccountId, userId, PermissionType.Create | permissions);
 
         var user = await _uow.Users.Query().FindAsync(userId);
 
-        var account = new Account
-        {
-            User = user,
-            HolderName = holderName,
-            PasswordHash = HashPassword(password),
-            Permissions = permissions,
-            AddedBy = superAccount.User,
-        };
+        return await DoCreateAsync(user, superAccount.User, holderName, password, permissions);
+    }
 
-        _uow.Accounts.Add(account);
-        await _uow.CommitAsync();
-
-        return account;
+    /// <inheritdoc/>
+    public Task<Account> CreateUncheckedAsync(
+        User owner,
+        string holderName,
+        string password,
+        PermissionType permissions,
+        IAsyncDatabaseTransaction? tx)
+    {
+        return DoCreateAsync(owner, owner, holderName, password, permissions, tx);
     }
 
     /// <inheritdoc/>
@@ -118,4 +112,36 @@ public sealed class AccountsService : IAccountsService
     }
 
     #endregion Public Methods
+
+    #region Private Methods
+
+    private async Task<Account> DoCreateAsync(
+        User owner,
+        User addedBy,
+        string holderName,
+        string password,
+        PermissionType permissions,
+        IAsyncDatabaseTransaction? tx = null)
+    {
+        var passwordSalt = _rndSvc.NextBytes(PASSWORD_SALT_LENGTH).ToArray();
+        var passwordHash = await _cryptoHashSvc.HashAsync(Encoding.UTF8.GetBytes(password), passwordSalt);
+
+        var account = new Account
+        {
+            User = owner,
+            HolderName = holderName,
+            PasswordHash = Convert.ToBase64String(passwordHash),
+            PasswordSalt = Convert.ToBase64String(passwordSalt),
+            Permissions = permissions,
+            AddedBy = addedBy,
+        };
+
+        _uow.Accounts.Add(account);
+
+        await _uow.CommitAsync(tx);
+
+        return account;
+    }
+
+    #endregion Private Methods
 }
