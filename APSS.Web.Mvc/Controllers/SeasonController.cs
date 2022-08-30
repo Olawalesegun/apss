@@ -99,7 +99,15 @@ namespace APSS.Web.Mvc.Controllers
         // GET: SeasonController/Get Season
         public ActionResult GetSeason(long Id)
         {
-            return View();
+            var seasonList = new List<SeasonDto>
+            {
+                new SeasonDto { Id = 1, Name ="Season1", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 2, Name ="Season2", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 3, Name ="Season3", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+                new SeasonDto { Id = 4, Name ="Season4", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
+            };
+
+            return View(seasonList.Where(i => i.Id == Id).First());
         }
     }
 }

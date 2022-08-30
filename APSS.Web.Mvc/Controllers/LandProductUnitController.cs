@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APSS.Web.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers
 {
@@ -6,7 +7,14 @@ namespace APSS.Web.Mvc.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var unitList = new List<LandProductUnitDto>
+            {
+                new LandProductUnitDto{Id=1, Name ="unit1", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=2, Name ="unit2", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=3, Name ="unit3", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=4, Name ="unit4", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+            };
+            return View(unitList);
         }
 
         // GET: LandProductUnitController/Add a new LandProductUnit
@@ -18,7 +26,7 @@ namespace APSS.Web.Mvc.Controllers
         // POST: LandProductUnitController/Add a new LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(IFormCollection collection)
+        public ActionResult Add(LandProductUnitDto landProductUnit)
         {
             try
             {
@@ -31,15 +39,22 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: LandProductUnitController/Update LandProductUnit
-        public ActionResult Update(long landProductUnitId)
+        public ActionResult Update(long Id)
         {
-            return View();
+            var unitList = new List<LandProductUnitDto>
+            {
+                new LandProductUnitDto{Id=1, Name ="unit1", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=2, Name ="unit2", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=3, Name ="unit3", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=4, Name ="unit4", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+            };
+            return View(unitList.Where(i => i.Id == Id).First());
         }
 
         // POST: LandProductUnit/Update LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(long landProductUnitId, IFormCollection collection)
+        public ActionResult Update(LandProductUnitDto landProductUnit)
         {
             try
             {
@@ -52,15 +67,22 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: LandProductUnitController/Delete  LandProductUnit
-        public ActionResult Delete(long landProductUnitId)
+        public ActionResult Delete(long Id)
         {
-            return View();
+            var unitList = new List<LandProductUnitDto>
+            {
+                new LandProductUnitDto{Id=1, Name ="unit1", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=2, Name ="unit2", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=3, Name ="unit3", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=4, Name ="unit4", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+            };
+            return View(unitList.Where(i => i.Id == Id).First());
         }
 
         // POST: LandProductUnitController/Delete LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(long landProductUnitId, IFormCollection collection)
+        public ActionResult Delete(LandProductUnitDto landProductUnit)
         {
             try
             {
@@ -73,31 +95,16 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: LandProductUnitController/Get LandProductUnit
-        public ActionResult GetLandProductUnit(long landProductUnitId)
+        public ActionResult GetLandProductUnit(long Id)
         {
-            return View();
-        }
-
-        // POST: LandProductUnitController/Get LandProductUnit
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetLandProductUnit(long landProductUnitId, IFormCollection collection)
-        {
-            return View();
-        }
-
-        // GET: LandProductUnitController/Get LandProductUnits
-        public ActionResult GetLandProductUnits()
-        {
-            return View();
-        }
-
-        // POST: LandProductUnitController/Get LandProductUnits
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetLandProductUnits(IFormCollection collection)
-        {
-            return View();
+            var unitList = new List<LandProductUnitDto>
+            {
+                new LandProductUnitDto{Id=1, Name ="unit1", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=2, Name ="unit2", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=3, Name ="unit3", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+                new LandProductUnitDto{Id=4, Name ="unit4", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
+            };
+            return View(unitList.Where(i => i.Id == Id).First());
         }
     }
 }
