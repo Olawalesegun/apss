@@ -12,7 +12,7 @@ public sealed class RefreshTokenValidator : Validator<RefreshToken>
     /// </summary>
     public RefreshTokenValidator()
     {
-        RuleFor(r => r.Token)
+        RuleFor(r => r.Value)
             .NotEmpty()
             .WithMessage("the token cannot be empty");
 

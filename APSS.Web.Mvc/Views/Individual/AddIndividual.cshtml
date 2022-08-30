@@ -1,0 +1,68 @@
+﻿@using static APSS.Web.Dtos.IndividualDto
+@model APSS.Web.Dtos.IndividualDto
+
+<div class="container-fluid px-3 py-3  mx-4 my-1">
+    <div class="col-sm-6">
+        <div class="d-flex justify-content-center">
+            <h4 >اضافة فرد</h4>
+        </div>
+        <form class=" mt-3 " method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-4">
+                <!-- Text input for individual name-->
+                <div class="mt-4">
+                    <span class="text-danger">*</span>
+                    <label class="form-label" asp-for="Name"></label>
+                    <input type="text" id="individual_name" asp-for="Name" class="form-control" />
+                </div>
+                <span asp-validation-for="Name" class="text-danger "></span>
+
+                <!-- Text input for Address -->
+                <div class="mt-4">
+                    <span class="text-danger">*</span>
+                    <label class="form-label" for="individual_Address" asp-for="Address"></label>
+                    <input type="text" id="individual_Address" class="form-control" asp-for="Address" />
+                </div>
+                <span asp-validation-for="Address" class="text-danger"></span>
+
+                <!-- Text input for Family -->
+                <div>
+                <div class=" mt-4">
+                    <span class="text-danger">*</span>
+                    <label class="form-label" asp-for="Family"></label>
+                    <input class="form-control" type="text" value="@Model.Family.Name" asp-for="Family">
+                </div>
+                <span asp-validation-for="Family.Name" class="text-danger"></span>
+                </div>
+                <!-- Gender input -->
+                <!-- Gender input -->
+            <div class="form-check-inline mt-3">
+                <span class="text-danger">*</span>
+                <label asp-for="Sex"></label>
+            @foreach (var value in Enum.GetValues(typeof(SexDto)))
+            {
+                @if (value.ToString() == SexDto.Female.ToString())
+                {
+                    <div class="mx-4 d-inline">
+                    @Html.RadioButtonFor(m=>m.Sex,value,Model.Sex)
+                    <label>أنثى</label>
+                    </div>
+                }
+                else
+                {  
+                    <div class="mx-4 d-inline">
+                    @Html.RadioButtonFor(m=>m.Sex,value,Model.Sex)
+                    <label class="">ذكر</label>
+                    </div>
+                }
+            }
+            </div>
+            <span asp-validation-for="Sex" class="text-danger"></span>
+            </div>
+            <div >
+                <button class="btn btn-primary mt-4 mx-1" asp-route-Id="@Model.Family.Id" asp-controller="Individual" asp-action="AddIndividual"> <i class="fa-solid fa-plus mx-2"></i><span>إضافة</span>  </button>
+                <button class="btn btn-danger mt-4 mx-1" asp-controller="Individual" asp-action="GetIndividuals"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+            </div>
+        </form>
+    </div>
+</div>

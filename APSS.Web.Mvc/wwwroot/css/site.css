@@ -12,11 +12,35 @@ html, body {
     height: 100%;
 }
 
+.form-control.input-validation-error {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.valid, .was-validated .form-control:valid {
+    border-color: #198754;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+input[type="text"], input[type="password"], input[type="tel"], input[type="search"],
+input {
+    background-color: none !important;
+}
+
 #side_nav {
     background-color: #F3F4F4;
-    min-width: 280px;
-    max-width: 280px;
+    min-width: 270px;
+    max-width: 270px;
     transition: all 0.5s;
+    width: 270px;
 }
 
 .familyicon {
@@ -78,7 +102,7 @@ hr.h-color {
 
 @media(max-width:768px) {
     #side_nav {
-        margin-left: -280px;
+        margin-right: -270px;
         min-height: 100vh;
         z-index: 1;
     }
@@ -99,7 +123,7 @@ hr.h-color {
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
     #side_nav {
-        margin-left: 0 !important;
+        margin-right: 0;
         min-height: 100vh;
         z-index: 1;
     }
@@ -164,6 +188,30 @@ hr.h-color {
     display: block;
     color: red;
 }
+
+#maintContent {
+}
+/* input[type="text"], input[type="number"],input[type="tel"],input[type="password"]{
+    background-color: #F8F8F8 !important;
+    border: 1px #829AB1 solid  !important;
+} */
+/* input[type="number"]{
+    background-color: #F8F8F8 !important;
+    border: 1px #829AB1 solid  !important;
+}
+input[type="tel"]{
+    background-color: #F3F4F4 !important;
+    border: 1px #829AB1 solid  !important;
+}
+input[type="password"]{
+    background-color: #F8F8F8 !important;
+    border: 1px #829AB1 solid  !important;
+} */
+
+/* select{
+    background-color: #F3F4F4 !important;
+    border: 1px #829AB1 solid  !important;
+} */
 
 /* thable style */
 .my-custom-scrollbar {
@@ -321,10 +369,17 @@ nav ul li div a {
 }
 
     .rotate.down {
-        -moz-transform: rotate(90deg);
-        -webkit-transform: rotate(90deg);
-        transform: rotate(90deg);
+        -moz-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
     }
+
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+}
 
 .sidebarSystem {
     overflow-y: auto;
@@ -517,6 +572,10 @@ div.scrollmenu a {
     }
 }
 
+input[type="search"] {
+    border-radius: 3px 0 0 3px
+}
+
 .confirm-data {
     border-right: 3px red solid !important;
     border-left: 3px red solid !important;
@@ -555,8 +614,9 @@ a.btn-link {
 }
 
 .search-btn {
+    border-radius: 0 3px 3px 0;
 }
 
-.active {
-    margin-left: 0 !important;
+.form-floating input {
+    background-color: rgba(255,255,255,0.3) !important;
 }

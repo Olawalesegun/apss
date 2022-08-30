@@ -1,0 +1,54 @@
+﻿@model IEnumerable<APSS.Web.Dtos.VoluntaryDto>
+@{
+    ViewData["Title"] = "Voluntary";
+}
+<div class="col-sm-12  ">
+
+        <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x ">
+
+            <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
+
+                <thead>
+                    <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
+                        <th style="width:8%;" class=" text-capitalize align-middle">الرقم</th>
+                        <th style="width:30%;" class=" text-capitalize align-middle">إسم التطوع</th>                     
+                        <th style="width:30%;" class=" text-capitalize align-middle">المتطوع</th>                     
+                        <th style="width:30%;" class=" text-capitalize align-middle">مجال التطوع</th>
+                        <th style="width:0%;" class=" text-capitalize align-middle">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr class="align-top">
+                        <td class="text-break text-capitalize align-middle">@item.Id</td>
+                        <td class="text-break text-capitalize align-middle">@item.Name</td>
+                        <td class="text-break text-capitalize align-middle">@item.Individual</td>
+                        <td class="text-break text-capitalize align-middle">@item.Field</td>
+                        <td class="align-middle center">
+
+                            <div class=" dropend">
+                                <a class="" role="button" id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" asp-controller="Voluntary" asp-action="ConfirmDeleteVoluntary" asp-route-Id="@item.Id">
+                                        <div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span>
+                                            </div></a></li>
+                                        <li class="">
+                                        <a class="dropdown-item" asp-action="UpdateVoluntary" asp-route-Id="@item.Id">
+                                        <div class="d-flex justify-content-between"> <span>تحديث</span>  <span>
+                                            <i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
