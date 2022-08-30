@@ -1,54 +1,73 @@
-﻿@model APSS.Web.Dtos.SurveyDto;
-@{
-    ViewData["Title"] = "Information Survey ";
-}
+﻿@model APSS.Web.Dtos.SurveyDto
+    @await Html.PartialAsync("_SurveyNavBar")
 
 <div class="card mt-2">
+    <div class="d-inline">
+    </div>
     <div class="card-body">
-        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:4px"></i> <h3>معلومات الإستبيان</h3></div>
+        <div class="d-flex ">
 
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Survey Information </h3>
+        </div>
         <table class="table user-view-table m-0 t ">
-            <tbody style="font-size:14px">
-                  <tr class="">
-                      <th>@Html.DisplayNameFor(s=>s.Id)</th>
-                    <td>@Model.Id</td>
+            <tbody>
+                <tr class="">
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.Id)</label></td>
+                    <td>@Model.Id </td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(s=>s.Name)</th>
-                    <td> @Model.Name</td>
+                    <td> <label>@Html.DisplayNameFor(m => m.Name);</label></td>
+                    <td>@Model.Name  </td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(s=>s.ExpirationDate)</th>
-                    <td>@Model.ExpirationDate</td>
-                </tr>
-                 <tr>
-                    <th> @Html.DisplayNameFor(s=>s.IsActive)</th>
-                    <td> @Model.IsActive</td>
+                    <td><label>@Html.DisplayNameFor(m => m.ExpirationDate)</label>  </td>
+                    <td> @Model.ExpirationDate </td>
                 </tr>
                 <tr>
-                    <th> @Html.DisplayNameFor(s=>s.CreatedBy)</th>
-                    <td> @Model.CreatedBy</td>
+                    <td><label>@Html.DisplayNameFor(m => m.IsActive)</label>  </td>
+                    <td> @Model.IsActive </td>
                 </tr>
-                 <tr>
-                    <th> @Html.DisplayNameFor(s=>s.CreatedAt)</th>
-                    <td>  @Model.CreatedAt</td>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.CreatedBy)</label>  </td>
+                    <td> @Model.CreatedBy.Name </td>
                 </tr>
-                 <tr>
-                    <th>@Html.DisplayNameFor(s=>s.ModifiedAt) </th>
-                    <td>@Model.ModifiedAt </td>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>
+                    <td>
+                        @Model.CreatedAt
+                    </td>
                 </tr>
-              
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.ModifiedAt)</label>  </td>
+                    <td>
+                        @Model.ModifiedAt
+                    </td>
+                </tr>
+                <tr></tr>
             </tbody>
         </table>
-        
-         <div cllass="d-inline pt-2">
-            <a class="btn btn-primary-danger btn-rounded  text-primary mx-1 pr-1 my-2 " asp-controller="Survey" asp-action="UpdateSurvey" > <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
-            <a class="btn  btn-link-danger btn-rounded text-danger mx-1 my-2 " asp-controller="Survey" asp-action="ConfirmDeleteSurvey" > <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
-            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Question" asp-action="AddQuestion" ><i class="fa-solid fa-plus mx-1 lg"></i><span class=""> Add Question </span> </a>
-            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Survey" asp-action="GetQuestion"><i class="fa-solid fa-angle-down mx-1 lg"></i><span class="">Questions </span> </a>
-            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="SurveyEntry" asp-action="GetSurveyEntries" ><i class="fa-solid fa-angle-down mx-1 lg"></i><span class=""> Survey Entries  </span> </a>
-            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1 " asp-controller="" asp-action=""><i class="fa-solid fa-share px-1"></i><span class="">Cancel </span> </a>
+        <br />
+        <div cllass="d-inline pt-2">
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Question" asp-action="AddQuestion"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Question</span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Survey" asp-action="EditSurvey"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
+            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="Family" asp-action="ConfirmDeleteSurvey" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
+            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="Question" asp-action="GetSurveyQuestions"><span class="">Questions </span> </a>
+            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="SurveyEntry" asp-action="GetSurveyEntries"><span class="">Entries </span> </a>
         </div>
     </div>
-    <hr class="border-light m-0">
 </div>
+
+@section scripts{
+<script>
+          $(document).ready(function() {
+            $(".sidebar ul li.active").removeClass('active');
+            $("#populationManagement").addClass('active');
+        });
+        document.getElementById("nav-system-name").innerHTML = "Populatoin Management";
+        document.getElementById("media-system-name").innerHTML = "Populatoin Management";
+
+        $("#survey").AddClass('actives');
+        $("#surveyentry").removeClass('actives');
+</script>
+}
