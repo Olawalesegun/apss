@@ -4,61 +4,61 @@ namespace APSS.Web.Dtos;
 
 public class LandProductDto : ProductDto
 {
-    [Display(Name = "طريقة التخزين")]
+    [Display(Name = "Storing Method")]
     public string StoringMethod { get; set; } = null!;
 
-    [Display(Name = "وحدة المنتج")]
+    [Display(Name = "Unit")]
     public LandProductUnitDto Unit { get; set; } = new LandProductUnitDto();
 
     public IEnumerable<LandProductUnitDto> Units { get; set; } = new List<LandProductUnitDto>();
 
     public long UnitId { get; set; }
 
-    [Display(Name = "الكمية")]
+    [Display(Name = "Quantity")]
     public double Quantity { get; set; }
 
-    [Display(Name = "اسم المحصول")]
+    [Display(Name = "CropName ")]
     public string CropName { get; set; } = null!;
 
-    [Display(Name = "صنف المحصول")]
+    [Display(Name = "Category")]
     public string Category { get; set; } = null!;
 
-    [Display(Name = "لديها مشتل ؟")]
+    [Display(Name = "Has Green house")]
     public bool HasGreenhouse { get; set; } = false;
 
-    [Display(Name = "طريقة الري")]
+    [Display(Name = "Irrigation Method")]
     public string IrrigationMethod { get; set; } = null!;
 
-    [Display(Name = "عدد مرات الري")]
+    [Display(Name = "Irrigation Count")]
     public double IrrigationCount { get; set; }
 
-    [Display(Name = "مصدر المياه")]
+    [Display(Name = "Irrigation Water Source")]
     public IrrigationWaterSourceDto IrrigationWaterSource { get; set; }
 
-    [Display(Name = "مصدر الطاقة")]
+    [Display(Name = "Irrigation Power Source")]
     public IrrigationPowerSourceDto IrrigationPowerSource { get; set; }
 
-    [Display(Name = "السماد")]
+    [Display(Name = "Fertilizer")]
     public string Fertilizer { get; set; } = null!;
 
-    [Display(Name = "المبيدات")]
+    [Display(Name = "Insecticide")]
     public string Insecticide { get; set; } = null!;
 
-    [Display(Name = "تاريخ البداية")]
+    [Display(Name = " Harvest Start")]
     public DateTime HarvestStart { get; set; }
 
-    [Display(Name = "تاريخ الحصاد")]
+    [Display(Name = "Harvest End")]
     public DateTime HarvestEnd { get; set; }
 
-    [Display(Name = "ممول من الحكومة؟")]
+    [Display(Name = "Is Government Funded")]
     public bool IsGovernmentFunded { get; set; }
 
-    [Display(Name = "الارض المنتجة")]
+    [Display(Name = "Producer")]
     public LandDto Producer { get; set; } = null!;
 
     public long ProducerId { get; set; }
 
-    [Display(Name = "موسم الانتاج")]
+    [Display(Name = "ProducedIn")]
     public SeasonDto ProducedIn { get; set; } = null!;
 
     public long SeasonId { get; set; }
