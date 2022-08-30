@@ -133,7 +133,7 @@ public sealed class ApssDbContext : DbContext
     /// <summary>
     /// Gets the seasons set
     /// </summary>
-    public DbSet<Season> Sessions => Set<Season>();
+    public DbSet<Season> Seasons => Set<Season>();
 
     /// <summary>
     /// Gets the skills set

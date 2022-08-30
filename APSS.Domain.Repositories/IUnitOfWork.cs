@@ -119,7 +119,7 @@ public interface IUnitOfWork : IDisposable, IAsyncDisposable
     /// <summary>
     /// Gets the seasons repository
     /// </summary>
-    IRepository<Season> Sessions { get; }
+    IRepository<Season> Seasons { get; }
 
     /// <summary>
     /// Gets the skills repository

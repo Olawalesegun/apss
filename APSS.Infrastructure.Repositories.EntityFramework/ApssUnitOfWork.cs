@@ -109,7 +109,7 @@ public sealed class ApssUnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
         => new Repository<RefreshToken, RefreshTokenValidator>(_ctx.RefreshTokens);
 
     /// <inheritdoc/>
-    public IRepository<Season> Sessions => new Repository<Season, SeasonValidator>(_ctx.Sessions);
+    public IRepository<Season> Seasons => new Repository<Season, SeasonValidator>(_ctx.Seasons);
 
     /// <inheritdoc/>
     public IRepository<Skill> Skills => new Repository<Skill, SkillValidator>(_ctx.Skills);

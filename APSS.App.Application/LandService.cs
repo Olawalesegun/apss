@@ -96,7 +96,7 @@ public class LandService : ILandService
             IrrigationPowerSource = irrigationPowerSource,
             IrrigationWaterSource = irrigationWaterSource,
             IsGovernmentFunded = isGovernmentFunded,
-            ProducedIn = await _uow.Sessions.Query().FindAsync(seasonId),
+            ProducedIn = await _uow.Seasons.Query().FindAsync(seasonId),
             Unit = await _uow.LandProductUnits.Query().FindAsync(landProductUnitId),
             CropName = cropName,
             HarvestStart = harvestStart,
@@ -136,7 +136,7 @@ public class LandService : ILandService
             CreatedAt = DateTime.Now
         };
 
-        _uow.Sessions.Add(season);
+        _uow.Seasons.Add(season);
         await _uow.CommitAsync();
 
         return season;
@@ -234,9 +234,9 @@ public class LandService : ILandService
             .Query()
             .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Root, PermissionType.Delete);
 
-        var season = await _uow.Sessions.Query().FindAsync(seasonId);
+        var season = await _uow.Seasons.Query().FindAsync(seasonId);
 
-        _uow.Sessions.Remove(season);
+        _uow.Seasons.Remove(season);
         await _uow.CommitAsync();
 
         return season;
@@ -362,13 +362,13 @@ public class LandService : ILandService
         await _uow.Accounts.Query()
             .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Root, PermissionType.Read);
 
-        return _uow.Sessions.Query().Where(i => i.Id == seasonId);
+        return _uow.Seasons.Query().Where(i => i.Id == seasonId);
     }
 
     /// <inheritdoc/>
     public IQueryBuilder<Season> GetSeasonsAsync()
     {
-        return _uow.Sessions.Query();
+        return _uow.Seasons.Query();
     }
 
     /// <inheritdoc/>
@@ -412,12 +412,12 @@ public class LandService : ILandService
         var account = await _uow.Accounts.Query()
             .Include(u => u.User)
             .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Root, PermissionType.Update);
-        var season = await _uow.Sessions.Query()
+        var season = await _uow.Seasons.Query()
             .FindAsync(seasonId);
 
         udapter(season);
 
-        _uow.Sessions.Update(season);
+        _uow.Seasons.Update(season);
 
         return season;
     }
