@@ -1,0 +1,62 @@
+﻿@model APSS.Web.Dtos.AnimalProductDto
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>Confirm Delete Product  </h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+
+                <tr class="">
+                    <th>@Html.DisplayNameFor(m=>m.Name)</th>
+                    <td> @Model.Name</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.Quantity)</th>
+                    <td> @Model.Quantity</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
+                    <td> @Model.PeriodTaken</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                    <td> @Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                    <td> @Model.ModifiedAt</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2 my-4">
+            <a class="btn btn-danger btn-rounded  " asp-controller="AnimalProduct" asp-action="ConfirmDeleteAnimalProduct">Confirm</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link  mx-3" style="background-color:#DCEEFB">Cancel</a>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
+    });
+
+        $(document).ready(function(){
+         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+         $("#animalProductMedia").addClass('MediaActive')
+
+     });
+       document.getElementById("nav-system-name").innerHTML="Data Management";
+    document.getElementById("media-system-name").innerHTML="Data Management";
+
+       $("#animalGroups").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+         $("#animalProducts").addClass('actives');
+</script>
+    }

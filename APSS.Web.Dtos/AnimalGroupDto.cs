@@ -11,16 +11,15 @@ namespace APSS.Web.Dtos
 {
     public class AnimalGroupDto : BaseAuditbleDto
     {
-        [Required]
-        [Display(Name = "النوع")]
+        [Display(Name = "Type")]
+        [Required(ErrorMessage = "Type is Required")]
         public string Type { get; set; } = null!;
 
-        [Required]
-        [Display(Name = "الكمية")]
+        [Required(ErrorMessage = "Quantity is Required")]
+        [Display(Name = "Quantity")]
         public int Quantity { get; set; }
 
-        [Required]
-        [Display(Name = "الجنس")]
+        [Display(Name = "Sex")]
         public AnimalSex Sex { get; set; }
     }
 }
