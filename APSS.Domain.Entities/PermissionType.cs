@@ -6,7 +6,6 @@
 [Flags]
 public enum PermissionType
 {
-    None = 0,
     Read = 1,
     Delete = 2,
     Update = 4,
