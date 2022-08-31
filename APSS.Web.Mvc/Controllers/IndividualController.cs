@@ -54,7 +54,7 @@ namespace APSS.Web.Mvc.Controllers
         public IActionResult AddIndividual(int id)
         {
             var family = families.Find(f => f.Id == id);
-            var individual = new IndividualDto
+            var individual = new IndividualAddDto
             {
                 Family = family!
             };
@@ -64,10 +64,14 @@ namespace APSS.Web.Mvc.Controllers
         // POST: IndividualController/AddIndividual
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddIndividual(int id, IndividualDto individual)
+        public IActionResult AddIndividual(long id, IndividualAddDto individual)
         {
             var family = families.Find(f => f.Id == id);
             individual.Family = family!;
+            if (!ModelState.IsValid)
+            {
+                return View(individual);
+            }
             return View(individual);
         }
 
@@ -95,12 +99,6 @@ namespace APSS.Web.Mvc.Controllers
         {
             var individual = individuals.Find(i => i.Id == id);
             return View(individual);
-        }
-
-        // GET: IndividualController/DeleteIndividual/5
-        public IActionResult DeleteIndividual(int id)
-        {
-            return View(nameof(GetIndividuals), individuals);
         }
 
         // GET: IndividualController/DeleteIndividual/5
