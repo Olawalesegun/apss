@@ -10,33 +10,33 @@
                 <div class="col-sm-6 mb-4 ">
                     <div class="input-group">
                         <span class="input-group-text">@@</span>
-                    <div class="form-floating col">
-                        <input type="text" asp-for="Name" placeholder="Name" class="form-control" required />
-                        <label class="" asp-for="Name">Name</label>
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
+                        <div class="form-floating col">
+                            <input type="text" asp-for="Name" placeholder="Name" class="form-control" required />
+                            <label class="" asp-for="Name">Name</label>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 mb-4   d-flex">
                     <div class="input-group">
                         <span class="input-group-text">00:00:00</span>
-                    <div class="form-floating col">
-                        <input type="number" asp-for="PeriodTaken" placeholder="PeriodTaken" class="form-control" required />
-                        <label class="form-label"  asp-for="PeriodTaken"></label>
-                        <span asp-validation-for="PeriodTaken" class="text-danger"></span>
+                        <div class="form-floating col">
+                            <input type="time" asp-for="PeriodTaken" asp-format="[-][d'.']hh':'mm':'ss['.'fffffff]" placeholder="PeriodTaken" class="form-control" required />
+                            <label class="form-label" asp-for="PeriodTaken"></label>
+                            <span asp-validation-for="PeriodTaken" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
-                    </div>
             </div>
 
             <div class="  mb-4">
                 <div class="input-group">
                     <span class="input-group-text">Kg</span>
-                <div class="form-floating col">
-                    <input type="number" class="form-control" placeholder="Number" asp-for="Quantity" required />
-                    <label asp-for="Quantity" class=""></label>
-                    <span asp-validation-for="Quantity" class="text-danger"></span>
-                </div>
+                    <div class="form-floating col">
+                        <input type="number" class="form-control" asp-for="Quantity" placeholder="Quantity"  required />
+                        <label asp-for="Quantity" class=""></label>
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
 
@@ -44,15 +44,15 @@
             <div class=" mb-4">
                 <div class="input-group">
                     <span class="input-group-text">U</span>
-                <div class="form-floating col">
-                <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model.Unit,"Id","Name"))" required>
-                    <option selected>select Unit</option>
-                </select>
-                <label asp-for="Unit" class=""></label>
-                <span asp-validation-for="Unit" class="text-danger"></span>
-            </div>
-            </div>
+                    <div class="form-floating col">
+                        <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model.Unit,"Id","Name"))" required>
+                            <option selected>select Unit</option>
+                        </select>
+                        <label asp-for="Unit" class=""></label>
+                        <span asp-validation-for="Unit" class="text-danger"></span>
+                    </div>
                 </div>
+            </div>
             <!--  animal group Producer -->
             <input type="hidden" asp-for="ProducerId" />            <!-- Submit button -->
             <button type="submit" class="btn btn-primary  w-25  mb-4 mt-4">Add</button>
@@ -63,27 +63,49 @@
 </div>
 
 @section scripts{
-<script type="text/javascript">
-        function AddAnimalGroup() {
-            var data = $("#ProductForm").serialize();
-            console.log(data);
-            $.ajax({
-                type: 'GET',
-                url: '/DataManagement/CreateAnimalProduct',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
-                data: data,
-                success: function (result) {
-                   alert('Successfully received Data ');
-                    console.log(result);
-                },
-                error: function () {
-                   alert('Failed to receive the Data');
-                    console.log('Failed ');
+
+<script>
+             $(document).ready(function(){
+            $(".sidebar ul li.active").removeClass('active');
+             $("#dataManagement").addClass('active');
+            });
+
+                $(document).ready(function(){
+                 $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+                 $("#animalProductMedia").addClass('MediaActive')
+
+             });
+               document.getElementById("nav-system-name").innerHTML="Data Management";
+            document.getElementById("media-system-name").innerHTML="Data Management";
+
+                $("#animalGroups").removeClass('actives');
+               $("#lands").removeClass('actives');
+           $    ("#landProducts").removeClass('actives');
+                $("#confirmation").removeClass('actives');
+            $    ("#units").removeClass('actives');
+             $("#animalProducts").addClass('actives');
+
+    <script     type="text/javascript">
+            func    tion AddAnimalGroup() {
+                    var data = $("#ProductForm").serialize();
+                    console.log(data);
+                $.aj    ax({
+                        type: 'POST',
+                        url: '/DataManagement/CreateAnimalProduct',
+                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+                        data: data,
+                    suc    cess: function (result) {
+                       a    lert('Successfully received Data ');
+                            console.log(result);
+                        },
+                    err    or: function () {
+                       a    lert('Failed to receive the Data');
+                            console.log('Failed ');
+                        }
+                    })
                 }
-            })
+            @{
+                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 </script>
 }

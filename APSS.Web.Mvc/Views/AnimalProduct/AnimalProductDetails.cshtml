@@ -42,4 +42,27 @@
     </div>
 </div>
 
-@*@await Html.PartialAsync("_CreateProductExpense.cshtml")*@
+@section scripts{
+<script>
+
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
+    });
+
+        $(document).ready(function(){
+         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+         $("#animalProductMedia").addClass('MediaActive')
+
+     });
+       document.getElementById("nav-system-name").innerHTML="Data Management";
+    document.getElementById("media-system-name").innerHTML="Data Management";
+
+       $("#animalGroups").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+         $("#animalProducts").addClass('actives');
+</script>
+    }
