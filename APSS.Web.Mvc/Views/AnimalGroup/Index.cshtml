@@ -1,10 +1,13 @@
 ﻿@model APSS.Web.Dtos.AnimalGroupAndProductDto
 <!--table-->
-
+@{
+    ViewData["controllar"] = "AnimalGroup";
+    ViewData["action"] = "Index";
+}
 <partial name="_dataNavBar" />
 <div class="aling" id="loader"></div>
 
-<div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 " id="table">
+<div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 needs-validation " id="table">
 
     <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="AnimalGroup" asp-action="Index" method="post">
         <div class=" mb-3 col-sm  d-flex">
@@ -12,7 +15,7 @@
             <button type="submit" class="btn btn-primary ">
                 <i class="fas fa-search"></i>
             </button>
-            <input type="search" class="form-control" id="search" placeholder="Search..." name="searchString" onkeyup="searchTable()" />
+            <input type="search" class="form-control" id="search" placeholder="Search..." name="searchString" onkeyup="searchTable()" required />
         </div>
         </div>
         <div class="col-sm-2 col-lg-1 mb-2 ">
@@ -50,7 +53,11 @@
 
         @if (ViewBag.SearchResult != null)
         {
-            <span class="text-danger">@ViewBag.SearchResult</span>
+            <span class="text-danger"></span>
+               <div class="alert alert-warning alert-dismissible fade show">
+        <strong>Warning!</strong> Not found Result <span class="text-danger">@ViewBag.SearchResult</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
         }
 
         <div class=" mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar" id="">
@@ -85,8 +92,8 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-action="AnimalDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item btn-link" asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
                                         <li class="">
                                             <a class="dropdown-item text-decoration-none" role="button" asp-route-Id="@item.Id" asp-controller="AnimalProduct" asp-action="CreateAnimalProduct">
 

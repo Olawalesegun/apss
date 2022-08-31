@@ -11,30 +11,30 @@
                     Edit Animal Information
                 </h3>
             </div>
-               <div class="mb-4 ">
+            <div class="mb-4 ">
                 <div class="input-group ">
                     <span class="input-group-text"><i class="fa-solid fa-cow"></i></span>
-                <div class="form-floating col ">
-                    <input type="text" id="animal_type" asp-for="Type" placeholder="Type" class="form-control"  required />
-                    <label class="form-label" asp-for="Type" style="border-radius:3px 0 0 3px !important;"></label>
-                    <span asp-validation-for="Type"></span>
-                    <div class="invalid-tooltip">
-                        Please Enter Type
+                    <div class="form-floating col ">
+                        <input type="text" id="animal_type" asp-for="Type" placeholder="Type" class="form-control" required />
+                        <label class="form-label" asp-for="Type" style="border-radius:3px 0 0 3px !important;"></label>
+                        <span asp-validation-for="Type"></span>
+                        <div class="invalid-tooltip">
+                            Please Enter Type
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
             <div class="mb-4">
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa-solid fa-arrow-up-wide-short"></i></span>
-                <div class="form-floating col">
-                    <input type="number" id="Quentity"  asp-for="Quantity" name="Quentity" class="form-control" placeholder="quantity" required />
-                    <label class="form-label" asp-for="Quantity"></label>
-                    <span asp-validation-for="Quantity"></span>
-                    <div class="invalid-tooltip">
-                        Pleae Eneter Quantity
+                    <div class="form-floating col">
+                        <input type="number" id="Quentity" asp-for="Quantity" name="Quentity" class="form-control" placeholder="quantity" required />
+                        <label class="form-label" asp-for="Quantity"></label>
+                        <span asp-validation-for="Quantity"></span>
+                        <div class="invalid-tooltip">
+                            Pleae Eneter Quantity
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
 
@@ -59,7 +59,7 @@
 
             <div class="my-4">
                 <!-- Submit button -->
-                <button type="submit"  onclick="EditAnimalGroup()" class="btn btn-primary  w-12 ">Edit</button>
+                <button type="submit" onclick="EditAnimalGroup()" class="btn btn-primary  w-12 ">Edit</button>
                 <a onClick="history.go(-1); return false;" class="btn btn-link  mx-2" style="background-color:#DCEEFB">Cancel</a>
             </div>
         </form>
@@ -94,8 +94,8 @@
     $(".sidebar ul li.active").removeClass('active');
      $("#dataManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-    document.getElementById("media-system-name").innerHTML=" ادارة الموظفين";
+     document.getElementById("nav-system-name").innerHTML="Employees Management";
+    document.getElementById("media-system-name").innerHTML="Employees Management";
 
        $("#animalProducts").removeClass('actives');
        $("#lands").removeClass('actives');
