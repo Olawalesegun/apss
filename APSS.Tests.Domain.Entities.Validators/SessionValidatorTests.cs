@@ -10,11 +10,11 @@ using FluentValidation.TestHelper;
 namespace APSS.Tests.Domain.Entities.Validators;
 
 [TestClass]
-public class RefreshTokenValidatorTests
+public class SessionValidatorTests
 {
     #region Private fields
 
-    private readonly RefreshTokenValidator _validator = new();
+    private readonly SessionValidator _validator = new();
     private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
@@ -24,29 +24,29 @@ public class RefreshTokenValidatorTests
     [TestMethod]
     public void ValidateAccountShouldSucceed()
     {
-        var refreshToken = new RefreshToken
+        var session = new Session
         {
-            Value = _rndSvc.NextString(0xff),
+            Token = _rndSvc.NextString(0xff),
             LastLogin = DateTime.Now.Subtract(TimeSpan.FromSeconds(_rndSvc.NextInt32(0))),
             ValidUntil = DateTime.Now.Add(TimeSpan.FromSeconds(_rndSvc.NextInt32(1))),
         };
 
-        Assert.IsTrue(_validator.Validate(refreshToken).IsValid);
+        Assert.IsTrue(_validator.Validate(session).IsValid);
     }
 
     [TestMethod]
     public void ValidateAccountShouldFail()
     {
-        var refreshToken = new RefreshToken
+        var refreshToken = new Session
         {
-            Value = string.Empty,
+            Token = string.Empty,
             LastLogin = DateTime.Now.Add(TimeSpan.FromSeconds(_rndSvc.NextInt32(0))),
             ValidUntil = DateTime.Now.Subtract(TimeSpan.FromSeconds(_rndSvc.NextInt32(1))),
         };
 
         var result = _validator.TestValidate(refreshToken);
 
-        result.ShouldHaveValidationErrorFor(r => r.Value);
+        result.ShouldHaveValidationErrorFor(r => r.Token);
         result.ShouldHaveValidationErrorFor(r => r.LastLogin);
         result.ShouldHaveValidationErrorFor(r => r.ValidUntil);
     }

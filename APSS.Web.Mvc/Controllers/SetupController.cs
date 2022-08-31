@@ -19,7 +19,7 @@ public class SetupController : Controller
         if (await _setupSvc.CanSetupAsync())
             return View();
 
-        return RedirectToRoutePermanent("/");
+        return RedirectToAuth();
     }
 
     [HttpPost]
@@ -31,6 +31,9 @@ public class SetupController : Controller
 
         var account = await _setupSvc.SetupAsync(form.HolderName, form.Password);
 
-        return RedirectToAction(nameof(AuthController.SignIn), nameof(AuthController));
+        return RedirectToAuth();
     }
+
+    private IActionResult RedirectToAuth()
+        => RedirectToAction(nameof(AuthController.SignIn), "Auth");
 }

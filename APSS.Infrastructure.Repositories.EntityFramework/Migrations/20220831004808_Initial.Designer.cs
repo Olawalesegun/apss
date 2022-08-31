@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
 {
     [DbContext(typeof(ApssDbContext))]
-    [Migration("20220828211202_Initial")]
+    [Migration("20220831004808_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -562,50 +562,6 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("QuestionAnswer");
                 });
 
-            modelBuilder.Entity("APSS.Domain.Entities.RefreshToken", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Agent")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("HostName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastIpAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastLogin")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("OwnerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ValidUntil")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("RefreshTokens");
-                });
-
             modelBuilder.Entity("APSS.Domain.Entities.Season", b =>
                 {
                     b.Property<long>("Id")
@@ -631,6 +587,48 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.ToTable("Seasons");
+                });
+
+            modelBuilder.Entity("APSS.Domain.Entities.Session", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Agent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastIpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastLogin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("OwnerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ValidUntil")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Sessions");
                 });
@@ -1107,7 +1105,7 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("APSS.Domain.Entities.RefreshToken", b =>
+            modelBuilder.Entity("APSS.Domain.Entities.Session", b =>
                 {
                     b.HasOne("APSS.Domain.Entities.Account", "Owner")
                         .WithMany()

@@ -3,16 +3,16 @@
 namespace APSS.Domain.Entities.Validators;
 
 /// <summary>
-/// A validator for the entity <see cref="RefreshToken"/>
+/// A validator for the entity <see cref="Session"/>
 /// </summary>
-public sealed class RefreshTokenValidator : Validator<RefreshToken>
+public sealed class SessionValidator : Validator<Session>
 {
     /// <summary>
     /// Default constructor
     /// </summary>
-    public RefreshTokenValidator()
+    public SessionValidator()
     {
-        RuleFor(r => r.Value)
+        RuleFor(r => r.Token)
             .NotEmpty()
             .WithMessage("the token cannot be empty");
 

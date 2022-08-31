@@ -42,7 +42,6 @@ public sealed class SetupService : ISetupService
 
         var rootUser = new User
         {
-            Id = 0,
             Name = "Root User",
             AccessLevel = AccessLevel.Root,
             UserStatus = UserStatus.Active
