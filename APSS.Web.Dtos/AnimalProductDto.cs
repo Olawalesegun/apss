@@ -23,7 +23,6 @@ namespace APSS.Web.Dtos
 
         [Display(Name = "Quantity")]
         [Required(ErrorMessage = "Quantity is Required")]
-        [Range(0, 1000000, ErrorMessage = "")]
         public double Quantity { get; set; }
 
         [Display(Name = "Period Taken ")]

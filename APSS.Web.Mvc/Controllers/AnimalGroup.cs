@@ -38,53 +38,59 @@ namespace APSS.Web.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string searchString = "", string searchBy = "")
         {
-            searchString = searchString.Trim();
-            if (!string.IsNullOrEmpty(searchString))
+            try
             {
-                if (searchBy == "1")
+                if (!string.IsNullOrEmpty(searchString))
                 {
                     var result = new AnimalGroupAndProductDto();
-                    result.AnimalGroupDtos = animal.Where(name => name.Type.Contains(searchString)).ToList();
-                    return View(result);
-                }
-                else if (searchBy == "2")
-                {
-                    var result = new AnimalGroupAndProductDto();
-                    long id = Convert.ToInt64(searchString);
-                    result.AnimalGroupDtos = animal.Where(name => name.Id == id).ToList();
-                    return View(result);
-                }
-                else if (searchBy == "3")
-                {
-                    var result = new AnimalGroupAndProductDto();
-                    long q = Convert.ToInt64(searchString);
-                    result.AnimalGroupDtos = animal.Where(name => name.Quantity == q).ToList();
-                    return View(result);
-                }
-                else if (searchBy == "4")
-                {
-                    var result = new AnimalGroupAndProductDto();
-                    searchString = searchString.Trim().ToLower();
-                    if (searchString.Equals("male"))
+
+                    searchString = searchString.Trim();
+
+                    if (searchBy == "2")
                     {
-                        searchString = "Male";
+                        long id = Convert.ToInt64(searchString);
+                        result.AnimalGroupDtos = animal.Where(name => name.Id == id).ToList();
+                        return View(result);
                     }
-                    else if (searchString.Equals("female"))
+                    else if (searchBy == "3")
                     {
-                        searchString = "Female";
+                        long q = Convert.ToInt64(searchString);
+                        result.AnimalGroupDtos = animal.Where(name => name.Quantity == q).ToList();
+                        return View(result);
+                    }
+                    else if (searchBy == "4")
+                    {
+                        searchString = searchString.Trim().ToLower();
+                        if (searchString.Equals("male"))
+                        {
+                            searchString = "Male";
+                        }
+                        else if (searchString.Equals("female"))
+                        {
+                            searchString = "Female";
+                        }
+                        else
+                        {
+                            var animalResult = new AnimalGroupAndProductDto();
+                            ViewBag.SearchResult = "ليس هناك نتائج عن " + searchString;
+                            return View(animalResult);
+                        }
+                        AnimalSex sex = (AnimalSex)Enum.Parse(typeof(AnimalSex), searchString);
+                        result.AnimalGroupDtos = animal.Where(name => name.Sex == sex).ToList();
+                        return View(result);
                     }
                     else
                     {
-                        var animalResult = new AnimalGroupAndProductDto();
-                        ViewBag.SearchResult = "ليس هناك نتائج عن " + searchString;
-                        return View(animalResult);
+                        result.AnimalGroupDtos = animal.Where(name => name.Type.Contains(searchString)).ToList();
+                        return View(result);
                     }
-                    AnimalSex sex = (AnimalSex)Enum.Parse(typeof(AnimalSex), searchString);
-                    result.AnimalGroupDtos = animal.Where(name => name.Sex == sex).ToList();
-                    return View(result);
                 }
             }
-            ViewBag.SearchResult = "ليس هناك نتائج عن " + searchString;
+            catch (Exception ex)
+            {
+                throw new Exception(message: "their are some thing error", ex);
+            }
+            ViewBag.SearchResult = searchString;
             var total = new AnimalGroupAndProductDto
             {
                 AnimalGroupDtos = animal.ToList(),

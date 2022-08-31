@@ -40,7 +40,7 @@
                                 @item.CreatedAt
                             </td>
                             <td class="align-middle center">
-                                <a class="text-decoration-none fw-600 confrim-link" asp-route-id="@item.Id" asp-controller="Confirmation" asp-action="ConfirmAnimalGroup"><div class="d-flex justify-content-between"> <span>تفاصيل...</span> </div> </a>
+                                <a class="text-decoration-none fw-600 text-danger" asp-route-id="@item.Id" asp-controller="Confirmation" asp-action="ConfirmAnimalGroup"><div class="d-flex justify-content-between"> <span><i class="fa-solid fa-circle-check"></i></span></div> </a>
                             </td>
                         </tr>
                     }
@@ -57,7 +57,7 @@
                                 @item.CreatedAt
                             </td>
                             <td class="align-middle center">
-                                <a class="text-decoration-none fw-600 confrim-link" asp-route-id="@item.Id" asp-controller="Confirmation" asp-action="ConfirmAnimalProduct"><div class="d-flex justify-content-between"> <span>تفاصيل...</span></div> </a>
+                                <a class="text-decoration-none fw-600 text-danger" asp-route-id="@item.Id" asp-controller="Confirmation" asp-action="ConfirmAnimalProduct"><div class="d-flex justify-content-between"> <span><i class="fa-solid fa-circle-check"></i></span></div> </a>
                             </td>
                         </tr>
                     }
@@ -88,8 +88,8 @@
     $(".sidebar ul li.active").removeClass('active');
      $("#dataManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-    document.getElementById("media-system-name").innerHTML=" ادارة الموظفين";
+     document.getElementById("nav-system-name").innerHTML="Emoplyees Management";
+    document.getElementById("media-system-name").innerHTML=" Emoplyees Management ";
 
        $("#animalProducts").removeClass('actives');
        $("#lands").removeClass('actives');

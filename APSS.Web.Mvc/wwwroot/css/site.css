@@ -14,38 +14,26 @@ html, body {
 
 #side_nav {
     background-color: #F3F4F4;
-    min-width: 280px;
-    max-width: 280px;
+    min-width: 290px;
+    max-width: 290px;
     transition: all 0.5s;
 }
 
-.other-systems div {
-    background-color: #1783D2;
-    padding: 10px;
-}
-
-    .other-systems div a {
-        color: white;
+    #side_nav ul li a:hover {
+        background-color: #DBE4F3 !important;
+        border-radius: 5px;
+        transition: all ease 0.3s;
     }
 
-.other-systems {
-    background-color: white;
+.other-systems div a:hover {
+    background-color: #F3F4F4;
+    color: black !important;
+    transition: 0.3s ease;
 }
-
-    .other-systems div a:hover {
-        background-color: #F3F4F4;
-        color: black !important;
-        transition: 0.3s ease;
-    }
 
 .content {
     min-height: 100vh;
     width: 100%;
-}
-
-hr.h-color {
-    color: #fff;
-    border-width: 2px;
 }
 
 .sidebar li.active {
@@ -70,9 +58,9 @@ hr.h-color {
 
 @media(max-width:768px) {
     #side_nav {
-        margin-left: -280px;
+        margin-left: -290px;
         min-height: 100vh;
-        z-index: 1;
+        z-index: 10;
     }
 
     .content {
@@ -93,7 +81,7 @@ hr.h-color {
     #side_nav {
         margin-left: 0 !important;
         min-height: 100vh;
-        z-index: 1;
+        z-index: 10;
     }
 
     .content {
@@ -290,10 +278,6 @@ nav ul li div a {
     border: 3px #1970B0 solid;
 }
 
-.show-sidebar {
-    margin-right: 100px;
-}
-
 .opecity-header:hover {
     border-radius: 50px;
     transition: all 0.1s;
@@ -318,58 +302,68 @@ nav ul li div a {
         transform: rotate(90deg);
     }
 
+.systems-style {
+    font-size: 18px !important;
+    color: #829AB1 !important;
+    font-weight: 700;
+}
+
 .sidebarSystem {
     overflow-y: auto;
 }
 
-.drop {
-    font-weight: bold;
-}
-
-.sidebarSystem .menu {
-    margin-right: 4px;
-    margin-left: 4px;
-}
-
-    .sidebarSystem .menu .item a {
-        font-size: 16px;
-        text-decoration: none;
-        display: block;
-        padding: 0px 20px;
-        line-height: 40px;
+    .sidebarSystem .menu {
+        margin-right: 4px;
+        margin-left: 4px;
     }
 
-        .sidebarSystem .menu .item a:hover {
-            background-color: #DBE4F3;
-            color: black !important;
-            transition: 0.3s ease;
+        .sidebarSystem .menu .item a {
+            font-size: 16px;
+            text-decoration: none;
+            display: block;
+            padding: 0px 20px;
+            line-height: 40px;
+            background-color: none;
         }
 
-    .sidebarSystem .menu .item i {
-        margin-left: 15px;
-    }
+            .sidebarSystem .menu .item a:hover {
+                background-color: #DBE4F3 !important;
+            }
 
-    .sidebarSystem .menu .item a .dropdown {
-        left: 0;
-        transition: 0.3s ease;
-    }
+        .sidebarSystem .menu .item a {
+            background-color: none !important;
+        }
 
-    .sidebarSystem .menu .item .sub-menu {
-        background: rgba(255,255,255,0.1);
-    }
+        .sidebarSystem .menu .item i {
+            margin-left: 15px;
+        }
+
+        .sidebarSystem .menu .item a .dropdown {
+            left: 0;
+            transition: 0.1s ease;
+        }
+
+        .sidebarSystem .menu .item .sub-menu {
+            background: rgba(255,255,255,0.1);
+        }
 
 .sub-menu a {
-    background: rgba(255,250,255,1);
-    color: black;
+    color: #829AB1;
     padding-right: 30px !important;
 }
 
 .sidebarSystem .menu .item .sub-menu a {
+    background-color: none !important;
 }
 
 .drop {
-    background-color: darkcyan;
-    color: white !important;
+    color: #DBE4F3 !important;
+    border-radius: 3px;
+    background-color: #DBE4F3 !important;
+}
+
+table tbody tr td {
+    line-height: 40px;
 }
 
 /* style for scroll navbar */
@@ -551,4 +545,27 @@ a.btn-link {
 
 .active {
     margin-left: 0 !important;
+}
+
+input[type="search"] {
+    box-shadow: none;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+select:focus,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active,
+.btn:hover {
+    outline: 0px !important;
+    -webkit-appearance: none;
+    box-shadow: none !important;
 }
