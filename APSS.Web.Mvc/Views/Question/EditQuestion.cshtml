@@ -22,8 +22,10 @@
           </div>
                    
             <div class="col-6">
-             <label asp-for="IsRequired"></label>
-             <input type="checkbox" asp-for="IsRequired"  value="@Model.IsRequired"/>
+             <div class="form-check flex-grow-1">
+                    <input class="form-check-input" type="checkbox"  asp-for="IsRequired" value="@Model.IsRequired">
+                    <label class="form-check-label" asp-for="IsRequired"> </label>
+                </div> 
           </div>
                 </div>
                 <div class=" mt-4">
