@@ -13,8 +13,10 @@ public class LandDto : OwnableDto
     public double Longitude { get; set; }
 
     [Display(Name = "Latitude")]
+    [Range(0, 23, ErrorMessage = "Area must be between [0, 23]")]
     public double Latitude { get; set; }
 
+    [Required(ErrorMessage = "Address is required")]
     [Display(Name = "Address")]
     public string Address { get; set; } = null!;
 
