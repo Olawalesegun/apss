@@ -1,8 +1,10 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -12,6 +14,7 @@ public class AnimalGroupValidatorTests
     #region Private fields
 
     private readonly AnimalGroupValidator _validator = new();
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
 
@@ -22,9 +25,9 @@ public class AnimalGroupValidatorTests
     {
         var animalGroup = new AnimalGroup
         {
-            Name = RandomGenerator.NextString(0xff),
-            Type = RandomGenerator.NextString(0xff),
-            Quantity = RandomGenerator.NextInt(1),
+            Name = _rndSvc.NextString(0xff),
+            Type = _rndSvc.NextString(0xff),
+            Quantity = _rndSvc.NextInt32(1),
             OwnedBy = new User { AccessLevel = AccessLevel.Farmer }
         };
 

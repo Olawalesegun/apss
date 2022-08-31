@@ -105,6 +105,10 @@ public sealed class ApssUnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
     public IRepository<Question> Questions => new Repository<Question, QuestionValidator>(_ctx.Questions);
 
     /// <inheritdoc/>
+    public IRepository<RefreshToken> RefreshTokens
+        => new Repository<RefreshToken, RefreshTokenValidator>(_ctx.RefreshTokens);
+
+    /// <inheritdoc/>
     public IRepository<Season> Sessions => new Repository<Season, SeasonValidator>(_ctx.Sessions);
 
     /// <inheritdoc/>
@@ -141,19 +145,20 @@ public sealed class ApssUnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
         => new AsyncDatabaseTransaction(await _ctx.Database.BeginTransactionAsync(cancellationToken));
 
     /// <inheritdoc/>
-    public Task<int> CommitAsync(CancellationToken cancellationToken = default)
-        => _ctx.SaveChangesAsync(cancellationToken);
-
-    /// <inheritdoc/>
     public async Task<int> CommitAsync(
-        IAsyncDatabaseTransaction transaction,
+        IAsyncDatabaseTransaction? tx = null,
         CancellationToken cancellationToken = default)
     {
-        var ret = await CommitAsync(cancellationToken);
+        if (tx is not null)
+        {
+            var ret = await _ctx.SaveChangesAsync(cancellationToken);
 
-        await transaction.CommitAsync(cancellationToken);
+            await tx.CommitAsync(cancellationToken);
 
-        return ret;
+            return ret;
+        }
+
+        return await _ctx.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc/>

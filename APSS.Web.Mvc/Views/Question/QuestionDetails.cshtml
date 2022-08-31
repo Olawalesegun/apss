@@ -1,0 +1,72 @@
+﻿@using APSS.Web.Dtos
+@model APSS.Web.Dtos.QuestionDto
+
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:4px"></i> <h3>معلومات الشخص</h3></div>
+
+        <table class="table user-view-table m-0 t ">
+            <tbody style="font-size:14px">
+                  <tr class="">
+                    <td>@Html.DisplayNameFor(q=>q.Id) </td>
+                    <td> @Model.Id</td>
+                </tr>
+                <tr class="">
+                    <td>@Html.DisplayNameFor(q=>q.Text) </td>
+                    <td> @Model.Text</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(q=>q.Index) </td>
+                    <td>@Model.Index</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(q=>q.QuestionType)   </td>
+                    <td> @Model.QuestionType</td>
+                </tr>
+                @if (Model.QuestionType==QuestionTypeDto.MultipleChoiceQuestion)
+                {
+                 <tr>
+                    <td>@Html.DisplayNameFor(q=>q.CanMultiSelect)   </td>
+                    <td>@Model.CanMultiSelect</td>
+                 </tr>
+              <tr>
+                <td>@Html.DisplayNameFor(q=>q.CandidateAnswers)</td>
+                <td>
+
+                   @foreach (var item in Model.CandidateAnswers!)
+                   {
+                       @item.ToString()!.Concat(", ")
+                       
+                   }
+
+                 </td>
+              </tr>
+                   
+                }
+
+                <tr>
+                    <td>Html.DisplayNameFor(q=>q.Survey)  </td>
+                    <td>@Model.Survey.Name</td>
+                </tr>
+
+                 <tr>
+                    <td>@Html.DisplayNameFor(q=>q.CreatedAt) </td>
+                    <td><span class="">@Model.CreatedAt  </span></td>
+                </tr>
+                <tr>
+                    <td>   @Html.DisplayNameFor(q=>q.ModifiedAt)   </td>
+                    <td><span class="">@Model.ModifiedAt </span></td>
+                </tr>
+              
+            </tbody>
+        </table>
+        
+         <div cllass="d-inline pt-2">
+            <a class="btn btn-primary-danger btn-rounded  text-primary mx-1 pr-1 my-2 " asp-controller="Question" asp-action="EditQuestion" asp-route-Id="@Model.Id"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
+            <a class="btn  btn-link-danger btn-rounded text-danger mx-1 my-2 " asp-controller="Question" asp-action="ConfirmDeleteQuestion" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
+            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1 " asp-controller="Question" asp-action="GetQuestionsSurvey"><i class="fa-solid fa-share px-1"></i><span class="">رجوع </span> </a>
+        </div>
+    </div>
+    <hr class="border-light m-0">
+</div>

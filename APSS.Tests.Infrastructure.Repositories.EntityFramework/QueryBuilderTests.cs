@@ -1,19 +1,21 @@
-﻿using APSS.Domain.Repositories.Exceptions;
-using APSS.Tests.Domain.Entities.Validators;
-using APSS.Tests.Infrastructure.Repositories.EntityFramework.Util;
-using APSS.Tests.Utils;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using APSS.Domain.Repositories.Exceptions;
+using APSS.Tests.Domain.Entities.Validators;
+using APSS.Tests.Infrastructure.Repositories.EntityFramework.Util;
+using APSS.Tests.Utils;
 
 namespace APSS.Tests.Infrastructure.Repositories.EntityFramework;
 
 [TestClass]
 public class QueryBuilderTests
 {
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
+
     [TestMethod]
     public async Task FirstShouldSucceed()
     {
@@ -34,11 +36,11 @@ public class QueryBuilderTests
         foreach (var log in logs)
         {
             Assert.IsTrue(
-               uow
-                   .Logs
-                   .Query()
-                   .FirstAsync(l => l.Id == log.Id).Result.Message == log.Message
-            );
+                uow
+                    .Logs
+                    .Query()
+                    .FirstAsync(l => l.Id == log.Id).Result.Message == log.Message
+                         );
         }
     }
 
@@ -73,7 +75,7 @@ public class QueryBuilderTests
         using var uow = TestUnitOfWork.Create();
 
         var logs = Enumerable
-            .Range(0, RandomGenerator.NextInt(0, 100))
+            .Range(0, _rndSvc.NextInt32(0, 100))
             .Select(i => ValidEntitiesFactory.CreateValidLog())
             .ToArray();
 
@@ -84,7 +86,7 @@ public class QueryBuilderTests
         Assert.AreEqual(
             logs.Count(l => l.Message.Length % 2 == 0),
             uow.Logs.Query().CountAsync(l => l.Message.Length % 2 == 0).Result
-        );
+                       );
     }
 
     [TestMethod]
@@ -122,7 +124,7 @@ public class QueryBuilderTests
         using var uow = TestUnitOfWork.Create();
 
         var logs = Enumerable
-            .Range(0, RandomGenerator.NextInt(0, 200))
+            .Range(0, _rndSvc.NextInt32(0, 200))
             .Select(i => ValidEntitiesFactory.CreateValidLog())
             .Where(l => l.Message.Length % 2 == 0)
             .ToArray();

@@ -1,8 +1,9 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -11,6 +12,7 @@ public class VoluntaryValidatorTests
 {
     #region Private fields
 
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
     private readonly VoluntaryValidator _validator = new();
 
     #endregion Private fields
@@ -22,8 +24,8 @@ public class VoluntaryValidatorTests
     {
         var voluntary = new Voluntary
         {
-            Name = RandomGenerator.NextString(0xff),
-            Field = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
+            Field = _rndSvc.NextString(0xff),
         };
 
         Assert.IsTrue(_validator.Validate(voluntary).IsValid);

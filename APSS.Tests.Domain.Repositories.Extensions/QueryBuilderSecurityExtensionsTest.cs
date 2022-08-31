@@ -14,6 +14,7 @@ public sealed class QueryBuilderSecurityExtensionsTest
 {
     #region Fields
 
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
     private readonly IUnitOfWork _uow;
 
     #endregion Fields
@@ -54,7 +55,7 @@ public sealed class QueryBuilderSecurityExtensionsTest
         PermissionType expectedPermissions,
         bool shouldSucceed)
     {
-        var account = await _uow.CreateTestingAccountAsync(RandomGenerator.NextAccessLevel(), permissions);
+        var account = await _uow.CreateTestingAccountAsync(_rndSvc.NextAccessLevel(), permissions);
 
         var findTask = _uow.Accounts
             .Query()
@@ -192,7 +193,7 @@ public sealed class QueryBuilderSecurityExtensionsTest
         PermissionType expectedPermissions,
         bool shouldSucceed)
     {
-        var account = await _uow.CreateTestingAccountAsync(RandomGenerator.NextAccessLevel(), permissions);
+        var account = await _uow.CreateTestingAccountAsync(_rndSvc.NextAccessLevel(), permissions);
 
         var findTask = _uow.Accounts
             .Query()

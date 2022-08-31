@@ -1,8 +1,9 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using APSS.Domain.Entities;
 using APSS.Domain.Entities.Validators;
 using APSS.Tests.Utils;
+
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace APSS.Tests.Domain.Entities.Validators;
 
@@ -12,6 +13,7 @@ public class SurveyValidatorTests
     #region Private fields
 
     private readonly SurveyValidator _validator = new();
+    private readonly SimpleRandomGeneratorService _rndSvc = new();
 
     #endregion Private fields
 
@@ -22,7 +24,7 @@ public class SurveyValidatorTests
     {
         var survey = new Survey
         {
-            Name = RandomGenerator.NextString(0xff),
+            Name = _rndSvc.NextString(0xff),
             CreatedBy = new User { AccessLevel = AccessLevel.Group },
         };
 

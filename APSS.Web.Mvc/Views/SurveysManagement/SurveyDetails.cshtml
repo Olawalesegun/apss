@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "معلومات ألإستبيان";
+}
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:4px"></i> <h3>معلومات الإستبيان</h3></div>
+
+        <table class="table user-view-table m-0 t ">
+            <tbody style="font-size:14px">
+                  <tr class="">
+                      <th>الرقم</th>
+                    <td>8956</td>
+                </tr>
+                <tr>
+                    <th>الإسم</th>
+                    <td> إستبيان</td>
+                </tr>
+                <tr>
+                    <th>وصف</th>
+                    <td>مشغول</td>
+                </tr>
+                <tr>
+                    <th>بداية النشر</th>
+                    <td>ايحين ماشتى</td>
+                </tr>
+                 <tr>
+                    <th>نهاية النشر</th>
+                    <td> مالك دخل</td>
+                </tr>
+                 <tr>
+                    <th>تاريخ الإنشاء</th>
+                    <td>عندما قام</td>
+                </tr>
+                 <tr>
+                    <th>أخر تعديل</th>
+                    <td> تنلبن</td>
+                </tr>
+              
+            </tbody>
+        </table>
+        
+         <div cllass="d-inline pt-2">
+            <a class="btn btn-primary-danger btn-rounded  text-primary mx-1 pr-1 my-2 " asp-controller="Survey" asp-action="UpdateSurvey" > <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
+            <a class="btn  btn-link-danger btn-rounded text-danger mx-1 my-2 " asp-controller="Survey" asp-action="ConfirmDeleteSurvey" > <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
+            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Survey" asp-action="GetQuestion"><i class="fa-solid fa-angle-down mx-1 lg"></i><span class="">الأسئلة </span> </a>
+            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Voluntary" asp-action="AddQuestion" ><i class="fa-solid fa-angle-down mx-1 lg"></i><span class="">إضافة سؤال </span> </a>
+            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1 " asp-controller="" asp-action=""><i class="fa-solid fa-share px-1"></i><span class="">رجوع </span> </a>
+        </div>
+    </div>
+    <hr class="border-light m-0">
+</div>

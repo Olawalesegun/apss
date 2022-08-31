@@ -1,0 +1,39 @@
+﻿@model SetupForm
+
+@{
+    Layout = "Layout/Generic";
+}
+
+<div class="row align-content-center min-vh-100">
+    <div class="col-lg-4 offset-lg-4">
+        <h1 class="display-4 text-center mb-5">Agriculture Scan System</h1>
+        <h4 class="text-center mb-5">Setup the system for the first time</h4>
+
+        <form method="post" asp-controller="Setup" class="needs-validation" novalidate>
+            <!-- Holder name input -->
+            <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Account ID" asp-for="HolderName" aria-describedby="holderNameValidation">
+                    <label>Holder Name</label>
+                </div>
+                <span id="holderNameValidation" class="d-block invalid-feedback" asp-validation-for="HolderName"></span>
+            </div>
+
+            <!-- Password input -->
+            <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="password" class="form-control" placeholder="Enter your password" asp-for="Password" pattern="^.{8,}$">
+                    <label>Password</label>
+                </div>
+                <span class="d-block invalid-feedback" asp-validation-for="Password"></span>
+            </div>
+
+            <div class="d-flex mt-5 justify-content-end">
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary px-3">Setup</button>
+            </div>
+        </form>
+    </div>
+</div>
