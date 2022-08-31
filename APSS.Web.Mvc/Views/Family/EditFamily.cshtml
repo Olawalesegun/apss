@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.FamilyDto
+﻿@model FamilyDto
 
 <div class="container-fluid px-3 py-3 mx-4 my-1">
     <div class="col-sm-6">
@@ -8,25 +8,26 @@
 
         <form class=" mt-3 " method="post">
 
-            <div class=" mb-4">
-                <div class="">
-                    <span class="text-danger">*</span>
-                    <label class="form-label" asp-for="Name"></label>
-                    <input type="text" asp-for="Name" class="form-control" />
+            <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Name" asp-for="Name" pattern="^[a-zA-Z''\s]{1,}$" value="@Model.Name" >
+                    <label asp-for="Name"></label>
                 </div>
-                <span asp-validation-for="Name" class="text-danger"></span>
-                <div class="mt-4">
-                    <span class="text-danger">*</span>
-                    <label class="form-label" asp-for="LivingLocation"> </label>
-                    <input type="text" asp-for="LivingLocation" class="form-control" />
-                    <span asp-validation-for="LivingLocation" class="text-danger"></span>
-                </div>
+                <span  class="d-block invalid-feedback" asp-validation-for="Name"></span>
             </div>
-
+             <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Address" value="@Model.LivingLocation" asp-for="LivingLocation" >
+                    <label asp-for="LivingLocation"></label>
+                </div>
+                <span  class="d-block invalid-feedback" asp-validation-for="LivingLocation"></span>
+            </div>
             <!-- Submit button -->
             <div class="d-inline">
                 <button class="btn btn-primary mt-4 mx-1" asp-controller="Family" asp-action="UpdateFamily"> <i class="fa-solid fa-pen-to-square mx-2 fa-lg"></i><span>Edit</span>  </button>
-                <button class="btn btn-danger mt-4 mx-1" asp-controller="Family" asp-action="GetFamilies"><i class="fa-solid fa-share mx-2 fa-lg"></i><span>Cancel</span>  </button>
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
             </div>
         </form>
     </div>
