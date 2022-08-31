@@ -17,20 +17,34 @@ public class TokenValidationEvent : CookieAuthenticationEvents
     {
         try
         {
-            var accountPrincipal = context.Principal!;
+            var principal = context.Principal!;
 
-            var id = long.Parse(accountPrincipal.Claims.First(c => c.Type == CustomClaims.Id).Value);
-            var token = accountPrincipal.Claims.First(c => c.Type == CustomClaims.Token).Value;
+            var accountId = principal.GetId();
+            var token = principal.GetClaimValue(CustomClaims.Token);
+            var status = await _authSvc.ValidateTokenAsync(accountId, token);
 
-            if (string.IsNullOrEmpty(token) || !await _authSvc.IsTokenValidAsync(id, token))
-                throw new Exception(); // to be changed!
+            if (status == TokenValidationResult.Valid)
+            {
+                return;
+            }
+            else if (status == TokenValidationResult.NeedsRefreshing || context.ShouldRenew)
+            {
+                var session = await _authSvc.RefreshAsync(
+                    accountId,
+                    token,
+                    context.HttpContext.GetLoginInfo());
+
+                context.ReplacePrincipal(AuthUtils.CreatePrincipal(session));
+                return;
+            }
         }
         catch (Exception)
         {
-            context.RejectPrincipal();
-
-            await context.HttpContext.SignOutAsync(
-                  CookieAuthenticationDefaults.AuthenticationScheme);
         }
+
+        context.RejectPrincipal();
+
+        await context.HttpContext.SignOutAsync(
+              CookieAuthenticationDefaults.AuthenticationScheme);
     }
 }
