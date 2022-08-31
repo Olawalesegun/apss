@@ -13,34 +13,32 @@ public interface IAuthService
     /// <returns>The created refresh token</returns>
     /// <exception cref="InvalidUsernameOrPasswordException"></exception>
     /// <exception cref="MaxSessionsCountExceeded"></exception>
-    Task<(Account, RefreshToken)> SignInAsync(long accountId, string password, LoginInfo deviceInfo);
+    Task<Session> SignInAsync(long accountId, string password, LoginInfo deviceInfo);
 
     /// <summary>
-    /// Asynchronously checks if a token is valid or not
+    /// Asynchronously validates a token
     /// </summary>
     /// <param name="accountId">The id of the owner of the token</param>
     /// <param name="token">The token to check</param>
-    /// <param name="uniqueId">The device unique id</param>
     /// <returns></returns>
-    Task<bool> IsTokenValidAsync(long accountId, string token, string uniqueId);
+    Task<TokenValidationResult> ValidateTokenAsync(long accountId, string token);
 
     /// <summary>
     /// Asynchronously invlidates a refresh token
     /// </summary>
     /// <param name="accountId">The id of the owner of the token</param>
     /// <param name="token">The token to check</param>
-    /// <param name="uniqueId">The device unique id</param>
     /// <returns></returns>
-    Task SignOutAsync(long accountId, string token, string uniqueId);
+    Task SignOutAsync(long accountId, string token);
 
     /// <summary>
-    /// Asynchronously generates an access token with a refresh token and an expired access toekn
+    /// Asynchronously refreshes a token
     /// </summary>
-    /// <param name="refreshToken">the refresh token to generate with</param>
-    /// <param name="accessToken">The access token to generate with</param>
-    /// <param name="uniqueIdentifier">The device unique id</param>
+    /// <param name="accountId">The id of the account to refresh the session for</param>
+    /// <param name="token">The token to refresh</param>
+    /// <param name="deviceInfo">The info of the device that requested the token</param>
     /// <returns>The generated access token</returns>
-    Task<string> RefreshAsync(string refreshToken, string accessToken, string uniqueIdentifier);
+    Task<Session> RefreshAsync(long accountId, string token, LoginInfo info);
 }
 
 public sealed class LoginInfo
@@ -48,15 +46,18 @@ public sealed class LoginInfo
     /// <summary>
     /// Gets or sets the last ip address that used the token
     /// </summary>
-    public string LastIpAddress { get; set; } = null!;
-
-    /// <summary>
-    /// Gets or sets the device name of the device that uses the token
-    /// </summary>
-    public string? HostName { get; set; }
+    public string IpAddress { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the hostname of the device that uses the token
     /// </summary>
-    public string? UserAgent { get; set; }
+    public string UserAgent { get; set; } = null!;
+}
+
+public enum TokenValidationResult
+{
+    Invalid,
+    NeedsRefreshing,
+    Expired,
+    Valid,
 }
