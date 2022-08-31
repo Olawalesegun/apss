@@ -72,7 +72,7 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sessions",
+                name: "Seasons",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -85,7 +85,7 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sessions", x => x.Id);
+                    table.PrimaryKey("PK_Seasons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -302,16 +302,15 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RefreshTokens",
+                name: "Sessions",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LastIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastLogin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HostName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Agent = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Agent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ValidUntil = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OwnerId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -319,9 +318,9 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.PrimaryKey("PK_Sessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RefreshTokens_Accounts_OwnerId",
+                        name: "FK_Sessions_Accounts_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
@@ -466,9 +465,9 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Products_Sessions_ProducedInId",
+                        name: "FK_Products_Seasons_ProducedInId",
                         column: x => x.ProducedInId,
-                        principalTable: "Sessions",
+                        principalTable: "Seasons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -717,8 +716,8 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                 column: "SurveyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RefreshTokens_OwnerId",
-                table: "RefreshTokens",
+                name: "IX_Sessions_OwnerId",
+                table: "Sessions",
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
@@ -767,7 +766,7 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                 name: "ProductExpenses");
 
             migrationBuilder.DropTable(
-                name: "RefreshTokens");
+                name: "Sessions");
 
             migrationBuilder.DropTable(
                 name: "Skills");
@@ -815,7 +814,7 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                 name: "Lands");
 
             migrationBuilder.DropTable(
-                name: "Sessions");
+                name: "Seasons");
 
             migrationBuilder.DropTable(
                 name: "Surveys");
