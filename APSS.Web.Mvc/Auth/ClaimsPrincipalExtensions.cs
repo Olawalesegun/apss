@@ -64,12 +64,12 @@ public static class ClaimsPrincipalExtensions
     /// <param name="claimKey"></param>
     /// <returns></returns>
     /// <exception cref="SecurityTokenException"></exception>
-    private static string GetClaimValue(this ClaimsPrincipal claims, string claimKey)
+    public static string GetClaimValue(this ClaimsPrincipal claims, string claimKey)
     {
         var value = claims.Claims.FirstOrDefault(c => c.Type == claimKey)?.Value;
 
         if (value == null)
-            throw new SecurityTokenException("invalid token");
+            throw new SecurityTokenException($"principal does not have claim `{claimKey}`");
 
         return value;
     }
