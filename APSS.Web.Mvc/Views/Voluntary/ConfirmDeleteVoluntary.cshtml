@@ -34,7 +34,7 @@
         <br />
         <div class=" d-inline pt-2">
             <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Voluntary" asp-action="DeleteVoluntary">Confirm</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-route-id="@Model.Individual.Id" asp-controller="Voluntary" asp-action="GetVoluntaries">Cancel</a>
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
         </div>
     </div>
 </div>
