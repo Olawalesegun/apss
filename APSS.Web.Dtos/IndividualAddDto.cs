@@ -1,24 +1,25 @@
-﻿using APSS.Domain.Entities;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using static APSS.Web.Dtos.IndividualDto;
 
 namespace APSS.Web.Dtos;
 
-public class IndividualAddDto : BaseAuditbleDto
+public sealed class IndividualAddDto : BaseAuditbleDto
 {
+    [Required]
+    [RegularExpression(@"^[a-zA-Z''\s]{1,}$", ErrorMessage = "Characters are not allowed.")]
     [Display(Name = "Name")]
-    [Required(ErrorMessage = "Field Name is required")]
     public string Name { get; set; } = null!;
 
+    [Required]
     [Display(Name = "Gender")]
-    [Required(ErrorMessage = "Field Gender is required")]
-    public IndividualSex Sex { get; set; }
+    public SexDto Sex { get; set; }
 
+    [Required]
     [Display(Name = "Address")]
-    [Required(ErrorMessage = "Field Address is required")]
     public string Address { get; set; } = null!;
 
     [Display(Name = "Family")]
-    [Required(ErrorMessage = "Field Family is required")]
     public FamilyDto Family { get; set; } = null!;
 
     [Display(Name = "User")]
