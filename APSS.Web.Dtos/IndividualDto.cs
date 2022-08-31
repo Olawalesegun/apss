@@ -1,12 +1,11 @@
-﻿using APSS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos;
 
 public class IndividualDto : BaseAuditbleDto
 {
+    [Required]
     [Display(Name = "Name")]
-    [Required(ErrorMessage = "Field Name is required")]
     public string Name { get; set; } = null!;
 
     [Display(Name = "Job")]
@@ -33,7 +32,6 @@ public class IndividualDto : BaseAuditbleDto
     public DateTime? DateOfBirth { get; set; }
 
     [Display(Name = "Family")]
-    [Required(ErrorMessage = "Field Family is required ")]
     public FamilyDto Family { get; set; } = null!;
 
     public UserDto? User { get; set; }
