@@ -8,7 +8,7 @@
     <link rel="stylesheet"
           -moz-text-size-adjust href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
- @*   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />*@
+    @*   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -60,8 +60,8 @@
 
                     <div class="item ">
 
-                        <a href="#sub" id="drops" class="  dropdown-toggole px-2 py-1 my-1 d-inline  drop d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
-                            <span> الانظمة الاخرى  </span>
+                        <a href="#sub" id="drops" class=" text-decoration-none  systems-style dropdown-toggole px-2 py-1 my-1    d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
+                            <span> Other System </span>
                             <i class="fa fa-angle-right  rotate dropdown " style="padding-top:8px;margin:5px" aria-hidden="true"></i>
                         </a>
 
@@ -95,8 +95,8 @@
                         <div id="open-btn" class=" d-flex justify-content-between ">
                             <button class="btn px-0  btn-link  open-btn "><i class="fas fa-stream fs-1  "></i></button>
 
-                            <a href="#" class=" text-sm-start overflow-scroll py-1    text-primary  " id="media-system-name" style="word-wrap:break-word">
-                                المسح الزراعي
+                            <a href="#" class="text-decoration-none text-sm-start overflow-scroll py-1    text-primary  " id="media-system-name" style="word-wrap:break-word">
+                                Scan App
                             </a>
                         </div>
                         <div class="d-flex ">
@@ -122,7 +122,7 @@
                     <div class="collapse navbar-collapse" id="media_collapse">
                         <h3 class="" id="nav-system-name">
 
-                            المسح الزراعي
+                            Scan App
                         </h3>
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item align-content-end ml-1">
@@ -184,6 +184,7 @@
         });
             $("#drops").on('click',function(){
             $('.rotate').toggleClass('down');
+            $('.system-style').addClass('active');
            });
     </script>
     }
