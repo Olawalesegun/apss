@@ -5,11 +5,11 @@
     <form class="row d-flex justify-content-start d-inline mb-3 " method="post" asp-controller="Accounts" asp-action="Index">
         <div class=" mb-2 col-sm col-lg-6   d-flex">
             <div class="input-group">
-            <button type="submit" class="btn btn-primary " asp-action="Index">
-                <i class="fas fa-search"></i>
-            </button>
-            <input type="search" class="form-control" id="search" name="searchString" onkeyup="searchTable()" placeholder="Search..." />
-        </div>
+                <button type="submit" class="btn btn-primary " asp-action="Index">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input type="search" class="form-control" id="search" name="searchString" onkeyup="searchTable()" placeholder="Search..." />
+            </div>
         </div>
 
         <div class="col-sm-2 col-lg-1 mb-2 ">
@@ -42,9 +42,9 @@
                 <thead>
                     <tr class="header  bg-fixed border border-bottom fw-bold">
                         <th class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
-                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.HolderName)</th>
-                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.PhoneNumber)</th>
-                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.NationalId)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.HolderName)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.PhoneNumber)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.NationalId)</th>
                         <th style="width:20px" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -52,29 +52,29 @@
                     @foreach (var item in Model)
                     {
 
-                            <tr class="align-top">
+                        <tr class="align-top">
 
-                                <td class="text-break text-capitalize align-middle">@item.Id</td>
-                                <td class="text-break text-capitalize align-middle"> @item.HolderName</td>
-                                <td class="text-break text-capitalize align-middle">@item.PhoneNumber</td>
-                                <td class="text-break text-capitalize align-middle">
+                            <td class="text-break text-capitalize align-middle">@item.Id</td>
+                            <td class="text-break text-capitalize align-middle"> @item.HolderName</td>
+                            <td class="text-break text-capitalize align-middle">@item.PhoneNumber</td>
+                            <td class="text-break text-capitalize align-middle">
                                 @item.NationalId
-                                </td>
-                                <td class="align-middle center">
-                                    <div class=" dropend">
-                                        <a class="" href="#" id="dropdownMenuLink"
+                            </td>
+                            <td class="align-middle center">
+                                <div class=" dropend">
+                                    <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" asp-controller="Accounts" asp-action="AccountDetails"><div class="d-flex justify-content-between"> <span>تفاصيل</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                            <li><a class="dropdown-item btn-link" asp-controller="Accounts" asp-action="DeleteAccount"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                            <li><a class="dropdown-item btn-link" asp-controller="Accounts" asp-action="EditAccount"><div class="d-flex justify-content-between"> <span>تعديل</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Accounts" asp-action="AccountDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                        <li><a class="dropdown-item btn-link" asp-controller="Accounts" asp-action="DeleteAccount"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-controller="Accounts" asp-action="EditAccount"><div class="d-flex justify-content-between"> <span>Eidt</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
                                         @*<li><a class="dropdown-item btn-link" asp-controller="Users" asp-action="UserAccounts"><div class="d-flex justify-content-between"> <span>Accounts</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>*@
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
