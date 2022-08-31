@@ -16,14 +16,9 @@ public sealed class Session : AuditableEntity
     public DateTime LastLogin { get; set; }
 
     /// <summary>
-    /// Gets or sets the hostname of the device that uses the token
-    /// </summary>
-    public string? HostName { get; set; }
-
-    /// <summary>
     /// Gets or sets the user agent of the user's browser
     /// </summary>
-    public string? Agent { get; set; }
+    public string Agent { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the token string
