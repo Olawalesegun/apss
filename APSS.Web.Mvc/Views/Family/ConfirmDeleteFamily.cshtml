@@ -30,7 +30,7 @@
         <br />
         <div class=" d-inline pt-2">
             <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="Family" asp-action="DeleteFamily">Confirm</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-controller="Family" asp-action="GetFamilies">Cancel</a>
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
         </div>
     </div>
 </div>
