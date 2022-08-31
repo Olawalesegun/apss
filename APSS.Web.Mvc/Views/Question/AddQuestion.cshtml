@@ -8,7 +8,6 @@
             </div>
             <form class="" method="post" asp-action="AddQuestion">
 
-                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
                 <div class="row d-flex justify-content-between mb-3">
@@ -22,76 +21,113 @@
           </div>
                    
             <div class="col-6">
-             <label asp-for="IsRequired"></label>
-             <input type="checkbox" asp-for="IsRequired" />
+             <div class="form-check flex-grow-1">
+                    <input class="form-check-input" type="checkbox"  asp-for="IsRequired">
+                    <label class="form-check-label" asp-for="IsRequired"> </label>
+                </div> 
           </div>
                 </div>
-                <div class=" mt-4">
-                    <span class="text-danger">*</span>
-                    <label asp-for="Text" class="form-label"></label>
-                    <input type="text"  class="form-control" asp-for="Text"  aria-label="Text input with dropdown button">
+               <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Why What...?"  asp-for="Text" >
+                    <label asp-for="Text"></label>
                 </div>
-                <span asp-validation-for="Text" class="text-danger"></span>
-                                     <div class="row d-flex justify-content-between">
+                <span  class="d-block invalid-feedback" asp-validation-for="Text"></span>
+            </div>
+
+                 <div class="row d-flex justify-content-between">
 }
                         <!--1-->
                     <div class=" col-6" id="box1">
-                        <div class=" form-group" id="">
-                            <label  class="form-label" > Selection one </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
-                        </div>
+                 <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Enter Choice"  asp-for="CandidateAnswers" required >
+                    <label >Choice One</label>
+                </div>
+                <span  class="d-block invalid-feedback">Enter Choice Requerd</span>
+            </div>
                     </div>
                   
                     <!--2-->
                     <div class=" col-6" id="box2">
-                        <div class=" form-group" id="">
-                            <label  class="form-label" >Selection Two </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
-                        </div>
+                        <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Enter Choice"  asp-for="CandidateAnswers" required >
+                    <label >Choice Tow</label>
+                </div>
+                <span  class="d-block invalid-feedback">Enter Choice Requerd</span>
+            </div>
                     </div>
                          <!--3-->
                          <div class=" col-6" id="box3">
-                        <div class=" form-group" id="">
-                            <label  class="form-label" >Selection three  </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" >
-                        </div>
+                        <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Enter Choice"  asp-for="CandidateAnswers" required >
+                    <label >Choice Three</label>
+                </div>
+                <span  class="d-block invalid-feedback">Enter Choice Requerd</span>
+            </div>
                     </div>
                    
                          <!--4-->
                     <div class=" col-6" id="box4">
-                        <div class=" form-group" id="">
-                            <label  class="form-label" > Selection Four </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
-                        </div>
+                      <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Enter Choice"  asp-for="CandidateAnswers" required >
+                    <label >Choice Four</label>
+                </div>
+                <span  class="d-block invalid-feedback">Enter Choice Requerd</span>
+            </div>
                     </div>
 
                          <!--5-->
                     <div class=" col-6" id="box5">
-                        <div class=" form-group" id="">
-                            <label  class="form-label" > Selection five </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
-                        </div>
+                         <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Enter Choice"  asp-for="CandidateAnswers" required >
+                    <label >Choice five</label>
+                </div>
+                <span  class="d-block invalid-feedback">Enter Choice Requerd</span>
+            </div>
                     </div>
                          <!--6-->
                     <div class=" col-6" id="box6">
-                        <div class=" form-group" id="">
-                            <label  class="form-label" > Selection six </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
-                        </div>
+                         <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Enter Choice"  asp-for="CandidateAnswers" required >
+                    <label >Choice Six</label>
+                </div>
+                <span  class="d-block invalid-feedback">Enter Choice Requerd</span>
+            </div>
                     </div>
                          <!--7-->
                     <div class=" col-6" id="box7">
-                        <div class=" form-group" id="">
-                            <label  class="form-label" > Selection seven </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
-                        </div>
+                        <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Enter Choice"  asp-for="CandidateAnswers" required >
+                    <label >Choice Seven</label>
+                </div>
+                <span  class="d-block invalid-feedback">Enter Choice Requerd</span>
+            </div>
                     </div>
                          <!--8-->
                     <div class=" col-6" id="box8">
-                        <div class=" form-group" id="">
-                            <label  class="form-label" > Selection Eghit </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
-                        </div>
+                        <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Enter Choice"  asp-for="CandidateAnswers" required >
+                    <label >Choice Eghit</label>
+                </div>
+                <span  class="d-block invalid-feedback">Enter Choice Requerd</span>
+            </div>
                     </div>
                     
                    
@@ -100,7 +136,7 @@
 
                 <div class="mt-4"></div>
                 <button class="btn btn-primary" asp-action="AddQuestion" asp-controller="َQuestion"><i class="fa-solid fa-plus"></i>Add</button>
-               <button class="btn btn-danger mt-4 mx-1" asp-controller="Question" asp-action="GetQuestionsSurvey"><i class="fa-solid fa-share mx-2"></i><span>Cancel</span>  </button>
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
 
             </form>
         </div>
