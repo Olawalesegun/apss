@@ -29,7 +29,7 @@ svc.AddScoped<IUnitOfWork, ApssUnitOfWork>();
 svc.AddSingleton<IRandomGeneratorService, SecureRandomGeneratorService>();
 svc.AddSingleton<ICryptoHashService, Argon2iCryptoHashService>();
 svc.AddSingleton<IConfigurationService, AppSettingsConfigurationService>();
-svc.AddScoped<IAuthService, JwtAuthService>();
+svc.AddScoped<IAuthService, AuthService>();
 svc.AddScoped<ILogsService, DatabaseLogsService>();
 svc.AddScoped<IUsersService, UsersService>();
 svc.AddScoped<IPermissionsService, PermissionsService>();
@@ -82,6 +82,6 @@ app.UseCookiePolicy(new CookiePolicyOptions
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Setup}/{action=Index}");
+    pattern: "{controller=AnimalGroup}/{action=Index}");
 
 app.Run();
