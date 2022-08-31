@@ -1,7 +1,7 @@
 ﻿@model APSS.Web.Dtos.AnimalProductUnitDto
-<div class="container-fluid">
-    <div class="row d-flex  col-sm-12 col-lg-5 mx-lg-4 mx-sm-2">
-        <form class=" mt-3 " asp-controller="Units" asp-action="EditUnit">
+<div class="container-fluid my-4">
+    <div class="row d-flex  col-sm-12 col-lg-5 mx-lg-4 mx-sm-2 border rounded p-2">
+        <form class=" mt-3 needs-validation " asp-controller="Units" asp-action="EditUnit" novalidate>
             <div asp-validation-summary="ModelOnly"></div>
             <!-- 2 column puts for the National number and Phome Number-->
             <div class="center d-flex justify-content-center mb-3 ">
@@ -10,14 +10,19 @@
                 </h3>
             </div>
             <!-- Text input for user name-->
-            <div class="mb-4 form-floating">
-                @*<span class="text-danger fw-bold">*</span>*@
-                <input type="text" id="user_name" asp-for="Name" class="form-control" />
+            <div class="input-group mb-4 ">
+                <span class="input-group-text">@@</span>
+            <div class="form-floating col">
+                <input type="text" id="user_name" asp-for="Name" as class="form-control" required />
                 <label class="form-label" asp-for="Name"></label>
+                <div class="invalid-tooltip">
+                    Unit Name is Required
+                </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="mb-4">
-                <button type="submit" class="btn btn-primary   mt-4">Edit</button>
+            </div>
+            <div class="my-4">
+                <button type="submit" class="btn btn-primary   ">Edit</button>
                 <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
             </div>
             <!-- Submit button -->
