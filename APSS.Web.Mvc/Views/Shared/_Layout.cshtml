@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@{
+    if (User.Identity is null)
+    {
+        Context.Response.Redirect("/Auth/SignIn");
+        return;
+    }
+}
+
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
@@ -116,7 +124,11 @@
                                     @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
                                 </a>
                                 <ul class="dropdown-menu ml-5">
-                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                                    <li>
+                                        <a class="dropdown-item p-3 d-flex justify-content-between" href="/Auth/SignOut">
+                                            <span>Logout</span> <i class="bi bi-box-arrow-left rotation "></i>
+                                        </a>
+                                    </li>
                                     <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
                                 </ul>
                             </div>
@@ -145,7 +157,11 @@
                                     <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
+                                    <li>
+                                        <a class="dropdown-item p-3 d-flex justify-content-between" href="/Auth/SignOut">
+                                            Logout <i class="bi bi-box-arrow-left rotation"></i>
+                                        </a>
+                                    </li>
                                     <li><a asp-controller="AccountManagement" asp-action="AccountDetails" class="dropdown-item p-3 d-flex justify-content-between"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
                                 </ul>
                             </div>
