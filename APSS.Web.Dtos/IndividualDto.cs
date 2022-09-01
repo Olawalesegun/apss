@@ -1,67 +1,65 @@
-﻿using APSS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos;
 
 public class IndividualDto : BaseAuditbleDto
 {
-    [Display(Name = "  الإسم")]
-    [Required(ErrorMessage = "يجب إدخال إسم الفرد")]
+    [Required]
+    [Display(Name = "Name")]
     public string Name { get; set; } = null!;
 
-    [Display(Name = "  العمل")]
+    [Display(Name = "Job")]
     public string Job { get; set; } = null!;
 
-    [Display(Name = "  الجنس")]
-    [Required(ErrorMessage = "يجب إدخال جنس الفرد")]
+    [Display(Name = "Sex")]
+    [Required(ErrorMessage = "Field Sex is required")]
     public SexDto Sex { get; set; }
 
-    [Display(Name = "  الحالة الإجتماعية")]
+    [Display(Name = "Social Status")]
     public SocialStatusDto? SocialStatus { get; set; }
 
-    [Display(Name = "  رقم التلفون")]
+    [Display(Name = "Phone Number")]
     public string? PhonNumber { get; set; }
 
-    [Display(Name = " رقم الهوية")]
+    [Display(Name = "National Number")]
     public string? NationalId { get; set; }
 
-    [Display(Name = " العنوان")]
-    [Required(ErrorMessage = "يجب إدخال عنوان الفرد")]
+    [Display(Name = "Address")]
+    [Required(ErrorMessage = "Field Address is required")]
     public string Address { get; set; } = null!;
 
-    [Display(Name = "  تاريخ الميلاد")]
+    [Display(Name = "Birth Date")]
     public DateTime? DateOfBirth { get; set; }
 
-    [Display(Name = "  عائلة الفرد")]
-    [Required(ErrorMessage = "يجب إدخال  العائلة ")]
+    [Display(Name = "Family")]
     public FamilyDto Family { get; set; } = null!;
 
     public UserDto? User { get; set; }
 
     public enum SocialStatusDto
     {
-        [Display(Name = "غير محدد")]
+        [Display(Name = "Unspecified")]
         Unspecified,
 
-        [Display(Name = "عازب ")]
+        [Display(Name = "Single")]
         Unmarried,
 
-        [Display(Name = "متزوج")]
+        [Display(Name = "Married")]
         Married,
 
-        [Display(Name = "مطلق")]
+        [Display(Name = "Divorced")]
         Divorced,
 
-        [Display(Name = "أرمل")]
+        [Display(Name = "Widowed")]
         Widowed,
     }
 
     public enum SexDto
     {
-        [Display(Name = "ذكر ")]
+        [Display(Name = "Male ")]
         Male,
 
-        [Display(Name = "أنثى")]
+        [Display(Name = "Female")]
         Female
     }
 }

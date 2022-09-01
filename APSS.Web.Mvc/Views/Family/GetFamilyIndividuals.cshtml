@@ -1,36 +1,32 @@
-﻿@model IEnumerable<APSS.Web.Dtos.FamilyIndividualDto>
+﻿
+@model IEnumerable<APSS.Web.Dtos.FamilyIndividualDto>
 @{
 }
-<div class="col-sm-12  ">
+    <div class="col-sm-12  ">
 
-    <div class="container mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x ">
 
-        <table class="table table-hover table-responsive table-bordered   table-striped  " id="myTable">
+            <table class="table table-hover table-responsive table-bordered   table-striped  " id="sortTable">
 
-            <thead>
+            <thead class="table-light">
                 <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                    <th style="width:8%;" class=" text-capitalize align-middle">ID</th>
-                    <th style="width:20%;" class=" text-capitalize align-middle">Name Family</th>
-                    <th style="width:20%;" class=" text-capitalize align-middle">Name Individual</th>
-                    <th style="width:10%;" class=" text-capitalize align-middle">Is parent</th>
-                    <th style="width:10%;" class=" text-capitalize align-middle">Is provider</th>
-                    <th style="width:10%;" class=" text-capitalize align-middle">Action</th>
+                    <th class=" fw-bold align-middle">@Html.DisplayNameFor(f=>f.Id)</th>
+                    <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.Family) </th>
+                    <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.Individual) </th>
+                    <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.IsParent) </th>
+                    <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.IsProvider) </th>
+                    <th style="width:20px;" class="fw-bold align-middle"></th>
                 </tr>
             </thead>
             <tbody>
 
                 @foreach (var item in Model)
                 {
-                    <tr class="align-top">
-                        <td class="text-break text-capitalize align-middle">@item.Id</td>
-                        <td class="text-break text-capitalize align-middle"> @item.Family.Name</td>
-                        <td class="text-break text-capitalize align-middle">@item.Individual.Name</td>
-                        <td class="text-break text-capitalize align-middle">
-                            @item.IsParent
-                        </td>
-                        <td class="text-break text-capitalize align-middle">
-                            @item.IsProvider
-                        </td>
+                    <tr >
+                        <td>@item.Id</td>
+                        <td>@item.Family.Name</td>
+                        <td>@item.Individual.Name</td>
+                        <td>@item.IsParent</td>
+                        <td>@item.IsProvider</td>
                         <td class="align-middle center">
 
                             <div class=" dropend">
@@ -38,10 +34,10 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" asp-controller="Family" asp-action="ConfirmDeleteFamilyIndividual" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                    <li><a class="dropdown-item" asp-controller="Family" asp-action="ConfirmDeleteFamilyIndividual" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     <li class="">
                                         <a class="dropdown-item" asp-controller="Family" asp-action="UpdateFamilyIndividual" asp-route-Id="@item.Id">
-                                            <div class="d-flex justify-content-between"> <span>تحديث</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
+                                            <div class="d-flex justify-content-between"> <span>Edit</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
                                         </a>
                                     </li>
                                 </ul>
@@ -52,4 +48,3 @@
             </tbody>
         </table>
     </div>
-</div>

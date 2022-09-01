@@ -1,8 +1,5 @@
 ﻿@model APSS.Web.Dtos.FamilyDto
-@{
-    ViewData["Title"] = "Family Details";
-}
-
+    @await Html.PartialAsync("_PupolationNavBar")
 
 <div class="card mt-2">
     <div class="d-inline">
@@ -10,44 +7,63 @@
     <div class="card-body">
         <div class="d-flex ">
 
-            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>معلومات العائلة</h3>
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Family Information </h3>
         </div>
         <table class="table user-view-table m-0 t ">
             <tbody>
                 <tr class="">
-                    <td>رقم العائلة</td>
-                    <td> @Model.Id </td>
-                </tr>
-                <tr class="">
-                    <td>إسم العائلة</td>
-                    <td> @Model.Name </td>
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.Id)</label></td>
+                    <td>@Model.Id </td>
                 </tr>
                 <tr>
-                    <td> العنوان</td>
-                    <td>@Model.LivingLocation </td>
-                </tr>
-                 <tr>
-                    <td> تاريخ الإنشاء</td>
-                    <td>@Model.CreatedAt </td>
-                </tr>
-                  <tr>
-                    <td>أخر تعديل </td>
-                    <td>@Model.CreatedAt </td>
+                    <td> <label>@Html.DisplayNameFor(m => m.Name);</label></td>
+                    <td>@Model.Name  </td>
                 </tr>
                 <tr>
-                    <td>المستخدم   </td>
-                    <td> @Model.User.Name</td>
+                    <td><label>@Html.DisplayNameFor(m => m.LivingLocation)</label>  </td>
+                    <td> @Model.LivingLocation </td>
                 </tr>
-
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.User)</label>  </td>
+                    <td> @Model.User.Name </td>
+                </tr>
+                
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>
+                    <td>
+                        @Model.CreatedAt
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.ModifiedAt)</label>  </td>
+                    <td>
+                        @Model.ModifiedAt
+                    </td>
+                </tr>
+                <tr></tr>
             </tbody>
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a class="btn btn-primary-danger btn-rounded  text-primary mx-1 pr-1 my-2 " asp-controller="Family" asp-action="UpdateFamily" asp-route-Id="@Model.Id"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
-            <a class="btn  btn-primary-danger btn-rounded text-primary mx-1 my-2 " asp-controller="Individual" asp-action="AddIndividual" asp-route-Id="@Model.Id"> <i class="fa-solid fa-person-circle-plus mx-1 lg"></i><span>إضافة فرد</span>  </a>
-            <a class="btn  btn-link-danger btn-rounded text-danger mx-1 my-2 " asp-controller="Family" asp-action="ConfirmDeleteFamily" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
-            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Family" asp-action="GetFamilyIndividuals"asp-route-Id="@Model.Id"><i class="fa-solid fa-people-roof mx-1 lg"></i><span class="">الأفراد </span> </a>
-            <a  class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1 " asp-controller="Family" asp-action="GetFamilies"><i class="fa-solid fa-angle-right px-1"></i><span class="">رجوع </span> </a>
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Individual" asp-action="AddIndividual"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Individual</span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Family" asp-action="UpdateFamily"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
+            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="Family" asp-action="ConfirmDeleteFamily" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
+            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="Family" asp-action="GetFamilyIndividuals"><span class="">Individuals </span> </a>
         </div>
     </div>
 </div>
+
+@section scripts{
+<script>
+          $(document).ready(function() {
+            $(".sidebar ul li.active").removeClass('active');
+            $("#populationManagement").addClass('active');
+        });
+        document.getElementById("nav-system-name").innerHTML = "Populatoin Management";
+        document.getElementById("media-system-name").innerHTML = "Populatoin Management";
+
+        $("#family").AddClass('actives');
+        $("#individual").removeClass('actives');
+</script>
+    }

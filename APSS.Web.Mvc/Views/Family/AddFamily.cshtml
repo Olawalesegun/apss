@@ -2,31 +2,30 @@
 <div class="container-fluid px-3 py-3 mx-4 my-1  ">
     <div class="col-sm-6">
         <div class="d-flex justify-content-center">
-            <h4>اضافة عائلة</h4>
+            <h4> Add Family</h4>
         </div>
 
-        <form class=" mt-3 " method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-2">
-                <div class="">
-                    <span class="text-danger">*</span>
-                    <label class="form-label" asp-for="Name"></label>
-                    <input type="text" asp-for="Name" class="form-control" />
+        <form method="post" asp-controller="Family" asp-action="AddFamily" class="needs-validation" novalidate>
+             <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control"  placeholder="Name" asp-for="Name"  >
+                    <label asp-for="Name"></label>
                 </div>
-                <span asp-validation-for="Name" class="text-danger mb-4"></span>
-
-                <div class=" mt-4 ">
-                    <span class="text-danger">*</span>
-                    <label class="form-label" asp-for="LivingLocation"></label>
-                    <input type="text" asp-for="LivingLocation" class="form-control" />
+                <span  class="d-block invalid-feedback" asp-validation-for="Name"></span>
+            </div>
+                <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Address" asp-for="LivingLocation" >
+                    <label asp-for="LivingLocation"></label>
                 </div>
-                <span asp-validation-for="LivingLocation" class="text-danger mb-4"></span>
+                <span  class="d-block invalid-feedback" asp-validation-for="LivingLocation"></span>
             </div>
 
-            <div class="d-inline">
-                <button class="btn btn-primary mt-4 mx-1" asp-controller="Family" asp-action="AddFamily"> <i class="fa-solid fa-plus mx-2"></i><span>إضافة</span>  </button>
-                <button class="btn btn-danger mt-4 mx-1" asp-controller="Family" asp-action="GetFamilies"><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
-            </div>
+             <button type="submit" class="btn btn-primary w-25 my-4 mx-3">Add </button>
+            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
+         
         </form>
     </div>
 </div>
