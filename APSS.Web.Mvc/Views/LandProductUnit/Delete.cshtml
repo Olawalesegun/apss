@@ -1,0 +1,26 @@
+﻿@model APSS.Web.Dtos.LandProductUnitDto
+@{
+    ViewData["title"] = "Delete Unit Page";
+}
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف الموسم</h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr>
+                    <td>@Html.DisplayNameFor(i => i.Id)</td>
+                    <td>@Model?.Id</td>
+                </tr>
+                <tr class="">
+                    <td>@Html.DisplayNameFor(m => m.Name)</td>
+                    <td>@Model?.Name</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-controller="LandProductUnit" asp-action="Delete">تأكيد</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="LandProductUnit" asp-action="Index">رجوع</a>
+        </div>
+    </div>
+</div>

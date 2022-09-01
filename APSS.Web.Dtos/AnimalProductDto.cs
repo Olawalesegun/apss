@@ -11,22 +11,22 @@ namespace APSS.Web.Dtos
 {
     public class AnimalProductDto : BaseAuditbleDto
     {
-        [Required(ErrorMessage = "يجب ادخال اسم المنتج")]
-        [Display(Name = "اسم المنتج")]
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Name is Required")]
         public string Name { get; set; } = null!;
 
         public int UnitId { get; set; }
 
-        [Display(Name = "الوحدة ")]
-        [Required(ErrorMessage = "يجب اختيار نوع الوحدة ")]
+        [Display(Name = "Unit ")]
+        [Required(ErrorMessage = "Unit is Required ")]
         public IEnumerable<AnimalProductUnitDto> Unit { get; set; } = new List<AnimalProductUnitDto>();
 
-        [Required(ErrorMessage = "يجب ادخال الكمية   ")]
-        [Range(1, int.MaxValue, ErrorMessage = " اقل كمية هي 1")]
-        [Display(Name = "كمية المنتج")]
+        [Display(Name = "Quantity")]
+        [Required(ErrorMessage = "Quantity is Required")]
+        [Range(0, 1000000, ErrorMessage = "")]
         public double Quantity { get; set; }
 
-        [Display(Name = "الفترة المأخوذة")]
+        [Display(Name = "Period Taken ")]
         public TimeSpan PeriodTaken { get; set; }
 
         public AnimalGroupDto Producer { get; set; } = null!;

@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="d-flex ">
 
-            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>معلومات الحيوان</h3>
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Animal Information </h3>
         </div>
         <table class="table user-view-table m-0 t ">
             <tbody>
@@ -44,11 +44,11 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a id="III" class="btn btn-outline-dark   my-2 bg-white text-dark text-decoration-none mx-1 " asp-controller="AnimalGroup" asp-action="Index"><i class="fa-solid fa-arrow-right px-1"></i><span class="">رجوع </span> </a>
-            <a class="btn btn-outline-primary   text-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="AddAnimalGroup"> <i class="fa-solid fa-plus mx-1 "> </i><span>اضافة منتج</span> </a>
-            <a class="btn btn-outline-primary   text-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>تعديل</span> </a>
-            <a class="btn  btn-outline-link  text-danger mx-1 my-2 " asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>حذف</span>  </a>
-            <a id="III" class="btn btn-outline-dark   my-2 bg-white text-dark text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="AnimalProduct" asp-action="AllAnimalProducts"><span class="">المنتجات </span> </a>
+            <a id="III" class="btn btn-outline-dark   my-2  text-decoration-none mx-1 " asp-controller="AnimalGroup" asp-action="Index"><i class="fa-solid fa-arrow-left px-1"></i><span class="">Back </span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="AddAnimalGroup"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Product</span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
+            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
+            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="AnimalProduct" asp-action="AllAnimalProducts"><span class="">Products </span> </a>
         </div>
     </div>
 </div>
@@ -60,8 +60,8 @@
     $(".sidebar ul li.active").removeClass('active');
      $("#dataManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-    document.getElementById("media-system-name").innerHTML=" ادارة الموظفين";
+     document.getElementById("nav-system-name").innerHTML="Employees Management";
+    document.getElementById("media-system-name").innerHTML="Employees Management";
 
        $("#animalProducts").removeClass('actives');
        $("#lands").removeClass('actives');

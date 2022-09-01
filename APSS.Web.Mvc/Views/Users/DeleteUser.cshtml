@@ -2,7 +2,7 @@
 @await Html.PartialAsync("_accountNavBar")
 <div class="card mt-2">
     <div class="card-body">
-        <div class="d-flex "><h5>تأكيد حذف المستخدم</h5> </div>
+        <div class="d-flex "><h5> Confirm Delete Area </h5> </div>
         <table class="table user-view-table m-0  ">
             <tbody style="font-size:14px">
                 <tr class="">
@@ -21,8 +21,8 @@
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger   " asp-controller="Users" asp-action="ConfirmDeleteUser">تأكيد</a>
-            <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">الغاء</a>
+            <a class="btn btn-danger   " asp-controller="Users" asp-action="ConfirmDeleteUser">Confirm</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
         </div>
 
         @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
@@ -36,8 +36,8 @@
     $("#accountManagement").addClass('active');
     });
 
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-    document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
+     document.getElementById("nav-system-name").innerHTML="Employees Management";
+    document.getElementById("media-system-name").innerHTML="Employees Management";
     $(".scrollmenu a").on('click',function(){
         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
 

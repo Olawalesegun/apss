@@ -10,7 +10,7 @@ namespace APSS.Web.Dtos
 {
     public class AnimalProductUnitDto : BaseAuditbleDto
     {
-        [Display(Name = "اسم الوحدة")]
+        [Display(Name = "Name ")]
         public string Name { get; set; } = null!;
 
         public static implicit operator uint(AnimalProductUnitDto v)

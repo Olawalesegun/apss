@@ -3,12 +3,12 @@
 
 <div class="">
     <div class="row col-lg-5 col-sm-12   m-lg-4 m-sm-2 rounded border ">
-        <form class=" mt-3 needs-validation" asp-controller="Users" asp-action="AddUser" novalidate>
+        <form class=" mt-3 needs-validation form-group" asp-controller="Users" asp-action="AddUser" novalidate>
             <div asp-validation-summary="ModelOnly"></div>
             <!-- 2 column puts for the National number and Phome Number-->
             <div class="center d-flex justify-content-center mb-3 ">
                 <h3 class="">
-                    اضافة منطقة جديدة
+                    Add New Area
                 </h3>
             </div>
             <!-- Text input for user name-->
@@ -19,7 +19,7 @@
                 <input type="text" id="user_name" placeholder="Name" asp-for="Name" class="form-control" required />
                 <label class="" asp-for="Name"></label>
                   <div class="invalid-tooltip">
-                     يجب ادخال اسم المنطقة
+                     Please Enter Area Name
                    </div>
                 @*<span asp-validation-for="Name" class="text-danger"></span>*@
             </div>
@@ -41,8 +41,8 @@
                 }*@
             <div class="mb-4">
 
-                <button type="submit" class="btn btn-primary w-25 mb-4 mt-4">اضافة</button>
-                <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">الغاء</a>
+                <button type="submit" class="btn btn-primary w-25 mb-4 mt-4">Add</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
             </div>
             <!-- Submit button -->
         </form>

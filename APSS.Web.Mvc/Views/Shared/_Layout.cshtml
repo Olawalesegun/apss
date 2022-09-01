@@ -7,7 +7,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,12 +19,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    @*-ms-flex-bottomk rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">*@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">*@
-   @* <link rel="icon" href="~/css/all.css" />
-    <link rel="icon" href="~/css/main.css" />
-    <link rel="icon" href="~/css/icons.css" />*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body onload="myFunction()">
 
@@ -53,13 +49,13 @@
                 <li class="">
                     <a href="#" class="text-decoration-none  px-3 py-2 d-block ">
                         <i class="fa-solid fa-gear px-2 fa-lg"></i>
-                        الاعدادات
+                        Settings
                     </a>
                 </li>
 
                 <li class="">
                     <a class="text-decoration-none px-3 py-2 d-flex justify-content-between">
-                        <span><i class="bi bi-bell-fill fa-lg px-2"></i> الاشعارات</span>
+                        <span><i class="bi bi-bell-fill fa-lg px-2"></i> Notification</span>
                         <span class="bg-dark text-white rounded-pill py-0 px-2">02</span>
                     </a>
                 </li>
@@ -71,9 +67,9 @@
 
                     <div class="item ">
 
-                        <a href="#sub" id="drops" class="  dropdown-toggole px-2 py-1 my-1 d-inline  drop d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
-                            <span> الانظمة الاخرى  </span>
-                            <i class="fa fa-angle-left  rotate dropdown " style="padding-top:10px" aria-hidden="true"></i>
+                        <a href="#sub" id="drops" class=" text-decoration-none  systems-style dropdown-toggole px-2 py-1 my-1    d-flex justify-content-between  " data-bs-toggle="collapse" aria-expanded="false">
+                            <span> Other System </span>
+                            <i class="fa fa-angle-right  rotate dropdown " style="padding-top:8px;margin:5px" aria-hidden="true"></i>
                         </a>
 
                         <div class="sub-menu collapse" id="sub">
@@ -106,8 +102,8 @@
                         <div id="open-btn" class=" d-flex justify-content-between ">
                             <button class="btn px-0  btn-link  open-btn "><i class="fas fa-stream fs-1  "></i></button>
 
-                            <a href="#" class=" text-sm-start overflow-scroll py-1    text-primary  " id="media-system-name" style="word-wrap:break-word">
-                                المسح الزراعي
+                            <a href="#" class="text-decoration-none text-sm-start overflow-scroll py-1    text-primary  " id="media-system-name" style="word-wrap:break-word">
+                                Scan App
                             </a>
                         </div>
                         <div class="d-flex ">
@@ -137,7 +133,7 @@
                     <div class="collapse navbar-collapse" id="media_collapse">
                         <h3 class="" id="nav-system-name">
 
-                            المسح الزراعي
+                            Scan App
                         </h3>
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item align-content-end ml-1">
@@ -187,8 +183,7 @@
     </div>
     <!-- model-->        @*<footer class="border-top footer text-muted">      <div class="container">      &copy; 2022 - APSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>      </div>      </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>*@
-    @*<script type="text/javascript" src="~/MDB/js/mdb.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/modelFunction.js" asp-append-version="true"></script>
 
@@ -204,6 +199,7 @@
         });
             $("#drops").on('click',function(){
             $('.rotate').toggleClass('down');
+            $('.system-style').addClass('active');
            });
     </script>
     }

@@ -25,6 +25,16 @@ namespace APSS.Web.Mvc.Controllers
             return View();
         }
 
+        public IActionResult simple_form()
+        {
+            return View();
+        }
+
+        public IActionResult simple_table()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

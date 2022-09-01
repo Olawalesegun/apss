@@ -1,0 +1,34 @@
+﻿@model APSS.Web.Dtos.LandDto
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف الارض</h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <td>@Html.DisplayNameFor(m => m.Name)</td>
+                    <td>@Model?.Name</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(a => a.Address)</td>
+                    <td>@Model?.Address</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(a => a.Area)</td>
+                    <td>@Model?.Area</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(c => c.OwnedBy)</td>
+                    <td>@Model?.OwnedBy.Name</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-controller="Land" asp-action="Delete">تأكيد</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="Land" asp-action="Index">رجوع</a>
+        </div>
+
+        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
+    </div>
+</div>

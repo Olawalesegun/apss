@@ -4,7 +4,7 @@
 <div class="card my-3 shadow-0 ">
     <div class="card-body ">
         <div class="d-flex justify-content-start">
-            <i class="fa-solid fa-caret-left fs-1 rotation-x" style="padding-left:2px"></i> <h4 class="rotation-x">معلومات الحساب</h4>
+            <i class="fa-solid fa-caret-left fs-1 rotation-x" style="padding-left:2px"></i> <h4 class="rotation-x">Employee Information </h4>
         </div>
         <table class="table user-view-table m-0 ">
             <tbody>
@@ -72,9 +72,9 @@
     </div>
     <div class="mx-lg-4 mx-sm-2 ">
         <div cllass="d-inline mt-2 ">
-            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>رجوع</span> </a>
-            <a class="btn btn-outline-primary mx-1 my-2" asp-controller="Accounts" asp-action="EditAccount"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>تعديل</span> </a>
-            <a class="btn btn-outline-danger  mx-1 my-2" asp-controller="Accounts" asp-action="DeleteAccount"> <i class="fa-solid fa-trash-can mx-2"></i><span>حذف</span>  </a>
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-alt-circle-left mx-2"> </i><span>Back</span> </a>
+            <a class="btn btn-outline-primary mx-1 my-2" asp-controller="Accounts" asp-action="EditAccount"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span> </a>
+            <a class="btn btn-outline-danger  mx-1 my-2" asp-controller="Accounts" asp-action="DeleteAccount"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
         </div>
     </div>
 </div>
@@ -85,8 +85,8 @@
     $(".sidebar ul li.active").removeClass('active');
     $("#accountManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-      document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
+     document.getElementById("nav-system-name").innerHTML="Employee Management";
+      document.getElementById("media-system-name").innerHTML="Employee Management";
 
     $(".scrollmenu a").on('click',function(){
         $(".scrollmenu a.MediaActive").removeClass('MediaActive');

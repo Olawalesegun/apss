@@ -10,16 +10,17 @@ namespace APSS.Web.Dtos
 {
     public class ProductExpenseDto : BaseAuditbleDto
     {
-        [Required(ErrorMessage = "يجب ادخال نوع التكلقة")]
-        [Display(Name = "نوع التكلفة")]
+        [Required(ErrorMessage = "Type Expense is Require")]
+        [Display(Name = "Type Expense ")]
         public string Type { get; set; } = null!;
 
-        [Required(ErrorMessage = "يجب ادخال قيمة التكلقة")]
-        [Display(Name = "التكلفة")]
+        [Required(ErrorMessage = "Ptice is Require")]
+        [Display(Name = "Price")]
         public decimal Price { get; set; }
 
         public long ProductId { get; set; }
 
+        [Display(Name = "منفق على")]
         public ProductDto SpentOn { get; set; } = null!;
     }
 }

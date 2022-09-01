@@ -1,0 +1,56 @@
+﻿@model APSS.Web.Dtos.SeasonDto
+@{
+    ViewData["title"] = "Add Season Page";
+}
+<div class="container-fluid">
+    <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
+        <form class=" mt-3 align-items-center needs-validation" method="post" asp-action="Add" novalidate>
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Add new Season
+                </h3>
+            </div>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="text" asp-for="Name" class="form-control" placeholder=" " />
+                        <label class="form-label" asp-for="Name"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="datetime" asp-for="StartsAt" class="form-control" placeholder=" " />
+                        <label class="form-label" asp-for="StartsAt"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="StartsAt"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="datetime" asp-for="EndsAt" class="form-control" placeholder=" " />
+                        <label class="form-label" asp-for="EndsAt"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="EndsAt"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary btn-block">Add</button>
+            </div>
+        </form>
+    </div>
+</div>

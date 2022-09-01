@@ -8,26 +8,28 @@
 
     <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="Users" asp-action="Index">
         <div class=" mb-2 col-sm col-lg-6 d-flex">
-            <button type="submit" class="btn btn-primary search-btn">
+            <div class="input-group">            <button type="submit" class="btn btn-primary search-btn">
                 <i class="fas fa-search"></i>
             </button>
             <input type="search" class="form-control" id="search" onkeyup="searchTable()" name="searchString" />
         </div>
+        </div>
         <div class="col-sm-2 col-lg-1 mb-2 ">
 
             <select class="form-select " id="searchby">
-                <option selected>20</option>
-                <option value="1">40</option>
-                <option value="2">80</option>
-                <option value="3">100</option>
+                <option selected>Pages</option>
+                <option value="1">20</option>
+                <option value="2">40</option>
+                <option value="3">80</option>
+                <option value="4">100</option>
             </select>
         </div>
         <div class="col-sm mb-2 ">
 
             <select class="form-select " id="searchby" name="searchBy">
-                <option selected>Choose search by</option>
-                <option value="1">الاسم</option>
-                <option value="2">الرقم</option>
+                <option selected> search by</option>
+                <option value="1">Name</option>
+                <option value="2">ID</option>
             </select>
         </div>
         <div class="col-sm d-flex   d-inline mb-2">
@@ -47,11 +49,11 @@
 
                 <thead>
                     <tr class="header  bg-fixed border border-bottom fw-bold">
-                        <th style="width:8%;" class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
-                        <th style="width:30%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
-                        <th style="width:20%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.AccessLevel)</th>
-                        <th style="width:30%;" class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
-                        <th style="width:0%;" class="fw-bold align-middle">Action</th>
+                        <th class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
+                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
+                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.AccessLevel)</th>
+                        <th  class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                        <th style="width:20px" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,14 +75,14 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Users" asp-action="UserDetials"><div class="d-flex justify-content-between"> <span>تفاصيل</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Users" asp-action="DeleteUser"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Users" asp-action="EditUser"><div class="d-flex justify-content-between"> <span>تعديل</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="UserAccounts"><div class="d-flex justify-content-between"> <span>الموظفين</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Users" asp-action="UserDetials"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Users" asp-action="DeleteUser"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Users" asp-action="EditUser"><div class="d-flex justify-content-between"> <span>Edit</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="UserAccounts"><div class="d-flex justify-content-between"> <span>Employess</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>
                                         <li class="">
                                             <a class="dropdown-item text-decoration-none" role="button" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="AddAccount">
 
-                                                <div class="d-flex justify-content-between"> <span>اضافة موظق</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
+                                                <div class="d-flex justify-content-between"> <span> Add Employee</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
                                             </a>
                                         </li>
                                     </ul>
