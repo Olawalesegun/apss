@@ -11,6 +11,7 @@ namespace APSS.Web.Mvc.Controllers
     public class AnimalGroup : Controller
     {
         private IEnumerable<AnimalGroupDto> animal;
+        private readonly IAnimalService _service;
 
         public AnimalGroup()
         {
@@ -25,8 +26,9 @@ namespace APSS.Web.Mvc.Controllers
             };
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            // var resultAnimal =await _service.GetAllAnimalGroupsAsync(1, 1);
             var total = new AnimalGroupAndProductDto
             {
                 AnimalGroupDtos = animal.ToList(),
@@ -40,6 +42,7 @@ namespace APSS.Web.Mvc.Controllers
         {
             try
             {
+                var searchResult = _service.GetAllAnimalGroupsAsync(1, 0);
                 if (!string.IsNullOrEmpty(searchString))
                 {
                     var result = new AnimalGroupAndProductDto();
@@ -110,7 +113,23 @@ namespace APSS.Web.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAnimalGroup(AnimalGroupDto animal)
         {
-            return RedirectToAction("Index");
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Problem("the Animal Group Is Null");
+                }
+                else
+                {
+                    var resultAdd = _service.AddAnimalGroupAsync(1, animal.Type, "", animal.Quantity, (AnimalSex)animal.Sex);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception ex)
+            {
+                return Problem("some thing error");
+            }
+            return View(animal);
         }
 
         public async Task<IActionResult> AddUnit(long Id)
@@ -120,58 +139,58 @@ namespace APSS.Web.Mvc.Controllers
             return View("Index");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddUnit(AnimalProductUnitDto unit)
-        {
-            var animalUnit = new AnimalProductUnitDto();
-            if (ModelState.IsValid)
-            {
-                BadRequest("Index");
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateAnimalProduct(AnimalProductDto animalProductDto)
-        {
-            if (ModelState.IsValid)
-            {
-                return View(animalProductDto);
-            }
-            return RedirectToAction("Index");
-        }
-
+        [HttpGet]
         public async Task<IActionResult> AnimalDetails(int id)
         {
             //AnimalGroupDto animalGroupDto = new AnimalGroupDto();
             var animalGroupDto = animal.Where(a => a.Id == id).FirstOrDefault();
+            var animalDetails = _service.GetAnimalGroupAsync(1, id);
             return View(animalGroupDto);
         }
 
         public async Task<IActionResult> DeleteAnimalGroup(int id)
         {
             AnimalGroupDto animalGroupDto = new AnimalGroupDto();
+            var animalDelete = _service.GetAnimalGroupAsync(1, id);
             return View(animalGroupDto);
         }
 
         public async Task<IActionResult> ConfirmDeleteAnimalGroup(int id)
         {
             AnimalGroupDto animalGroupDto = new AnimalGroupDto();
-
+            var animalDelete = _service.RemoveAnimalGroupAsync(1, id);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EditAnimalGroup(int id)
         {
             AnimalGroupDto animalGroupDto = new AnimalGroupDto();
+            var animalEdit = _service.GetAnimalGroupAsync(1, id);
             return View(animalGroupDto);
         }
 
         [HttpPost]
         public async Task<IActionResult> EditAnimalGroup(AnimalGroupDto animalGroupDto)
         {
-            return RedirectToAction("Index");
+            if (!animalGroupDto.Equals(""))
+            {
+                try
+                {
+                    var resultEdit = _service.UpdateAnimalGroupAsync(1, animalGroupDto.Id, A =>
+                    {
+                        A.Id = animalGroupDto.Id;
+                        A.Type = animalGroupDto.Type;
+                        A.Quantity = animalGroupDto.Quantity;
+                        A.Sex = animalGroupDto.Sex;
+                    });
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    return Problem("error");
+                }
+            }
+            return View(animalGroupDto);
         }
     }
 }

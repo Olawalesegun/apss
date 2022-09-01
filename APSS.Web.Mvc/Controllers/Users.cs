@@ -25,7 +25,7 @@ namespace APSS.Web.Mvc.Controllers
             this._accountsService = accountsService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             List<UserDto> userDto = new List<UserDto>();
             userDto.Add(new UserDto { Name = "user 1", Id = 1, CreatedAt = DateTime.Now, AccessLevel = Domain.Entities.AccessLevel.Directorate });

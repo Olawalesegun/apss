@@ -1,11 +1,6 @@
 body {
-    /*  background-color: #F3F4F4;*/
     color: #3A6A59 !important;
     height: 100%;
-}
-
-.content {
-    /*   background-color: #f3f4f4;*/
 }
 
 html, body {
@@ -52,8 +47,6 @@ html, body {
     padding: 15px;
     font-size: 18px !important;
     font-family: 'Tajawal';
-    /*font-family: "Times New Roman", Times, serif;*/
-    /*  font-family: Arial, Helvetica, sans-serif;*/
 }
 
 @media(max-width:768px) {
@@ -121,10 +114,6 @@ html, body {
 
 .sidebar ul li a {
     font-size: 16px;
-}
-
-.btn-color {
-    /*  background-color: #186FAF !important;*/ /**/
 }
 
 .form-layout {
@@ -242,13 +231,10 @@ nav ul li div a {
 .actives {
     color: #2680C2 !important;
     border-bottom: 3px #2680C2 solid !important;
-    /* border-top: 3px #2680C2 solid !important;
-    border-radius: 30px 30px 30px 30px;*/
 }
 
 .manage-ment ul li a:hover {
     color: #2680C2 !important;
-    /* border-bottom: 3px #2680C2 solid !important;*/
 }
 
 .manage-ment ul li a {
@@ -368,7 +354,6 @@ table tbody tr td {
 
 /* style for scroll navbar */
 div.scrollmenu {
-    /* background-color: #333;*/
     overflow: auto;
     white-space: nowrap;
     margin-left: 0;
@@ -409,7 +394,6 @@ div.scrollmenu a {
     margin: -76px 0 0 -76px;
     border: 5px solid #f3f3f3;
     border-radius: 50%;
-    /* border-top: 5px solid blue;*/
     border-bottom: 5px solid #343434;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;

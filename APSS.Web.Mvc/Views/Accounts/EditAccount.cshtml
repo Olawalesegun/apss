@@ -1,133 +1,137 @@
 ﻿@model APSS.Web.Dtos.AccountDto
  @await Html.PartialAsync("_requiredStyle.cshtml")
- <style>
-     input{
-         input, select {
-    border-radius: 30px 0 0 3px !important;
-}
-     }
- </style>
- <div class="col-lg-8 col-sm-12  col-md-12  col-md-10 mx-lg-4  d-flex px-0">
-                <form class="row  mt-2   needs-validation " method="post" asp-controller="Accounts" asp-action="EditAccount"  novalidate>
-                    <div asp-validation-summary="ModelOnly"></div>
-                    <input type="hidden" asp-for="UserId" />
-                    <!-- 2 column puts for the National number and Phome Number-->
-                    <div class="center d-flex justify-content-center mb-2 ">
-                        <h3 class="">
-                            Edit Employee Information
-                        </h3>
-                    </div>
-                    <!-- Text input for account name-->
-                    <div class=" row d-flex  justify-content-between mx-1">
-                        <div class="col-sm-6 mt-4 flex-column form-group   position-relative">
-                            <div class="input-group">
-                               <span class="input-group-text">
-                                   <i class="fa-solid fa-user"></i>
-                               </span>
-                         <div class="form-floating col">
-                            <input type="text" id="account-name" asp-for="HolderName" placeholder="Holder Name" class="form-control w-100 " required />
-                            <label class="form-label" asp-for="HolderName"></label>
-                             <div class="invalid-tooltip ">
-                                Please Eneter Employee Name
-                             </div>
-                            </div>
-                            </div>
+<style>
+    input {
+        input, select
+
+    {
+        border-radius: 30px 0 0 3px !important;
+    }
+
+    }
+</style>
+<div class="col-lg-8 col-sm-12  col-md-12  col-md-10 mx-lg-4  d-flex px-0">
+    <form class="row  mt-2   needs-validation " method="post" asp-controller="Accounts" asp-action="EditAccount" novalidate>
+        <div asp-validation-summary="ModelOnly"></div>
+        <input type="hidden" asp-for="UserId" />
+        <!-- 2 column puts for the National number and Phome Number-->
+        <div class="center d-flex justify-content-center mb-2 ">
+            <h3 class="">
+                Edit Employee Information
+            </h3>
+        </div>
+        <!-- Text input for account name-->
+        <div class=" row d-flex  justify-content-between mx-1">
+            <div class="col-sm-6 mt-4 flex-column form-group   position-relative">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <div class="form-floating col">
+                        <input type="text" id="account-name" asp-for="HolderName" placeholder="Holder Name" class="form-control w-100 " required />
+                        <label class="form-label" asp-for="HolderName"></label>
+                        <div class="invalid-tooltip ">
+                            Please Eneter Employee Name
                         </div>
-                         <div class="col-sm-6 mt-4 flex-column form-group  d-flex    position-relative">
-                             <div class="input-group">
-                                 <span class="input-group-text">
-                                       <i class="fa-solid fa-key"></i>
-                                 </span>
-                              <div class="form-floating col">
-                            <input type="password" id="id_password" asp-for="PasswordHash" placeholder="Password" class="form-control " required />
-                            <label class="form-label" asp-for="PasswordHash"></label>
-                             <div class="invalid-tooltip">
-                                Please Eneter stronge Password
-                            </div>
-                            </div>
-                              <div class="input-group-text" ><i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Text input for AccessLevel -->
-                    <div class="row d-flex  justify-content-between mx-1 ">
-                        <div class="col-sm-6 mt-4 flex-column form-group has-validation d-flex  ">
-                            <div class="input-group"><span class="input-group-text">
-                                <i class="fa-solid fa-id-card"></i>
-                                </span>
-                            <div class="form-floating col">
-                            <input type="text" id="account-nationalID" asp-for="NationalId" placeholder="National ID" class="form-control d-inline " />
-                            <label class="form-label" id="valid" asp-for="NationalId"></label>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="col-sm-6 mt-4 flex-column form-group d-flex  ">
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-phone-flip"></i></span>
-                            <div class="form-floating col">
-                            <input type="text" id="account-phonenumber" asp-for="PhoneNumber" placeholder="phoneNumber" class="form-control d-inline" />
-                            <label class="form-label" asp-for="PhoneNumber"></label>
-                        </div>
-                           </div>
-                            </div>
-                    </div>
-                    <div class="row mx-1">
-                    <div class="mt-4  ">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
-                            <div class="form-floating col">
-                        <input type="text" id="account-job" asp-for="Job" placeholder="job" class="form-control d-inline" />
-                        <label class="form-label" asp-for="Job"></label>
-                        </div>
-                        </div>
-                     </div>
-                    </div>
-                    <div class="row d-flex justify-content-between mx-1 ">
-                        <div class=" col-sm-6  mt-4  flex-column form-group d-flex  ">
-                            <div class="input-group">
-                                <span class="input-group-text">social</span>
-                                <div class="form-floating col">
-                            <select class="form-select" asp-for="SocialStatus" asp-items="@ViewBag.socialstatus"></select>
-                            <label class="select-label mb-2" asp-for="SocialStatus"></label>
-                        </div>
-                        </div>
-                            </div>
-                        <div class=" col-sm-6  mt-4  flex-column form-group d-flex  ">
-                            <div class="input-group">
-                                <span class="input-group-text">Permissions</span>
-                                <div class="form-floating col">
-                            <select class="form-select" asp-for="Permissions" asp-items="@ViewBag.permission"></select>
-                            <label class="select-label mb-2" asp-for="Permissions">Permissions</label>
-                        </div>
-                    </div>
                     </div>
                 </div>
-
-                    <!-- account Permission -->
-                    @*  <div class="form-check-inline">
-                        <h5 class="inline">الصلاحيات:</h5>
-                        </div>*@
-                    <!--read Permission -->
-                    @*         <!--delete Permission -->
-                        <div class="form-check form-check-inline  ">
-                        <input class="form-check-input" type="checkbox" value="delete" id="delete" asp-for="DeletePermission" />
-                        <label class="form-check-label" asp-for="DeletePermission">  </label>
-                        </div>*@
-                    <div class="row d-flex mt-3 mx-2  justify-content-between">
-                        <div class="col-10  ">
-                        <h5> Employee Status </h5>
-                        <input class="form-check-input" type="radio" value="true" asp-for="IsActive" />
-                        <label class="form-check-label" asp-for="IsActive">  </label>
+            </div>
+            <div class="col-sm-6 mt-4 flex-column form-group  d-flex    position-relative">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fa-solid fa-key"></i>
+                    </span>
+                    <div class="form-floating col">
+                        <input type="password" id="id_password" asp-for="PasswordHash" placeholder="Password" class="form-control " required />
+                        <label class="form-label" asp-for="PasswordHash"></label>
+                        <div class="invalid-tooltip">
+                            Please Eneter stronge Password
                         </div>
                     </div>
-                    <br />
-                    <!-- Submit button -->
-                    <div class="row mx-2 justify-content-end mb-4">
-                        <button type="submit" class="btn btn-primary w-25  ">Edit</button>
-                        <a onClick="history.go(-1); return false;" class="btn btn-link   w-25 mx-3" style="background-color:#DCEEFB">Cancel</a>
-                    </div>
-                </form>
+                    <div class="input-group-text"><i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i></div>
+                </div>
             </div>
+        </div>
+        <!-- Text input for AccessLevel -->
+        <div class="row d-flex  justify-content-between mx-1 ">
+            <div class="col-sm-6 mt-4 flex-column form-group has-validation d-flex  ">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fa-solid fa-id-card"></i>
+                    </span>
+                    <div class="form-floating col">
+                        <input type="text" id="account-nationalID" asp-for="NationalId" placeholder="National ID" class="form-control d-inline " />
+                        <label class="form-label" id="valid" asp-for="NationalId"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 mt-4 flex-column form-group d-flex  ">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-phone-flip"></i></span>
+                    <div class="form-floating col">
+                        <input type="text" id="account-phonenumber" asp-for="PhoneNumber" placeholder="phoneNumber" class="form-control d-inline" />
+                        <label class="form-label" asp-for="PhoneNumber"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mx-1">
+            <div class="mt-4  ">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
+                    <div class="form-floating col">
+                        <input type="text" id="account-job" asp-for="Job" placeholder="job" class="form-control d-inline" />
+                        <label class="form-label" asp-for="Job"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-between mx-1 ">
+            <div class=" col-sm-6  mt-4  flex-column form-group d-flex  ">
+                <div class="input-group">
+                    <span class="input-group-text">social</span>
+                    <div class="form-floating col">
+                        <select class="form-select" asp-for="SocialStatus" asp-items="@ViewBag.socialstatus"></select>
+                        <label class="select-label mb-2" asp-for="SocialStatus"></label>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-sm-6  mt-4  flex-column form-group d-flex  ">
+                <div class="input-group">
+                    <span class="input-group-text">Permissions</span>
+                    <div class="form-floating col">
+                        <select class="form-select" asp-for="Permissions" asp-items="@ViewBag.permission"></select>
+                        <label class="select-label mb-2" asp-for="Permissions">Permissions</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- account Permission -->
+        @*  <div class="form-check-inline">
+            <h5 class="inline">الصلاحيات:</h5>
+            </div>*@
+        <!--read Permission -->
+        @*         <!--delete Permission -->
+            <div class="form-check form-check-inline  ">
+            <input class="form-check-input" type="checkbox" value="delete" id="delete" asp-for="DeletePermission" />
+            <label class="form-check-label" asp-for="DeletePermission">  </label>
+            </div>*@
+        <div class="row d-flex mt-3 mx-2  justify-content-between">
+            <div class="col-10  ">
+                <h5> Employee Status </h5>
+                <input class="form-check-input" type="radio" value="true" asp-for="IsActive" />
+                <label class="form-check-label" asp-for="IsActive">  </label>
+            </div>
+        </div>
+        <br />
+        <!-- Submit button -->
+        <div class="row mx-2 justify-content-start mb-4">
+            <button type="submit" class="btn btn-primary w-25  ">Edit</button>
+            <a onClick="history.go(-1); return false;" class="btn btn-link   w-25 mx-3" style="background-color:#DCEEFB">Cancel</a>
+        </div>
+    </form>
+</div>
 
 @section scripts{
 <script>
