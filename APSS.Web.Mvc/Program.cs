@@ -82,6 +82,6 @@ app.UseCookiePolicy(new CookiePolicyOptions
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=AnimalGroup}/{action=Index}");
+    pattern: "{controller=Family}/{action=GetFamilies}/{id?}");
 
 app.Run();
