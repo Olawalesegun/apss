@@ -234,7 +234,7 @@ public sealed class LandServiceTest
 
         var season = await addSeasonTask;
 
-        Assert.True(await _uow.Sessions.Query().ContainsAsync(season!));
+        Assert.True(await _uow.Seasons.Query().ContainsAsync(season!));
         //Assert.Equal(tampletSeason.Id, season.Id);
         //Assert.Equal(account.User.Id, season.);   there is no attribute name for the season creator
         Assert.Equal(tampletSeason.Name, season.Name);
@@ -506,7 +506,7 @@ public sealed class LandServiceTest
     {
         var (season, account) = await SeasonAddedTheory();
 
-        Assert.True(await _uow.Sessions.Query().ContainsAsync(season!));
+        Assert.True(await _uow.Seasons.Query().ContainsAsync(season!));
 
         account = await _uow.CreateTestingAccountForUserAsync(account.User.Id, permissionType);
 
@@ -528,7 +528,7 @@ public sealed class LandServiceTest
 
         await removeSeasonTask;
 
-        Assert.False(await _uow.Sessions.Query().ContainsAsync(season!));
+        Assert.False(await _uow.Seasons.Query().ContainsAsync(season!));
     }
 
     [Theory]
@@ -724,7 +724,7 @@ public sealed class LandServiceTest
         account = await _uow.CreateTestingAccountForUserAsync(account.User.Id, permissionType);
 
         Assert.True(await _uow.Lands.Query().ContainsAsync(land!));
-        Assert.True(await _uow.Sessions.Query().ContainsAsync(season!));
+        Assert.True(await _uow.Seasons.Query().ContainsAsync(season!));
         Assert.True(await _uow.LandProducts.Query().ContainsAsync(landProduct!));
         Assert.True(await _uow.Accounts.Query().ContainsAsync(account!));
 
@@ -796,7 +796,7 @@ public sealed class LandServiceTest
     {
         var (season, account) = await SeasonAddedTheory();
 
-        Assert.True(await _uow.Sessions.Query().ContainsAsync(season));
+        Assert.True(await _uow.Seasons.Query().ContainsAsync(season));
         Assert.True(await _uow.Accounts.Query().ContainsAsync(account));
 
         account = await _uow.CreateTestingAccountForUserAsync(account.User.Id, permissionType);
@@ -1068,7 +1068,7 @@ public sealed class LandServiceTest
         var (season, account) = await SeasonAddedTheory();
         var templateSeason = ValidEntitiesFactory.CreateValidSeason();
 
-        Assert.True(await _uow.Sessions.Query().ContainsAsync(season!));
+        Assert.True(await _uow.Seasons.Query().ContainsAsync(season!));
 
         account = await _uow.CreateTestingAccountForUserAsync(account.User.Id, permissionType);
 

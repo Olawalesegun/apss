@@ -112,14 +112,14 @@ public interface IUnitOfWork : IDisposable, IAsyncDisposable
     IRepository<Question> Questions { get; }
 
     /// <summary>
-    /// Gets the refresh tokens repository
+    /// Gets the account sessions repository
     /// </summary>
-    IRepository<RefreshToken> RefreshTokens { get; }
+    IRepository<Session> Sessions { get; }
 
     /// <summary>
     /// Gets the seasons repository
     /// </summary>
-    IRepository<Season> Sessions { get; }
+    IRepository<Season> Seasons { get; }
 
     /// <summary>
     /// Gets the skills repository
