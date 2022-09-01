@@ -14,7 +14,7 @@
        <form method="post" asp-controller="Individual" asp-action="AddIndividual" class="needs-validation" novalidate>
             <!-- ID input -->
             <div class="input-group has-validation mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-person"></i></span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="Name" asp-for="Name" pattern="^[a-zA-Z\]{1,}$" aria-describedby="indvidualName" >
                     <label asp-for="Name"></label>
@@ -24,7 +24,7 @@
 
             <!-- Password input -->
              <div class="input-group has-validation mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="Address" asp-for="Address" pattern="^[a-zA-Z''\s]{1,}$" aria-describedby="indvidualAddress" >
                     <label asp-for="Address"></label>
@@ -34,7 +34,7 @@
 
                 <!-- Text input for Family -->
               <div class="input-group has-validation mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-people-roof"></i></span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="Family" asp-for="Family.Name" value="@Model.Family.Name"  pattern="^[a-zA-Z''\s]{1,}$" aria-describedby="indvidualFamily" >
                     <label asp-for="Family"></label>
