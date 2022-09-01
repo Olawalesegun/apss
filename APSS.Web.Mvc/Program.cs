@@ -48,7 +48,11 @@ svc.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 
     options.ExpireTimeSpan = settings.CookieExpiration;
     options.SlidingExpiration = settings.SlidingExpiration;
+
     options.AccessDeniedPath = "/Forbidden/";
+    options.LoginPath = "/Auth/SignIn";
+    options.LogoutPath = "/Auth/SignOut";
+
     options.EventsType = typeof(TokenValidationEvent);
 });
 
