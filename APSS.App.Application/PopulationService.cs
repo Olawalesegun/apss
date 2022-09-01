@@ -200,7 +200,7 @@ public sealed class PopulationService : IPopulationService
     }
 
     ///<inheritdoc/>
-    public IQueryBuilder<Family> GetFamiliesAsync(long accountId)
+    public IQueryBuilder<Family> GetFamilies(long accountId)
     {
         var family = _uow.Families
             .Query()
