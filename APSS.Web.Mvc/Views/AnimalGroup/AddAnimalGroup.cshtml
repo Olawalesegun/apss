@@ -27,11 +27,11 @@
             <div class="input-group">
                 <span class="input-group-text"><i class="fa-solid fa-arrow-up-wide-short"></i></span>
                 <div class="form-floating col">
-                    <input type="number" id="Quentity" asp-for="Quantity" name="Quentity" class="form-control" placeholder="quantity" required />
+                    <input type="number" id="Quentity" asp-for="Quantity" class="form-control" placeholder="quantity" required />
                     <label class="form-label" asp-for="Quantity"></label>
                     <span asp-validation-for="Quantity"></span>
                     <div class="invalid-tooltip">
-                        يجب ادخال الكمية
+                        Quintity feild is Required
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
     $(".sidebar ul li.active").removeClass('active');
      $("#dataManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="";
+     document.getElementById("nav-system-name").innerHTML="Employees Management";
     document.getElementById("media-system-name").innerHTML="Employees Management";
 
        $("#animalProducts").removeClass('actives');

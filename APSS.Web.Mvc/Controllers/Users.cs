@@ -3,36 +3,39 @@ using Microsoft.AspNetCore.Mvc;
 using APSS.Domain.Entities;
 using APSS.Domain.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using APSS.Web.Mvc.Auth;
 
 namespace APSS.Web.Mvc.Controllers
 {
     public class Users : Controller
     {
         private List<UserDto> _userDtos;
-        private readonly IAccountsService _accountsService;
+        private readonly IUsersService _userService;
 
-        public Users(IAccountsService accountsService)
+        public Users(IUsersService userService)
         {
-            _userDtos = new List<UserDto>
-            {
-                new UserDto{Name ="user 1",Id=1,CreatedAt=DateTime.Now,AccessLevel=Domain.Entities.AccessLevel.Directorate},
-                new UserDto{Name ="user 2",Id=2,CreatedAt=DateTime.Now,AccessLevel=Domain.Entities.AccessLevel.Directorate},
-                new UserDto{Name ="user 3",Id=3,CreatedAt=DateTime.Now,AccessLevel=Domain.Entities.AccessLevel.Directorate},
-                new UserDto{Name ="user 4",Id=4,CreatedAt=DateTime.Now,AccessLevel=Domain.Entities.AccessLevel.Directorate},
-                new UserDto{Name ="user 5",Id=5,CreatedAt=DateTime.Now,AccessLevel=Domain.Entities.AccessLevel.Directorate},
-                new UserDto{Name ="user 6",Id=6,CreatedAt=DateTime.Now,AccessLevel=Domain.Entities.AccessLevel.Directorate},
-            };
-            this._accountsService = accountsService;
+            _userService = userService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             List<UserDto> userDto = new List<UserDto>();
-            userDto.Add(new UserDto { Name = "user 1", Id = 1, CreatedAt = DateTime.Now, AccessLevel = Domain.Entities.AccessLevel.Directorate });
-            userDto.Add(new UserDto { Name = "user 2", Id = 2, CreatedAt = DateTime.Now, AccessLevel = Domain.Entities.AccessLevel.Directorate });
-            userDto.Add(new UserDto { Name = "user 3", Id = 3, CreatedAt = DateTime.Now, AccessLevel = Domain.Entities.AccessLevel.Directorate });
-            userDto.Add(new UserDto { Name = "user 4", Id = 4, CreatedAt = DateTime.Now, AccessLevel = Domain.Entities.AccessLevel.Directorate });
-            userDto.Add(new UserDto { Name = "user 5", Id = 5, CreatedAt = DateTime.Now, AccessLevel = Domain.Entities.AccessLevel.Directorate });
+            var user = await (await _userService.GetSubuserAsync(1)).AsAsyncEnumerable().ToListAsync();
+            foreach (var userDtoItem in user)
+            {
+                userDto.Add(new UserDto
+                {
+                    Id = userDtoItem.Id,
+                    Name = userDtoItem.Name,
+                    AccessLevel = userDtoItem.AccessLevel,
+                    userStatus = userDtoItem.UserStatus,
+                    CreatedAt = userDtoItem.CreatedAt,
+                });
+            }
             return View(userDto);
         }
 
@@ -65,22 +68,19 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(UserDto user)
         {
-            var userDto = new UserDto();
-            return View(userDto);
+            var accountis = 1;
+            var add = await _userService.CreateAsync(accountis, user.Name);
+            return RedirectToAction("Index");
+
+            return View(user);
         }
 
         public async Task<IActionResult> Accounts()
         {
-            List<AccountDto> accountDto = new List<AccountDto>
-            {
-                new AccountDto{Id=1,HolderName="account 1",PhoneNumber="7777777777",NationalId="06754653"},
-                new AccountDto{Id=2,HolderName="account 2",PhoneNumber="7777777777",NationalId="06754653"},
-                new AccountDto{Id=3,HolderName="account 3",PhoneNumber="7777777777",NationalId="06754653"},
-                new AccountDto{Id=4,HolderName="account 4",PhoneNumber="7777777777",NationalId="06754653"},
-                new AccountDto{Id=5,HolderName="account 5",PhoneNumber="7777777777",NationalId="06754653"}
-            };
+            List<AccountDto> accountDto = new List<AccountDto>();
             return View(accountDto);
         }
 
@@ -98,11 +98,6 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> DeleteUser(long id)
         {
             UserDto userDto = new UserDto();
-            userDto.Id = 10;
-            userDto.Name = "BBB";
-            userDto.AccessLevel = Domain.Entities.AccessLevel.Directorate;
-            userDto.ModifiedAt = DateTime.Now;
-            userDto.CreatedAt = DateTime.Now;
             return View(userDto);
         }
 
@@ -123,10 +118,4 @@ namespace APSS.Web.Mvc.Controllers
             return View(userDto);
         }
     }
-}
-
-internal class perm
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
 }

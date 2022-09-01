@@ -1,4 +1,5 @@
 ﻿using APSS.Domain.Entities;
+using APSS.Web.Dtos.ValueTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,7 +36,7 @@ namespace APSS.Web.Dtos
         /// Gets or sets the phone number of the user
         /// </summary>
 
-        [Display(Name = "Phoen Number ")]
+        [Display(Name = "Phone Number ")]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace APSS.Web.Dtos
         /// </summary>
 
         [Display(Name = "Social Status")]
-        public SocialStatus SocialStatus { get; set; } = SocialStatus.Unspecified;
+        public SocialStatus SocialStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the job of the user
@@ -65,8 +66,9 @@ namespace APSS.Web.Dtos
         /// Gets or sets the permissions of the account
         /// </summary>
         [Display(Name = "Permissions")]
-        public PermissionType Permissions { get; set; }
+        public PermissionTypeDto PermissionTypeDto { get; set; } = new PermissionTypeDto();
 
+        public PermissionType permissionType { get; set; }
         public long UserId { get; set; }
 
         /// <summary>

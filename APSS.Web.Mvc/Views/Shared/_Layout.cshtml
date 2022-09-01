@@ -14,8 +14,9 @@
     <link rel="icon" type="image/x-icon" href="/resources/planting.png">
     <title>@ViewData["Title"] - APSS</title>
     <link rel="stylesheet"
-          -moz-text-size-adjust href="~/lib/font-awesome/css/all.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+          -moz-text-size-adjust href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    @*   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APSS.Web.Mvc.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -44,8 +45,8 @@
                 <li class="" id="dashBoard"><a asp-action="Index" asp-controller="Home" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-house px-2 fa-lg"></i> الصفحة الرئيسية</a></li>
                 <li class="" id="accountManagement"><a asp-action="Index" asp-controller="Users" class="text-decoration-none px-2 py-2 my-1 d-block"><i class="fa-solid fa-users px-2 fa-lg"></i> ادارة الموظفين </a></li>
 
-                <li class="" id="dataManagement"><a asp-action="Index" asp-controller="DataManagement" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Management</a></li>
-                <li class="" id="surveyManagement"><a asp-action="GetSurveys" asp-controller="Survey" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> survey Management</a></li>
+                <li class="" id="dataManagement"><a asp-action="Index" asp-controller="AnimalGroup" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-database px-2 fa-lg"></i> Data Managament  </a></li>
+                <li class="" id="surveyManagement"><a href="#" class="text-decoration-none px-2 my-1 py-2 d-block"><i class="fa-solid fa-circle-question px-2 fa-lg"></i> Survey Management  </a></li>
             </ul>
 
             <hr class="mx-2">
@@ -124,11 +125,7 @@
                                     @*<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>*@
                                 </a>
                                 <ul class="dropdown-menu ml-5">
-                                    <li>
-                                        <a class="dropdown-item p-3 d-flex justify-content-between" href="/Auth/SignOut">
-                                            <span>Logout</span> <i class="bi bi-box-arrow-left rotation "></i>
-                                        </a>
-                                    </li>
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
                                     <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
                                 </ul>
                             </div>
@@ -157,11 +154,7 @@
                                     <img src="~/resources/user.jpg" alt="" style="width:35px; height:35px" class="rounded-circle border border-2 border-primary">
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item p-3 d-flex justify-content-between" href="/Auth/SignOut">
-                                            Logout <i class="bi bi-box-arrow-left rotation"></i>
-                                        </a>
-                                    </li>
+                                    <li><a class="dropdown-item p-3 d-flex justify-content-between" href="#"><span>Logout</span> <span class=""><i class="bi bi-box-arrow-left rotation "></i></span> </a></li>
                                     <li><a asp-controller="AccountManagement" asp-action="AccountDetails" class="dropdown-item p-3 d-flex justify-content-between"><span>Detials</span> <span><i class="bi bi-info-circle "></i></span></a></li>
                                 </ul>
                             </div>

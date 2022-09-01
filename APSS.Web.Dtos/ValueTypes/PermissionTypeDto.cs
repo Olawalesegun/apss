@@ -1,4 +1,5 @@
 ﻿using APSS.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos.ValueTypes;
 
@@ -22,6 +23,7 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets or sets whether permissions has `Create` flag set or not
     /// </summary>
+    [Display(Name = "Create")]
     public bool Create
     {
         get => HasPermission(PermissionType.Create);
@@ -31,6 +33,7 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets or sets whether permissions has `Delete` flag set or not
     /// </summary>
+    [Display(Name = "Delete")]
     public bool Delete
     {
         get => HasPermission(PermissionType.Delete);
@@ -40,6 +43,7 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets or sets whether permissions has `Read` flag set or not
     /// </summary>
+    [Display(Name = "Read")]
     public bool Read
     {
         get => HasPermission(PermissionType.Read);
@@ -49,6 +53,7 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets or sets whether permissions has `Update` flag set or not
     /// </summary>
+    [Display(Name = "Update")]
     public bool Update
     {
         get => HasPermission(PermissionType.Update);

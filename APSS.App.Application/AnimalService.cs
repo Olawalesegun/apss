@@ -98,18 +98,15 @@ public class AnimalService : IAnimalService
     /// <inheritdoc/>
     public async Task<IQueryBuilder<AnimalProduct>> GetAnimalProductAsync(long accountId, long animalProductId)
     {
-        var user = await _uow.Accounts.Query()
+        var account = await _uow.Accounts.Query()
             .Include(u => u.User)
-            .FindAsync(accountId);
-        await _permissionsService.ValidatePermissionsAsync(accountId, user.User.Id, PermissionType.Read);
-
-        return _uow.AnimalProducts.Query().Where(p => p.Id == animalProductId);
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+        return _uow.AnimalProducts.Query().Where(p => p.Id == animalProductId && p.AddedBy.Id == account.User.Id);
     }
 
     public async Task<IQueryBuilder<AnimalGroup>> GetAnimalGroupAsync(long accountId, long animalGroupId)
     {
-        var user = await _uow.Accounts.Query().FindAsync(accountId);
-        await _permissionsService.ValidatePermissionsAsync(accountId, user.User.Id, PermissionType.Read);
+        var user = await _uow.Accounts.Query().FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
         return _uow.AnimalGroups.Query().Where(g => g.Id == animalGroupId);
     }
@@ -266,8 +263,11 @@ public class AnimalService : IAnimalService
 
         await _permissionsService.ValidateUserPatenthoodAsync(accountId, animalProductId, PermissionType.Update);
 
-        if (isConfirm) return _uow.AnimalProducts.Confirm(animalProduct);
-        else return _uow.AnimalProducts.Decline(animalProduct);
+        if (isConfirm) _uow.AnimalProducts.Confirm(animalProduct);
+        else _uow.AnimalProducts.Decline(animalProduct);
+
+        await _uow.CommitAsync();
+        return animalProduct;
     }
 
     public async Task<AnimalGroup> ConfirmAnimalGroup(long accountId, long animalGroupId, bool isConfirm)
@@ -280,20 +280,23 @@ public class AnimalService : IAnimalService
 
         if (isConfirm)
         {
-            return _uow.AnimalGroups.Confirm(animalGroup);
+            _uow.AnimalGroups.Confirm(animalGroup);
         }
         else
         {
-            return _uow.AnimalGroups.Decline(animalGroup);
+            _uow.AnimalGroups.Decline(animalGroup);
         }
+
+        await _uow.CommitAsync();
+
+        return animalGroup;
     }
 
     public async Task<IQueryBuilder<AnimalProductUnit>> GetAnimalProductUnitAsync(long accountId)
     {
         var account = await _uow.Accounts.Query()
             .Include(u => u.User)
-            .FindAsync(accountId);
-        await _permissionsService.ValidatePermissionsAsync(accountId, account.User.Id, PermissionType.Read);
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
         return _uow.AnimalProductUnits.Query();
     }
 
