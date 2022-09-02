@@ -11,12 +11,12 @@ using APSS.Web.Mvc.Auth;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
 
 #region Services
 
 var svc = builder.Services;
-
 // Database context
 svc.AddDbContext<ApssDbContext>(cfg =>
     cfg.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"])

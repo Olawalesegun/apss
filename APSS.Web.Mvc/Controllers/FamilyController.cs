@@ -1,20 +1,35 @@
 ﻿using APSS.Application.App;
 using APSS.Domain.Entities;
+using APSS.Domain.Services;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.Forms;
+using APSS.Web.Mvc.Auth;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace APSS.Web.Mvc.Controllers
 {
     public class FamilyController : Controller
     {
-        private readonly UserDto _userDto;
-        private readonly List<FamilyDto> families;
+        #region Fields
+
+        private readonly IMapper _mapper;
+        private readonly IPopulationService _populationSvc;
+        private readonly UserDto _usereDto;
+        private readonly List<FamilyDto> fes;
         private readonly List<IndividualDto> individuals;
         private readonly List<FamilyIndividualDto> familyIndividuals;
 
-        public FamilyController()
+        #endregion Fields
+
+        #region Public Constructors
+
+        public FamilyController(IPopulationService populationService, IMapper mapper)
         {
-            _userDto = new UserDto
+            _populationSvc = populationService;
+            _mapper = mapper;
+            _usereDto = new UserDto
             {
                 Id = 1,
                 Name = "aden",
@@ -22,46 +37,83 @@ namespace APSS.Web.Mvc.Controllers
                 userStatus = UserStatus.Active,
             };
 
-            families = new List<FamilyDto>
+            fes = new List<FamilyDto>
             {
-              new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
-              new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
+              new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_usereDto },
+              new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_usereDto },
             };
 
             individuals = new List<IndividualDto>
             {
-                new IndividualDto{Id=54, Name="ali",Address="mareb",Family=families.First(),User=_userDto},
-                new IndividualDto{Id=534, Name="salih",Address="mareb",Family=families.Last(),User=_userDto}
+                new IndividualDto{Id=54, Name="ali",Address="mareb",Family=fes.First(),User=_usereDto},
+                new IndividualDto{Id=534, Name="salih",Address="mareb",Family=fes.Last(),User=_usereDto}
             };
 
             familyIndividuals = new List<FamilyIndividualDto>
             {
-                new FamilyIndividualDto{Id=54,Individual=individuals.First(),Family=families.First(),IsParent=true,IsProvider=true},
-                new FamilyIndividualDto{Id=54,Individual=individuals.Last(),Family=families.Last(),IsParent=true,IsProvider=true},
+                new FamilyIndividualDto{Id=54,Individual=individuals.First(),Family=fes.First(),IsParent=true,IsProvider=true},
+                new FamilyIndividualDto{Id=54,Individual=individuals.Last(),Family=fes.Last(),IsParent=true,IsProvider=true},
             };
         }
 
+        #endregion Public Constructors
+
         // GET: FamilyController/GetFamilies
-        public IActionResult GetFamilies()
+        [ApssAuthorized(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Directorate | AccessLevel.District
+                          | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group, PermissionType.Read)]
+        public IActionResult Index()
         {
-            return View(families);
+            var families = _populationSvc.GetFamilies(User.GetId());
+            var familiesDto = _mapper.Map<FamilyDto>(families);
+            /*          var familiesDto= await families.AsAsyncEnumerable().Select(
+                            f => new FamilyGetDto
+                            {
+                                Id = f.Id,
+                                Name = f.Name,
+                                LivingLocation = f.LivingLocation,
+                                UserName=f.AddedBy.Name
+                            }).ToListAsync();*/
+
+            return View("GetFamilies", familiesDto);
         }
 
         // GET: FamilyController/FamilyDetails/5
-        public IActionResult FamilyDetails(int id)
+        [ApssAuthorized(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Directorate | AccessLevel.District
+                       | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group, PermissionType.Read)]
+        public IActionResult FamilyDetails(long id)
         {
-            var family = families.Find(f => f.Id == id);
-            return View(family);
+            var family = _populationSvc.GetFamilies(User.GetId()).Where(f => f.Id == id);
+            var familyDto = _mapper.Map<FamilyDto>(family);
+            /* var familyDto= await  family.Where(f => f.Id == id)
+                    .AsAsyncEnumerable()
+                    .Select(f => new FamilyGetDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    LivingLocation = f.LivingLocation,
+                    CreatedAt = f.CreatedAt,
+                    ModifiedAt = f.ModifiedAt
+                }).ToListAsync();*/
+
+            return View(familyDto);
         }
 
         // GET: FamilyController/GetFamilyIndividuals/5
-        public IActionResult GetFamilyIndividuals(int id)
+        [ApssAuthorized(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Directorate | AccessLevel.District
+                      | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group, PermissionType.Read)]
+        public async Task<IActionResult> GetFamilyIndividuals(long id)
         {
+            var familyindividualsDto = await _populationSvc
+                .GetIndividualsOfFamilyAsync(User.GetId(), id);
+
+            var indiviudalofFamilyDtoMap = _mapper.Map<FamilyIndividualDto>(familyindividualsDto);
+
             var individualoffamily = familyIndividuals.Where(f => f.Family.Id == id);
-            return View(individualoffamily.ToList());
+            return View(indiviudalofFamilyDtoMap);
         }
 
         // GET: FamilyController/AddFamily
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Create)]
         public IActionResult AddFamily()
         {
             return View();
@@ -70,80 +122,74 @@ namespace APSS.Web.Mvc.Controllers
         // POST: FamilyController/AddFamily
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddFamily(FamilyAddDto family)
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Create)]
+        public IActionResult AddFamily([FromForm] FamilyAddForm family)
         {
-            return View(family);
+            if (!ModelState.IsValid)
+            {
+                return View(family);
+            }
+            _populationSvc.AddFamilyAsync(User.GetId(), family.Name, family.LivingLocation);
+
+            return RedirectToAction(nameof(family));
         }
 
         // GET: FamilyController/EditFamily/5
-        public IActionResult UpdateFamily(int id)
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
+        public async Task<IActionResult> UpdateFamily(long id)
         {
-            var family = families.Find(f => f.Id == id);
-            return View("Editfamily", family);
+            var family = await _populationSvc.GetFamilyAsync(User.GetId(), id);
+            var familyDto = _mapper.Map<FamilyDto>(family);
+
+            return View("Editfamily", familyDto);
         }
 
         // POST: FamilyController/EditFamily/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateFamily(int id, FamilyDto family)
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
+        public async Task<IActionResult> UpdateFamily(long id, [FromForm] FamilyAddForm family)
         {
-            return View("Editfamily", family);
-        }
+            if (!ModelState.IsValid)
+            {
+                return View(family);
+            }
+            var familynew = await _populationSvc
+                .UpdateFamilyAsync(User.GetId(), id,
+                f =>
+                {
+                    f.Name = family.Name;
+                    f.LivingLocation = family.LivingLocation;
+                });
 
-        // POST: FamilyController/UpdateFamilyIndividuals/5
-        public IActionResult UpdateFamilyIndividual(int id)
-        {
-            var newfamilyindividual = familyIndividuals.Find(f => f.Id == id);
-            return View(newfamilyindividual);
-        }
-
-        // POST: FamilyController/EditFamilyIndividual/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult UpdateFamilyIndividuals(int id, FamilyIndividualDto newfamilyIndividual)
-        {
-            return View("EditFamilyIndividual", newfamilyIndividual);
-        }
-
-        // GET: FamilyController/DeleteFamily/5
-        public IActionResult ConfirmDeleteFamily(int id)
-        {
-            var family = families.Find(f => f.Id == id);
-            return View(family!);
-        }
-
-        public IActionResult ConfirmDeleteFamilyIndividual(int id)
-        {
-            var individualoffamily = familyIndividuals.Find(f => f.Id == id);
-            return View(individualoffamily!);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: FamilyController/DeleteFamily/5
-        public IActionResult DeleteFamily(int id)
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
+        public async Task<IActionResult> DeleteFamily(long id)
         {
-            return RedirectToAction(nameof(GetFamilies));
+            var family = await _populationSvc.GetFamilyAsync(User.GetId(), id);
+            if (family == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View("ConfirmDeleteFamily", family);
         }
 
         // POST: FamilyController/DeleteFamily/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteFamily(int id, FamilyDto familyDto)
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
+        public async Task<IActionResult> DeleteFamily(long id, FamilyDto family)
         {
-            return RedirectToAction(nameof(GetFamilies));
-        }
-
-        // GET: FamilyController/DeleteFamilyIndividual/5
-        public IActionResult DeleteFamilyIndividual(int id)
-        {
-            return RedirectToAction(nameof(GetFamilyIndividuals));
-        }
-
-        // POST: FamilyController/DeleteFamilyIndividual/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteFamilyIndividual(int id, FamilyIndividualDto familyIndividualDto)
-        {
-            return RedirectToAction(nameof(GetFamilyIndividuals));
+            var Oldfamily = await _populationSvc.GetFamilyAsync(User.GetId(), id);
+            if (family == null | Oldfamily.Id != family!.Id)
+            {
+                return View("ConfirmDeleteFamily", family);
+            }
+            await _populationSvc.RemoveFamilyAsync(User.GetId(), id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

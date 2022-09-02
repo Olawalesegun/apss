@@ -21,10 +21,21 @@ public sealed class UserDto : BaseAuditbleDto
     /// <summary>
     /// Gets or sets the user status
     /// </summary>
-    public APSS.Domain.Entities.UserStatus userStatus { get; set; }
+
+    [Display(Name = " Active")]
+    public string? Active { get; set; }
+
+    [Display(Name = " Inactive")]
+    public string? Inactive { get; set; }
+
+    [Display(Name = "Termint")]
+    public string? Terminated { get; set; }
+
+    [Display(Name = "Area Status")]
+    public UserStatus userStatus { get; set; }
 
     /// <summary>
     /// Gets or sets the supervisor
     /// </summary>
-    public UserDto? SupervisedBy { get; set; }
+    public UserDto SupervisedBy { get; set; }
 }

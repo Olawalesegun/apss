@@ -1,5 +1,6 @@
 ﻿using APSS.Domain.Entities;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.ValueTypes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers;
@@ -31,10 +32,10 @@ public class SkillController : Controller
         individuals = new List<IndividualDto>
             {
                 new IndividualDto{Id=53, Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=IndividualDto.SexDto.Male,SocialStatus=IndividualDto.SocialStatusDto.Unspecified,NationalId="57994",
+                    Sex=SexDto.Male,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
                     PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
                 new IndividualDto{Id=43,  Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=IndividualDto.SexDto.Female,SocialStatus=IndividualDto.SocialStatusDto.Unspecified,NationalId="57994",
+                    Sex=SexDto.Female,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
                     PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
             };
         skills = new List<SkillDto>
@@ -47,10 +48,10 @@ public class SkillController : Controller
     }
 
     // GET: SkillController/GetSkills/5
-    public ActionResult GetSkills(int id)
+    public ActionResult Index(int id)
     {
         var skill = skills.Where(s => s.Individual.Id == id);
-        return View(skill);
+        return View("GetSkills", skill);
     }
 
     // GET: SkillController/AddSkill/5
@@ -101,7 +102,7 @@ public class SkillController : Controller
     // GET: SkillController/DeleteSkill/5
     public ActionResult DeleteSkill(int id)
     {
-        return View(nameof(GetSkills), skills);
+        return View(nameof(Index), skills);
     }
 
     // POST: SkillController/DeleteSkill/5
@@ -109,6 +110,6 @@ public class SkillController : Controller
     [ValidateAntiForgeryToken]
     public ActionResult DeleteSkill(int id, SkillDto skilldto)
     {
-        return View(nameof(GetSkills), skills);
+        return View(nameof(Index), skills);
     }
 }
