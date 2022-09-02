@@ -530,5 +530,29 @@ public class LandService : ILandService
         return landProduct;
     }
 
+    /// <inhertdoc/>
+    public async Task<IQueryBuilder<Land>> UnConfirmedLands(long accountId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Update);
+
+        return _uow.Lands.Query()
+            .Include(u => u.OwnedBy)
+            .Where(l => l.OwnedBy.SupervisedBy!.Id == account.User.Id && l.IsConfirmed == false);
+    }
+
+    /// <inhertdoc/>
+    public async Task<IQueryBuilder<LandProduct>> UnConfirmedLandProducts(long accountId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Update);
+
+        return _uow.LandProducts.Query()
+            .Include(u => u.AddedBy)
+            .Where(p => p.AddedBy.SupervisedBy!.Id == account.AddedBy.Id && p.IsConfirmed == false);
+    }
+
     #endregion Public Methods
 }
