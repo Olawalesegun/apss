@@ -1,7 +1,10 @@
 ﻿using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
+using APSS.Domain.Repositories.Extensions.Exceptions;
 using APSS.Domain.Services;
+using APSS.Domain.Services.Exceptions;
 using APSS.Web.Dtos;
+using APSS.Web.Mvc.Filters;
 using APSS.Web.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,8 +16,9 @@ namespace APSS.Web.Mvc.Controllers
         private IEnumerable<AnimalGroupDto> animal;
         private readonly IAnimalService _service;
 
-        public AnimalGroup()
+        public AnimalGroup(IAnimalService service)
         {
+            _service = service;
             animal = new List<AnimalGroupDto>
             {
                 new AnimalGroupDto{Id=1,Type="types 1",Quantity=100,CreatedAt=new DateTime(),Sex=Domain.Entities.AnimalSex.Female},
@@ -111,8 +115,11 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddAnimalGroup(AnimalGroupDto animal)
         {
+            var resultAdd = await _service.AddAnimalGroupAsync(1, "type 1", "name 1", animal.Quantity, AnimalSex.Female);
+
             try
             {
                 if (!ModelState.IsValid)
@@ -121,7 +128,6 @@ namespace APSS.Web.Mvc.Controllers
                 }
                 else
                 {
-                    var resultAdd = _service.AddAnimalGroupAsync(1, animal.Type, "", animal.Quantity, (AnimalSex)animal.Sex);
                     return RedirectToAction(nameof(Index));
                 }
             }

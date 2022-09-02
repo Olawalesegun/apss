@@ -37,7 +37,7 @@ public class AuthController : Controller
     public IActionResult SignIn()
     {
         if (User.Identity is not null)
-            return RedirectToAction("Index", "AnimalGroup");
+            return View();
 
         return View(nameof(SignIn));
     }
@@ -51,7 +51,7 @@ public class AuthController : Controller
             return View(nameof(SignIn), form);
 
         if (User.Identity is not null)
-            return RedirectToAction();
+            return RedirectToAction("Index", "AnimalGroup");
 
         var deviceInfo = HttpContext.GetLoginInfo();
         var session = await _authSvc.SignInAsync(long.Parse(form.AccountId), form.Password, deviceInfo);
