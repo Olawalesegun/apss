@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+
 using static APSS.Web.Dtos.IndividualDto;
+using APSS.Web.Dtos.ValueTypes;
 
 namespace APSS.Web.Dtos;
 

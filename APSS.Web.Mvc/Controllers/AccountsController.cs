@@ -19,15 +19,6 @@ namespace APSS.Web.Mvc.Controllers
             _uow = uow;
             accounts = new List<AccountDto>
             {
-                new AccountDto{Id = 1, HolderName="account 1",NationalId="1244551",PhoneNumber="7657879876",CreatedAt=DateTime.Now},
-                new AccountDto{Id = 2, HolderName="one 1",NationalId="1244551",PhoneNumber="765779876",CreatedAt=DateTime.Now},
-                new AccountDto{Id = 3, HolderName="one 2",NationalId="1244551",PhoneNumber="76578876",CreatedAt=DateTime.Now},
-                new AccountDto{Id = 4, HolderName="two 1",NationalId="1244551",PhoneNumber="76578799876",CreatedAt=DateTime.Now},
-                new AccountDto{Id = 5, HolderName="tow 2",NationalId="1244551",PhoneNumber="76578791006",CreatedAt=DateTime.Now},
-                new AccountDto{Id = 6, HolderName="account 3",NationalId="1244551",PhoneNumber="76557879876",CreatedAt=DateTime.Now},
-                new AccountDto{Id = 7, HolderName="account 2",NationalId="1244551",PhoneNumber="76657879876",CreatedAt=DateTime.Now},
-            accounts = new List<AccountDto>
-            {
             };
         }
 
@@ -252,16 +243,16 @@ namespace APSS.Web.Mvc.Controllers
             try
             {
                 var resultEdit = await _accountsService.UpdateAsync(account.UserId, account.Id, p =>
-                  {
-                      p.HolderName = account.HolderName;
-                      p.Job = account.Job;
-                      p.NationalId = account.NationalId;
-                      p.PhoneNumber = account.PhoneNumber;
-                      p.SocialStatus = account.SocialStatus;
-                      p.Permissions = account.PermissionTypeDto.Permissions;
-                      p.IsActive = account.IsActive;
-                      p.SocialStatus = account.SocialStatus;
-                  });
+                    {
+                        p.HolderName = account.HolderName;
+                        p.Job = account.Job;
+                        p.NationalId = account.NationalId;
+                        p.PhoneNumber = account.PhoneNumber;
+                        p.SocialStatus = account.SocialStatus;
+                        p.Permissions = account.PermissionTypeDto.Permissions;
+                        p.IsActive = account.IsActive;
+                        p.SocialStatus = account.SocialStatus;
+                    });
                 if (resultEdit != null)
                 {
                     TempData["Action"] = "Employees";
