@@ -2,7 +2,8 @@
 @{
     ViewData["Title"] = "Account Management";
 }
-@await Html.PartialAsync("_requiredStyle.cshtml")<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
+@await Html.PartialAsync("_requiredStyle.cshtml")
+<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
     <form class="row d-flex justify-content-start d-inline mb-3 " method="post" asp-controller="Accounts" asp-action="Index">
         <div class=" mb-2 col-sm col-lg-6   d-flex">
             <div class="input-group">
@@ -11,16 +12,6 @@
                 </button>
                 <input type="search" class="form-control" id="search" name="searchString" onkeyup="searchTable()" placeholder="Search..." />
             </div>
-        </div>
-
-        <div class="col-sm-2 col-lg-1 mb-2 ">
-
-            <select class="form-select " id="searchby">
-                <option selected>20</option>
-                <option value="1">40</option>
-                <option value="2">80</option>
-                <option value="3">100</option>
-            </select>
         </div>
         <div class="col-sm col-lg-2 mb-2 ">
 
@@ -38,29 +29,42 @@
 
         <div class=" my-3 bg-light table-rsponsive  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
 
-            <table class="table table-hover table-responsive table-bordered   table-striped mb-0 " id="myTable">
+            <table class="table table-hover table-responsive table-bordered    mb-0 " id="myTable">
 
                 <thead>
                     <tr class="header  bg-fixed border border-bottom fw-bold">
-                        <th class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
+                        <th class=" fw-bold align-middle">#</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.HolderName)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.PhoneNumber)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.NationalId)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Job)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.IsActive)</th>
                         <th style="width:20px" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
+                        <tr class="align-top bg-white">
 
-                        <tr class="align-top">
+                            <td class="text-break text-capitalize ">@item.Id</td>
+                            <td class="text-break text-capitalize "> @item.HolderName</td>
+                            <td class="text-break text-capitalize ">@item.PhoneNumber</td>
+                            <td class="text-break text-capitalize ">  @item.NationalId</td>
+                            <td class="text-break text-capitalize ">  @item.CreatedAt</td>
+                            <td class="text-break text-capitalize   "> @item.Job </td>
+                            @{
+                                if (@item.IsActive)
+                                {
+                                    <td class="text-break text-capitalize text-center "> <div class=""><label class="activeLabel text-success"></label></div> </td>
+                                }
+                                else
+                                {
+                                    <td class="text-break text-capitalize text-center "> <div class=""><label class="activeLabel text-danger"></label></div> </td>
+                                }
+                            }
 
-                            <td class="text-break text-capitalize align-middle">@item.Id</td>
-                            <td class="text-break text-capitalize align-middle"> @item.HolderName</td>
-                            <td class="text-break text-capitalize align-middle">@item.PhoneNumber</td>
-                            <td class="text-break text-capitalize align-middle">
-                                @item.NationalId
-                            </td>
                             <td class="align-middle center">
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"
@@ -68,10 +72,9 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="Accounts" asp-action="AccountDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item btn-link" asp-controller="Accounts" asp-action="DeleteAccount"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-controller="Accounts" asp-action="EditAccount"><div class="d-flex justify-content-between"> <span>Eidt</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
-                                        @*<li><a class="dropdown-item btn-link" asp-controller="Users" asp-action="UserAccounts"><div class="d-flex justify-content-between"> <span>Accounts</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>*@
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="AccountDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="DeleteAccount"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="EditAccount"><div class="d-flex justify-content-between"> <span>Eidt</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -103,8 +106,8 @@
     $(".sidebar ul li.active").removeClass('active');
     $("#accountManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-      document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
+     document.getElementById("nav-system-name").innerHTML="Employees Management";
+      document.getElementById("media-system-name").innerHTML="Employees Management";
 
     $(".scrollmenu a").on('click',function(){
         $(".scrollmenu a.MediaActive").removeClass('MediaActive');

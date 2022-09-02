@@ -1,15 +1,5 @@
 ﻿@model APSS.Web.Dtos.AccountDto
  @await Html.PartialAsync("_requiredStyle.cshtml")
-<style>
-    input {
-        input, select
-
-    {
-        border-radius: 30px 0 0 3px !important;
-    }
-
-    }
-</style>
 <div class="col-lg-8 col-sm-12  col-md-12  col-md-10 mx-lg-4  d-flex px-0">
     <form class="row  mt-2   needs-validation " method="post" asp-controller="Accounts" asp-action="EditAccount" novalidate>
         <div asp-validation-summary="ModelOnly"></div>
@@ -21,7 +11,7 @@
             </h3>
         </div>
         <!-- Text input for account name-->
-        <div class=" row d-flex  justify-content-between mx-1">
+        <div class=" row d-flex  justify-content-between ">
             <div class="col-sm-6 mt-4 flex-column form-group   position-relative">
                 <div class="input-group">
                     <span class="input-group-text">
@@ -44,7 +34,7 @@
                     <div class="form-floating col">
                         <input type="password" id="id_password" asp-for="PasswordHash" placeholder="Password" class="form-control " required />
                         <label class="form-label" asp-for="PasswordHash"></label>
-                        <div class="invalid-tooltip">
+                        <div class="invalid-feedback">
                             Please Eneter stronge Password
                         </div>
                     </div>
@@ -53,7 +43,7 @@
             </div>
         </div>
         <!-- Text input for AccessLevel -->
-        <div class="row d-flex  justify-content-between mx-1 ">
+        <div class="row d-flex  justify-content-between  ">
             <div class="col-sm-6 mt-4 flex-column form-group has-validation d-flex  ">
                 <div class="input-group">
                     <span class="input-group-text">
@@ -75,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mx-1">
+        <div class="row ">
             <div class="mt-4  ">
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
@@ -86,37 +76,43 @@
                 </div>
             </div>
         </div>
-        <div class="row d-flex justify-content-between mx-1 ">
-            <div class=" col-sm-6  mt-4  flex-column form-group d-flex  ">
-                <div class="input-group">
-                    <span class="input-group-text">social</span>
-                    <div class="form-floating col">
-                        <select class="form-select" asp-for="SocialStatus" asp-items="@ViewBag.socialstatus"></select>
-                        <label class="select-label mb-2" asp-for="SocialStatus"></label>
+        <div class=" mt-4 ">
+            <p class="fw-600">@Html.DisplayNameFor(p=>p.SocialStatus)</p>
+        </div>
+        <div class="mb-3 justify-content-start">
+            <div class="input-group d-flex justify-content-start">
+                @foreach (var item in Enum.GetValues(typeof(APSS.Domain.Entities.SocialStatus)))
+                {
+                    <div class="form-check  mx-2">
+                        <input class="form-check-input " type="radio" asp-for="SocialStatus" id="socialstatus" value="@Convert.ToInt32(item)" checked />
+                        <label class="form-check-label"> @Html.Label(item.ToString())</label>
                     </div>
-                </div>
+                }
             </div>
-            <div class=" col-sm-6  mt-4  flex-column form-group d-flex  ">
-                <div class="input-group">
-                    <span class="input-group-text">Permissions</span>
-                    <div class="form-floating col">
-                        <select class="form-select" asp-for="Permissions" asp-items="@ViewBag.permission"></select>
-                        <label class="select-label mb-2" asp-for="Permissions">Permissions</label>
-                    </div>
+        </div>
+        <div class=" mt-4 ">
+            <p class="fw-600">@Html.DisplayNameFor(p=>p.PermissionTypeDto)</p>
+        </div>
+        <div class=" mb-3  ">
+            <div class="input-group d-flex justify-content-start ">
+                <div class="form-check  mx-2">
+                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Read" id="" value="true" checked />
+                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Read"></label>
+                </div>
+                <div class="form-check  mx-2">
+                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Create" id="" value="true" />
+                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Create"></label>
+                </div>
+                <div class="form-check  mx-2">
+                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Update" id="" value="true" />
+                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Update"></label>
+                </div>
+                <div class="form-check  mx-2">
+                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Delete" id="" value="true" />
+                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Delete"></label>
                 </div>
             </div>
         </div>
-
-        <!-- account Permission -->
-        @*  <div class="form-check-inline">
-            <h5 class="inline">الصلاحيات:</h5>
-            </div>*@
-        <!--read Permission -->
-        @*         <!--delete Permission -->
-            <div class="form-check form-check-inline  ">
-            <input class="form-check-input" type="checkbox" value="delete" id="delete" asp-for="DeletePermission" />
-            <label class="form-check-label" asp-for="DeletePermission">  </label>
-            </div>*@
         <div class="row d-flex mt-3 mx-2  justify-content-between">
             <div class="col-10  ">
                 <h5> Employee Status </h5>
