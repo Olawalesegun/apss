@@ -1,7 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using APSS.Domain.Entities;
 using APSS.Domain.Services;
-using APSS.Web.Dtos;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using APSS.Web.Mvc.Auth;
+using APSS.Domain.Repositories;
 
 namespace APSS.Web.Mvc.Controllers
 {
@@ -9,16 +15,19 @@ namespace APSS.Web.Mvc.Controllers
     {
         private List<UserDto> _userDtos;
         private readonly IUsersService _userService;
+        private readonly IUnitOfWork _uow;
 
         public UsersController(IUsersService userService)
         {
             _userService = userService;
+            _uow = uow;
         }
 
         public async Task<IActionResult> Index()
         {
             List<UserDto> userDto = new List<UserDto>();
             var user = await (await _userService.GetSubuserAsync(1)).AsAsyncEnumerable().ToListAsync();
+            var users = await _uow.Users.Query().FirstAsync(u => u.Id == 1);
             foreach (var userDtoItem in user)
             {
                 userDto.Add(new UserDto
@@ -30,6 +39,7 @@ namespace APSS.Web.Mvc.Controllers
                     CreatedAt = userDtoItem.CreatedAt,
                 });
             }
+            userDto.Add(new UserDto { Name = users.Name, Id = users.Id, AccessLevel = users.AccessLevel, userStatus = users.UserStatus, CreatedAt = users.CreatedAt });
             return View(userDto);
         }
 
@@ -65,10 +75,13 @@ namespace APSS.Web.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(UserDto user)
         {
-            var accountis = 1;
-            var add = await _userService.CreateAsync(accountis, user.Name);
-            return RedirectToAction("Index");
-
+            try
+            {
+                var accountis = 1;
+                var add = await _userService.CreateAsync(accountis, user.Name);
+                return RedirectToAction("Index");
+            }
+            catch (Exception) { }
             return View(user);
         }
 
@@ -80,13 +93,17 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> UserDetials(int id)
         {
-            var user = _userDtos.Where(m => m.Id == id).FirstOrDefault();
-            return View(user);
-        }
-
-        public async Task<IActionResult> UsersIndex()
-        {
-            return View();
+            var users = await _uow.Users.Query().FirstAsync(u => u.Id == 1);
+            if (users == null) return NotFound();
+            var userDto = new UserDto
+            {
+                Name = users.Name,
+                Id = users.Id,
+                AccessLevel = users.AccessLevel,
+                userStatus = users.UserStatus,
+                CreatedAt = users.CreatedAt,
+            };
+            return View(userDto);
         }
 
         public async Task<IActionResult> DeleteUser(long id)
@@ -97,7 +114,17 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> ConfirmDeleteUser(long id)
         {
-            return RedirectToAction("Index");
+            try
+            {
+                var user = await _uow.Users.Query().FirstAsync(u => u.Id == id);
+                if (user == null) return NotFound();
+                TempData["Action"] = "Delete Erea";
+                TempData["success"] = "Erea Deleted Successfully";
+                return RedirectToAction("Index");
+            }
+            catch (Exception) { }
+            var userDto = new UserDto();
+            return View(userDto);
         }
 
         public async Task<IActionResult> EditUser(long id)
@@ -109,6 +136,34 @@ namespace APSS.Web.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(UserDto userDto)
         {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(userDto);
+                }
+                else
+                {
+                    var edit = await _userService.UpdateAsync(1, 1, p =>
+                      {
+                          p.Name = userDto.Name;
+                          p.UserStatus = userDto.userStatus;
+                      });
+                    if (edit == null)
+                    {
+                        TempData["Action"] = "Update Erea";
+                        TempData["success"] = "Update Failed!!!";
+                    }
+                    else
+                    {
+                        TempData["Action"] = "Update Erea";
+                        TempData["success"] = "Erea Updated Successfully";
+                    }
+
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception) { }
             return View(userDto);
         }
     }

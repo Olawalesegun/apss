@@ -12,57 +12,57 @@
         <table class="table user-view-table m-0 t ">
             <tbody>
                 <tr class="">
-                    <td class="label"><label>@Html.DisplayNameFor(m => m.Id)</label></td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Id)</th>
                     <td>@Model.Id </td>
                 </tr>
                 <tr>
-                    <td> <label>@Html.DisplayNameFor(m => m.Name);</label></td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Name)</th>
                     <td>@Model.Name  </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.Address)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Address)</th>
                     <td> @Model.Address </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.Job)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Job)</th>
                     <td> @Model.Job </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.PhonNumber)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.PhonNumber)</th>
                     <td> @Model.PhonNumber </td>
                 </tr>
                <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.NationalId)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.NationalId)</th>
                     <td> @Model.NationalId </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.Sex)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Sex)</th>
                     <td> @Model.Sex</td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.SocialStatus)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.SocialStatus)</th>
                     <td> @Model.SocialStatus </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.DateOfBirth)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.DateOfBirth)</th>
                     <td> @Model.DateOfBirth </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.Family)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Family)</th>
                     <td> @Model.Family.Name </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.User)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.User)</th>
                     <td> @Model.User!.Name </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.CreatedAt)</th>
                     <td>
                         @Model.CreatedAt
                     </td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.ModifiedAt)</label>  </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.ModifiedAt)</th>
                     <td>
                         @Model.ModifiedAt
                     </td>
@@ -72,7 +72,7 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-left mx-2"> </i><span>Back</span> </a>
             <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Skill" asp-action="AddSkill"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Skill</span> </a>
             <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Voluntary" asp-action="AddVoluntary"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Voluntary</span> </a>
             <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Individual" asp-action="UpdateIndividual"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>

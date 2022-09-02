@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.FamilyDto>
+﻿@model IEnumerable<FamilyDto>
 
 @{
     ViewData["Title"] = "Families";
@@ -6,29 +6,29 @@
 
 <partial name="_PupolationNavBar" />
 <div class="aling" id="loader"></div>
-<div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 " id="table">
+<div class="p-2 col-ms-12  my-0 mt-2 rounded ml-2" id="table">
 
-    <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="AnimalGroup" asp-action="Index" method="post">
+    <form class="row d-flex justify-content-between d-inline mb-3" asp-controller="AnimalGroup" asp-action="Index" method="post">
         <div class=" mb-3 col-sm  d-flex">
             <div class="input-group">
-            <button type="submit" class="btn btn-primary ">
+            <button type="submit" class="btn btn-primary">
                 <i class="fas fa-search"></i>
             </button>
             <input type="search" class="form-control" id="search" placeholder="Search..." name="searchString" onkeyup="searchTable()" />
         </div>
         </div>
-        <div class="col-sm-2 col-lg-1 mb-2 ">
+        <div class="col-sm-2 col-lg-1 mb-2">
 
-            <select class="form-select " id="searchby">
+            <select class="form-select" id="searchby">
                 <option selected>20</option>
                 <option value="1">40</option>
                 <option value="2">80</option>
                 <option value="3">100</option>
             </select>
         </div>
-        <div class="col-sm mb-3 ">
+        <div class="col-sm mb-3">
 
-            <select class="form-select " id="searchby" name="searchBy">
+            <select class="form-select" id="searchby" name="searchBy">
                 <option selected>Search By </option>
                 <option value="1">@Html.DisplayNameFor(f=>f.Id)</option>
                 <option value="2">@Html.DisplayNameFor(f=>f.Name)</option>
@@ -36,9 +36,9 @@
                 <option value="4">@Html.DisplayNameFor(f=>f.User)</option>
             </select>
         </div>
-        <div class="col-sm d-flex   d-inline mb-3   ">
+        <div class="col-sm d-flex d-inline mb-3">
            
-            <a class=" btn btn-primary " role="button" asp-controller="Family" asp-action="AddFamily">
+            <a class="btn btn-primary" role="button" asp-controller="Family" asp-action="AddFamily">
                 <i class="fa-solid fa-plus"></i>
                 Family
             </a>
@@ -50,9 +50,9 @@
         {
             <span class="text-danger">@ViewBag.SearchResult</span>
         }
-        <div class=" mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
+        <div class="mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
 
-            <table class="table table-hover table-responsive table-bordered   table-striped  " id="sortTable">
+            <table class="table table-hover table-responsive table-bordered table-striped" id="sortTable">
 
                 <thead class="table-light">
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">

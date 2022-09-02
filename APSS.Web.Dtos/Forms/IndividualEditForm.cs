@@ -1,10 +1,12 @@
 ﻿using APSS.Web.Dtos.ValueTypes;
 using System.ComponentModel.DataAnnotations;
 
-namespace APSS.Web.Dtos;
+namespace APSS.Web.Dtos.Forms;
 
-public class IndividualDto : BaseAuditbleDto
+public class IndividualEditForm
 {
+    public long Id { get; set; }
+
     [Required]
     [Display(Name = "Name")]
     public string Name { get; set; } = null!;
@@ -17,7 +19,7 @@ public class IndividualDto : BaseAuditbleDto
     public SexDto Sex { get; set; }
 
     [Display(Name = "Social Status")]
-    public SocialStatusDto SocialStatus { get; set; }
+    public SocialStatusDto? SocialStatus { get; set; }
 
     [Display(Name = "Phone Number")]
     public string? PhonNumber { get; set; }
@@ -35,5 +37,6 @@ public class IndividualDto : BaseAuditbleDto
     [Display(Name = "Family")]
     public FamilyDto Family { get; set; } = null!;
 
-    public UserDto? User { get; set; }
+    public bool Isprovider { get; set; }
+    public bool Isparent { get; set; }
 }

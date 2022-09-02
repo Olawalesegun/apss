@@ -8,8 +8,8 @@ public sealed class UserDto : BaseAuditbleDto
     /// <summary>
     /// Gets or stes the name of the user
     /// </summary>
-    [Required(ErrorMessage = "Area Name is Required")]
-    [Display(Name = "Area Name")]
+    [Required(ErrorMessage = "Erea Name is Required")]
+    [Display(Name = "Erea Name")]
     public string Name { get; set; } = null!;
 
     /// <summary>
@@ -32,10 +32,10 @@ public sealed class UserDto : BaseAuditbleDto
     public string? Terminated { get; set; }
 
     [Display(Name = "Area Status")]
-    public APSS.Domain.Entities.UserStatus userStatus { get; set; }
+    public UserStatus userStatus { get; set; }
 
     /// <summary>
     /// Gets or sets the supervisor
     /// </summary>
-    public UserDto? SupervisedBy { get; set; }
+    public UserDto SupervisedBy { get; set; }
 }

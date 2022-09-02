@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.VoluntaryDto
+﻿@model VoluntaryAddForm
 
 <div class="container-fluid px-3 py-3 mx-4 my-1">
     <div class="col-sm-6">
@@ -6,9 +6,9 @@
             <h4 style="border-bottom :2px darkgray solid;"> Add Voluntary</h4>
         </div>
         <form class=" mt-3 " method="post">
-
+            <input type="text" asp-for="IndividualId" hidden/>
              <div class="input-group has-validation mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-handshake"></i></span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="Name"  asp-for="Name" >
                     <label asp-for="Name"></label>
@@ -17,7 +17,7 @@
             </div>
 
                  <div class="input-group has-validation mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <span class="input-group-text"><i class="fa-brands fa-nfc-symbol"></i></span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="Field"  asp-for="Field" >
                     <label asp-for="Field"></label>
@@ -27,7 +27,7 @@
             <!-- Submit button -->
             <div class="d-inline">
                 <button class="btn btn-primary mt-4 mx-1" asp-controller="Voluntary" asp-action="AddVoluntary"> <i class="fa-solid fa-plus mx-2"></i><span>Add</span>  </button>
-            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
             </div>
         </form>
     </div>
