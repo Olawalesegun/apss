@@ -2,7 +2,7 @@
 
 namespace APSS.Web.Mvc.Controllers;
 
-public class QuestionController : Controller
+public class QuestionsController : Controller
 {
     public IActionResult AddQuestion(long id)
     {

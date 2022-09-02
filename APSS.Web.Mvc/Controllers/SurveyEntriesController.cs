@@ -2,7 +2,7 @@
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class SurveyEntryController : Controller
+    public class SurveyEntriesController : Controller
     {
         //Get:SurveyEntry/GetSurveyEntries
         public IActionResult GetSurveyEntries()

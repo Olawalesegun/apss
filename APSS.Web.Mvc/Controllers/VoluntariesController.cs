@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers;
 
-public class VoluntaryController : Controller
+public class VoluntariesController : Controller
 {
     private readonly UserDto _userDto;
     private readonly List<FamilyDto> families;
     private readonly List<IndividualDto> individuals;
     private readonly List<VoluntaryDto> voluntaries;
 
-    public VoluntaryController()
+    public VoluntariesController()
     {
         _userDto = new UserDto
         {
