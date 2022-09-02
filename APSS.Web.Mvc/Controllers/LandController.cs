@@ -110,6 +110,7 @@ namespace APSS.Web.Mvc.Controllers
                     new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
                     new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
                     new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                    new LandDto{Name ="land4",Id=4,Address="djskhao4", Area =555},
                 };
 
             LandDto land = LandList.Where(i => i.Id == Id).First();
@@ -138,29 +139,21 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: LandController/Get land
-        public ActionResult GetLand(long landId)
+        public ActionResult GetLand(long Id)
         {
-            return View();
-        }
+            var LandList = new List<LandDto>
+                {
+                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
+                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
+                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
+                };
 
-        // POST: LandController/Get land
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetLand(long landId, IFormCollection collection)
-        {
-            return View();
+            LandDto land = LandList.Where(i => i.Id == Id).First();
+            return View(land);
         }
 
         // GET: LandController/Get lands
         public ActionResult GetLands(long userId)
-        {
-            return View();
-        }
-
-        // POST: LandController/Get lands
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetLands(long userId, IFormCollection collection)
         {
             return View();
         }
