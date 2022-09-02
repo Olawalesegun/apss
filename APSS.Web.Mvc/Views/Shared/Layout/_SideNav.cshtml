@@ -18,7 +18,7 @@
         @foreach (var route in Routes.Dashboard.Children)
         {
             <li class="nav-item">
-                <a href="@route.DefaultRoute.FullPath" class="nav-link py-3 @(route.Name == currentDashboardRoute?.Name ? "active" : "")" aria-current="page">
+                <a href="@route.DefaultRoute.FullPath" class="nav-link py-3 @(route.Name == currentDashboardRoute?.Name ? "active" : "")">
                     @route.Icon.Render(additionalClasses: "mx-2")
                     @route.Name
                 </a>
