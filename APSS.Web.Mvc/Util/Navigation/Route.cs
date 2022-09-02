@@ -1,0 +1,85 @@
+﻿namespace APSS.Web.Mvc.Util.Navigation;
+
+public class Route : IRoute
+{
+    #region Fields
+
+    private readonly IList<IRoute> _children;
+    private readonly string _fullPath;
+    private readonly Icon _icon;
+    private readonly string _name;
+    private readonly IRoute? _parent;
+    private readonly string _pathSegment;
+
+    #endregion Fields
+
+    #region Public Constructors
+
+    public Route(
+        IRoute? parent,
+        string name,
+        string? pathSegment = null,
+        IList<IRoute>? children = null,
+        Icon icon = Icon.None)
+    {
+        if (parent is not null)
+            parent.Children.Add(this);
+
+        _parent = parent;
+        _name = name;
+        _icon = icon;
+        _pathSegment = pathSegment ?? string.Empty;
+        _children = children ?? new List<IRoute>();
+
+        IList<string> segments = new List<string>();
+
+        for (IRoute? segment = this; segment != null; segment = segment.Parent)
+        {
+            if (segment.PathSegment.Length > 0)
+                segments.Add(segment.PathSegment);
+        }
+
+        _fullPath = "/" + string.Join('/', segments.Reverse());
+    }
+
+    #endregion Public Constructors
+
+    #region Properties
+
+    /// <inheritdoc/>
+    public IList<IRoute> Children => _children;
+
+    /// <inheritdoc/>
+    public string FullPath => _fullPath;
+
+    /// <inheritdoc/>
+    public Icon Icon => _icon;
+
+    /// <inheritdoc/>
+    public string Name => _name;
+
+    /// <inheritdoc/>
+    public IRoute? Parent => _parent;
+
+    /// <inheritdoc/>
+    public string PathSegment => _pathSegment;
+
+    /// <inheritdoc/>
+    public virtual IRoute DefaultRoute => this;
+
+    #endregion Properties
+
+    #region Protected Methods
+
+    protected IRoute FromController<T>(
+        string? displayName = null,
+        IList<IRoute>? children = null,
+        Icon icon = Icon.None)
+    {
+        var baseName = typeof(T).Name.Replace("Controller", string.Empty);
+
+        return new Route(this, displayName ?? baseName, baseName, children, icon);
+    }
+
+    #endregion Protected Methods
+}
