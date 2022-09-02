@@ -8,16 +8,12 @@
                     Add new land
                 </h3>
             </div>
-            <div class=" mb-3">
-                <div class="input-group">
-                    <span class="input-group-text">@@</span>
-                    <div class="form-floating col">
-                        <input type="text" asp-for="Name" class="form-control" placeholder=" " />
-                        <label class="form-label" asp-for="Name"></label>
-                        <div class="invalid-feedback">
-                            <span asp-validation-for="Name"></span>
-                        </div>
-                    </div>
+            <div class="input-group mb-3 has-validation">
+                <span class="input-group-text">@@</span>
+                <div class="form-floating col">
+                    <input type="text" asp-for="Name" class="form-control" placeholder=" " required />
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    <label class="form-label" asp-for="Name"></label>
                 </div>
             </div>
             <div class=" mb-3">

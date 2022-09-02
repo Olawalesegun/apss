@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class LandProductExpenseController : Controller
+    public class LandProductExpensesController : Controller
     {
         public IActionResult Index(long Id)
         {
