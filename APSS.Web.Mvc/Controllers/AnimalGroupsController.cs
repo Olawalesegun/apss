@@ -1,4 +1,6 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions.Exceptions;
 using APSS.Domain.Services;
@@ -6,17 +8,15 @@ using APSS.Domain.Services.Exceptions;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Filters;
 using APSS.Web.Mvc.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class AnimalGroup : Controller
+    public class AnimalGroupsController : Controller
     {
         private IEnumerable<AnimalGroupDto> animal;
         private readonly IAnimalService _service;
 
-        public AnimalGroup(IAnimalService service)
+        public AnimalGroupsController(IAnimalService service)
         {
             _service = service;
             animal = new List<AnimalGroupDto>

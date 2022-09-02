@@ -3,7 +3,7 @@ using APSS.Web.Dtos;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class Confirmation : Controller
+    public class ConfirmationsController : Controller
     {
         private List<AnimalGroupDto> animalgroup = new List<AnimalGroupDto>
             {
@@ -28,7 +28,7 @@ namespace APSS.Web.Mvc.Controllers
                 new AnimalProductDto{Id=7,Name="name 1",Quantity=20,CreatedAt=new DateTime().AddHours(1)},
             };
 
-        public Confirmation()
+        public ConfirmationsController()
         {
         }
 

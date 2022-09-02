@@ -1,22 +1,16 @@
-﻿using APSS.Web.Dtos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using APSS.Domain.Entities;
 using APSS.Domain.Services;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using APSS.Web.Mvc.Auth;
+using APSS.Web.Dtos;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class Users : Controller
+    public class UsersController : Controller
     {
         private List<UserDto> _userDtos;
         private readonly IUsersService _userService;
 
-        public Users(IUsersService userService)
+        public UsersController(IUsersService userService)
         {
             _userService = userService;
         }

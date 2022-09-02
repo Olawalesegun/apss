@@ -1,9 +1,9 @@
-﻿using APSS.Web.Dtos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Dtos;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class ProductExpense : Controller
+    public class ProductExpensesController : Controller
     {
         public async Task<IActionResult> Index(long id)
         {
@@ -46,9 +46,9 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteExpense(ProductExpense expense)
+        public async Task<IActionResult> DeleteExpense(ProductExpensesController expense)
         {
-            var expenses = new ProductExpense();
+            var expenses = new ProductExpensesController();
 
             return RedirectToAction("Index");
         }

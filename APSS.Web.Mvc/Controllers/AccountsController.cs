@@ -1,36 +1,31 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
+using APSS.Domain.Repositories;
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
-using Microsoft.AspNetCore.Authentication;
 using APSS.Web.Mvc.Auth;
-using APSS.Application.App;
-using APSS.Domain.Repositories;
-using APSS.Domain.Entities;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class Accounts : Controller
+    public class AccountsController : Controller
     {
         private readonly IUnitOfWork _uow;
         public IEnumerable<AccountDto> accounts;
         private readonly IAccountsService _accountsService;
 
-        public Accounts(IAccountsService accountsService, IUnitOfWork uow)
+        public AccountsController(IAccountsService accountsService, IUnitOfWork uow)
         {
             _accountsService = accountsService;
             _uow = uow;
-            accounts = new List<AccountDto> {
-            new AccountDto{Id = 1, HolderName="account 1",NationalId="1244551",PhoneNumber="7657879876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 2, HolderName="one 1",NationalId="1244551",PhoneNumber="765779876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 3, HolderName="one 2",NationalId="1244551",PhoneNumber="76578876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 4, HolderName="two 1",NationalId="1244551",PhoneNumber="76578799876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 5, HolderName="tow 2",NationalId="1244551",PhoneNumber="76578791006",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 6, HolderName="account 3",NationalId="1244551",PhoneNumber="76557879876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 7, HolderName="account 2",NationalId="1244551",PhoneNumber="76657879876",CreatedAt=DateTime.Now},
+            accounts = new List<AccountDto>
+            {
+                new AccountDto{Id = 1, HolderName="account 1",NationalId="1244551",PhoneNumber="7657879876",CreatedAt=DateTime.Now},
+                new AccountDto{Id = 2, HolderName="one 1",NationalId="1244551",PhoneNumber="765779876",CreatedAt=DateTime.Now},
+                new AccountDto{Id = 3, HolderName="one 2",NationalId="1244551",PhoneNumber="76578876",CreatedAt=DateTime.Now},
+                new AccountDto{Id = 4, HolderName="two 1",NationalId="1244551",PhoneNumber="76578799876",CreatedAt=DateTime.Now},
+                new AccountDto{Id = 5, HolderName="tow 2",NationalId="1244551",PhoneNumber="76578791006",CreatedAt=DateTime.Now},
+                new AccountDto{Id = 6, HolderName="account 3",NationalId="1244551",PhoneNumber="76557879876",CreatedAt=DateTime.Now},
+                new AccountDto{Id = 7, HolderName="account 2",NationalId="1244551",PhoneNumber="76657879876",CreatedAt=DateTime.Now},
             };
         }
 
@@ -217,16 +212,16 @@ namespace APSS.Web.Mvc.Controllers
             try
             {
                 var resultEdit = await _accountsService.UpdateAsync(1, 1, p =>
-                  {
-                      p.HolderName = account.HolderName;
-                      p.Job = account.Job;
-                      p.NationalId = account.NationalId;
-                      p.PhoneNumber = account.PhoneNumber;
-                      p.SocialStatus = account.SocialStatus;
-                      p.PasswordHash = account.PasswordHash;
-                      p.Permissions = account.PermissionTypeDto.Permissions;
-                      p.IsActive = account.IsActive;
-                  });
+                    {
+                        p.HolderName = account.HolderName;
+                        p.Job = account.Job;
+                        p.NationalId = account.NationalId;
+                        p.PhoneNumber = account.PhoneNumber;
+                        p.SocialStatus = account.SocialStatus;
+                        p.PasswordHash = account.PasswordHash;
+                        p.Permissions = account.PermissionTypeDto.Permissions;
+                        p.IsActive = account.IsActive;
+                    });
                 TempData["Action"] = "Employees";
                 TempData["success"] = "Edit Employee is succesfully";
                 return RedirectToAction("Index");

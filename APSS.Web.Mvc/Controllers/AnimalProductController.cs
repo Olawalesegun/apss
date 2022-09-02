@@ -1,13 +1,13 @@
-﻿using APSS.Web.Dtos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Dtos;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class AnimalProduct : Controller
+    public class AnimalProductsController : Controller
     {
         private IEnumerable<AnimalProductDto> product;
 
-        public AnimalProduct()
+        public AnimalProductsController()
         {
             product = new List<AnimalProductDto>
             {
