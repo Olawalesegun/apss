@@ -2,7 +2,7 @@
 
 public sealed class UsersRoute : Route
 {
-    public UsersRoute(IRoute parent) : base(parent, "Users Managment", "Users")
+    public UsersRoute(IRoute parent) : base(parent, "Users Managment", "Users", icon: Icon.Users)
     {
         Test1 = new Route(this, "Sign In", "#test1");
         Test2 = new Route(this, "Sign Out", "#test2");
