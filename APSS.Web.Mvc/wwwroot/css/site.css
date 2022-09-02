@@ -553,3 +553,15 @@ label:focus,
     -webkit-appearance: none;
     box-shadow: none !important;
 }
+
+input[type="checkbox"],
+input[type="radio"] {
+    cursor: pointer;
+}
+
+.activeLabel {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50%;
+    background-color: green;
+}
