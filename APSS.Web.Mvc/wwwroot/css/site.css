@@ -9,22 +9,29 @@ html, body {
 
 #side_nav {
     background-color: #F3F4F4;
-    min-width: 290px;
-    max-width: 290px;
+    min-width: 300px;
+    max-width: 300px;
     transition: all 0.5s;
 }
 
     #side_nav ul li a:hover {
-        background-color: #DBE4F3 !important;
-        border-radius: 5px;
-        transition: all ease 0.3s;
+        background-color: #0d6efd !important;
+        color: white;
     }
 
 .other-systems div a:hover {
     background-color: #F3F4F4;
     color: black !important;
-    transition: 0.3s ease;
+    transition: 0.8s ease;
 }
+
+.active {
+    background-color: #0d6efd !important;
+}
+
+    .active a {
+        color: white !important;
+    }
 
 .content {
     min-height: 100vh;
@@ -33,25 +40,26 @@ html, body {
 
 .sidebar li.active {
     background: #DBE4F3;
-    border-radius: 8px;
 }
 
     .sidebar li.active a, .sidebar li.active a:hover {
         color: #1783D2;
-        font-weight: bold;
         transition: 0.3s ease;
     }
 
+#drops {
+    line-height: 40px !important;
+}
+
 .sidebar li a {
+    line-height: 40px;
     color: #829AB1;
-    padding: 15px;
     font-size: 18px !important;
-    font-family: 'Tajawal';
 }
 
 @media(max-width:768px) {
     #side_nav {
-        margin-left: -290px;
+        margin-left: -300px;
         min-height: 100vh;
         z-index: 10;
     }
@@ -63,10 +71,6 @@ html, body {
 
     #account-manage {
         display: none;
-    }
-
-    #loader {
-        left: 65% !important;
     }
 }
 
@@ -83,10 +87,6 @@ html, body {
 
     #account-manage {
         display: none;
-    }
-
-    #loader {
-        left: 65% !important;
     }
 }
 
@@ -288,7 +288,8 @@ nav ul li div a {
         transform: rotate(90deg);
     }
 
-.systems-style {
+.item a.systems-style {
+    line-height: 40px !important;
     font-size: 18px !important;
     color: #829AB1 !important;
     font-weight: 700;
@@ -382,21 +383,6 @@ div.scrollmenu a {
 /* setting for doading style*/
 #table {
     display: none;
-}
-
-#loader {
-    position: absolute;
-    left: 50%;
-    top: 30%;
-    z-index: 1;
-    width: 50px;
-    height: 50px;
-    margin: -76px 0 0 -76px;
-    border: 5px solid #f3f3f3;
-    border-radius: 50%;
-    border-bottom: 5px solid #343434;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
 }
 
 @-webkit-keyframes spin {
@@ -524,9 +510,6 @@ a.btn-link {
     }
 }
 
-.search-btn {
-}
-
 .active {
     margin-left: 0 !important;
 }
@@ -563,5 +546,4 @@ input[type="radio"] {
     width: 20px !important;
     height: 20px !important;
     border-radius: 50%;
-    background-color: green;
 }
