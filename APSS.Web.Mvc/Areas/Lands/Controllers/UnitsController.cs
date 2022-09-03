@@ -1,9 +1,10 @@
-﻿using APSS.Web.Dtos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Dtos;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
-    public class LandProductUnitsController : Controller
+    [Area(Areas.Lands)]
+    public class UnitsController : Controller
     {
         public IActionResult Index()
         {
@@ -66,7 +67,7 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        // GET: LandProductUnitController/Delete  LandProductUnit
+        // GET: LandProductUnitController/Delete LandProductUnit
         public ActionResult Delete(long Id)
         {
             var unitList = new List<LandProductUnitDto>

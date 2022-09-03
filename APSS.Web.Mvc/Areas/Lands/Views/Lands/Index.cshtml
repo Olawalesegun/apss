@@ -1,4 +1,9 @@
-﻿@model IEnumerable<APSS.Web.Dtos.ProductExpenseDto>
+﻿@{
+    Layout = "Layout/Dashboard";
+}
+
+@model IEnumerable<APSS.Web.Dtos.LandDto>
+
 <partial name="_dataNavBar" />
 <div class="aling" id="loader"></div>
 
@@ -25,10 +30,16 @@
 
             <select class="form-select " id="searchby" name="searchBy">
                 <option selected>Search By</option>
-                <option value="1">@Html.DisplayNameFor(t => t.Type)</option>
-                <option value="2">@Html.DisplayNameFor(i => i.Id)</option>
-                <option value="3">@Html.DisplayNameFor(p => p.Price)</option>
+                <option value="1">@Html.DisplayNameFor(n => n.Name)</option>
+                <option value="2">@Html.DisplayNameFor(a => a.Address)</option>
+                <option value="3">@Html.DisplayNameFor(i => i.Id)</option>
             </select>
+        </div>
+        <div class="col-sm d-flex   d-inline mb-3   ">
+            <a class=" btn btn-primary " role="button" asp-action="Add">
+                <i class="fa-solid fa-plus"></i>
+                Add
+            </a>
         </div>
     </form>
 
@@ -40,8 +51,9 @@
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(i => i.Id)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(t => t.Type)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.Price)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(n => n.Name)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(a => a.Address)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(a => a.Area)</th>
                         <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -50,8 +62,9 @@
                     {
                         <tr>
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
-                            <td class="text-break text-capitalize align-middle">@item.Type</td>
-                            <td class="text-break text-capitalize align-middle">@item.Price</td>
+                            <td class="text-break text-capitalize align-middle"> @item.Name</td>
+                            <td class="text-break text-capitalize align-middle">@item.Address</td>
+                            <td class="text-break text-capitalize align-middle">@item.Area</td>
                             <td class="align-middle center">
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"
@@ -59,9 +72,10 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Details" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="Land" asp-action="Details"><div class="d-flex justify-content-between"><span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="LandProduct" asp-action="add"><div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-Id="@item.Id" asp-controller="Land" asp-action="Update"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-controller="Land" asp-action="Delete" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -96,6 +110,7 @@
        $("#landProducts").removeClass('actives');
        $("#animalGroups").removeClass('actives');
     $("#animalProducts").removeClass('actives');
-    $("#lands").addClass('actives');
+    $("#lands").removeClass('actives');
+    $("#seasons").addClass('actives');
 </script>
 }

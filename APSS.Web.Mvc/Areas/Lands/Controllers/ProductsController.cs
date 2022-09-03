@@ -1,9 +1,10 @@
-﻿using APSS.Web.Dtos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Dtos;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
-    public class LandProductsController : Controller
+    [Area(Areas.Lands)]
+    public class ProductsController : Controller
     {
         public IActionResult Index()
         {
@@ -29,12 +30,13 @@ namespace APSS.Web.Mvc.Controllers
             return View(ProductList);
         }
 
-        // GET: LandProduc  tController/Add a new landProduct
+        // GET: LandProduc tController/Add a new landProduct
         public ActionResult Add(long Id)
         {
             var landprodut = new LandProductDto
             {
-                Seasons = new List<SeasonDto> {
+                Seasons = new List<SeasonDto>
+                {
                     new SeasonDto { Name = "season1", CreatedAt = DateTime.Now, Id = 1 },
                     new SeasonDto { Name = "season2", CreatedAt = DateTime.Now, Id = 2 },
                     new SeasonDto { Name = "season3", CreatedAt = DateTime.Now, Id = 3 },
@@ -71,7 +73,8 @@ namespace APSS.Web.Mvc.Controllers
         {
             var landProductDto = new LandProductDto
             {
-                Seasons = new List<SeasonDto> {
+                Seasons = new List<SeasonDto>
+                {
                     new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },
                     new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },
                     new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },
@@ -155,7 +158,7 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        // GET: LandController/Delete  landProduct
+        // GET: LandController/Delete landProduct
         public ActionResult Delete(long Id)
         {
             var ProductList = new List<LandProductDto>

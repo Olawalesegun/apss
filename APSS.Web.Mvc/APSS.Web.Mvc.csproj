@@ -26,4 +26,9 @@
     <ProjectReference Include="..\APSS.Web.Dtos\APSS.Web.Dtos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Lands\" />
+    <Folder Include="Views\LandProduct\" />
+  </ItemGroup>
+
 </Project>

@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using APSS.Domain.Entities;
-using APSS.Domain.Services;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using APSS.Web.Mvc.Auth;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
+using APSS.Domain.Services;
+using APSS.Web.Dtos;
+using APSS.Web.Mvc.Auth;
+using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
 
 namespace APSS.Web.Mvc.Controllers
 {
@@ -20,7 +21,7 @@ namespace APSS.Web.Mvc.Controllers
         public UsersController(IUsersService userService)
         {
             _userService = userService;
-            _uow = uow;
+            //_uow = uow;
         }
 
         public async Task<IActionResult> Index()
@@ -145,10 +146,10 @@ namespace APSS.Web.Mvc.Controllers
                 else
                 {
                     var edit = await _userService.UpdateAsync(1, 1, p =>
-                      {
-                          p.Name = userDto.Name;
-                          p.UserStatus = userDto.userStatus;
-                      });
+                        {
+                            p.Name = userDto.Name;
+                            p.UserStatus = userDto.userStatus;
+                        });
                     if (edit == null)
                     {
                         TempData["Action"] = "Update Erea";

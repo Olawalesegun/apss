@@ -1,9 +1,10 @@
-﻿using APSS.Web.Dtos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Dtos;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
-    public class SeasonController : Controller
+    [Area(Areas.Lands)]
+    public class SeasonsController : Controller
     {
         public IActionResult Index()
         {
@@ -67,7 +68,7 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        // GET: SeasonController/Delete  Season
+        // GET: SeasonController/Delete Season
         public ActionResult Delete(long Id)
         {
             var seasonList = new List<SeasonDto>

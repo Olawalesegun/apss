@@ -1,11 +1,12 @@
-﻿using APSS.Web.Dtos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Dtos;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
+    [Area(Areas.Lands)]
     public class LandsController : Controller
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var LandList = new List<LandDto>
                 {
@@ -102,7 +103,7 @@ namespace APSS.Web.Mvc.Controllers
             }
         }
 
-        // GET: LandController/Delete  land
+        // GET: LandController/Delete land
         public ActionResult Delete(long Id)
         {
             var LandList = new List<LandDto>
