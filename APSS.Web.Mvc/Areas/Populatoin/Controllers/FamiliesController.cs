@@ -8,8 +8,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
 {
+    [Area(Areas.Population)]
     public class FamiliesController : Controller
     {
         #region Fields

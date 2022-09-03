@@ -3,8 +3,9 @@ using APSS.Web.Dtos;
 using APSS.Web.Dtos.ValueTypes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace APSS.Web.Mvc.Controllers;
+namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
+[Area(Areas.Population)]
 public class SkillsController : Controller
 {
     private readonly UserDto _userDto;
