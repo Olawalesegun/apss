@@ -1,0 +1,31 @@
+﻿@model FamilyAddForm
+<div class="container-fluid px-3 py-3 mx-4 my-1">
+    <div class="col-sm-6">
+        <div class="d-flex justify-content-center">
+            <h4> Add Family</h4>
+        </div>
+
+        <form method="post" asp-controller="Family" asp-action="AddFamily" class="needs-validation" novalidate>
+             <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-people-roof"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control"  placeholder="Name" asp-for="Name"  >
+                    <label asp-for="Name"></label>
+                </div>
+                <span  class="d-block invalid-feedback" asp-validation-for="Name"></span>
+            </div>
+                <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-house-chimney"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Address" asp-for="LivingLocation" >
+                    <label asp-for="LivingLocation"></label>
+                </div>
+                <span  class="d-block invalid-feedback" asp-validation-for="LivingLocation"></span>
+            </div>
+
+             <button type="submit" class="btn btn-primary w-25 my-4 mx-3">Add </button>
+            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
+         
+        </form>
+    </div>
+</div>

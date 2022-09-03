@@ -1,0 +1,70 @@
+﻿@using APSS.Web.Dtos.ValueTypes
+@model IndividualAddForm
+
+@{
+    Layout = "Layout/Generic";
+    ViewData["Title"] = "Add Individual";
+}
+
+<div class="container-fluid px-3 py-3 mx-4 my-1">
+    <div class="col-sm-6">
+        <div class="d-flex justify-content-center">
+            <h4 > Add Individual</h4>
+        </div>
+       <form method="post" asp-controller="Individual" asp-action="AddIndividual" class="needs-validation" novalidate>
+            <!-- ID input -->
+            <input type="number" asp-for="FamilyId" hidden/>
+            <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-person"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Name" asp-for="Name" pattern="^[a-zA-Z\]{1,}$" aria-describedby="indvidualName" >
+                    <label asp-for="Name"></label>
+                </div>
+                <span id="indvidualName" class="d-block invalid-feedback" asp-validation-for="Name"></span>
+            </div>
+
+            <!-- Password input -->
+             <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Address" asp-for="Address" pattern="^[a-zA-Z''\s]{1,}$" aria-describedby="indvidualAddress" >
+                    <label asp-for="Address"></label>
+                </div>
+                <span id="indvidualAddress" class="d-block invalid-feedback" asp-validation-for="Address"></span>
+            </div>
+
+                <!-- id input for Family -->
+                <input type="number" asp-for="FamilyId" hidden/>
+              
+                <!-- Gender input -->
+                <!-- Gender input -->
+            <div class="form-check-inline mt-3">
+                <label asp-for="Sex"></label>
+            @foreach (var value in Enum.GetValues(typeof(SexDto)))
+            {
+                @if (value.ToString() == SexDto.Female.ToString())
+                {
+                    <div class="mx-4 d-inline">
+                    @Html.RadioButtonFor(m=>m.Sex,value,Model.Sex)
+                    <label>Female</label>
+                    </div>
+                }
+                else
+                {  
+                    <div class="mx-4 d-inline">
+                    @Html.RadioButtonFor(m=>m.Sex,value,Model.Sex)
+                    <label class="">Male</label>
+                    </div>
+                }
+            }
+            </div>
+            <span asp-validation-for="Sex" class="text-danger"></span>
+            
+            <div >
+               
+                <button class="btn btn-primary mt-4 mx-1" type="submit" asp-route-Id="@Model.FamilyId"> <i class="fa-solid fa-plus mx-2"></i><span>Add</span>  </button>
+                <button class="btn btn-danger mt-4 mx-1" asp-controller="Individual" asp-action="GetIndividuals"><i class="fa-solid fa-share mx-2"></i><span>Cancel</span>  </button>
+            </div>
+      </form>
+    </div>
+    </div>
