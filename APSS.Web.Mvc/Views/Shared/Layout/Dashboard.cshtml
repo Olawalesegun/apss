@@ -1,12 +1,6 @@
 ﻿@{
     Layout = "Layout/Generic";
     ViewData["Title"] = Context.GetCurrentDashboardRoute()?.Name;
-
-    if (User.Identity is null)
-    {
-        Context.Response.Redirect("/Auth/SignIn");
-        return;
-    }
 }
 
 <!-- main div  -->
