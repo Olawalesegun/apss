@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers;
 
-public class SkillController : Controller
+public class SkillsController : Controller
 {
     private readonly UserDto _userDto;
     private readonly List<FamilyDto> families;
@@ -13,7 +13,7 @@ public class SkillController : Controller
 
     private List<SkillDto> skills;
 
-    public SkillController()
+    public SkillsController()
     {
         _userDto = new UserDto
         {

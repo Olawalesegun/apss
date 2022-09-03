@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class FamilyController : Controller
+    public class FamiliesController : Controller
     {
         #region Fields
 
@@ -25,7 +25,7 @@ namespace APSS.Web.Mvc.Controllers
 
         #region Public Constructors
 
-        public FamilyController(IPopulationService populationService, IMapper mapper)
+        public FamiliesController(IPopulationService populationService, IMapper mapper)
         {
             _populationSvc = populationService;
             _mapper = mapper;
