@@ -211,7 +211,40 @@ public sealed class PopulationService : IPopulationService
     }
 
     ///<inheritdoc/>
-    public async Task<IQueryBuilder<FamilyIndividual>> GetFamilyIndividualsAsync(long accountId, long familyId)
+    public IQueryBuilder<Individual> GetIndividuals(long accountId)
+    {
+        var individuals = _uow.Individuals
+            .Query()
+            .Include(i => i.AddedBy)
+            .Where(i => GetSubuserDistanceAsync(accountId, i.AddedBy.Id).Result >= 0);
+
+        return individuals;
+    }
+
+    ///<inheritdoc/>
+    public async Task<Family> GetFamilyAsync(long accountId, long familyId)
+    {
+        var account = await GetAuthorizedGroupAccountAsync(accountId, PermissionType.Update);
+
+        var family = await _uow.Families.Query()
+            .Include(f => f.AddedBy)
+            .FindWithOwnershipValidationAync(familyId, f => f.AddedBy, account);
+        return family;
+    }
+
+    ///<inheritdoc/>
+    public async Task<Individual> GetIndividualAsync(long accountId, long IndividualId)
+    {
+        var account = await GetAuthorizedGroupAccountAsync(accountId, PermissionType.Update);
+
+        var individual = await _uow.Individuals.Query()
+            .Include(f => f.AddedBy)
+            .FindWithOwnershipValidationAync(IndividualId, f => f.AddedBy, account);
+        return individual;
+    }
+
+    ///<inheritdoc/>
+    public async Task<IQueryBuilder<FamilyIndividual>> GetIndividualsOfFamilyAsync(long accountId, long familyId)
     {
         var family = await _uow.Families.Query()
             .Include(f => f.AddedBy)
@@ -299,6 +332,29 @@ public sealed class PopulationService : IPopulationService
         await _uow.CommitAsync();
 
         return individual;
+    }
+
+    public async Task<FamilyIndividual> UpdateSkillAsync(
+            long accountId,
+            long familyIndividualId,
+            Action<FamilyIndividual> updater)
+    {
+        var account = await GetAuthorizedGroupAccountAsync(accountId, PermissionType.Update);
+
+        var familyindividuals = await _uow.FamilyIndividuals.Query()
+            .Include(f => f.Family)
+            .Include(f => f.Individual)
+            .FindAsync(familyIndividualId);
+
+        await _uow.Families.Query()
+            .FindWithOwnershipValidationAync(familyindividuals.Family.Id, f => f.AddedBy, account);
+
+        updater(familyindividuals);
+
+        _uow.FamilyIndividuals.Update(familyindividuals);
+        await _uow.CommitAsync();
+
+        return familyindividuals;
     }
 
     ///<inheritdoc/>
