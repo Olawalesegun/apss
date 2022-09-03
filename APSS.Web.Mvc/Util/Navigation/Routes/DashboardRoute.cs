@@ -1,6 +1,5 @@
 ﻿using APSS.Domain.Entities;
 using APSS.Web.Mvc.Areas.Surveys.Controllers;
-using APSS.Web.Mvc.Areas.Surveys.Controllers.Surveys;
 using APSS.Web.Mvc.Controllers;
 
 namespace APSS.Web.Mvc.Util.Navigation.Routes;
