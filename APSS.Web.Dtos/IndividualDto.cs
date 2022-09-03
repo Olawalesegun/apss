@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using APSS.Web.Dtos.ValueTypes;
+using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos;
 
@@ -16,7 +17,7 @@ public class IndividualDto : BaseAuditbleDto
     public SexDto Sex { get; set; }
 
     [Display(Name = "Social Status")]
-    public SocialStatusDto? SocialStatus { get; set; }
+    public SocialStatusDto SocialStatus { get; set; }
 
     [Display(Name = "Phone Number")]
     public string? PhonNumber { get; set; }
@@ -35,31 +36,4 @@ public class IndividualDto : BaseAuditbleDto
     public FamilyDto Family { get; set; } = null!;
 
     public UserDto? User { get; set; }
-
-    public enum SocialStatusDto
-    {
-        [Display(Name = "Unspecified")]
-        Unspecified,
-
-        [Display(Name = "Single")]
-        Unmarried,
-
-        [Display(Name = "Married")]
-        Married,
-
-        [Display(Name = "Divorced")]
-        Divorced,
-
-        [Display(Name = "Widowed")]
-        Widowed,
-    }
-
-    public enum SexDto
-    {
-        [Display(Name = "Male ")]
-        Male,
-
-        [Display(Name = "Female")]
-        Female
-    }
 }

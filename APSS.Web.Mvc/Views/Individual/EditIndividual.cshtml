@@ -1,17 +1,18 @@
-﻿@using static APSS.Web.Dtos.IndividualDto
-@model APSS.Web.Dtos.IndividualDto
+﻿@using APSS.Web.Dtos.ValueTypes
+@model IndividualEditForm
 
 <div class="container-fluid px-3 py-3  mx-4 my-1">
     <div class="col-sm-6">
         <div class="d-flex justify-content-center">
             <h4> Update Individual </h4>
         </div>
-        <form class=" mt-3 " method="post">
+        <form class="mt-3" method="post" asp-action="UpdateIndividual" asp-controller="Individual">
+            <input type="number" asp-for="Id" hidden />
 
            <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-person"></i></span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Name" value="@Model.Name" asp-for="Name" >
+                    <input type="text" class="form-control" placeholder="Name" asp-for="Name" >
                     <label asp-for="Name"></label>
                 </div>
                 <span  class="d-block invalid-feedback" asp-validation-for="Name"></span>
@@ -21,7 +22,7 @@
            <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-house-chimney"></i></span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Address" value="@Model.Address" asp-for="Address" >
+                    <input type="text" class="form-control" placeholder="Address"  asp-for="Address" >
                     <label asp-for="Address"></label>
                 </div>
                 <span  class="d-block invalid-feedback" asp-validation-for="Address"></span>
@@ -32,7 +33,7 @@
             <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-people-roof"></i></span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Family" value="@Model.Family.Name" asp-for="Family" >
+                    <input type="text" class="form-control" placeholder="Family"  asp-for="Family" >
                     <label asp-for="Family"></label>
                 </div>
                 <span  class="d-block invalid-feedback" asp-validation-for="Family"></span>
@@ -42,14 +43,14 @@
             <!-- Text input for job -->
                 <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Job" value="@Model.Job" asp-for="Job" >
+                    <input type="text" class="form-control" placeholder="Job"  asp-for="Job" >
                     <label asp-for="Job"></label>
                 </div>
               
             <!-- Text input for phonenumber -->
                 <span class="input-group-text"><i class="fa-solid fa-phone-flip"></i></span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Phone Number" value="@Model.PhonNumber" asp-for="PhonNumber" >
+                    <input type="text" class="form-control" placeholder="Phone Number" asp-for="PhonNumber" >
                     <label asp-for="PhonNumber"></label>
                 </div>
                
@@ -57,7 +58,7 @@
             <!-- Text input for NationalId -->
                 <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="National ID" value="@Model.NationalId" asp-for="NationalId" >
+                    <input type="text" class="form-control" placeholder="National ID"  asp-for="NationalId" >
                     <label asp-for="NationalId"></label>
                 </div>
 
@@ -65,7 +66,7 @@
             <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
             <div class=" datepicker input-group.date-p form-floating flex-grow-1">
                 <label class="form-label" asp-for="DateOfBirth"></label>
-                <input type="date" id="sandbox-container-p" placeholder="Birth Date" asp-for="DateOfBirth" value="@Model.DateOfBirth" class="form-control" />
+                <input type="date" id="sandbox-container-p" placeholder="Birth Date" asp-for="DateOfBirth"  class="form-control" />
             </div>
 
             <!-- Gender input -->
@@ -102,10 +103,20 @@
             </select>
           </div>
 
+           <div class="form-check flex-grow-1">
+                    <input class="form-check-input" type="checkbox"  asp-for="Isprovider">
+                    <label class="form-check-label" asp-for="Isparent"> </label>
+                </div> 
+
+                 <div class="form-check flex-grow-1">
+                    <input class="form-check-input" type="checkbox"  asp-for="Isprovider">
+                    <label class="form-check-label" asp-for="Isparent"> </label>
+                </div> 
+
 
             <!-- Submit button -->
             <div class="d-inline">
-                <button class="btn btn-primary mt-4 mx-1" asp-controller="Individual" asp-action="UpdateIndividual"> 
+                <button class="btn btn-primary mt-4 mx-1" type="submit"> 
                     <i class="fa-solid fa-pen-to-square fa-lg mx-2"></i><span>Edit</span> 
                 </button>
             <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
