@@ -15,12 +15,35 @@ public interface IPopulationService
     IQueryBuilder<Family> GetFamilies(long accountId);
 
     /// <summary>
+    ///  Gets a query for the get indviduals
+    /// </summary>
+    /// <param name="accountId">The id of the account which to get the added individual  by its</param>
+    /// <returns></returns>
+    IQueryBuilder<Individual> GetIndividuals(long accountId);
+
+    /// <summary>
+    /// Get any family
+    /// </summary>
+    /// <param name="accountId">The id of the account which to get the added familiy  by its</param>
+    /// <param name="familyId">The id of family which get by account</param>
+    /// <returns>family</returns>
+    Task<Family> GetFamilyAsync(long accountId, long familyId);
+
+    /// <summary>
+    /// Get any Individual
+    /// </summary>
+    /// <param name="accountId">The id of the account which to get the added individual  by its</param>
+    /// <param name="individualId">The id of the individual get it</param>
+    /// <returns></returns>
+    Task<Individual> GetIndividualAsync(long accountId, long individualId);
+
+    /// <summary>
     /// Asynnchrosuly Gets a query for the get individuals of family
     /// </summary>
     /// <param name="accountId">The id of the account which has reading permssion </param>
     /// <param name="familyId">The id of the family which to get the individuals for </param>
     /// <returns></returns>
-    Task<IQueryBuilder<FamilyIndividual>> GetFamilyIndividualsAsync(long accountId, long familyId);
+    Task<IQueryBuilder<FamilyIndividual>> GetIndividualsOfFamilyAsync(long accountId, long familyId);
 
     /// <summary>
     /// Asynnchrosuly Gets a query for the get skill of individual
@@ -67,6 +90,18 @@ public interface IPopulationService
     /// <param name="updater">The updating callback</param>
     /// <returns>The Updated individual</returns>
     Task<Individual> UpdateIndividualAsync(long accountId, long individualId, Action<Individual> updater);
+
+    /// <summary>
+    ///  Asynchronosuly update a FamilyIndividual
+    /// </summary>
+    /// <param name="accountId">The id of the account of the familyindividual to update</param>
+    /// <param name="familyIndividualId">The id of individual to update</param>
+    /// <param name="updater">The updating callback</param>
+    /// <returns>The Updated familyindividual</returns>
+    Task<FamilyIndividual> UpdateSkillAsync(
+            long accountId,
+            long familyIndividualId,
+            Action<FamilyIndividual> updater);
 
     /// <summary>
     /// Asynchronosuly  delete a Individual
