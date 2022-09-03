@@ -23,40 +23,31 @@ namespace APSS.Web.Mvc.Controllers
         {
             _accountsService = accountsService;
             _uow = uow;
-            accounts = new List<AccountDto> {
-            new AccountDto{Id = 1, HolderName="account 1",NationalId="1244551",PhoneNumber="7657879876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 2, HolderName="one 1",NationalId="1244551",PhoneNumber="765779876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 3, HolderName="one 2",NationalId="1244551",PhoneNumber="76578876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 4, HolderName="two 1",NationalId="1244551",PhoneNumber="76578799876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 5, HolderName="tow 2",NationalId="1244551",PhoneNumber="76578791006",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 6, HolderName="account 3",NationalId="1244551",PhoneNumber="76557879876",CreatedAt=DateTime.Now},
-            new AccountDto{Id = 7, HolderName="account 2",NationalId="1244551",PhoneNumber="76657879876",CreatedAt=DateTime.Now},
+            accounts = new List<AccountDto>
+            {
             };
         }
 
         public async Task<IActionResult> Index()
         {
             var entityAccount = await _uow.Accounts.Query().FirstAsync();
-            var entityAccount2 = await _uow.Accounts.Query().FirstAsync(i => i.Id == 6);
+            //var entityAccount3 = await _uow.Accounts.Query().AsAsyncEnumerable().ToListAsync();
+            var entityAccount3 = await _accountsService.GetUserAccounts(1, 1).ToAsyncEnumerable().ToListAsync();
             var account = new List<AccountDto>();
-            account.Add(new AccountDto
+            foreach (var accountDto in entityAccount3)
             {
-                HolderName = entityAccount.HolderName,
-                Id = entityAccount.Id,
-                PhoneNumber = entityAccount.PhoneNumber,
-                NationalId = entityAccount.NationalId,
-                IsActive = entityAccount.IsActive,
-                Job = entityAccount.Job
-            });
-            account.Add(new AccountDto
-            {
-                HolderName = entityAccount2.HolderName,
-                Id = entityAccount2.Id,
-                PhoneNumber = entityAccount2.PhoneNumber,
-                NationalId = entityAccount2.NationalId,
-                IsActive = entityAccount2.IsActive,
-                Job = entityAccount2.Job
-            });
+                var item = await accountDto.FirstAsync();
+                account.Add(new AccountDto
+                {
+                    HolderName = item.HolderName,
+                    Id = item.Id,
+                    PhoneNumber = item.PhoneNumber,
+                    NationalId = item.NationalId,
+                    IsActive = item.IsActive,
+                    Job = item.Job
+                });
+            }
+
             return View(account);
         }
 
@@ -94,21 +85,25 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> AddAccount(long id)
         {
-            var account = await _uow.Accounts.Query().FirstAsync();
-            /*if (id.Equals(null))
+            try
             {
-                return View();
-            }*/
-            /*var account = new AccountDto();
-            account.UserId = id;*/
-            AccountDto result = new AccountDto
+                if (id > 0)
+                {
+                    var account = await _uow.Users.Query().FirstAsync(i => i.Id == id);
+
+                    AccountDto result = new AccountDto();
+                    result.UserId = account.Id;
+                    return View(result);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "User");
+                }
+            }
+            catch (Exception)
             {
-                Id = account.Id,
-                HolderName = account.HolderName,
-                PhoneNumber = account.PhoneNumber,
-                NationalId = account.NationalId,
-            };
-            return View(result);
+            }
+            return RedirectToAction("Index", "User");
         }
 
         [HttpPost]
@@ -119,10 +114,23 @@ namespace APSS.Web.Mvc.Controllers
             var userID = 1;
             try
             {
-                var add = await _accountsService.CreateAsync(accountId, userID, accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
-                TempData["Action"] = "الموظفـين";
-                TempData["success"] = "تم اضافة الموظـف بنجاح";
-                return RedirectToAction("IndeX");
+                if (accountDto == null)
+                    return View(accountDto);
+                else
+                {
+                    var add = await _accountsService.CreateAsync(accountId, accountDto.UserId, accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
+                    if (add != null)
+                    {
+                        TempData["Action"] = "Employee Management";
+                        TempData["success"] = "Add Employee is Successfully";
+                    }
+                    else
+                    {
+                        TempData["Action"] = "Employee Management";
+                        TempData["success"] = "Add Failed!!!";
+                    }
+                    return RedirectToAction("Index");
+                }
             }
             catch (Exception)
             {
@@ -140,8 +148,22 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> AccountDetails(long id)
         {
-            AccountDto accountDto = new AccountDto();
-            accountDto.User = new UserDto();
+            var account = await _accountsService.GetAccountAsync(1, id);
+            AccountDto accountDto = new AccountDto
+            {
+                Id = account.Id,
+                HolderName = account.HolderName,
+                SocialStatus = account.SocialStatus,
+                IsActive = account.IsActive,
+                Job = account.Job,
+                NationalId = account.NationalId,
+                PhoneNumber = account.PhoneNumber,
+                permissionType = account.Permissions,
+            };
+            accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
+            accountDto.PermissionTypeDto.Update = accountDto.permissionType.HasFlag(PermissionType.Update);
+            accountDto.PermissionTypeDto.Create = accountDto.permissionType.HasFlag(PermissionType.Create);
+            accountDto.PermissionTypeDto.Delete = accountDto.permissionType.HasFlag(PermissionType.Delete);
             return View(accountDto);
         }
 
@@ -156,7 +178,7 @@ namespace APSS.Web.Mvc.Controllers
         {
             if (id > 0)
             {
-                var account = await _uow.Accounts.Query().FirstOrNullAsync(i => i.Id == id);
+                var account = await _accountsService.GetAccountAsync(1, id);
                 var accountDto = new AccountDto();
                 accountDto.HolderName = account!.HolderName;
                 accountDto.Id = account.Id;
@@ -171,6 +193,7 @@ namespace APSS.Web.Mvc.Controllers
                 accountDto.PermissionTypeDto.Delete = accountDto.permissionType.HasFlag(PermissionType.Delete);
                 accountDto.NationalId = account.NationalId;
                 accountDto.PasswordHash = account.PasswordHash;
+                accountDto.Job = account.Job;
                 return View(accountDto);
             }
             return RedirectToAction("Index");
@@ -178,36 +201,45 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> ConfirmDeleteAccount(long id)
         {
-            if (id > 0)
+            try
             {
-                await _accountsService.RemoveAsync(User.GetId(), id);
-                TempData["Action"] = "الموظفين";
-                TempData["success"] = "تم حذف الموظف بنجاح";
+                if (id > 0)
+                {
+                    await _accountsService.RemoveAsync(1, id);
+                    TempData["Action"] = "الموظفين";
+                    TempData["success"] = "تم حذف الموظف بنجاح";
+                }
             }
+            catch (Exception) { }
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EditAccount(long id)
         {
-            if (id > 0)
+            try
             {
-                var account = await _uow.Accounts.Query().FirstOrNullAsync(i => i.Id == id);
-                var accountDto = new AccountDto();
-                accountDto.HolderName = account.HolderName;
-                accountDto.Id = account.Id;
-                accountDto.IsActive = account.IsActive;
-                accountDto.PhoneNumber = account.PhoneNumber;
-                accountDto.SocialStatus = account.SocialStatus;
-                accountDto.UserId = 1;
-                accountDto.permissionType = account.Permissions;
-                accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
-                accountDto.PermissionTypeDto.Update = accountDto.permissionType.HasFlag(PermissionType.Update);
-                accountDto.PermissionTypeDto.Create = accountDto.permissionType.HasFlag(PermissionType.Create);
-                accountDto.PermissionTypeDto.Delete = accountDto.permissionType.HasFlag(PermissionType.Delete);
-                accountDto.NationalId = account.NationalId;
-                accountDto.PasswordHash = account.PasswordHash;
-                return View(accountDto);
+                if (id > 0)
+                {
+                    var account = await _uow.Accounts.Query().FirstOrNullAsync(i => i.Id == id);
+                    var accountDto = new AccountDto();
+                    accountDto.HolderName = account!.HolderName;
+                    accountDto.Id = account.Id;
+                    accountDto.IsActive = account.IsActive;
+                    accountDto.PhoneNumber = account.PhoneNumber;
+                    accountDto.SocialStatus = account.SocialStatus;
+                    accountDto.Job = account.Job;
+                    accountDto.UserId = 1;
+                    accountDto.permissionType = account.Permissions;
+                    accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
+                    accountDto.PermissionTypeDto.Update = accountDto.permissionType.HasFlag(PermissionType.Update);
+                    accountDto.PermissionTypeDto.Create = accountDto.permissionType.HasFlag(PermissionType.Create);
+                    accountDto.PermissionTypeDto.Delete = accountDto.permissionType.HasFlag(PermissionType.Delete);
+                    accountDto.NationalId = account.NationalId;
+                    accountDto.PasswordHash = account.PasswordHash;
+                    return View(accountDto);
+                }
             }
+            catch (Exception ex) { }
             return RedirectToAction("Index");
         }
 
@@ -216,20 +248,29 @@ namespace APSS.Web.Mvc.Controllers
         {
             try
             {
-                var resultEdit = await _accountsService.UpdateAsync(1, 1, p =>
+                var resultEdit = await _accountsService.UpdateAsync(account.UserId, account.Id, p =>
                   {
                       p.HolderName = account.HolderName;
                       p.Job = account.Job;
                       p.NationalId = account.NationalId;
                       p.PhoneNumber = account.PhoneNumber;
                       p.SocialStatus = account.SocialStatus;
-                      p.PasswordHash = account.PasswordHash;
                       p.Permissions = account.PermissionTypeDto.Permissions;
                       p.IsActive = account.IsActive;
+                      p.SocialStatus = account.SocialStatus;
                   });
-                TempData["Action"] = "Employees";
-                TempData["success"] = "Edit Employee is succesfully";
-                return RedirectToAction("Index");
+                if (resultEdit != null)
+                {
+                    TempData["Action"] = "Employees";
+                    TempData["success"] = "Edit Employee is successfully";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["Action"] = "Employees";
+                    TempData["success"] = "Edit Employee is not Successed";
+                    return View(account);
+                }
             }
             catch (Exception) { }
 
@@ -239,55 +280,47 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> UserAccounts(long id)
         {
             var account = new List<AccountDto>();
-            account.Add(new AccountDto { HolderName = "محمد", Id = 1, NationalId = "1212", PhoneNumber = "7777777777", CreatedAt = new DateTime().AddDays(30) });
-            account.Add(new AccountDto { HolderName = "محمد", Id = 1, NationalId = "1212", PhoneNumber = "7777777777", CreatedAt = new DateTime().AddDays(30) });
-            account.Add(new AccountDto { HolderName = "محمد", Id = 1, NationalId = "1212", PhoneNumber = "7777777777", CreatedAt = new DateTime().AddDays(30) });
 
             return View(account);
         }
-    }
-}
 
-public class Pager
-{
-    public int TotalItem { get; private set; }
-    public int CorrentPage { get; private set; }
-    public int PagrSize { get; private set; }
-    public int TotalPages { get; set; }
-    public int StartPage { get; set; }
-    public int EndPage { get; set; }
-
-    public Pager()
-    {
-    }
-
-    public Pager(int totalItem, int page, int pageSize = 10)
-    {
-        int totalPage = (int)System.Math.Ceiling((decimal)totalItem / (decimal)pageSize);
-        int correntPage = page;
-
-        int startPage = correntPage - 5;
-        int endPage = correntPage + 4;
-
-        if (startPage < 0)
+        public async Task<IActionResult> EditPassword(long id)
         {
-            endPage = endPage - (startPage - 1);
-            startPage = 1;
+            var accountDto = new AccountDto();
+
+            accountDto.Id = id;
+            return View(accountDto);
         }
-        if (endPage > totalPage)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPassword(AccountDto accountDto)
         {
-            endPage = totalPage;
-            if (endPage > pageSize)
+            try
             {
-                startPage = endPage - 9;
+                if (accountDto.PasswordHash == null)
+                {
+                    return View(accountDto);
+                }
+                else
+                {
+                    var edit = await _accountsService.UpdateAsync(1, 1, p => p.PasswordHash = accountDto.PasswordHash);
+                    if (edit != null)
+                    {
+                        TempData["Action"] = "Employees";
+                        TempData["success"] = "Edit Password is  successfully";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["Action"] = "Employees";
+                        TempData["success"] = "Edit Password is not successed";
+                        return View(accountDto);
+                    }
+                }
             }
+            catch (Exception) { }
+            return View(accountDto);
         }
-
-        TotalItem = totalItem;
-        CorrentPage = correntPage;
-        PagrSize = pageSize;
-        StartPage = startPage;
-        EndPage = endPage;
-        TotalPages = totalPage;
     }
 }
