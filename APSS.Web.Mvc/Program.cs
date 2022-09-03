@@ -90,7 +90,7 @@ foreach (var area in Areas.All)
     app.MapAreaControllerRoute(
         name: area,
         areaName: area,
-        pattern: "{area:exists}/{controller}/{action=Index}/{id?}").RequireAuthorization();
+        pattern: "{area:exists}/{controller}/{action=Index}/{id?}");
 }
 
 #endregion Areas
