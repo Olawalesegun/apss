@@ -3,7 +3,7 @@
 <div class="card mt-2">
     <div class="card-body">
         <div class="d-flex "><h5> Confirm Delete Employee </h5> </div>
-        <table class="table user-view-table  m-0 table-borderless ">
+        <table class="table user-view-table  m-0 table-borderless  table-responsive">
             <tbody style="font-size:14px">
                 <tr class="">
                     <th style="width:30%">@Html.DisplayNameFor(m=>m.HolderName)</th>
@@ -18,13 +18,35 @@
                     <td> @Model.NationalId</td>
                 </tr>
                 <tr>
-                    <th style="width:30%">@Html.DisplayNameFor(m=>m.Job)</th>
+                    <th style="">@Html.DisplayNameFor(m=>m.Job)</th>
                     <td> @Model.Job</td>
                 </tr>
                 <tr>
                     <th style="width:30%">@Html.DisplayNameFor(m=>m.SocialStatus)</th>
                     <td> @Model.SocialStatus</td>
                 </tr>
+                <tr>
+                    <th style="width:30%">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                    <td> @Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <th style="width:30%">@Html.DisplayNameFor(m=>m.IsActive)</th>
+                    @{
+                        if (@Model.IsActive)
+                        {
+                            <td>Active<i class="fa-solid fa-check mx-1"></i> </td>
+                        }
+                        else
+                        {
+                            <td>Inactive <i class="fa-solid fa-xmark mx-1"></i> </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <th class="align-self-center">@Html.DisplayNameFor(m=>m.PermissionTypeDto)</th>
+                    <td>
+                        @Model.PermissionTypeDto.Permissions
+                    </td>
             </tbody>
         </table>
         <br />
