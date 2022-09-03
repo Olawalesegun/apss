@@ -16,14 +16,6 @@
             </div>
         </div>
         <div class="col-sm-2 col-lg-1 mb-2 ">
-
-            <select class="form-select " id="searchby">
-                <option selected>Pages</option>
-                <option value="1">20</option>
-                <option value="2">40</option>
-                <option value="3">80</option>
-                <option value="4">100</option>
-            </select>
         </div>
         <div class="col-sm mb-2 ">
 
@@ -54,6 +46,7 @@
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.AccessLevel)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.userStatus)</th>
                         <th style="width:20px" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -69,6 +62,7 @@
                             <td class="text-break text-capitalize align-middle">
                                 @item.CreatedAt
                             </td>
+                            <td class="text-break text-capitalize align-middle">@item.userStatus</td>
                             <td class="align-middle center">
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"
