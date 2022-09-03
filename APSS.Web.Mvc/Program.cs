@@ -1,5 +1,6 @@
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using APSS.Application.App;
@@ -9,6 +10,7 @@ using APSS.Infrastructure.Repositores.EntityFramework;
 using APSS.Infrastructure.Services;
 using APSS.Web.Mvc.Areas;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,18 +83,15 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 
-// Cookie policies
-app.UseCookiePolicy(new CookiePolicyOptions
-{
-    Secure = CookieSecurePolicy.Always,
-});
-
 #region Areas
 
-app.MapAreaControllerRoute(
-    name: Areas.Lands,
-    areaName: Areas.Lands,
-    pattern: "{area:exists}/{controller}/{action=Index}/{id?}");
+foreach (var area in Areas.All)
+{
+    app.MapAreaControllerRoute(
+        name: area,
+        areaName: area,
+        pattern: "{area:exists}/{controller}/{action=Index}/{id?}").RequireAuthorization();
+}
 
 #endregion Areas
 
