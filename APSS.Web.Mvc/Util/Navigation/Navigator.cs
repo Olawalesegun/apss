@@ -1,4 +1,5 @@
-﻿using APSS.Web.Mvc.Util.Navigation;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Mvc.Util.Navigation;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 
 public static class Navigator
@@ -16,4 +17,7 @@ public static class Navigator
 
         return Routes.Dashboard.Children.FirstOrDefault(r => path.StartsWith(r.FullPath));
     }
+
+    public static void NavigateTo(this HttpContext self, IRoute route)
+        => self.Response.Redirect(route.FullPath);
 }
