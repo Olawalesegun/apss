@@ -1,24 +1,29 @@
-﻿using APSS.Domain.Entities;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+
+using static APSS.Web.Dtos.IndividualDto;
+using APSS.Web.Dtos.ValueTypes;
 
 namespace APSS.Web.Dtos;
 
-public class IndividualAddDto : BaseAuditbleDto
+public sealed class IndividualAddDto : BaseAuditbleDto
 {
-    [Display(Name = "  :إسم الفرد")]
-    [Required(ErrorMessage = "يجب إدخال إسم الفرد")]
+    [Required]
+    [RegularExpression(@"^[a-zA-Z''\s]{1,}$", ErrorMessage = "Characters are not allowed.")]
+    [Display(Name = "Name")]
     public string Name { get; set; } = null!;
 
-    [Display(Name = "  :الجنس ")]
-    [Required(ErrorMessage = "يجب إدخال جنس الفرد")]
-    public IndividualSex Sex { get; set; }
+    [Required]
+    [Display(Name = "Gender")]
+    public SexDto Sex { get; set; }
 
-    [Display(Name = " :العنوان ")]
-    [Required(ErrorMessage = "يجب إدخال العنوان ")]
+    [Required]
+    [Display(Name = "Address")]
     public string Address { get; set; } = null!;
 
-    [Display(Name = "  :إسم العائلة")]
+    [Display(Name = "Family")]
     public FamilyDto Family { get; set; } = null!;
 
+    [Display(Name = "User")]
     public UserDto User { get; set; } = null!;
 }

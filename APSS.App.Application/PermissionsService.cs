@@ -1,4 +1,5 @@
 ﻿using APSS.Domain.Entities;
+using APSS.Domain.Entities.Util;
 using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions;
 using APSS.Domain.Services;
@@ -60,7 +61,7 @@ public sealed class PermissionsService : IPermissionsService
         {
             throw new InsufficientPermissionsException(
                 accountId,
-                 $"account #{accountId} of user #{account.User.Id} with permissions {account.Permissions.ToFormattedString()} does not have permissions {permissions.ToFormattedString()} on or does not own user #{userId}");
+                 $"account #{accountId} of user #{account.User.Id} with permissions {account.Permissions.ToSetFormattedString()} does not have permissions {permissions.ToSetFormattedString()} on or does not own user #{userId}");
         }
 
         return account;
@@ -79,7 +80,7 @@ public sealed class PermissionsService : IPermissionsService
         {
             throw new InsufficientPermissionsException(
                 accountId,
-                $"account #{accountId} of user #{account.User.Id} with permissions {account.Permissions.ToFormattedString()} does not have permissions {permissions.ToFormattedString()} on user #{userId}");
+                $"account #{accountId} of user #{account.User.Id} with permissions {account.Permissions.ToSetFormattedString()} does not have permissions {permissions.ToSetFormattedString()} on user #{userId}");
         }
 
         return account;

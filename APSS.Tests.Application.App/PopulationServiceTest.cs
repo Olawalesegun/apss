@@ -575,7 +575,7 @@ public sealed class PopulationServiceTest : IDisposable
             superaccount = await _uow.CreateTestingAccountAboveUserAsync(account.User.Id, accessLevel, permission);
         }
 
-        var getFamlyIndividualTask = _populationSvc.GetFamilyIndividualsAsync(superaccount.Id, templateFamlyIndividuals.Family.Id);
+        var getFamlyIndividualTask = _populationSvc.GetIndividualsOfFamilyAsync(superaccount.Id, templateFamlyIndividuals.Family.Id);
 
         if (!shoulSucceed)
         {

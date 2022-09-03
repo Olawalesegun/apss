@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APSS.Web.Dtos", "APSS.Web.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APSS.Web.Mvc", "APSS.Web.Mvc\APSS.Web.Mvc.csproj", "{4A9DB458-F58B-4018-9D96-B96EF08536E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APSS.Tests.Infrastructure.Services", "APSS.Tests.Infrastructure.Services\APSS.Tests.Infrastructure.Services.csproj", "{E720EF3A-5CAF-4D31-AEED-3468ADF77B9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APSS.Tests.Infrastructure.Services", "APSS.Tests.Infrastructure.Services\APSS.Tests.Infrastructure.Services.csproj", "{E720EF3A-5CAF-4D31-AEED-3468ADF77B9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

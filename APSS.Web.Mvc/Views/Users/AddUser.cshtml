@@ -14,16 +14,15 @@
             <!-- Text input for user name-->
             <div class=" mb-4 position-relative  ">
                 <div class="input-group">
-                <span class="input-group-text">@@</span>
-                <div class="form-floating col">
-                <input type="text" id="user_name" placeholder="Name" asp-for="Name" class="form-control" required />
-                <label class="" asp-for="Name"></label>
-                  <div class="invalid-tooltip">
-                     Please Enter Area Name
-                   </div>
-                @*<span asp-validation-for="Name" class="text-danger"></span>*@
-            </div>
-            </div>
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" id="user_name" placeholder="Name" asp-for="Name" class="form-control" required />
+                        <label class="" asp-for="Name"></label>
+                        <div class="invalid-tooltip">
+                            Please Enter Area Name
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="">
@@ -32,13 +31,13 @@
                 </h5>
             </div>
             <!--used -->
-            @*@foreach (var item in Enum.GetValues(typeof(APSS.Web.Dtos.UserStatusDto)))
-                {
-                    <div class="form-check form-check-inline mx-1 ">
-                        <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@Convert.ToInt32(item)" />
-                        <label class="form-check-label">@item.ToString()</label>
-                    </div>
-                }*@
+            @foreach (var item in Enum.GetValues(typeof(APSS.Domain.Entities.UserStatus)))
+            {
+                <div class="form-check form-check-inline mx-1 ">
+                    <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@Convert.ToInt32(item)" />
+                    <label class="form-check-label">@item.ToString()</label>
+                </div>
+            }
             <div class="mb-4">
 
                 <button type="submit" class="btn btn-primary w-25 mb-4 mt-4">Add</button>

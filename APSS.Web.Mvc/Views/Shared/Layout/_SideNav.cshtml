@@ -1,0 +1,39 @@
+﻿@{
+    var currentDashboardRoute = Context.GetCurrentDashboardRoute();
+}
+
+<div class="d-flex flex-column flex-shrink-0 min-h-100 h-100 p-3 bg-light">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-3 d-flex align-items-center justify-content-center bg-primary text-light py-3 px-4 me-1 rounded-3">
+                    @Icon.Wheat.Render(IconSize.ExtraLarge)
+                </div>
+                 <p class="col-8 fs-3 fw-light mb-0">APSS</p>
+            </div>
+        </div>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto text-success">
+        @foreach (var route in Routes.Dashboard.Children)
+        {
+            <li class="nav-item">
+                <a href="@route.DefaultRoute.FullPath" class="nav-link py-3 @(route.Name == currentDashboardRoute?.Name ? "active" : "")">
+                    @route.Icon.Render(additionalClasses: "mx-2")
+                    @route.Name
+                </a>
+            </li>
+        }
+    </ul>
+    <hr>
+    <ul class="nav nav-pills flex-column">
+        @for (int i = 0; i < 4; ++i)
+        {
+            <li class="nav-item">
+                <a href="#" class="nav-link" aria-current="page">
+                    @Icon.Link.Render(additionalClasses: "mx-2") Other System #@(i + 1)
+                </a>
+            </li>
+        }
+    </ul>
+</div>

@@ -94,7 +94,7 @@ namespace APSS.Tests.Application.App
         {
             var (account, animalGroups) = await AnimalAddedTheory();
 
-            var productUnit = await AnimalProductUnitAddedTheory(AccessLevel.Farmer, PermissionType.Create, true);
+            var productUnit = await AnimalProductUnitAddedTheory(AccessLevel.Root, PermissionType.Create, true);
 
             var accountnew = await _uow.CreateTestingAccountForUserAsync(account.User.Id, permissionType);
 

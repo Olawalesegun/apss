@@ -126,14 +126,14 @@ public sealed class ApssDbContext : DbContext
     public DbSet<Question> Questions => Set<Question>();
 
     /// <summary>
-    /// Gets the refresh tokens set
+    /// Gets the account sessions set
     /// </summary>
-    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<Session> Sessions => Set<Session>();
 
     /// <summary>
     /// Gets the seasons set
     /// </summary>
-    public DbSet<Season> Sessions => Set<Season>();
+    public DbSet<Season> Seasons => Set<Season>();
 
     /// <summary>
     /// Gets the skills set

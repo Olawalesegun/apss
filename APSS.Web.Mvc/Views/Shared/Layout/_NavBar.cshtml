@@ -1,0 +1,34 @@
+﻿@{
+    var currentDashboardRoute = Context.GetCurrentDashboardRoute();
+    var currentRoute = Context.GetCurrentRoute();
+}
+
+<nav class="d-flex py-3 ps-2">
+    <h1 class="flex-fill fw-light">@(currentDashboardRoute?.Name ?? "Unknown")</h1>
+    <div class="dropdown p-2 bg-super-light">
+        <button class="btn btn-light dropdown-toggle rounded-pill border border-1 px-1" id="userDropDownButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+            <span class="ps-2">Username</span>
+            <img src="~/resources/user.jpg" alt="" width="32" height="32px" class="rounded-circle border border-1 mx-2"/>
+        </button>
+        <ul class="dropdown-menu shadow" aria-labelledby="userDropDown">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+    </div>
+</nav>
+
+@if (currentDashboardRoute is not null && currentDashboardRoute.Children.Any())
+{
+    <ul class="nav nav-tabs">
+        @foreach (var route in currentDashboardRoute.Children)
+        {
+            <li class="nav-item">
+                <a class="nav-link @(currentRoute?.FullPath == route.FullPath ? "active" : "")" href="@route.FullPath">
+                    @route.Name
+                </a>
+            </li>
+        }
+    </ul>
+}

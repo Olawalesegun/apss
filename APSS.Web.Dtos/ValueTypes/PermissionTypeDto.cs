@@ -1,4 +1,5 @@
 ﻿using APSS.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos.ValueTypes;
 
@@ -14,7 +15,7 @@ public sealed class PermissionTypeDto
     /// Default constructor
     /// </summary>
     /// <param name="permissions">The initial permission set</param>
-    public PermissionTypeDto(PermissionType permissions = PermissionType.None)
+    public PermissionTypeDto(PermissionType permissions = 0)
         => _permissions = permissions;
 
     #region Properties
@@ -22,6 +23,7 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets or sets whether permissions has `Create` flag set or not
     /// </summary>
+    [Display(Name = "Create")]
     public bool Create
     {
         get => HasPermission(PermissionType.Create);
@@ -31,6 +33,7 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets or sets whether permissions has `Delete` flag set or not
     /// </summary>
+    [Display(Name = "Delete")]
     public bool Delete
     {
         get => HasPermission(PermissionType.Delete);
@@ -40,6 +43,7 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets or sets whether permissions has `Read` flag set or not
     /// </summary>
+    [Display(Name = "Read")]
     public bool Read
     {
         get => HasPermission(PermissionType.Read);
@@ -49,6 +53,7 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets or sets whether permissions has `Update` flag set or not
     /// </summary>
+    [Display(Name = "Update")]
     public bool Update
     {
         get => HasPermission(PermissionType.Update);
@@ -58,14 +63,14 @@ public sealed class PermissionTypeDto
     /// <summary>
     /// Gets the current perission set
     /// </summary>
-    private PermissionType Permissions => _permissions;
+    public PermissionType Permissions => _permissions;
 
     #endregion Properties
 
     #region Private Methods
 
     private bool HasPermission(PermissionType permission)
-        => _permissions.HasFlag(Permissions);
+        => _permissions.HasFlag(permission);
 
     private void SetPermissionIf(PermissionType permission, bool cond)
     {

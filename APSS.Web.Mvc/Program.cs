@@ -1,28 +1,22 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
 using APSS.Application.App;
-using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Services;
 using APSS.Infrastructure.Repositores.EntityFramework;
 using APSS.Infrastructure.Services;
 using APSS.Web.Mvc.Auth;
-using APSS.Web.Mvc.Auth.Handlers;
-using APSS.Web.Mvc.Auth.Requirements;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
 
 #region Services
 
 var svc = builder.Services;
-
 // Database context
 svc.AddDbContext<ApssDbContext>(cfg =>
     cfg.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"])
@@ -35,7 +29,7 @@ svc.AddScoped<IUnitOfWork, ApssUnitOfWork>();
 svc.AddSingleton<IRandomGeneratorService, SecureRandomGeneratorService>();
 svc.AddSingleton<ICryptoHashService, Argon2iCryptoHashService>();
 svc.AddSingleton<IConfigurationService, AppSettingsConfigurationService>();
-svc.AddScoped<IAuthService, JwtAuthService>();
+svc.AddScoped<IAuthService, AuthService>();
 svc.AddScoped<ILogsService, DatabaseLogsService>();
 svc.AddScoped<IUsersService, UsersService>();
 svc.AddScoped<IPermissionsService, PermissionsService>();
@@ -54,53 +48,16 @@ svc.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 
     options.ExpireTimeSpan = settings.CookieExpiration;
     options.SlidingExpiration = settings.SlidingExpiration;
+
     options.AccessDeniedPath = "/Forbidden/";
+    options.LoginPath = "/Auth/SignIn";
+    options.LogoutPath = "/Auth/SignOut";
+
     options.EventsType = typeof(TokenValidationEvent);
 });
 
-// Authorization
-svc.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
-
-svc.AddAuthorization(options =>
-{
-    var registerAccessLevelPolicy = (AccessLevel accessLevel) =>
-    {
-        options.AddPolicy(accessLevel.ToString(), policy =>
-        {
-            policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
-            policy.RequireAuthenticatedUser();
-            policy.RequireClaim(ClaimTypes.Role);
-            policy.Requirements.Add(new AccessLevelRequirement(accessLevel));
-        });
-    };
-
-    var registerPermissionPolicy = (PermissionType permission) =>
-    {
-        options.AddPolicy(permission.ToString(), policy =>
-        {
-            policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
-            policy.RequireAuthenticatedUser();
-            policy.RequireClaim(ClaimTypes.Role);
-            policy.Requirements.Add(new PermissionRequirement(permission));
-        });
-    };
-
-    // policies
-    registerAccessLevelPolicy(AccessLevel.Root);
-    registerAccessLevelPolicy(AccessLevel.Presedint);
-    registerAccessLevelPolicy(AccessLevel.Governorate);
-    registerAccessLevelPolicy(AccessLevel.Directorate);
-    registerAccessLevelPolicy(AccessLevel.District);
-    registerAccessLevelPolicy(AccessLevel.Village);
-    registerAccessLevelPolicy(AccessLevel.Group);
-    registerAccessLevelPolicy(AccessLevel.Farmer);
-    registerPermissionPolicy(PermissionType.Create);
-    registerPermissionPolicy(PermissionType.Read);
-    registerPermissionPolicy(PermissionType.Update);
-    registerPermissionPolicy(PermissionType.Delete);
-});
-
-builder.Services.AddScoped<TokenValidationEvent>();
+svc.AddAuthorization();
+svc.AddScoped<TokenValidationEvent>();
 
 #endregion Services
 
@@ -129,6 +86,5 @@ app.UseCookiePolicy(new CookiePolicyOptions
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Family}/{action=GetFamilies}/{id?}");
-
+    pattern: "{controller=Home}/{action=Index}");
 app.Run();

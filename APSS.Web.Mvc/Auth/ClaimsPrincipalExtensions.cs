@@ -2,6 +2,8 @@
 
 using Microsoft.IdentityModel.Tokens;
 
+using APSS.Domain.Entities;
+
 namespace APSS.Web.Mvc.Auth;
 
 public static class ClaimsPrincipalExtensions
@@ -27,10 +29,29 @@ public static class ClaimsPrincipalExtensions
         => GetClaimValue(self, ClaimTypes.NameIdentifier);
 
     /// <summary>
-    /// Gets the roles from a claims principal
+    /// Gets the permissions from a claims principal
     /// </summary>
-    public static IEnumerable<string> Permissions(this ClaimsPrincipal self)
-        => GetClaimValue(self, CustomClaims.Permissions).Split(',');
+    public static PermissionType GetPermissions(this ClaimsPrincipal self)
+    {
+        return GetClaimValue(self, CustomClaims.Permissions).Split(',')
+            .Select(p => Enum.Parse<PermissionType>(p))
+            .Aggregate((lhs, rhs) => lhs | rhs);
+    }
+
+    /// <summary>
+    /// Gets the access level from a claims principal
+    /// </summary>
+    public static AccessLevel GetAccessLevel(this ClaimsPrincipal self)
+        => Enum.Parse<AccessLevel>(self.GetClaimValue(ClaimTypes.Role));
+
+    /// <summary>
+    /// Gets whether a user is in an access level or not
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public static bool IsInLevel(this ClaimsPrincipal self, AccessLevel level)
+        => self.IsInRole(Enum.GetName(level)!);
 
     #endregion Public Methods
 
@@ -43,12 +64,12 @@ public static class ClaimsPrincipalExtensions
     /// <param name="claimKey"></param>
     /// <returns></returns>
     /// <exception cref="SecurityTokenException"></exception>
-    private static string GetClaimValue(ClaimsPrincipal claims, string claimKey)
+    public static string GetClaimValue(this ClaimsPrincipal claims, string claimKey)
     {
         var value = claims.Claims.FirstOrDefault(c => c.Type == claimKey)?.Value;
 
         if (value == null)
-            throw new SecurityTokenException("invalid token");
+            throw new SecurityTokenException($"principal does not have claim `{claimKey}`");
 
         return value;
     }

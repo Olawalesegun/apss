@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class LandController : Controller
+    public class LandsController : Controller
     {
         public async Task<IActionResult> Index()
         {

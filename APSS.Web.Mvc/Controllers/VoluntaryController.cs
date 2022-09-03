@@ -1,5 +1,6 @@
 ﻿using APSS.Domain.Entities;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.ValueTypes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers;
@@ -30,10 +31,10 @@ public class VoluntaryController : Controller
         individuals = new List<IndividualDto>
             {
                 new IndividualDto{Id=53, Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=IndividualDto.SexDto.Male,SocialStatus=IndividualDto.SocialStatusDto.Unspecified,NationalId="57994",
+                    Sex=SexDto.Male,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
                     PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
                 new IndividualDto{Id=43,  Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=IndividualDto.SexDto.Female,SocialStatus=IndividualDto.SocialStatusDto.Unspecified,NationalId="57994",
+                    Sex=SexDto.Female,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
                     PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
             };
 
@@ -47,10 +48,10 @@ public class VoluntaryController : Controller
     }
 
     // GET: VoluntaryController/GetVoluntaries/5
-    public ActionResult GetVoluntaries(int id)
+    public ActionResult Index(int id)
     {
         var voluntary = voluntaries.Where(v => v.Individual.Id == id);
-        return View(voluntary);
+        return View("GetVoluntaries", voluntary);
     }
 
     // GET: VoluntaryController/AddVoluntary/5
@@ -94,7 +95,7 @@ public class VoluntaryController : Controller
     // GET: VoluntaryController/DeleteVoluntary/5
     public ActionResult DeleteVoluntary(int id)
     {
-        return RedirectToAction(nameof(GetVoluntaries), voluntaries);
+        return RedirectToAction(nameof(Index), voluntaries);
     }
 
     // POST: VoluntaryController/DeleteVoluntary/5
@@ -102,6 +103,6 @@ public class VoluntaryController : Controller
     [ValidateAntiForgeryToken]
     public ActionResult DeleteVoluntary(int id, VoluntaryDto voluntaryDto)
     {
-        return RedirectToAction(nameof(GetVoluntaries), voluntaries);
+        return RedirectToAction(nameof(Index), voluntaries);
     }
 }
