@@ -61,7 +61,7 @@ namespace APSS.Web.Mvc.Controllers
         // GET: FamilyController/GetFamilies
         [ApssAuthorized(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Directorate | AccessLevel.District
                           | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group, PermissionType.Read)]
-        public IActionResult GetFamilies()
+        public IActionResult Index()
         {
             var families = _populationSvc.GetFamilies(User.GetId());
             var familiesDto = _mapper.Map<FamilyDto>(families);
@@ -74,7 +74,7 @@ namespace APSS.Web.Mvc.Controllers
                                 UserName=f.AddedBy.Name
                             }).ToListAsync();*/
 
-            return View(familiesDto);
+            return View("GetFamilies", familiesDto);
         }
 
         // GET: FamilyController/FamilyDetails/5
@@ -162,7 +162,7 @@ namespace APSS.Web.Mvc.Controllers
                     f.LivingLocation = family.LivingLocation;
                 });
 
-            return RedirectToAction(nameof(GetFamilies));
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: FamilyController/DeleteFamily/5
@@ -172,7 +172,7 @@ namespace APSS.Web.Mvc.Controllers
             var family = await _populationSvc.GetFamilyAsync(User.GetId(), id);
             if (family == null)
             {
-                return RedirectToAction(nameof(GetFamilies));
+                return RedirectToAction(nameof(Index));
             }
             return View("ConfirmDeleteFamily", family);
         }
@@ -189,7 +189,7 @@ namespace APSS.Web.Mvc.Controllers
                 return View("ConfirmDeleteFamily", family);
             }
             await _populationSvc.RemoveFamilyAsync(User.GetId(), id);
-            return RedirectToAction(nameof(GetFamilies));
+            return RedirectToAction(nameof(Index));
         }
     }
 }
