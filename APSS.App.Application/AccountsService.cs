@@ -111,6 +111,20 @@ public sealed class AccountsService : IAccountsService
         return account;
     }
 
+    public async Task<Account> GetAccountAsync(long SuperId, long accountId)
+    {
+        var (_, account) = await _permissionsSvc
+            .ValidateAccountPatenthoodAsync(SuperId, accountId, PermissionType.Read);
+
+        return account;
+    }
+
+    public async Task<IQueryBuilder<Account>> GetUserAccounts(long accountId, long userId)
+    {
+        var account = await _permissionsSvc.ValidateAccountPatenthoodAsync(accountId, userId, PermissionType.Read);
+        return _uow.Accounts.Query().Where(A => A.User.Id == userId);
+    }
+
     #endregion Public Methods
 
     #region Private Methods
