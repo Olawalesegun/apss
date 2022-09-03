@@ -18,12 +18,12 @@ public sealed class DashboardRoute : Route
     }
 
     public IRoute Home { get; init; }
-    public IRoute Users { get; init; }
+    public UsersRoute Users { get; init; }
     public IRoute Accounts { get; init; }
-    public IRoute Animals { get; init; }
-    public IRoute Lands { get; init; }
+    public AnimalsRoute Animals { get; init; }
+    public LandsRoute Lands { get; init; }
     public IRoute Surveys { get; init; }
-    public IRoute Population { get; init; }
+    public PopulationRoute Population { get; init; }
     public IRoute Settings { get; init; }
 
     public override IRoute DefaultRoute => Home;
