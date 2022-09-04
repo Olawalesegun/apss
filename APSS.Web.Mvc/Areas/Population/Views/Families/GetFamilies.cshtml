@@ -1,14 +1,21 @@
-﻿@model IEnumerable<FamilyDto>
+﻿@{
+    Layout = "Layout/Dashboard";
+}
+
+@model IEnumerable<FamilyDto>
 
 @{
     ViewData["Title"] = "Families";
+
+    
+
 }
 
 <partial name="_PupolationNavBar" />
 <div class="aling" id="loader"></div>
 <div class="p-2 col-ms-12  my-0 mt-2 rounded ml-2" id="table">
 
-    <form class="row d-flex justify-content-between d-inline mb-3" asp-controller="AnimalGroup" asp-action="Index" method="post">
+    <form class="row d-flex justify-content-between d-inline mb-3" asp-controller="Families" asp-action="Index" method="post">
         <div class=" mb-3 col-sm  d-flex">
             <div class="input-group">
             <button type="submit" class="btn btn-primary">

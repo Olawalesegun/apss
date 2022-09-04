@@ -8,8 +8,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
 {
+    [Area(Areas.Population)]
     public class FamiliesController : Controller
     {
         #region Fields
@@ -59,13 +60,12 @@ namespace APSS.Web.Mvc.Controllers
         #endregion Public Constructors
 
         // GET: FamilyController/GetFamilies
-        [ApssAuthorized(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Directorate | AccessLevel.District
-                          | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group, PermissionType.Read)]
+
         public IActionResult Index()
         {
-            var families = _populationSvc.GetFamilies(User.GetId());
+            /*var families = _populationSvc.GetFamilies(User.GetId());
             var familiesDto = _mapper.Map<FamilyDto>(families);
-            /*          var familiesDto= await families.AsAsyncEnumerable().Select(
+            *//*          var familiesDto= await families.AsAsyncEnumerable().Select(
                             f => new FamilyGetDto
                             {
                                 Id = f.Id,
@@ -74,7 +74,7 @@ namespace APSS.Web.Mvc.Controllers
                                 UserName=f.AddedBy.Name
                             }).ToListAsync();*/
 
-            return View("GetFamilies", familiesDto);
+            return View("GetFamilies", fes);
         }
 
         // GET: FamilyController/FamilyDetails/5

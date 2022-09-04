@@ -1,9 +1,20 @@
 ﻿@{
     Layout = "Layout/Generic";
     ViewData["Title"] = Context.GetCurrentDashboardRoute()?.Name;
+
+    @if (User.Identity?.IsAuthenticated != true)
+    {
+        Context.NavigateTo(Routes.Auth.SignIn);
+
+        IgnoreSection("styles");
+        IgnoreSection("scripts");
+        IgnoreBody();
+
+        return;
+    }
 }
 
-<!-- main div  -->
+    <!-- main div  -->
 <div class="row w-100 m-0">
     <aside class="col-lg-3 col-md-4 p-0 min-vh-100">
         @await Html.PartialAsync("Layout/_SideNav")
@@ -16,7 +27,7 @@
 </div>
 
 @section styles {
-    <link rel="stylesheet" href="assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/dashboard.css" />
     @await RenderSectionAsync("styles", required: false)
 }
 

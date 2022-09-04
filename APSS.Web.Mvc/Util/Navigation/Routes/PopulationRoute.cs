@@ -1,11 +1,13 @@
-﻿namespace APSS.Web.Mvc.Util.Navigation.Routes;
+﻿using APSS.Web.Mvc.Areas.Populatoin.Controllers;
+
+namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
 public sealed class PopulationRoute : Route
 {
     public PopulationRoute(IRoute parent) : base(parent, "Population", "Population", icon: Icon.People)
     {
-        Families = new Route(this, "Families", "Families", icon: Icon.People);
-        Individuals = new Route(this, "Individuals", "Individuals", icon: Icon.People);
+        Families = FromController<FamiliesController>(icon: Icon.People);
+        Individuals = FromController<IndividualsController>(icon: Icon.People);
     }
 
     public IRoute Families { get; init; }

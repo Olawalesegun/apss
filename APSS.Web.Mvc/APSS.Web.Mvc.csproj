@@ -28,7 +28,10 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Lands\" />
+    <Folder Include="Views\Family\" />
     <Folder Include="Views\LandProduct\" />
+    <Folder Include="Views\Skill\" />
+    <Folder Include="Views\Voluntary\" />
   </ItemGroup>
 
 </Project>
