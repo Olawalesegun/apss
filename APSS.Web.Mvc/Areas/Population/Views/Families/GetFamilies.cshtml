@@ -1,7 +1,4 @@
-﻿@{
-    Layout = "Layout/Dashboard";
-}
-
+﻿
 @model IEnumerable<FamilyDto>
 
 @{
@@ -15,7 +12,7 @@
 <div class="aling" id="loader"></div>
 <div class="p-2 col-ms-12  my-0 mt-2 rounded ml-2" id="table">
 
-    <form class="row d-flex justify-content-between d-inline mb-3" asp-controller="Families" asp-action="Index" method="post">
+    <form class="row d-flex justify-content-between d-inline mb-3" asp-area="Population" asp-controller="Families" asp-action="Index" method="post">
         <div class=" mb-3 col-sm  d-flex">
             <div class="input-group">
             <button type="submit" class="btn btn-primary">
@@ -45,7 +42,7 @@
         </div>
         <div class="col-sm d-flex d-inline mb-3">
            
-            <a class="btn btn-primary" role="button" asp-controller="Families" asp-action="AddFamily">
+            <a class="btn btn-primary" role="button" asp-area="Population" asp-controller="Families" asp-action="AddFamily">
                 <i class="fa-solid fa-plus"></i>
                 Family
             </a>
@@ -89,15 +86,15 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" asp-controller="Family" asp-action="FamilyDetails" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item" asp-controller="Family" asp-action="ConfirmDeleteFamily" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-area="Population" asp-controller="Families" asp-action="FamilyDetails" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                        <li><a class="dropdown-item" asp-area="Population" asp-controller="Families" asp-action="ConfirmDeleteFamily" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li class="">
-                                            <a class="dropdown-item" asp-controller="Individual" asp-action="AddIndividual" asp-route-Id="@item.Id">
+                                            <a class="dropdown-item" asp-area="Population" asp-controller="Individuals" asp-action="AddIndividual" asp-route-Id="@item.Id">
                                                 <div class="d-flex justify-content-between"> <span> Add Individual</span>  <span><i class="fa-solid fa-user-plus"></i> </span> </div>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a class="dropdown-item" asp-controller="Family" asp-action="UpdateFamily" asp-route-Id="@item.Id">
+                                            <a class="dropdown-item" asp-area="Population" asp-controller="Families" asp-action="UpdateFamily" asp-route-Id="@item.Id">
                                                 <div class="d-flex justify-content-between"> <span> Edit </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
                                             </a>
                                         </li>
@@ -127,18 +124,3 @@
     </div>
 </div>
 
-
-@section scripts{
-    <script>
-        $(document).ready(function() {
-            $(".sidebar ul li.active").removeClass('active');
-            $("#populationManagement").addClass('active');
-        });
-        document.getElementById("nav-system-name").innerHTML = "Populatoin Management";
-        document.getElementById("media-system-name").innerHTML = "Populatoin Management";
-
-        $("#family").AddClass('actives');
-        $("#individual").removeClass('actives');
-
-    </script>
-}
