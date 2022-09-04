@@ -50,7 +50,7 @@ public sealed class UsersService : IUsersService
         {
             Name = name,
             SupervisedBy = superAccount.User,
-            AccessLevel = (AccessLevel)(((int)superAccount.User.AccessLevel) + 1)
+            AccessLevel = (AccessLevel)(((int)superAccount.User.AccessLevel.NextLevelBelow()) + 1)
         };
 
         _uow.Users.Add(user);
@@ -119,6 +119,15 @@ public sealed class UsersService : IUsersService
 
             userId = user.SupervisedBy.Id;
         }
+    }
+
+    public async Task<IQueryBuilder<User>> GetUserAsync(long accountId, long userId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        return _uow.Users.Query().Where(u => u.Id == userId);
     }
 
     #endregion Public Methods
