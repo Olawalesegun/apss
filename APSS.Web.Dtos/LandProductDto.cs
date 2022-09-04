@@ -62,6 +62,7 @@ public class LandProductDto : ProductDto
     public SeasonDto ProducedIn { get; set; } = null!;
 
     public long SeasonId { get; set; }
+    public long landId { get; set; }
     public IEnumerable<SeasonDto> Seasons { get; set; } = new List<SeasonDto>();
 }
 
