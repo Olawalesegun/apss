@@ -4,9 +4,11 @@ using APSS.Domain.Repositories;
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Dtos.ValueTypes;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Controllers
 {
+    [Area(Areas.Users)]
     public class AccountsController : Controller
     {
         private readonly IUnitOfWork _uow;
@@ -151,7 +153,7 @@ namespace APSS.Web.Mvc.Controllers
             {
                 Id = account.Id,
                 HolderName = account.HolderName,
-                SocialStatus = account.SocialStatus,
+                SocialStatus = (SocialStatusDto)account.SocialStatus,
                 IsActive = account.IsActive,
                 Job = account.Job,
                 NationalId = account.NationalId,
@@ -182,7 +184,7 @@ namespace APSS.Web.Mvc.Controllers
                 accountDto.Id = account.Id;
                 accountDto.IsActive = account.IsActive;
                 accountDto.PhoneNumber = account.PhoneNumber;
-                accountDto.SocialStatus = account.SocialStatus;
+                accountDto.SocialStatus = (SocialStatusDto)account.SocialStatus;
                 accountDto.UserId = 1;
                 accountDto.permissionType = account.Permissions;
                 accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
@@ -224,7 +226,7 @@ namespace APSS.Web.Mvc.Controllers
                     accountDto.Id = account.Id;
                     accountDto.IsActive = account.IsActive;
                     accountDto.PhoneNumber = account.PhoneNumber;
-                    accountDto.SocialStatus = account.SocialStatus;
+                    accountDto.SocialStatus = (SocialStatusDto)account.SocialStatus;
                     accountDto.Job = account.Job;
                     accountDto.permissionType = account.Permissions;
                     accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
@@ -236,7 +238,7 @@ namespace APSS.Web.Mvc.Controllers
                     return View(accountDto);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
             return RedirectToAction("Index");
         }
 
@@ -245,16 +247,15 @@ namespace APSS.Web.Mvc.Controllers
         {
             try
             {
-                var resultEdit = await _accountsService.UpdateAsync(account.UserId, account.Id, p =>
+                var resultEdit = await _accountsService.UpdateAsync(User.GetId(), account.Id, p =>
                     {
                         p.HolderName = account.HolderName;
                         p.Job = account.Job;
                         p.NationalId = account.NationalId;
                         p.PhoneNumber = account.PhoneNumber;
-                        p.SocialStatus = account.SocialStatus;
+                        p.SocialStatus = (SocialStatus)account.SocialStatus;
                         p.Permissions = account.PermissionTypeDto.Permissions;
                         p.IsActive = account.IsActive;
-                        p.SocialStatus = account.SocialStatus;
                     });
                 if (resultEdit != null)
                 {

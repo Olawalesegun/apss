@@ -1,21 +1,22 @@
-﻿@model APSS.Web.Dtos.AnimalGroupDto
-@await Html.PartialAsync("_dataNavBar")
+﻿@model APSS.Web.Dtos.AnimalProductDto
+
 <div class="card mt-2">
     <div class="card-body">
-        <div class="d-flex "><h5>Confirm Delete Animal  </h5> </div>
+        <div class="d-flex "><h5>Confirm Delete Product  </h5> </div>
         <table class="table user-view-table m-0  ">
             <tbody style="font-size:14px">
+
                 <tr class="">
-                    <th>@Html.DisplayNameFor(m=>m.Type)</th>
-                    <td> @Model.Type</td>
+                    <th>@Html.DisplayNameFor(m=>m.Name)</th>
+                    <td> @Model.Name</td>
                 </tr>
                 <tr>
                     <th>@Html.DisplayNameFor(m=>m.Quantity)</th>
                     <td> @Model.Quantity</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(m=>m.Sex)</th>
-                    <td> @Model.Sex</td>
+                    <th>@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
+                    <td> @Model.PeriodTaken</td>
                 </tr>
                 <tr>
                     <th>@Html.DisplayNameFor(m=>m.CreatedAt)</th>
@@ -27,14 +28,11 @@
                 </tr>
             </tbody>
         </table>
-       @ViewData["action"]
         <br />
-        <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="AnimalGroups" asp-action="ConfirmDeleteAnimalGroup">Confirm</a>
-            <a onclick="history.back()" class="btn btn-link my-4  mx-3" style="background-color:#DCEEFB">Cancel</a>
+        <div class=" d-inline pt-2 my-4">
+            <a class="btn btn-danger btn-rounded  " asp-controller="Products" asp-action="DeleteConfirm">Confirm</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link  mx-3" style="background-color:#DCEEFB">Cancel</a>
         </div>
-
-        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
     </div>
 </div>
 
@@ -45,14 +43,20 @@
     $(".sidebar ul li.active").removeClass('active');
      $("#dataManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="Employees Management";
-    document.getElementById("media-system-name").innerHTML="Employees Management";
 
-       $("#animalProducts").removeClass('actives');
+        $(document).ready(function(){
+         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+         $("#animalProductMedia").addClass('MediaActive')
+
+     });
+       document.getElementById("nav-system-name").innerHTML="Data Management";
+    document.getElementById("media-system-name").innerHTML="Data Management";
+
+       $("#animalGroups").removeClass('actives');
        $("#lands").removeClass('actives');
        $("#landProducts").removeClass('actives');
         $("#confirmation").removeClass('actives');
         $("#units").removeClass('actives');
-       $("#animalGroups").addClass('actives');
+         $("#animalProducts").addClass('actives');
 </script>
     }

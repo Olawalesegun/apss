@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.AnimalGroupDto
+﻿@model APSS.Web.Dtos.AnimalGroupListDto
 
 @{
     ViewData["Title"] = "Animal Details";
@@ -19,6 +19,10 @@
                     <td class="label"><label>@Html.DisplayNameFor(m => m.Type)</label></td>
                     <td>@Model.Type </td>
                 </tr>
+                <tr class="">
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.Name)</label></td>
+                    <td>@Model.Name </td>
+                </tr>
                 <tr>
                     <td> <label>@Html.DisplayNameFor(m => m.Quantity);</label></td>
                     <td>@Model.Quantity  </td>
@@ -26,6 +30,10 @@
                 <tr>
                     <td><label>@Html.DisplayNameFor(m => m.Sex)</label>  </td>
                     <td> @Model.Sex </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.Confirm)</label>  </td>
+                    <td> @Model.Confirm </td>
                 </tr>
                 <tr>
                     <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>
@@ -44,11 +52,11 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a id="III" class="btn btn-outline-dark   my-2  text-decoration-none mx-1 " asp-controller="AnimalGroups" asp-action="Index"><i class="fa-solid fa-arrow-left px-1"></i><span class="">Back </span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroups" asp-action="AddAnimalGroup"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Product</span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="AnimalGroups" asp-action="EditAnimalGroup"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
-            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="AnimalGroups" asp-action="DeleteAnimalGroup" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
-            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="AnimalProduct" asp-action="AllAnimalProducts"><span class="">Products </span> </a>
+            <a id="III" class="btn btn-outline-dark   my-2  text-decoration-none mx-1 " asp-controller="Groups" asp-action="Index"><i class="fa-solid fa-arrow-left px-1"></i><span class="">Back </span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Add"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Product</span> </a>
+            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Edit"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
+            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="AnimalGroups" asp-action="Groups" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
+            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="Products" asp-action="AllProducts"><span class="">Products </span> </a>
         </div>
     </div>
 </div>

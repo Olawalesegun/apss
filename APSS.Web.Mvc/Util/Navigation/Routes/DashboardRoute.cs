@@ -1,4 +1,5 @@
 ﻿using APSS.Domain.Entities;
+using APSS.Web.Mvc.Areas.Controllers;
 using APSS.Web.Mvc.Areas.Surveys.Controllers;
 using APSS.Web.Mvc.Controllers;
 
@@ -10,7 +11,6 @@ public sealed class DashboardRoute : Route
     {
         Home = FromController<HomeController>(icon: Icon.Home);
         Users = new UsersRoute(this);
-        Accounts = FromController<AccountsController>(icon: Icon.Key);
         Animals = new AnimalsRoute(this);
         Lands = new LandsRoute(this);
         Surveys = FromController<SurveysController>(icon: Icon.Poll);

@@ -10,8 +10,9 @@ using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
 using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Controllers
 {
+    [Area(Areas.Users)]
     public class UsersController : Controller
     {
         private List<UserDto> _userDtos;
@@ -75,7 +76,7 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> AddUser(UserDto user)
         {
             var accountis = 1;
-            var add = await _userService.CreateAsync(1, user.Name);
+            var add = await _userService.CreateAsync(User.GetId(), user.Name);
             return RedirectToAction(nameof(Index));
 
             return View(user);
