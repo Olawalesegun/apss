@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
+using APSS.Domain.Services;
+using APSS.Web.Mvc.Auth;
+using AutoMapper;
 using APSS.Web.Dtos;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
@@ -6,19 +10,35 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     [Area(Areas.Lands)]
     public class UnitsController : Controller
     {
-        public IActionResult Index()
+        private readonly ILandService _landSvc;
+        private readonly IMapper _mapper;
+        private readonly List<LandProductUnitDto> _unitsList;
+
+        public UnitsController(ILandService landService, IMapper mapper)
         {
-            var unitList = new List<LandProductUnitDto>
+            _landSvc = landService;
+            _mapper = mapper;
+            _unitsList = new List<LandProductUnitDto>();
+        }
+
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
+        public async Task<IActionResult> Index()
+        {
+            var unitList = await _landSvc.
+                GetLandProductUnitsAsync()
+                .AsAsyncEnumerable()
+                .ToListAsync();
+            foreach (var unit in unitList)
             {
-                new LandProductUnitDto{Id=1, Name ="unit1", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=2, Name ="unit2", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=3, Name ="unit3", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=4, Name ="unit4", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-            };
-            return View(unitList);
+                var item = _mapper.Map<LandProductUnitDto>(unit);
+                _unitsList.Add(item);
+            }
+
+            return View(_unitsList);
         }
 
         // GET: LandProductUnitController/Add a new LandProductUnit
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
         public ActionResult Add()
         {
             return View();
@@ -27,85 +47,75 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: LandProductUnitController/Add a new LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(LandProductUnitDto landProductUnit)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
+        public async Task<ActionResult> Add(LandProductUnitDto landProductUnit)
         {
-            try
+            if (!ModelState.IsValid || landProductUnit == null)
             {
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            await _landSvc.AddLandProductUnitAsync(User.GetId(), landProductUnit!.Name);
+
+            return RedirectToAction("Index");
         }
 
         // GET: LandProductUnitController/Update LandProductUnit
-        public ActionResult Update(long Id)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
+        public async Task<ActionResult> Update(long Id)
         {
-            var unitList = new List<LandProductUnitDto>
-            {
-                new LandProductUnitDto{Id=1, Name ="unit1", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=2, Name ="unit2", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=3, Name ="unit3", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=4, Name ="unit4", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-            };
-            return View(unitList.Where(i => i.Id == Id).First());
+            return View(_mapper.Map<LandProductUnitDto>(
+                await _landSvc.GetLandProductUnitAsync(User.GetId(), Id)));
         }
 
         // POST: LandProductUnit/Update LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(LandProductUnitDto landProductUnit)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
+        public async Task<ActionResult> Update(LandProductUnitDto landProductUnit)
         {
-            try
+            if (!ModelState.IsValid || landProductUnit == null)
             {
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            await _landSvc.UpdateLandProductUnitAsync(User.GetId(),
+                landProductUnit!.Id,
+                f =>
+                {
+                    f.Name = landProductUnit.Name;
+                });
+
+            return RedirectToAction("Index");
         }
 
         // GET: LandProductUnitController/Delete LandProductUnit
-        public ActionResult Delete(long Id)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
+        public async Task<ActionResult> Delete(long Id)
         {
-            var unitList = new List<LandProductUnitDto>
-            {
-                new LandProductUnitDto{Id=1, Name ="unit1", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=2, Name ="unit2", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=3, Name ="unit3", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=4, Name ="unit4", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-            };
-            return View(unitList.Where(i => i.Id == Id).First());
+            if (Id <= 0)
+            { }
+
+            return View(_mapper.Map<LandProductUnitDto>(
+                await _landSvc.GetLandProductUnitAsync(User.GetId(), Id)));
         }
 
         // POST: LandProductUnitController/Delete LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(LandProductUnitDto landProductUnit)
+        [HttpPost, ActionName("Delete")]
+        public async Task<ActionResult> DeletePost(long Id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (Id <= 0)
+            { }
+            await _landSvc.RemoveLandProductUnitAsync(User.GetId(), Id);
+
+            return RedirectToAction("Index");
         }
 
         // GET: LandProductUnitController/Get LandProductUnit
-        public ActionResult GetLandProductUnit(long Id)
+        public async Task<ActionResult> GetLandProductUnit(long Id)
         {
-            var unitList = new List<LandProductUnitDto>
-            {
-                new LandProductUnitDto{Id=1, Name ="unit1", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=2, Name ="unit2", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=3, Name ="unit3", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-                new LandProductUnitDto{Id=4, Name ="unit4", CreatedAt = DateTime.Now, ModifiedAt = DateTime.Now.AddDays(2)},
-            };
-            return View(unitList.Where(i => i.Id == Id).First());
+            if (Id <= 0)
+            { }
+            return View(_mapper.Map<LandProductUnitDto>(
+                await _landSvc.GetLandProductUnitAsync(User.GetId(), Id)));
         }
     }
 }
