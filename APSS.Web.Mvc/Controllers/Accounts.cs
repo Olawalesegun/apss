@@ -30,21 +30,18 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var entityAccount = await _uow.Accounts.Query().FirstAsync();
-            //var entityAccount3 = await _uow.Accounts.Query().AsAsyncEnumerable().ToListAsync();
-            var entityAccount3 = await _accountsService.GetUserAccounts(1, 1).ToAsyncEnumerable().ToListAsync();
+            var entityAccount3 = await (await _accountsService.GetUserAccounts(1, 1)).AsAsyncEnumerable().ToListAsync();
             var account = new List<AccountDto>();
             foreach (var accountDto in entityAccount3)
             {
-                var item = await accountDto.FirstAsync();
                 account.Add(new AccountDto
                 {
-                    HolderName = item.HolderName,
-                    Id = item.Id,
-                    PhoneNumber = item.PhoneNumber,
-                    NationalId = item.NationalId,
-                    IsActive = item.IsActive,
-                    Job = item.Job
+                    HolderName = accountDto.HolderName,
+                    Id = accountDto.Id,
+                    PhoneNumber = accountDto.PhoneNumber,
+                    NationalId = accountDto.NationalId,
+                    IsActive = accountDto.IsActive,
+                    Job = accountDto.Job
                 });
             }
 
@@ -108,6 +105,7 @@ namespace APSS.Web.Mvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // [ApssAuthorized(AccessLevel.Root | AccessLevel.District | AccessLevel.Group | AccessLevel.Presedint | AccessLevel.Village | AccessLevel.Directorate, PermissionType.Create)]
         public async Task<IActionResult> AddAccount(AccountDto accountDto)
         {
             var accountId = 1;
@@ -279,8 +277,20 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> UserAccounts(long id)
         {
+            var entityAccount3 = await (await _accountsService.GetUserAccounts(1, 1)).AsAsyncEnumerable().ToListAsync();
             var account = new List<AccountDto>();
-
+            foreach (var accountDto in entityAccount3)
+            {
+                account.Add(new AccountDto
+                {
+                    HolderName = accountDto.HolderName,
+                    Id = accountDto.Id,
+                    PhoneNumber = accountDto.PhoneNumber,
+                    NationalId = accountDto.NationalId,
+                    IsActive = accountDto.IsActive,
+                    Job = accountDto.Job
+                });
+            }
             return View(account);
         }
 

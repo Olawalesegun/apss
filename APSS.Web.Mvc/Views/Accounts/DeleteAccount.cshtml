@@ -34,7 +34,7 @@
                     @{
                         if (@Model.IsActive)
                         {
-                            <td>Active<i class="fa-solid fa-check mx-1"></i> </td>
+                            <td>Active<i class="fa-solid fa-check text-primary mx-1"></i> </td>
                         }
                         else
                         {
@@ -75,7 +75,6 @@
     $(".manage-ment ul li a").on('click',function(){
         $(".scrollmenu a.actives").removeClass('actives');
         $("#animalGroups").addClass('actives');
-
     });
     $("#users").removeClass('actives');
        $("#lands").removeClass('actives');

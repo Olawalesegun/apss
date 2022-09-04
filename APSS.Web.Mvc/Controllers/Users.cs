@@ -76,13 +76,10 @@ namespace APSS.Web.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(UserDto user)
         {
-            try
-            {
-                var accountis = 1;
-                var add = await _userService.CreateAsync(accountis, user.Name);
-                return RedirectToAction("Index");
-            }
-            catch (Exception) { }
+            var accountis = 1;
+            var add = await _userService.CreateAsync(accountis, user.Name);
+            return RedirectToAction("Index");
+
             return View(user);
         }
 
