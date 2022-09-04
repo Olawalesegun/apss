@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "Layout/Generic";
+    ViewData["Title"] = Context.GetCurrentDashboardRoute()?.Name;
+}
+
+<!-- main div  -->
+<div class="row w-100 m-0">
+    <aside class="col-lg-3 col-md-4 p-0 min-vh-100">
+        @await Html.PartialAsync("Layout/_SideNav")
+    </aside>
+    <main class="col-lg-9 col-md-8">
+        @await Html.PartialAsync("Layout/_NavBar")
+        @await Html.PartialAsync("_Notification")
+        @RenderBody()
+    </main>
+</div>
+
+@section styles {
+    <link rel="stylesheet" href="assets/css/dashboard.css" />
+    @await RenderSectionAsync("styles", required: false)
+}
+
+@section scripts {
+    <script src="~/js/modelFunction.js"></script>
+    @await RenderSectionAsync("scripts", required: false)
+}

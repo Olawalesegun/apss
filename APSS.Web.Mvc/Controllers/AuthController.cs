@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.HttpSys;
 using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Mvc.Filters;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
 
 namespace APSS.Web.Mvc.Controllers;
@@ -36,8 +38,8 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult SignIn()
     {
-        if (User.Identity is not null)
-            return View();
+        if (User.Identity?.IsAuthenticated == true)
+            return LocalRedirect(Routes.Dashboard.Home.FullPath);
 
         return View(nameof(SignIn));
     }
@@ -49,9 +51,6 @@ public class AuthController : Controller
     {
         if (!ModelState.IsValid)
             return View(nameof(SignIn), form);
-
-        if (User.Identity is not null)
-            return RedirectToAction("Index", "AnimalGroup");
 
         var deviceInfo = HttpContext.GetLoginInfo();
         var session = await _authSvc.SignInAsync(long.Parse(form.AccountId), form.Password, deviceInfo);
@@ -71,12 +70,12 @@ public class AuthController : Controller
             authProperties);
 
         if (returnUrl is not null)
-            return LocalRedirect(returnUrl);
+            return LocalRedirect($"~/{returnUrl}");
 
-        return RedirectToAction("Index", "AnimalGroup");
+        return LocalRedirect(Routes.Dashboard.Home.FullPath);
     }
 
-    [HttpGet("SignOut")]
+    [HttpGet("Logout", Order = 100)]
     [Authorize]
     public async Task<IActionResult> DoSignOut()
     {

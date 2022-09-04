@@ -1,5 +1,6 @@
 ﻿using APSS.Domain.Entities;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.ValueTypes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Controllers
@@ -30,10 +31,10 @@ namespace APSS.Web.Mvc.Controllers
             individuals = new List<IndividualDto>
             {
                 new IndividualDto{Id=53, Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=IndividualDto.SexDto.Male,SocialStatus=IndividualDto.SocialStatusDto.Unspecified,NationalId="57994",
+                    Sex=SexDto.Male,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
                     PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
                 new IndividualDto{Id=43,  Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=IndividualDto.SexDto.Female,SocialStatus=IndividualDto.SocialStatusDto.Unspecified,NationalId="57994",
+                    Sex=SexDto.Female,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
                     PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
             };
 
@@ -45,7 +46,7 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: Individual/GetIndividuals
-        public IActionResult GetIndividuals()
+        public IActionResult Index()
         {
             return View(individuals);
         }
@@ -54,20 +55,24 @@ namespace APSS.Web.Mvc.Controllers
         public IActionResult AddIndividual(int id)
         {
             var family = families.Find(f => f.Id == id);
-            var individual = new IndividualDto
+            var individual = new IndividualAddDto
             {
                 Family = family!
             };
-            return View(individual);
+            return View("GetIndividuals", individual);
         }
 
         // POST: IndividualController/AddIndividual
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddIndividual(int id, IndividualDto individual)
+        public IActionResult AddIndividual(long id, IndividualAddDto individual)
         {
             var family = families.Find(f => f.Id == id);
             individual.Family = family!;
+            if (!ModelState.IsValid)
+            {
+                return View(individual);
+            }
             return View(individual);
         }
 
@@ -98,17 +103,11 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         // GET: IndividualController/DeleteIndividual/5
-        public IActionResult DeleteIndividual(int id)
-        {
-            return View(nameof(GetIndividuals), individuals);
-        }
-
-        // GET: IndividualController/DeleteIndividual/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteIndividual(int id, IndividualDto individualDto)
         {
-            return View(nameof(GetIndividuals), individuals);
+            return View(nameof(Index), individuals);
         }
 
         public IActionResult IndividualDetails(int id)

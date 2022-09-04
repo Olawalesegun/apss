@@ -2,43 +2,43 @@
 
 <div class="card mt-2">
     <div class="card-body">
-        <div class="d-flex "><h5>تأكيد حذف المهارة   </h5> </div>
+        <div class="d-flex "><h5>Confirm Delete Skill</h5> </div>
         <table class="table user-view-table m-0  ">
             <tbody style="font-size:14px">
                 <tr class="">
-                    <th>@Html.DisplayNameFor(s=>s.Id)</th>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Id)</th>
                     <td> @Model.Id</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(s=>s.Name)</th>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Name)</th>
                     <td> @Model.Name</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(s=>s.Description)</th>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Description)</th>
                     <td> @Model.Description</td>
                 </tr>
                  <tr>
-                    <th>@Html.DisplayNameFor(s=>s.Field)</th>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Field)</th>
                     <td> @Model.Field</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(s=>s.Individual.Name)</th>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Individual)</th>
                     <td> @Model.Individual.Name</td>
                 </tr>
                  <tr>
-                    <th>@Html.DisplayNameFor(s=>s.CreatedAt)</th>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.CreatedAt)</th>
                     <td> @Model.CreatedAt</td>
                 </tr>
                  <tr>
-                    <th>@Html.DisplayNameFor(s=>s.ModifiedAt)</th>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.ModifiedAt)</th>
                     <td> @Model.ModifiedAt</td>
                 </tr>
             </tbody>
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="Skill" asp-action="DeleteSkill">تأكيد</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-controller="Skill" asp-action="GetSkills" asp-route-Id="@Model.Individual.Id">رجوع</a>
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="Skill" asp-action="DeleteSkill">Confirm</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
         </div>
     </div>
 </div>

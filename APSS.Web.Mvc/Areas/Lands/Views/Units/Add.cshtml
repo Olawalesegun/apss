@@ -1,0 +1,32 @@
+﻿@model APSS.Web.Dtos.LandProductUnitDto
+@{
+    ViewData["title"] = "Add Unit Page";
+}
+<div class="container-fluid">
+    <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
+        <form class="mt-3 align-items-center needs-validation" method="post" asp-action="Add" novalidate>
+            <!--  column puts for the Land Product Expense Type -->
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Add new Land Unit
+                </h3>
+            </div>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="text" asp-for="Name" class="form-control" placeholder=" " />
+                        <label class="form-label" asp-for="Name"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary btn-block">Add</button>
+            </div>
+        </form>
+    </div>
+</div>

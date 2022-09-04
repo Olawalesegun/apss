@@ -4,17 +4,18 @@ namespace APSS.Web.Dtos;
 
 public class SkillDto : BaseAuditbleDto
 {
-    [Display(Name = "  إسم المهارة")]
-    [Required(ErrorMessage = "يجب إدخال إسم المهارة")]
+    [Display(Name = "Name")]
+    [Required(ErrorMessage = "Field Name is required")]
     public string Name { get; set; } = null!;
 
-    [Display(Name = "  إسم الفرد")]
+    [Display(Name = "Description")]
     public string? Description { get; set; }
 
-    [Display(Name = "  مجال المهارة ")]
-    [Required(ErrorMessage = "يجب إدخال مجال المهارة")]
+    [Display(Name = "Field ")]
+    [Required(ErrorMessage = "Field Field is required")]
     public string Field { get; set; } = null!;
 
-    [Display(Name = "  إسم الفرد")]
+    [Display(Name = "Person")]
+    [Required(ErrorMessage = "Field Persone is required")]
     public IndividualDto Individual { get; set; } = null!;
 }

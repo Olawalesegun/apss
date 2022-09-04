@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@{
+    if (User.Identity is null)
+    {
+        Context.Response.Redirect("/Auth/SignIn");
+        return;
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8" />

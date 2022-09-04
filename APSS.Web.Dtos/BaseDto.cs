@@ -1,14 +1,12 @@
-﻿namespace APSS.Web.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace APSS.Web.Dtos;
 
 public abstract class BaseDto
 {
-    /// <summary>
-    /// Gets or sets the id of the entity
-    /// </summary>
+    [Display(Name = "ID")]
     public long Id { get; set; }
 
-    /// <summary>
-    /// Gets or sets the creation date of the entity
-    /// </summary>
+    [Display(Name = "Date Of Create")]
     public DateTime CreatedAt { get; set; }
 }

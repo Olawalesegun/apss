@@ -3,19 +3,19 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "font-awesome@6.1.2",
-      "destination": "wwwroot/lib/font-awesome/"
+      "destination": "wwwroot/lib/font-awesome/",
+      "library": "font-awesome@6.2.0"
     },
     {
       "library": "bootstrap@5.2.0",
       "destination": "wwwroot/lib/bootstrap"
     },
     {
-      "library": "popper.js@2.11.6",
-      "destination": "wwwroot/lib/popper.js"
+      "destination": "wwwroot/lib/popper.js",
+      "library": "popper.js@2.11.6"
     },
     {
-      "library": "jquery@3.6.0",
+      "library": "jquery@3.6.1",
       "destination": "wwwroot\\lib\\jquery"
     },
     {

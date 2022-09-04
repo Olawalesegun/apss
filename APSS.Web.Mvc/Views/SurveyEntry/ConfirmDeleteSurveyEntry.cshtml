@@ -1,1 +1,36 @@
 ﻿@model APSS.Web.Dtos.SurveyEntryDto
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>Confrim Delete Survey Entry </h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th>@Html.DisplayNameFor(s=>s.Id)</th>
+                    <td>@Model.Id</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(s=>s.Survey)</th>
+                    <td> @Model.Survey.Name</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(s=>s.MadeBy)</th>
+                    <td>@Model.MadeBy.Name</td>
+                </tr>
+                 <tr>
+                    <th>@Html.DisplayNameFor(s=>s.CreatedAt)</th>
+                    <td> @Model.CreatedAt</td>
+                </tr>
+                 <tr>
+                    <th> @Html.DisplayNameFor(s=>s.ModifiedAt)</th>
+                    <td> @Model.ModifiedAt</td>
+                </tr>
+               
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  "  asp-controller="SurveyEntry" asp-action="DeleteSurveyEntry">Confirm</a>
+            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
+        </div>
+    </div>
+    </div>

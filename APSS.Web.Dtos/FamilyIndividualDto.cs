@@ -4,18 +4,18 @@ namespace APSS.Web.Dtos
 {
     public class FamilyIndividualDto : BaseAuditbleDto
     {
-        [Display(Name = "إسم العائلة")]
-        [Required(ErrorMessage = "يجب إدخال إسم العائلة")]
+        [Display(Name = "Family")]
+        [Required(ErrorMessage = "Field Family is required")]
         public FamilyDto Family { get; set; } = null!;
 
-        [Display(Name = "إسم الفرد")]
-        [Required(ErrorMessage = "يجب إدخال إسم الفرد")]
+        [Display(Name = "Individual")]
+        [Required(ErrorMessage = "Field Individual is required")]
         public IndividualDto Individual { get; set; } = null!;
 
-        [Display(Name = "هل مازال حي؟")]
+        [Display(Name = "Proveder")]
         public bool IsProvider { get; set; } = false;
 
-        [Display(Name = " هل هو المعيل للإسرة؟")]
+        [Display(Name = "Parenter")]
         public bool IsParent { get; set; }
     }
 }

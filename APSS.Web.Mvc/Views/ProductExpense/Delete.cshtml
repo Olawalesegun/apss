@@ -1,0 +1,27 @@
+﻿@model APSS.Web.Dtos.ProductExpenseDto
+@{
+    ViewData["title"] = "صفحة حذف التكلفة";
+}
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "><h5>تأكيد حذف التكلفة</h5> </div>
+        <table class="table user-view-table m-0  ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <td>@Html.DisplayNameFor(t => t.Type)</td>
+                    <td>@Model?.Type</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(p => p.Price)</td>
+                    <td>@Model?.Price</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class=" d-inline pt-2">
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-controller="LandProductExpense" asp-action="Delete" asp-route-Id="@Model?.Id">تأكيد</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-controller="LandProductExpense" asp-action="Index">رجوع</a>
+        </div>
+    </div>
+</div>

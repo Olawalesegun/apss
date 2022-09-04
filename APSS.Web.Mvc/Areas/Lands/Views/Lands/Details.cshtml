@@ -1,0 +1,44 @@
+﻿@model APSS.Web.Dtos.LandDto
+@{
+    ViewData["Title"] = "Land Information";
+}
+
+<div class="card mt-2">
+    <div class="d-inline">
+    </div>
+    <div class="card-body">
+        <div class="d-flex ">
+
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Land Information</h3>
+        </div>
+        <table class="table user-view-table m-0 t ">
+            <tbody>
+                <tr class="">
+                    <td>@Html.DisplayNameFor(m => m.Name)</td>
+                    <td>@Model?.Name</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(a => a.Address)</td>
+                    <td>@Model?.Address</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(a => a.Area)</td>
+                    <td>@Model?.Area</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(c => c.OwnedBy)</td>
+                    <td>@Model?.OwnedBy.Name</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div cllass="d-inline pt-2">
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Land" asp-action="Index"> <i class="fa-solid fa-share mx-2"></i><span> رجوع </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProduct" asp-action="add"> <i class="fa-solid fa-plus mx-2"></i><span> Add Product </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProduct" asp-action="GetLandProducts"><i class="fa-solid fa-angle-down"></i><span class="">All Land Products </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="Land" asp-action="Update"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Update</span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="Land" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+        </div>
+        @*<a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> المنتجات</a>*@
+    </div>
+</div>

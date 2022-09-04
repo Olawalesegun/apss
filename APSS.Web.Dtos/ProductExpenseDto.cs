@@ -20,6 +20,7 @@ namespace APSS.Web.Dtos
 
         public long ProductId { get; set; }
 
+        [Display(Name = "منفق على")]
         public ProductDto SpentOn { get; set; } = null!;
     }
 }

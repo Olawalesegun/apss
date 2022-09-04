@@ -7,7 +7,7 @@ namespace APSS.Web.Mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AnimalGroup _contextAccessor;
+        private readonly AnimalGroupsController _contextAccessor;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -21,6 +21,16 @@ namespace APSS.Web.Mvc.Controllers
 
         [HttpPost]
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult simple_form()
+        {
+            return View();
+        }
+
+        public IActionResult simple_table()
         {
             return View();
         }

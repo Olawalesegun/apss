@@ -1,35 +1,33 @@
-﻿@model APSS.Web.Dtos.VoluntaryDto 
+﻿@model VoluntaryEditForm
 <div class="container-fluid px-3 py-3 mx-4 my-1">
     <div class="col-sm-6">
         <div class="d-flex justify-content-center">
-            <h4> تحديث بيانات التطوع</h4>
+            <h4> Update  </h4>
         </div>
-<form class=" mt-3 " method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class=" mb-4">
-                
-                    <div class="">
-                        <span class="text-danger">*</span>
-                        <label class="form-label" asp-for="Name"></label>
-                        <input type="text" id="name_voluntary" asp-for="Name" value="@Model.Name"  class="form-control" />
-                    </div>
-                    <span class="text-danger" asp-validation-for="Name"></span>
-
-               
-                    <div class="mt-4">
-                        <span class="text-danger" >*</span>
-                        <label class="form-label" for="field_voluntary" asp-for="Field"></label>
-                        <input type="text" id="field_voluntary" value="@Model.Field" asp-for="Field"  class="form-control" />
-                    </div>
-                    <span asp-validation-for="Field" class="text-danger"></span>
+<form class=" mt-3 " method="post" asp-controller="Voluntary" asp-action="UpdateVoluntary">
+    <input type="number" asp-for="IndividualId"/>
+              <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Name"  asp-for="Name" >
+                    <label asp-for="Name"></label>
+                </div>
+                <span  class="d-block invalid-feedback" asp-validation-for="Name"></span>
             </div>
-
+               
+                   <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Field"  asp-for="Field" >
+                    <label asp-for="Field"></label>
+                </div>
+                <span  class="d-block invalid-feedback" asp-validation-for="Field"></span>
+            </div>
 
             <!-- Submit button -->
   <div class="d-inline">
-        <button class="btn btn-primary mt-4 mx-1" asp-controller="Voluntary" asp-action="UpdateVoluntary" > <i class="fa-solid fa-pen-to-square mx-2"></i><span>تحديث</span>  </button>
-        <button class="btn btn-danger mt-4 mx-1" asp-controller="Voluntary" asp-action="GetVoluntaries" ><i class="fa-solid fa-share mx-2"></i><span>رجوع</span>  </button>
+        <button class="btn btn-primary mt-4 mx-1" > <i class="fa-solid fa-pen-to-square mx-2"></i><span>Edit</span>  </button>
+            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
         </div> 
         </form>
         </div>
