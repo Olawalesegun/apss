@@ -24,7 +24,7 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var entityAccount3 = await (await _accountsService.GetUserAccounts(1, 1)).AsAsyncEnumerable().ToListAsync();
+            var entityAccount3 = await (await _accountsService.GetUserAccounts(1, User.GetId())).AsAsyncEnumerable().ToListAsync();
             var account = new List<AccountDto>();
             foreach (var accountDto in entityAccount3)
             {
@@ -80,11 +80,17 @@ namespace APSS.Web.Mvc.Controllers
             {
                 if (id > 0)
                 {
-                    var account = await _uow.Users.Query().FirstAsync(i => i.Id == id);
-
-                    AccountDto result = new AccountDto();
-                    result.UserId = account.Id;
-                    return View(result);
+                    var account = await _accountsService.GetAccountAsync(User.GetId(), id);
+                    if (account != null)
+                    {
+                        AccountDto result = new AccountDto();
+                        result.UserId = account.Id;
+                        return View(result);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {
@@ -110,7 +116,7 @@ namespace APSS.Web.Mvc.Controllers
                     return View(accountDto);
                 else
                 {
-                    var add = await _accountsService.CreateAsync(accountId, accountDto.UserId, accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
+                    var add = await _accountsService.CreateAsync(User.GetId(), User.GetId(), accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
                     if (add != null)
                     {
                         TempData["Action"] = "Employee Management";
@@ -140,7 +146,7 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> AccountDetails(long id)
         {
-            var account = await _accountsService.GetAccountAsync(1, id);
+            var account = await _accountsService.GetAccountAsync(User.GetId(), id);
             AccountDto accountDto = new AccountDto
             {
                 Id = account.Id,
@@ -170,7 +176,7 @@ namespace APSS.Web.Mvc.Controllers
         {
             if (id > 0)
             {
-                var account = await _accountsService.GetAccountAsync(1, id);
+                var account = await _accountsService.GetAccountAsync(User.GetId(), id);
                 var accountDto = new AccountDto();
                 accountDto.HolderName = account!.HolderName;
                 accountDto.Id = account.Id;
@@ -212,7 +218,7 @@ namespace APSS.Web.Mvc.Controllers
             {
                 if (id > 0)
                 {
-                    var account = await _uow.Accounts.Query().FirstOrNullAsync(i => i.Id == id);
+                    var account = await _accountsService.GetAccountAsync(User.GetId(), id);
                     var accountDto = new AccountDto();
                     accountDto.HolderName = account!.HolderName;
                     accountDto.Id = account.Id;
@@ -220,7 +226,6 @@ namespace APSS.Web.Mvc.Controllers
                     accountDto.PhoneNumber = account.PhoneNumber;
                     accountDto.SocialStatus = account.SocialStatus;
                     accountDto.Job = account.Job;
-                    accountDto.UserId = 1;
                     accountDto.permissionType = account.Permissions;
                     accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
                     accountDto.PermissionTypeDto.Update = accountDto.permissionType.HasFlag(PermissionType.Update);
@@ -271,7 +276,7 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> UserAccounts(long id)
         {
-            var entityAccount3 = await (await _accountsService.GetUserAccounts(1, 1)).AsAsyncEnumerable().ToListAsync();
+            var entityAccount3 = await (await _accountsService.GetUserAccounts(1, User.GetId())).AsAsyncEnumerable().ToListAsync();
             var account = new List<AccountDto>();
             foreach (var accountDto in entityAccount3)
             {

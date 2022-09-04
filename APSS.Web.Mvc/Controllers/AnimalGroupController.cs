@@ -8,37 +8,42 @@ using APSS.Domain.Services.Exceptions;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Filters;
 using APSS.Web.Mvc.Models;
+using APSS.Web.Mvc.Auth;
+using APSS.Web.Dtos.ValueTypes;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class AnimalGroupsController : Controller
+    public class AnimalGroupController : Controller
     {
         private IEnumerable<AnimalGroupDto> animal;
         private readonly IAnimalService _service;
 
-        public AnimalGroupsController(IAnimalService service)
+        public AnimalGroupController(IAnimalService service)
         {
             _service = service;
             animal = new List<AnimalGroupDto>
             {
-                new AnimalGroupDto{Id=1,Type="types 1",Quantity=100,CreatedAt=new DateTime(),Sex=Domain.Entities.AnimalSex.Female},
-                new AnimalGroupDto{Id=2,Type="one 2",Quantity=100,CreatedAt=new DateTime(),Sex=Domain.Entities.AnimalSex.Female},
-                new AnimalGroupDto{Id=3,Type="one2 3",Quantity=100,CreatedAt=new DateTime(),Sex=Domain.Entities.AnimalSex.Female},
-                new AnimalGroupDto{Id=4,Type="tow 4",Quantity=100,CreatedAt=new DateTime(),Sex=Domain.Entities.AnimalSex.Female},
-                new AnimalGroupDto{Id=4,Type="tow2 4",Quantity=100,CreatedAt=new DateTime(),Sex=Domain.Entities.AnimalSex.Female},
-                new AnimalGroupDto{Id=5,Type="type 5",Quantity=100,CreatedAt=new DateTime(),Sex=Domain.Entities.AnimalSex.Female},
             };
         }
 
         public async Task<IActionResult> Index()
         {
-            // var resultAnimal =await _service.GetAllAnimalGroupsAsync(1, 1);
-            var total = new AnimalGroupAndProductDto
+            var animalDto = new List<AnimalGroupListDto>();
+            var animals = await (await _service.GetAllAnimalGroupsAsync(1, User.GetId())).Include(i => i.IsConfirmed!).AsAsyncEnumerable().ToListAsync();
+            foreach (var item in animals)
             {
-                AnimalGroupDtos = animal.ToList(),
-                AnimalProducts = new AnimalProductDto(),
-            };
-            return View(total);
+                animalDto.Add(new AnimalGroupListDto
+                {
+                    Type = item.Type,
+                    Quantity = item.Quantity,
+                    CreatedAt = item.CreatedAt,
+                    Sex = (SexDto)item.Sex,
+                    Name = item.Name,
+                    Confirm = (bool)item.IsConfirmed!,
+                });
+            }
+
+            return View(animalDto);
         }
 
         [HttpPost]
@@ -83,7 +88,7 @@ namespace APSS.Web.Mvc.Controllers
                             return View(animalResult);
                         }
                         AnimalSex sex = (AnimalSex)Enum.Parse(typeof(AnimalSex), searchString);
-                        result.AnimalGroupDtos = animal.Where(name => name.Sex == sex).ToList();
+                        // result.AnimalGroupDtos = animal.Where(name => name.Sex == sex).ToList();
                         return View(result);
                     }
                     else
@@ -110,7 +115,6 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> AddAnimalGroup()
         {
             var animalGroup = new AnimalGroupDto();
-            ViewBag.Gender = new AnimalSex();
             return View(animalGroup);
         }
 
@@ -187,7 +191,7 @@ namespace APSS.Web.Mvc.Controllers
                         A.Id = animalGroupDto.Id;
                         A.Type = animalGroupDto.Type;
                         A.Quantity = animalGroupDto.Quantity;
-                        A.Sex = animalGroupDto.Sex;
+                        A.Sex = (AnimalSex)animalGroupDto.Sex;
                     });
                     return RedirectToAction(nameof(Index));
                 }

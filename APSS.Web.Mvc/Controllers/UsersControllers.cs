@@ -18,17 +18,16 @@ namespace APSS.Web.Mvc.Controllers
         private readonly IUsersService _userService;
         private readonly IUnitOfWork _uow;
 
-        public UsersController(IUsersService userService)
+        public UsersController(IUsersService userService, IUnitOfWork uow)
         {
             _userService = userService;
-            //_uow = uow;
+            _uow = uow;
         }
 
         public async Task<IActionResult> Index()
         {
             List<UserDto> userDto = new List<UserDto>();
-            var user = await (await _userService.GetSubuserAsync(1)).AsAsyncEnumerable().ToListAsync();
-            var users = await _uow.Users.Query().FirstAsync(u => u.Id == 1);
+            var user = await (await _userService.GetSubuserAsync((int)User.GetId())).AsAsyncEnumerable().ToListAsync();
             foreach (var userDtoItem in user)
             {
                 userDto.Add(new UserDto
@@ -40,7 +39,6 @@ namespace APSS.Web.Mvc.Controllers
                     CreatedAt = userDtoItem.CreatedAt,
                 });
             }
-            userDto.Add(new UserDto { Name = users.Name, Id = users.Id, AccessLevel = users.AccessLevel, userStatus = users.UserStatus, CreatedAt = users.CreatedAt });
             return View(userDto);
         }
 
@@ -77,8 +75,8 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> AddUser(UserDto user)
         {
             var accountis = 1;
-            var add = await _userService.CreateAsync(accountis, user.Name);
-            return RedirectToAction("Index");
+            var add = await _userService.CreateAsync(1, user.Name);
+            return RedirectToAction(nameof(Index));
 
             return View(user);
         }
@@ -91,34 +89,73 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> UserDetials(int id)
         {
-            var users = await _uow.Users.Query().FirstAsync(u => u.Id == 1);
-            if (users == null) return NotFound();
+            var user = await (await _userService.GetUserAsync(1, User.GetId())).AsAsyncEnumerable().ToListAsync();
+            if (user == null) return NotFound();
+            var users = user.FirstOrDefault();
             var userDto = new UserDto
             {
-                Name = users.Name,
+                Name = users!.Name,
                 Id = users.Id,
                 AccessLevel = users.AccessLevel,
                 userStatus = users.UserStatus,
                 CreatedAt = users.CreatedAt,
+                ModifiedAt = users.ModifiedAt
             };
             return View(userDto);
         }
 
         public async Task<IActionResult> DeleteUser(long id)
         {
-            UserDto userDto = new UserDto();
-            return View(userDto);
+            try
+            {
+                if (id > 0)
+                {
+                    var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
+                    if (user == null) return RedirectToAction(nameof(Index));
+                    var users = user.FirstOrDefault();
+                    var userDto = new UserDto
+                    {
+                        Name = users!.Name,
+                        Id = users.Id,
+                        AccessLevel = users.AccessLevel,
+                        userStatus = users.UserStatus,
+                        CreatedAt = users.CreatedAt,
+                    };
+                    return View(userDto);
+                }
+                else
+                {
+                    TempData["Action"] = "Delete Erea";
+                    TempData["success"] = "Erea Id Is Null!!!";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> ConfirmDeleteUser(long id)
         {
             try
             {
-                var user = await _uow.Users.Query().FirstAsync(u => u.Id == id);
-                if (user == null) return NotFound();
-                TempData["Action"] = "Delete Erea";
-                TempData["success"] = "Erea Deleted Successfully";
-                return RedirectToAction("Index");
+                if (id > 0)
+                {
+                    var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
+                    if (user == null) return NotFound();
+                    var delete = await _userService.SetUserStatusAsync(1, id, UserStatus.Terminated);
+                    if (delete == null) return RedirectToAction(nameof(Index));
+                    TempData["Action"] = "Delete Erea";
+                    TempData["success"] = "Erea Deleted Successfully";
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["Action"] = "Delete Erea";
+                    TempData["success"] = "Erea Id Is Null!!!";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             catch (Exception) { }
             var userDto = new UserDto();
@@ -127,8 +164,25 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> EditUser(long id)
         {
-            UserDto userDto = new UserDto();
-            return View(userDto);
+            try
+            {
+                if (id > 0)
+                {
+                    var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
+                    if (user == null) return RedirectToAction(nameof(Index));
+                    var users = user.FirstOrDefault();
+                    var userDto = new UserDto
+                    {
+                        Name = users!.Name,
+                        Id = users.Id,
+                        userStatus = users.UserStatus,
+                        CreatedAt = users.CreatedAt,
+                    };
+                    return View(userDto);
+                }
+            }
+            catch (Exception) { }
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -142,11 +196,11 @@ namespace APSS.Web.Mvc.Controllers
                 }
                 else
                 {
-                    var edit = await _userService.UpdateAsync(1, 1, p =>
-                        {
-                            p.Name = userDto.Name;
-                            p.UserStatus = userDto.userStatus;
-                        });
+                    var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
+                         {
+                             p.Name = userDto.Name;
+                             p.UserStatus = userDto.userStatus;
+                         });
                     if (edit == null)
                     {
                         TempData["Action"] = "Update Erea";
