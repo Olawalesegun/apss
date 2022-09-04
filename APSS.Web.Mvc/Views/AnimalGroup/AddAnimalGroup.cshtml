@@ -1,9 +1,10 @@
-﻿@model APSS.Web.Dtos.AnimalGroupDto
+﻿@using APSS.Domain.Entities
+@model APSS.Web.Dtos.AnimalGroupDto
 @await Html.PartialAsync("_dataNavBar")
 
 <div class="col-sm-12 col-lg-6 col-md-8 m-sm-0 m-lg-4 d-flex border rounded p-2 p-sm-2 ">
 
-    <form class="row d-flex justify-content-berween  needs-validation " method="post" asp-controller="AnimalGroup" asp-action="AddAnimalGroup" novalidate>
+    <form class="row d-flex justify-content-berween  needs-validation " method="post" asp-controller="AnimalGroups" asp-action="AddAnimalGroup" novalidate>
         <!-- 2 column puts for the type  and quantity of animal-->
         <div class="center d-flex justify-content-center mb-3 ">
             <h3 class=" ">
@@ -35,7 +36,21 @@
                     </div>
                 </div>
             </div>
-        </div>            <!-- Gender input -->
+        </div>
+        <div class="mb-4 row">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-arrow-up-wide-short"></i></span>
+                <div class="form-floating">
+                    <input type="number" id="Quentity" asp-for="Quantity" class="form-control" placeholder="quantity" required />
+                    <label class="form-label" asp-for="Quantity"></label>
+                    <span asp-validation-for="Quantity"></span>
+                    <div class="invalid-tooltip">
+                        Quintity feild is Required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Gender input -->
         <div class="row d-flex  d-inline">
             <div class="col">
 
@@ -44,26 +59,26 @@
                 </h5>
             </div>
 
-            @foreach (var item in Enum.GetValues(typeof(APSS.Domain.Entities.AnimalSex)))
+            @foreach (var item in Enum.GetValues<AnimalSex>())
             {
-                <div class="form-check col ">
-                    <input class="form-check-input " type="radio" asp-for="Sex" id="female" value="@Convert.ToInt32(item)" checked />
-                    @*<label class="form-check-label" asp-for="@item"></label>*@
-                    @Html.Label(item.ToString())
-                </div>
+                if (@item == AnimalSex.Male)
+                {
+                    <div class="form-check col ">
+                        <input class="form-check-input " type="radio" asp-for="Sex" id="female" value="@Convert.ToInt32(item)" checked />
+                        @*<label class="form-check-label" asp-for="@item"></label>*@
+                        @Html.Label(item.ToString())
+                    </div>
+                }
+                else
+                {
+                    <div class="form-check col ">
+                        <input class="form-check-input " type="radio" asp-for="Sex" id="female" value="@Convert.ToInt32(item)" />
+                        @*<label class="form-check-label" asp-for="@item"></label>*@
+                        @Html.Label(item.ToString())
+                    </div>
+                }
             }
         </div>
-
-        @*<div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="" id="male" name="gender" />
-            <label class="form-check-label" for="male"> Male </label>
-            </div>
-
-            <div class="form-check form-check-inline">
-
-            <input class="form-check-input" type="radio" value="other" id="other" name="gender" />
-            <label class="form-check-label" for="other"> Other </label>
-            </div>*@
 
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary w-25 my-4 mx-3">Add </button>

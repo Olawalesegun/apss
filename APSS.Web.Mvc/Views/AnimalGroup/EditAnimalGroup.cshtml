@@ -1,4 +1,5 @@
-﻿@model APSS.Web.Dtos.AnimalGroupDto
+﻿@using APSS.Domain.Entities
+@model APSS.Web.Dtos.AnimalGroupDto
 @await Html.PartialAsync("_dataNavBar")
 <div class="container-fluid">
     <div class="col-sm-12 col-lg-5 col-md-8 mx-sm-2 mx-lg-4 d-flex ">
@@ -47,7 +48,7 @@
                     </h5>
                 </div>
 
-                @foreach (var item in Enum.GetValues(typeof(APSS.Domain.Entities.AnimalSex)))
+                @foreach (var item in Enum.GetValues<AnimalSex>())
                 {
                     <div class="form-check col ">
                         <input class="form-check-input " type="radio" asp-for="Sex" id="female" value="@Convert.ToInt32(item)" checked />
@@ -72,7 +73,7 @@
         console.log(data);
         $.ajax({
             type: 'POST',
-            url: '/AnimalGroup/EditAnimalGroup',
+            url: '/AnimalGroups/EditAnimalGroup',
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
             data: data,
             success: function (result) {
