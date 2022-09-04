@@ -1,162 +1,162 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
+using APSS.Domain.Services;
+using APSS.Web.Mvc.Auth;
+using AutoMapper;
 using APSS.Web.Dtos;
+using APSS.Domain.ValueTypes;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
     [Area(Areas.Lands)]
     public class LandsController : Controller
     {
-        public IActionResult Index()
-        {
-            var LandList = new List<LandDto>
-                {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
-                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
-                };
+        private readonly IMapper _mapper;
+        private readonly ILandService _landSvc;
+        private readonly List<LandDto> _landList;
 
-            return View(LandList);
+        public LandsController(ILandService landService, IMapper mapper)
+        {
+            _mapper = mapper;
+            _landSvc = landService;
+            _landList = new List<LandDto>();
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var landList = await _landSvc.GetLandsAsync(User.GetId(), User.GetId()).ToAsyncEnumerable().ToListAsync();
+            foreach (var land in landList)
+            {
+                var item = _mapper.Map<LandDto>(land);
+                _landList.Add(item);
+            }
+
+            return View(_landList);
         }
 
         // GET: LandController/Add a new land
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public ActionResult Add()
         {
-            var land = new LandDto();
-            return View(land);
+            return View(new LandDto());
         }
 
         // POST: LandController/Add a new land
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public ActionResult Add(LandDto newLand)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid || newLand == null)
             {
-                return RedirectToAction(nameof(Index));
+                return View(newLand);
             }
-            return View();
-            //try
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //    return View();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+            Coordinates coordinates = new(newLand.Latitude, newLand.Longitude);
+            _landSvc.AddLandAsync(User.GetId(),
+                newLand.Area,
+                coordinates,
+                newLand.Address,
+                newLand.Name,
+                newLand.IsUsable,
+                newLand.IsUsed);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        public ActionResult Details(long Id)
+        [ApssAuthorized(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Directorate | AccessLevel.District
+                       | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group | AccessLevel.Farmer, PermissionType.Read)]
+        public async Task<ActionResult> Details(long Id)
         {
-            var LandList = new List<LandDto>
-                {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
-                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
-                };
-
-            LandDto land = LandList.Where(i => i.Id == Id).First();
-            land.OwnedBy = new UserDto
+            if (Id <= 0)
             {
-                Name = "Farouq"
-            };
-            return View(land);
+            }
+
+            return View(_mapper.Map<LandDto>(
+                await _landSvc.GetLandAsync(User.GetId(), Id)));
         }
 
         // GET: LandController/Update land
-        public ActionResult Update(long Id)
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        public async Task<ActionResult> Update(long Id)
         {
-            var LandList = new List<LandDto>
-                {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
-                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
-                };
-
-            LandDto land = LandList.Where(i => i.Id == Id).First();
-            land.OwnedBy = new UserDto
+            if (Id <= 0)
             {
-                Name = "Farouq"
-            };
-            return View(land);
+            }
+
+            return View(_mapper.Map<LandDto>(
+                await _landSvc.GetLandAsync(User.GetId(), Id)));
         }
 
         // POST: LandController/Update land
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(LandDto landDto)
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        public async Task<ActionResult> Update(LandDto landDto)
         {
-            try
+            if (!ModelState.IsValid || landDto == null)
             {
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            await _landSvc.UpdateLandAsync(
+                User.GetId(),
+                landDto!.Id,
+                l =>
+                {
+                    l.Name = landDto.Name;
+                    l.Longitude = landDto.Longitude;
+                    l.IsUsed = landDto.IsUsed;
+                    l.Latitude = landDto.Latitude;
+                    l.Area = landDto.Area;
+                    l.Address = landDto.Address;
+                    l.IsUsable = landDto.IsUsable;
+                });
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: LandController/Delete land
-        public ActionResult Delete(long Id)
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        public async Task<ActionResult> Delete(long Id)
         {
-            var LandList = new List<LandDto>
-                {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
-                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                    new LandDto{Name ="land4",Id=4,Address="djskhao4", Area =555},
-                };
-
-            LandDto land = LandList.Where(i => i.Id == Id).First();
-            land.OwnedBy = new UserDto
+            if (Id <= 0)
             {
-                Name = "Farouq"
-            };
+            }
 
-            return View(land);
+            return View(_mapper.Map<LandDto>(
+                await _landSvc.GetLandAsync(User.GetId(), Id)));
         }
 
         // POST: LandController/Delete land
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeletePost(long Id)
+        public async Task<ActionResult> DeletePost(long Id)
         {
-            try
+            if (Id <= 0)
             {
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            await _landSvc.RemoveLandAsync(User.GetId(), Id);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: LandController/Get land
-        public ActionResult GetLand(long Id)
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
+        public async Task<ActionResult> GetLand(long Id)
         {
-            var LandList = new List<LandDto>
-                {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
-                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                };
-
-            LandDto land = LandList.Where(i => i.Id == Id).First();
-            return View(land);
+            return View(_mapper.Map<LandDto>(
+                await _landSvc.GetLandAsync(User.GetId(), Id)));
         }
 
         // GET: LandController/Get lands
-        public ActionResult GetLands(long userId)
+        public async Task<ActionResult> GetLands(long Id)
         {
-            return View();
+            var landList = await _landSvc.GetLandsAsync(User.GetId(), Id).ToAsyncEnumerable().ToListAsync();
+            foreach (var land in landList)
+            {
+                var item = _mapper.Map<LandDto>(land);
+                _landList.Add(item);
+            }
+            return View(_landList);
         }
     }
 }
