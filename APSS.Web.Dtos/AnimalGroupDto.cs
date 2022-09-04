@@ -1,5 +1,6 @@
 ﻿using APSS.Domain.Entities;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.ValueTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,6 +21,9 @@ namespace APSS.Web.Dtos
         public int Quantity { get; set; }
 
         [Display(Name = "Sex")]
-        public AnimalSex Sex { get; set; }
+        public SexDto Sex { get; set; }
+
+        [Display(Name = "Name")]
+        public string? Name { get; set; }
     }
 }
