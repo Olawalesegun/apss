@@ -60,12 +60,13 @@ public sealed class UsersService : IUsersService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<User>> GetSubuserAsync(int accountId)
+    public async Task<IQueryBuilder<User>> GetSubuserAsync(long accountId)
     {
-        await _uow.Accounts.Query()
+        var account = await _uow.Accounts.Query()
+            .Include(u=>u.User)
             .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
-        return _uow.Users.Query().Where(u => u.SupervisedBy!.Id == accountId);
+        return _uow.Users.Query().Where(u => u.SupervisedBy != null && u.SupervisedBy.Id == account.User.Id);
     }
 
     /// <inheritdoc/>
