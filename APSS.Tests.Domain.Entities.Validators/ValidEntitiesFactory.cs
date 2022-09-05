@@ -96,13 +96,13 @@ public static class ValidEntitiesFactory
     /// Creates a valid family object
     /// </summary>
     /// <returns>The created family object</returns>
-    public static Family CreateValidFamily()
+    public static Family CreateValidFamily(User? addedBy = null)
     {
         return new Family
         {
             Name = _rndSvc.NextString(0xff),
             LivingLocation = _rndSvc.NextString(0xff),
-            AddedBy = CreateValidUser(AccessLevel.Group),
+            AddedBy = addedBy ?? CreateValidUser(AccessLevel.Group),
         };
     }
 
@@ -110,7 +110,7 @@ public static class ValidEntitiesFactory
     /// Creates a valid individual object
     /// </summary>
     /// <returns>The created individual object</returns>
-    public static Individual CreateValidIndividual()
+    public static Individual CreateValidIndividual(User? addedBy = null)
     {
         return new Individual
         {
@@ -119,7 +119,7 @@ public static class ValidEntitiesFactory
             DateOfBirth = DateTime.Now,
             Address = _rndSvc.NextString(0xff),
             SocialStatus = SocialStatus.Unspecified,
-            AddedBy = CreateValidUser(AccessLevel.Group),
+            AddedBy = addedBy ?? CreateValidUser(AccessLevel.Group),
         };
     }
 
@@ -184,12 +184,14 @@ public static class ValidEntitiesFactory
     /// Creates a valid family individual object
     /// </summary>
     /// <returns>The created family individual object</returns>
-    public static FamilyIndividual CreateValidFamilyIndividual()
+    public static FamilyIndividual CreateValidFamilyIndividual(User? addedBy = null)
     {
+        addedBy ??= CreateValidUser(AccessLevel.Group);
+
         return new FamilyIndividual
         {
-            Individual = ValidEntitiesFactory.CreateValidIndividual(),
-            Family = ValidEntitiesFactory.CreateValidFamily(),
+            Individual = CreateValidIndividual(addedBy),
+            Family = CreateValidFamily(addedBy),
             IsParent = _rndSvc.NextBool(),
             IsProvider = _rndSvc.NextBool(),
         };

@@ -16,15 +16,7 @@ using APSS.Web.Mvc.Util.Navigation.Routes;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAutoMapper(o =>
-{
-    o.AddProfile<FamilyProfile>();
-    o.AddProfile<LandProductProfile>();
-    o.AddProfile<LandProfile>();
-    o.AddProfile<ProductExpenseProfile>();
-    o.AddProfile<SeasonProfile>();
-    o.AddProfile<UserProfile>();
-});
+builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 builder.Services.AddControllersWithViews();
 
 #region Services

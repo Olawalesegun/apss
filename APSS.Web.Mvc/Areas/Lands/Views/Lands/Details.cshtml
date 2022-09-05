@@ -33,11 +33,11 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="Land" asp-action="Index"> <i class="fa-solid fa-share mx-2"></i><span> رجوع </span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProduct" asp-action="add"> <i class="fa-solid fa-plus mx-2"></i><span> Add Product </span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProduct" asp-action="GetLandProducts"><i class="fa-solid fa-angle-down"></i><span class="">All Land Products </span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="Land" asp-action="Update"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Update</span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="Land" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-area="Lands" asp-controller="Lands" asp-action="Index"> <i class="fa-solid fa-share mx-2"></i><span> رجوع </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-area="Lands" asp-route-Id="@Model?.Id" asp-controller="Products" asp-action="add"> <i class="fa-solid fa-plus mx-2"></i><span> Add Product </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-area="Lands" asp-route-Id="@Model?.Id" asp-controller="Products" asp-action="GetLandProducts"><i class="fa-solid fa-angle-down"></i><span class="">All Land Products </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-area="Lands" asp-route-Id="@Model?.Id" asp-controller="Lands" asp-action="Update"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Update</span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-area="Lands" asp-route-Id="@Model?.Id" asp-controller="Lands" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
         </div>
         @*<a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> المنتجات</a>*@
     </div>
