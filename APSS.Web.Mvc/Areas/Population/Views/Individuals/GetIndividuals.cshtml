@@ -81,23 +81,23 @@
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" asp-controller="Individual" asp-action="IndividualDetails" asp-route-Id="@item.Id">
+                                    <li><a class="dropdown-item" asp-area="Population" asp-controller="Individuals" asp-action="IndividualDetails" asp-route-Id="@item.Id">
                                         <div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span>
                                             </div> </a>
                                         </li>
-                                    <li><a class="dropdown-item" asp-controller="Individual" asp-action="ConfirmDeleteIndividual" asp-route-Id="@item.Id" >
+                                    <li><a class="dropdown-item" asp-area="Population" asp-controller="Individuals" asp-action="ConfirmDeleteIndividual" asp-route-Id="@item.Id" >
                                         <div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> 
                                             </div></a></li>
                                     <li class="">
-                                        <a class="dropdown-item" asp-controller="Individual" asp-action="UpdateIndividual" asp-route-Id="@item.Id">
+                                        <a class="dropdown-item" asp-area="Population" asp-controller="Individuals" asp-action="UpdateIndividual" asp-route-Id="@item.Id">
                                         <div class="d-flex justify-content-between"> <span>Edit</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a>
                                     </li>
                                     <li class="">
-                                        <a class="dropdown-item" asp-controller="Skill" asp-action="AddSkill" asp-route-Id="@item.Id">
+                                        <a class="dropdown-item" asp-area="Population" asp-controller="Skills" asp-action="AddSkill" asp-route-Id="@item.Id">
                                         <div class="d-flex justify-content-between"> <span>Add Skill </span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
                                     </li>
                                      <li class="">
-                                        <a class="dropdown-item" asp-controller="Voluntary" asp-action="AddVoluntary" asp-route-Id="@item.Id">
+                                        <a class="dropdown-item" asp-area="Population" asp-controller="Voluntaries" asp-action="AddVoluntary" asp-route-Id="@item.Id">
                                         <div class="d-flex justify-content-between"> <span> Add Voluntary</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a>
                                     </li>
                                    
@@ -127,22 +127,4 @@
     </div>
     
 </div>
-
-  
-
-@section scripts{
-<script>
-       $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#populationManagement").addClass('active');
-    });
-    document.getElementById("nav-system-name").innerHTML="Populatoin Management";
-    document.getElementById("media-system-name").innerHTML="Populatoin Management";
-  
-    $("#family").removeClass('actives');
-    $("#individual").addClass('actives');
-      
-      
-      
-</script>
 }
