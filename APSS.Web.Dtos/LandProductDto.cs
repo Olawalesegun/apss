@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using APSS.Domain.Entities;
+
 namespace APSS.Web.Dtos;
 
 public class LandProductDto : ProductDto
@@ -33,10 +35,10 @@ public class LandProductDto : ProductDto
     public double IrrigationCount { get; set; }
 
     [Display(Name = "Irrigation Water Source")]
-    public IrrigationWaterSourceDto IrrigationWaterSource { get; set; }
+    public IrrigationWaterSource IrrigationWaterSource { get; set; }
 
     [Display(Name = "Irrigation Power Source")]
-    public IrrigationPowerSourceDto IrrigationPowerSource { get; set; }
+    public IrrigationPowerSource IrrigationPowerSource { get; set; }
 
     [Display(Name = "Fertilizer")]
     public string Fertilizer { get; set; } = null!;
@@ -64,18 +66,4 @@ public class LandProductDto : ProductDto
     public long SeasonId { get; set; }
     public long landId { get; set; }
     public IEnumerable<SeasonDto> Seasons { get; set; } = new List<SeasonDto>();
-}
-
-public enum IrrigationWaterSourceDto
-{
-    Natural,
-    HumanStored,
-    OnDemand,
-}
-
-public enum IrrigationPowerSourceDto
-{
-    None,
-    Renewable,
-    FossileFuel,
 }
