@@ -17,10 +17,16 @@ public static class ClaimsPrincipalExtensions
         => GetClaimValue(self, ClaimTypes.Name);
 
     /// <summary>
-    /// Gets the id from a claims principal
+    /// Gets the account id from a claims principal
     /// </summary>
-    public static long GetId(this ClaimsPrincipal self)
-        => Convert.ToInt64(GetClaimValue(self, CustomClaims.Id));
+    public static long GetAccountId(this ClaimsPrincipal self)
+        => Convert.ToInt64(GetClaimValue(self, CustomClaims.UserId));
+
+    /// <summary>
+    /// Gets the user id from a claims principal
+    /// </summary>
+    public static long GetUserId(this ClaimsPrincipal self)
+        => Convert.ToInt64(GetClaimValue(self, ));
 
     /// <summary>
     /// Gets the name from a claims principal

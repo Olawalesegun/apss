@@ -28,7 +28,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         public async Task<IActionResult> Index()
         {
             List<UserDto> userDto = new List<UserDto>();
-            var user = await (await _userService.GetSubuserAsync((int)User.GetId())).AsAsyncEnumerable().ToListAsync();
+            var user = await (await _userService.GetSubuserAsync((int)User.GetAccountId())).AsAsyncEnumerable().ToListAsync();
             foreach (var userDtoItem in user)
             {
                 userDto.Add(new UserDto
@@ -79,7 +79,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    var add = await _userService.CreateAsync(User.GetId(), user.Name);
+                    var add = await _userService.CreateAsync(User.GetAccountId(), user.Name);
                     TempData["Action"] = "Add Erea";
                     TempData["success"] = $"{user.Name} is addedd successfully";
                     return RedirectToAction(nameof(Index));
@@ -100,7 +100,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> UserDetials(int id)
         {
-            var user = await (await _userService.GetUserAsync(1, User.GetId())).AsAsyncEnumerable().ToListAsync();
+            var user = await (await _userService.GetUserAsync(1, User.GetAccountId())).AsAsyncEnumerable().ToListAsync();
             if (user == null) return NotFound();
             var users = user.FirstOrDefault();
             var userDto = new UserDto

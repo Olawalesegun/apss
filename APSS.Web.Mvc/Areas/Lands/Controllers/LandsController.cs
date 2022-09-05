@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using APSS.Domain.Entities;
 using APSS.Domain.Services;
+using APSS.Domain.ValueTypes;
+using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
 using AutoMapper;
-using APSS.Web.Dtos;
-using APSS.Domain.ValueTypes;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -24,7 +24,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var landList = await _landSvc.GetLandsAsync(User.GetId(), User.GetId()).ToAsyncEnumerable().ToListAsync();
+            var landList = await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetAccountId()).ToAsyncEnumerable().ToListAsync();
             foreach (var land in landList)
             {
                 var item = _mapper.Map<LandDto>(land);
@@ -52,7 +52,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 return View(newLand);
             }
             Coordinates coordinates = new(newLand.Latitude, newLand.Longitude);
-            _landSvc.AddLandAsync(User.GetId(),
+            _landSvc.AddLandAsync(User.GetAccountId(),
                 newLand.Area,
                 coordinates,
                 newLand.Address,
@@ -64,7 +64,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         [ApssAuthorized(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Directorate | AccessLevel.District
-                       | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group | AccessLevel.Farmer, PermissionType.Read)]
+                        | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group | AccessLevel.Farmer, PermissionType.Read)]
         public async Task<ActionResult> Details(long Id)
         {
             if (Id <= 0)
@@ -72,7 +72,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             }
 
             return View(_mapper.Map<LandDto>(
-                await _landSvc.GetLandAsync(User.GetId(), Id)));
+                await _landSvc.GetLandAsync(User.GetAccountId(), Id)));
         }
 
         // GET: LandController/Update land
@@ -84,7 +84,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             }
 
             return View(_mapper.Map<LandDto>(
-                await _landSvc.GetLandAsync(User.GetId(), Id)));
+                await _landSvc.GetLandAsync(User.GetAccountId(), Id)));
         }
 
         // POST: LandController/Update land
@@ -97,7 +97,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             {
             }
             await _landSvc.UpdateLandAsync(
-                User.GetId(),
+                User.GetAccountId(),
                 landDto!.Id,
                 l =>
                 {
@@ -122,7 +122,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             }
 
             return View(_mapper.Map<LandDto>(
-                await _landSvc.GetLandAsync(User.GetId(), Id)));
+                await _landSvc.GetLandAsync(User.GetAccountId(), Id)));
         }
 
         // POST: LandController/Delete land
@@ -134,7 +134,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             if (Id <= 0)
             {
             }
-            await _landSvc.RemoveLandAsync(User.GetId(), Id);
+            await _landSvc.RemoveLandAsync(User.GetAccountId(), Id);
 
             return RedirectToAction(nameof(Index));
         }
@@ -144,13 +144,13 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> GetLand(long Id)
         {
             return View(_mapper.Map<LandDto>(
-                await _landSvc.GetLandAsync(User.GetId(), Id)));
+                await _landSvc.GetLandAsync(User.GetAccountId(), Id)));
         }
 
         // GET: LandController/Get lands
         public async Task<ActionResult> GetLands(long Id)
         {
-            var landList = await _landSvc.GetLandsAsync(User.GetId(), Id).ToAsyncEnumerable().ToListAsync();
+            var landList = await _landSvc.GetLandsAsync(User.GetAccountId(), Id).ToAsyncEnumerable().ToListAsync();
             foreach (var land in landList)
             {
                 var item = _mapper.Map<LandDto>(land);

@@ -29,7 +29,7 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> Index()
         {
             var animalDto = new List<AnimalGroupListDto>();
-            var animals = await (await _service.GetAllAnimalGroupsAsync(1, User.GetId())).Include(i => i.IsConfirmed!).AsAsyncEnumerable().ToListAsync();
+            var animals = await (await _service.GetAllAnimalGroupsAsync(1, User.GetAccountId())).Include(i => i.IsConfirmed!).AsAsyncEnumerable().ToListAsync();
             foreach (var item in animals)
             {
                 animalDto.Add(new AnimalGroupListDto

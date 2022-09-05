@@ -52,7 +52,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             if (!ModelState.IsValid || season == null)
             { }
             await _landSvc.AddSeasonAsync(
-                User.GetId(),
+                User.GetAccountId(),
                 season!.Name,
                 season.StartsAt,
                 season.EndsAt);
@@ -68,7 +68,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             { }
 
             return View(_mapper.Map<SeasonDto>(
-                await _landSvc.GetSeasonAsync(User.GetId(), Id)));
+                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
         }
 
         // POST: SeasonController/Update Season
@@ -79,7 +79,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             if (!ModelState.IsValid || season == null)
             { }
-            await _landSvc.UpdateSeasonAsync(User.GetId(),
+            await _landSvc.UpdateSeasonAsync(User.GetAccountId(),
                 season!.Id,
                 f =>
                 {
@@ -96,7 +96,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> Delete(long Id)
         {
             return View(_mapper.Map<SeasonDto>(
-                await _landSvc.GetSeasonAsync(User.GetId(), Id)));
+                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
         }
 
         // POST: SeasonController/Delete Season
@@ -107,7 +107,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             if (Id <= 0)
             { }
-            await _landSvc.RemoveSeasonAsync(User.GetId(), Id);
+            await _landSvc.RemoveSeasonAsync(User.GetAccountId(), Id);
 
             return RedirectToAction("Index");
         }
@@ -117,7 +117,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> GetSeason(long Id)
         {
             return View(_mapper.Map<SeasonDto>(
-                await _landSvc.GetSeasonAsync(User.GetId(), Id)));
+                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
         }
     }
 }
