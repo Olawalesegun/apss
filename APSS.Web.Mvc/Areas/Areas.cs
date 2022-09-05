@@ -6,8 +6,7 @@ public static class Areas
     public const string Population = "Population";
     public const string Surveys = "Surveys";
     public const string Animals = "Animals";
-    public const string AnimalProducts = "AnimalProducts";
-    public const string Accounts = "Accounts";
+    public const string Users = "Users";
 
     public static IEnumerable<string> All
     {
@@ -17,8 +16,7 @@ public static class Areas
             yield return Lands;
             yield return Population;
             yield return Surveys;
-            yield return AnimalProducts;
-            yield return Accounts;
+            yield return Users;
         }
     }
 }
