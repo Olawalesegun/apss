@@ -549,53 +549,69 @@ public sealed class PopulationServiceTest : IDisposable
     }
 
     [Theory]
-    [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
-                PermissionType.Read, true)]
-    [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
-                PermissionType.Update | PermissionType.Create | PermissionType.Delete, false)]
+    [InlineData(AccessLevel.Root, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Governorate, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Directorate, PermissionType.Read, true)]
+    [InlineData(AccessLevel.District, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Village, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Group, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Farmer, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Root, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Governorate, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Directorate, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.District, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Village, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Group, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Farmer, PermissionType.Full ^ PermissionType.Read, false)]
     [InlineData(AccessLevel.Farmer, PermissionType.Full, false)]
     public async Task GetIndividualOfFamlyTheory(AccessLevel accessLevel,
         PermissionType permission = PermissionType.Read,
         bool shoulSucceed = true)
     {
-        var templateFamlyIndividuals = ValidEntitiesFactory.CreateValidFamilyIndividual();
+        var owner = await _uow.CreateTestingAccountAsync(AccessLevel.Group, PermissionType.Create);
+        var template = ValidEntitiesFactory.CreateValidFamilyIndividual(owner.User);
 
-        _uow.FamilyIndividuals.Add(templateFamlyIndividuals);
+        _uow.Families.Add(template.Family);
+        _uow.Individuals.Add(template.Individual);
+        _uow.FamilyIndividuals.Add(template);
         await _uow.CommitAsync();
 
-        Assert.True(await _uow.FamilyIndividuals.Query().ContainsAsync(templateFamlyIndividuals));
+        Assert.True(await _uow.FamilyIndividuals.Query().ContainsAsync(template));
 
-        var account = await _uow.CreateTestingAccountAsync(templateFamlyIndividuals.Family.AddedBy.AccessLevel, permission);
-        var superaccount = account;
+        var superAccount = shoulSucceed
+            ? await _uow.CreateTestingAccountAboveUserAsync(owner.User.Id, owner.User.AccessLevel.NextLevelUpove(), permission)
+            : await _uow.CreateTestingAccountAsync(template.Family.AddedBy.AccessLevel, permission);
 
-        if (shoulSucceed & accessLevel != AccessLevel.Group)
-        {
-            superaccount = await _uow.CreateTestingAccountAboveUserAsync(account.User.Id, accessLevel, permission);
-        }
-
-        var getFamlyIndividualTask = _populationSvc.GetIndividualsOfFamilyAsync(superaccount.Id, templateFamlyIndividuals.Family.Id);
+        var getFamilyIndividualTask = _populationSvc.GetIndividualsOfFamilyAsync(superAccount.Id, template.Family.Id);
 
         if (!shoulSucceed)
         {
             await Assert
-                .ThrowsAsync<InsufficientPermissionsException>(async () => await getFamlyIndividualTask);
+                .ThrowsAsync<InsufficientPermissionsException>(async () => await getFamilyIndividualTask);
+
             return;
         }
 
-        var familyIndividuals = await getFamlyIndividualTask;
+        var familyIndividuals = await getFamilyIndividualTask;
         Assert.NotNull(familyIndividuals);
-        Assert.True(await familyIndividuals.ContainsAsync(templateFamlyIndividuals));
+        Assert.True(await familyIndividuals.ContainsAsync(template));
     }
 
     [Theory]
-    [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
-                PermissionType.Read, true)]
-    [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
-                PermissionType.Update | PermissionType.Create | PermissionType.Delete, false)]
+    [InlineData(AccessLevel.Root, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Governorate, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Directorate, PermissionType.Read, true)]
+    [InlineData(AccessLevel.District, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Village, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Group, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Farmer, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Root, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Governorate, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Directorate, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.District, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Village, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Group, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Farmer, PermissionType.Full ^ PermissionType.Read, false)]
     [InlineData(AccessLevel.Farmer, PermissionType.Full, false)]
     public async Task GetSkillOfIndividualTheory(AccessLevel accessLevel,
         PermissionType permission = PermissionType.Read,
@@ -631,12 +647,20 @@ public sealed class PopulationServiceTest : IDisposable
     }
 
     [Theory]
-    [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
-                PermissionType.Read, true)]
-    [InlineData(AccessLevel.Group | AccessLevel.Root | AccessLevel.Village | AccessLevel.District
-                | AccessLevel.Directorate | AccessLevel.Presedint | AccessLevel.Governorate,
-                PermissionType.Update | PermissionType.Create | PermissionType.Delete, false)]
+    [InlineData(AccessLevel.Root, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Governorate, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Directorate, PermissionType.Read, true)]
+    [InlineData(AccessLevel.District, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Village, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Group, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Farmer, PermissionType.Read, true)]
+    [InlineData(AccessLevel.Root, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Governorate, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Directorate, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.District, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Village, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Group, PermissionType.Full ^ PermissionType.Read, false)]
+    [InlineData(AccessLevel.Farmer, PermissionType.Full ^ PermissionType.Read, false)]
     [InlineData(AccessLevel.Farmer, PermissionType.Full, false)]
     public async Task GetVoluntaryOfIndividualTheory(AccessLevel accessLevel,
         PermissionType permission = PermissionType.Read,

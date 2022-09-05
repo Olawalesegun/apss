@@ -9,12 +9,20 @@
   <ItemGroup>
     <Compile Remove="Views\Family\**" />
     <Compile Remove="Views\LandProduct\**" />
+    <Compile Remove="Views\Skill\**" />
+    <Compile Remove="Views\Voluntary\**" />
     <Content Remove="Views\Family\**" />
     <Content Remove="Views\LandProduct\**" />
+    <Content Remove="Views\Skill\**" />
+    <Content Remove="Views\Voluntary\**" />
     <EmbeddedResource Remove="Views\Family\**" />
     <EmbeddedResource Remove="Views\LandProduct\**" />
+    <EmbeddedResource Remove="Views\Skill\**" />
+    <EmbeddedResource Remove="Views\Voluntary\**" />
     <None Remove="Views\Family\**" />
     <None Remove="Views\LandProduct\**" />
+    <None Remove="Views\Skill\**" />
+    <None Remove="Views\Voluntary\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,11 +43,6 @@
     <ProjectReference Include="..\APSS.Infrastructure.Repositories.EntityFramework\APSS.Infrastructure.Repositories.EntityFramework.csproj" />
     <ProjectReference Include="..\APSS.Tests.Infrastructure.Services\APSS.Tests.Infrastructure.Services.csproj" />
     <ProjectReference Include="..\APSS.Web.Dtos\APSS.Web.Dtos.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Skill\" />
-    <Folder Include="Views\Voluntary\" />
   </ItemGroup>
 
 </Project>
