@@ -53,9 +53,6 @@ public static class AccessLevelExtensions
         if (self == AccessLevel.Root)
             throw new InvalidOperationException("root users cannot have superusers");
 
-        if (self == AccessLevel.Presedint)
-            return AccessLevel.Root;
-
         return (AccessLevel)(((uint)self) << 1);
     }
 
@@ -70,9 +67,6 @@ public static class AccessLevelExtensions
         if (self == AccessLevel.Farmer)
             throw new InvalidOperationException("famers cannot have subusers");
 
-        if (self == AccessLevel.Root)
-            return AccessLevel.Presedint;
-
         return (AccessLevel)(((uint)self) >> 1);
     }
 
@@ -83,12 +77,6 @@ public static class AccessLevelExtensions
     /// <returns></returns>
     public static IEnumerable<AccessLevel> AsEnumerable(this AccessLevel self)
     {
-        if (self == AccessLevel.Root)
-        {
-            yield return self;
-            yield break;
-        }
-
         foreach (var level in self.GetSetValues())
             yield return level;
     }
