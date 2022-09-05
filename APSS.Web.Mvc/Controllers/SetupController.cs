@@ -30,7 +30,7 @@ public class SetupController : Controller
         if (!ModelState.IsValid)
             return View(form);
 
-        var account = await _setupSvc.SetupAsync(form.HolderName, form.Password);
+        _ = await _setupSvc.SetupAsync(form.HolderName, form.Password);
 
         return RedirectToAuth();
     }
