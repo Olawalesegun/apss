@@ -84,7 +84,7 @@ public class AuthController : Controller
     [Authorize]
     public async Task<IActionResult> DoSignOut()
     {
-        await _authSvc.SignOutAsync(User.GetId(), User.GetClaimValue(CustomClaims.Token));
+        await _authSvc.SignOutAsync(User.GetAccountId(), User.GetClaimValue(CustomClaims.Token));
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
         return RedirectToAction(nameof(SignIn));

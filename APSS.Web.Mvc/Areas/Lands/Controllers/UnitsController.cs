@@ -53,7 +53,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             if (!ModelState.IsValid || landProductUnit == null)
             {
             }
-            await _landSvc.AddLandProductUnitAsync(User.GetId(), landProductUnit!.Name);
+            await _landSvc.AddLandProductUnitAsync(User.GetAccountId(), landProductUnit!.Name);
 
             return RedirectToAction("Index");
         }
@@ -63,7 +63,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> Update(long Id)
         {
             return View(_mapper.Map<LandProductUnitDto>(
-                await _landSvc.GetLandProductUnitAsync(User.GetId(), Id)));
+                await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)));
         }
 
         // POST: LandProductUnit/Update LandProductUnit
@@ -75,7 +75,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             if (!ModelState.IsValid || landProductUnit == null)
             {
             }
-            await _landSvc.UpdateLandProductUnitAsync(User.GetId(),
+            await _landSvc.UpdateLandProductUnitAsync(User.GetAccountId(),
                 landProductUnit!.Id,
                 f =>
                 {
@@ -93,7 +93,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             { }
 
             return View(_mapper.Map<LandProductUnitDto>(
-                await _landSvc.GetLandProductUnitAsync(User.GetId(), Id)));
+                await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)));
         }
 
         // POST: LandProductUnitController/Delete LandProductUnit
@@ -104,7 +104,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             if (Id <= 0)
             { }
-            await _landSvc.RemoveLandProductUnitAsync(User.GetId(), Id);
+            await _landSvc.RemoveLandProductUnitAsync(User.GetAccountId(), Id);
 
             return RedirectToAction("Index");
         }
@@ -115,7 +115,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             if (Id <= 0)
             { }
             return View(_mapper.Map<LandProductUnitDto>(
-                await _landSvc.GetLandProductUnitAsync(User.GetId(), Id)));
+                await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)));
         }
     }
 }

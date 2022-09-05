@@ -34,7 +34,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<IActionResult> Index()
         {
             var productsList = await _landSvc.GetLandProductsAsync(
-                User.GetId(), User.GetId())
+                User.GetAccountId(), User.GetAccountId())
                 .ToAsyncEnumerable()
                 .ToListAsync();
             var products = new List<LandProductDto>();
@@ -92,7 +92,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             {
             }
             await _landSvc.AddLandProductAsync(
-                User.GetId(),
+                User.GetAccountId(),
                 landProduct!.landId,
                 landProduct.SeasonId,
                 landProduct.UnitId,
@@ -130,7 +130,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             {
             }
             return View(_mapper.Map<LandProductDto>(
-                await _landSvc.GetLandProductAsync(User.GetId(), Id)));
+                await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)));
         }
 
         // GET: LandController/Update landProduct
@@ -141,7 +141,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             {
             }
             return View(_mapper.Map<LandProductDto>(
-                await _landSvc.GetLandProductAsync(User.GetId(), Id)));
+                await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)));
         }
 
         // POST: LandController/Update landProduct
@@ -153,7 +153,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             if (!ModelState.IsValid || landProduct == null)
             {
             }
-            await _landSvc.UpdateLandProductAsync(User.GetId(), landProduct!.Id,
+            await _landSvc.UpdateLandProductAsync(User.GetAccountId(), landProduct!.Id,
                 f =>
                 {
                     f.StoringMethod = landProduct.StoringMethod;
@@ -182,7 +182,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> Delete(long Id)
         {
             return View(_mapper.Map<LandProductDto>(
-                await _landSvc.GetLandProductAsync(User.GetId(), Id)));
+                await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)));
         }
 
         // POST: LandController/Delete landProduct
@@ -192,7 +192,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<ActionResult> DeletePost(long Id)
         {
-            await _landSvc.RemoveLandProductAsync(User.GetId(), Id);
+            await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -210,7 +210,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> GetLandProduct(long Id)
         {
             return View(_mapper.Map<LandProductDto>(
-                await _landSvc.GetLandProductAsync(User.GetId(), Id)));
+                await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)));
         }
 
         // GET: LandController/Get landProducts
@@ -227,7 +227,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> GetLandProducts(long Id)
         {
             var productsList = await _landSvc.GetLandProductsAsync(
-                User.GetId(), Id)
+                User.GetAccountId(), Id)
                 .ToAsyncEnumerable()
                 .ToListAsync();
             var products = new List<LandProductDto>();
