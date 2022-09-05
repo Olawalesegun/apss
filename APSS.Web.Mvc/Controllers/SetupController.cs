@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using APSS.Domain.Services;
 using APSS.Web.Dtos.Forms;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Controllers;
 
@@ -35,5 +36,5 @@ public class SetupController : Controller
     }
 
     private IActionResult RedirectToAuth()
-        => RedirectToAction(nameof(AuthController.SignIn), "Auth");
+        => LocalRedirect(Routes.Auth.SignIn.FullPath);
 }
