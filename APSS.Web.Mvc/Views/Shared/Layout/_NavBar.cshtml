@@ -12,7 +12,7 @@
         </button>
         <ul class="dropdown-menu shadow" aria-labelledby="userDropDown">
             <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" asp-route-id="@((long)User.GetId())" asp-controller="Accounts" asp-action="AccountDetails">Settings</a></li>
+            <li><a class="dropdown-item" asp-route-id="@User.GetAccountId()" asp-controller="Accounts" asp-action="AccountDetails">Settings</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="@(Routes.Auth.SignOut.FullPath)">Sign out</a></li>
         </ul>
@@ -21,6 +21,19 @@
 
 @if (currentDashboardRoute is not null && currentDashboardRoute.Children.Any())
 {
+    @if (currentRoute is not null)
+    {
+        <nav aria-label="breadcrumb p-1 bg-secondary">
+            <ol class="breadcrumb">
+
+                @foreach (var route in currentRoute.Heirarchy.Reverse())
+                {
+                    <li class="breadcrumb-item"><a href="@route.FullPath">@route.Name</a></li>
+                }
+            </ol>
+        </nav>
+    }
+    
     <ul class="nav nav-tabs">
         @foreach (var route in currentDashboardRoute.Children)
         {
