@@ -50,7 +50,7 @@ public sealed class UsersService : IUsersService
         {
             Name = name,
             SupervisedBy = superAccount.User,
-            AccessLevel = (AccessLevel)(((int)superAccount.User.AccessLevel.NextLevelBelow()) + 1)
+            AccessLevel = (AccessLevel)(((int)superAccount.User.AccessLevel.NextLevelBelow()))
         };
 
         _uow.Users.Add(user);
