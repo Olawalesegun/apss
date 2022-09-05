@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Lands\" />
     <Folder Include="Views\Family\" />
     <Folder Include="Views\LandProduct\" />
     <Folder Include="Views\Skill\" />
