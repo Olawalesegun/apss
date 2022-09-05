@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.AnimalGroupDto
+﻿@model APSS.Web.Dtos.AnimalGroupListDto
 
 @{
     ViewData["Title"] = "Animal Details";
@@ -19,6 +19,10 @@
                     <td class="label"><label>@Html.DisplayNameFor(m => m.Type)</label></td>
                     <td>@Model.Type </td>
                 </tr>
+                <tr class="">
+                    <td class="label"><label>@Html.DisplayNameFor(m => m.Name)</label></td>
+                    <td>@Model.Name </td>
+                </tr>
                 <tr>
                     <td> <label>@Html.DisplayNameFor(m => m.Quantity);</label></td>
                     <td>@Model.Quantity  </td>
@@ -26,6 +30,10 @@
                 <tr>
                     <td><label>@Html.DisplayNameFor(m => m.Sex)</label>  </td>
                     <td> @Model.Sex </td>
+                </tr>
+                <tr>
+                    <td><label>@Html.DisplayNameFor(m => m.Confirm)</label>  </td>
+                    <td> @Model.Confirm </td>
                 </tr>
                 <tr>
                     <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>

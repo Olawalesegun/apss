@@ -1,14 +1,14 @@
-﻿@model APSS.Web.Dtos.AnimalGroupAndProductDto
+﻿@model IEnumerable<APSS.Web.Dtos.AnimalGroupListDto>
 <!--table-->
 @{
-    ViewData["controllar"] = "AnimalGroup";
+    ViewData["controllar"] = "AnimalGroups";
     ViewData["action"] = "Index";
 }
 <partial name="_dataNavBar" />
 
 <div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 needs-validation " id="">
 
-    <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="AnimalGroup" asp-action="Index" method="post">
+    <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="AnimalGroups" asp-action="Index" method="post">
         <div class=" mb-3 col-sm  d-flex">
             <div class="input-group">
                 <button type="submit" class="btn btn-primary ">
@@ -37,7 +37,11 @@
             </select>
         </div>
         <div class="col-sm d-flex   d-inline mb-3   ">
-            <a class=" btn btn-primary " role="button" asp-controller="AnimalGroups" asp-action="Add">
+            <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#AddUnit">
+                <i class="fa-solid fa-plus"></i>
+                Unit
+            </a>
+            <a class=" btn btn-primary " role="button" asp-controller="AnimalGroups" asp-action="AddAnimalGroup">
                 <i class="fa-solid fa-plus"></i>
                 Animal
             </a>
@@ -60,25 +64,37 @@
 
                 <thead class="table-light">
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th class=" fw-bold align-middle"> ID</th>
-                        <th class="fw-bold align-middle">Type</th>
-                        <th class="fw-bold align-middle">Quantity</th>
-                        <th class="fw-bold align-middle">sex</th>
-                        <th style="width:20px;" class="fw-bold align-middle"></th>
+                        <th class=" fw-bold align-middle"> #</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Type)</th>
+                        <th style="width:20px;" class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Name)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Quantity)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Sex)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Confirm)</th>
+                        <th class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    @foreach (var item in Model.AnimalGroupDtos)
+                    @foreach (var item in Model)
                     {
 
                         <tr>
 
                             <td>@item.Id</td>
                             <td>@item.Type</td>
+                            <td>@item.Name</td>
                             <td>@item.Quantity</td>
                             <td>@item.Sex</td>
-
+                            @{
+                                if (@item.Confirm)
+                                {
+                                    <td class="text-break text-capitalize text-center "> <div class=""><label class="activeLabel bg-success"></label></div> </td>
+                                }
+                                else
+                                {
+                                    <td class="text-break text-capitalize text-center "> <div class=""><label class="activeLabel bg-danger"></label></div> </td>
+                                }
+                            }
                             <td class="align-middle center">
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"
@@ -87,8 +103,8 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-action="AnimalDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="AnimalGroup" asp-action="DeleteAnimalGroup"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="AnimalGroup" asp-action="EditAnimalGroup"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="AnimalGroups" asp-action="DeleteAnimalGroup"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="AnimalGroups" asp-action="EditAnimalGroup"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
                                         <li class="">
                                             <a class="dropdown-item text-decoration-none" role="button" asp-route-Id="@item.Id" asp-controller="AnimalProduct" asp-action="CreateAnimalProduct">
 
