@@ -1,12 +1,22 @@
 ﻿@if (TempData["success"] != null)
 {
+    var time = DateTime.Now.Second - DateTime.Now.Second + 2;
     <div aria-live="polite" aria-atomic="true" class="bg-dark   bd-example-toasts">
-        <div class="toast-container position-absolute bottom-0 end-0  p-3" id="toastPlacement">
+        <div class="toast-container position-absolute top-0 end-0  p-3" id="toastPlacement">
             <div class="toast">
                 <div class="toast-header bg-primary text-white">
                     <img src="~/resources/planting.png" class="rounded me-2" style="width:20px;height:20px;" alt="...">
                     <strong class="me-auto">@TempData["action"]</strong>
-                    <small>@DateTime.Now.TimeOfDay</small>
+                    @{
+                        if (time == 0)
+                        {
+                            <small>Now</small>
+                        }
+                        else
+                        {
+                            <small>@time second</small>
+                        }
+                    }
                     <button type="button" class="btn-close text-white" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">

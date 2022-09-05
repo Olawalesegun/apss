@@ -1,0 +1,72 @@
+﻿@model APSS.Web.Dtos.AnimalProductDetailsDto
+@{
+    ViewData["Title"] = "Animal Product Detials";
+}
+
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="d-flex "> <i class="fa-solid fa-caret-left fs-1 " style="padding-left:4px"></i> <h4 class="">Animal Product information </h4></div>
+
+        <table class="table user-view-table m-0 t ">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
+                    <td> @Model.Name</td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.Quantity)</th>
+                    <td> @Model.Quantity</td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.UnitName)</th>
+                    <td> @Model.UnitName</td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
+                    <td> @Model.PeriodTaken</td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                    <td> @Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                    <td> @Model.ModifiedAt</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div cllass="d-inline pt-2">
+            <a class="btn btn-outline-dark   mx-1 my-2" asp-controller="Products" asp-action="Index"><i class="fa-solid fa-arrow-left mx-2"></i><span>Back</span>  </a>
+            <a class="btn btn-outline-primary   mx-1 my-2" asp-route-id="@Model.Id" asp-controller="ProductExpense" asp-action="AddExpense"><i class="fa-solid fa-plus mx-2"></i><span>Add Expense </span> </a>
+            <a class="btn btn-outline-primary   mx-1 my-2" asp-route-id="@Model.Id" asp-controller="ProductExpense" asp-action="Index"><i class=""></i><span>  All Expense </span> </a>
+            <a class="btn btn-outline-primary  mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="Products" asp-action="Edit"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span> </a>
+            <a class="btn btn-outline-danger  mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="ProductS" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+
+     $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+     $("#dataManagement").addClass('active');
+    });
+
+        $(document).ready(function(){
+         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+         $("#animalProductMedia").addClass('MediaActive')
+
+     });
+       document.getElementById("nav-system-name").innerHTML="Data Management";
+    document.getElementById("media-system-name").innerHTML="Data Management";
+
+       $("#animalGroups").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+         $("#animalProducts").addClass('actives');
+</script>
+    }

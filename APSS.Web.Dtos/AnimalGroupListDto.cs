@@ -1,6 +1,4 @@
-﻿using APSS.Domain.Entities;
-using APSS.Web.Dtos;
-using APSS.Web.Dtos.ValueTypes;
+﻿using APSS.Web.Dtos.ValueTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace APSS.Web.Dtos
 {
-    public class AnimalGroupDto : BaseAuditbleDto
+    public class AnimalGroupListDto : BaseAuditbleDto
     {
         [Display(Name = "Type")]
         [Required(ErrorMessage = "Type is Required")]
@@ -24,6 +22,9 @@ namespace APSS.Web.Dtos
         public SexDto Sex { get; set; }
 
         [Display(Name = "Name")]
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
+
+        [Display(Name = "Confirm")]
+        public bool Confirm { get; set; }
     }
 }

@@ -1,0 +1,96 @@
+﻿@model APSS.Web.Dtos.AccountDto
+@await Html.PartialAsync("_requiredStyle.cshtml")
+
+<div class="card my-3 shadow-0 ">
+    <div class="card-body ">
+        <h3 class="mt-2 mb-3">Employee Information </h3>
+        <table class="table user-view-table m-0 ">
+            <tbody>
+                <tr class="">
+                    <th class="align-middle" style="width:30%">@Html.DisplayNameFor(m=>m.Id) </th>
+                    <td>@Model.Id </td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.HolderName) </th>
+                    <td>  @Model.HolderName </td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.PhoneNumber) </th>
+                    <td>  @Model.PhoneNumber </td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.NationalId) </th>
+                    <td>  @Model.NationalId </td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.Job) </th>
+                    <td>  @Model.Job </td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.SocialStatus) </th>
+                    <td>  @Model.SocialStatus </td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.IsActive) </th>
+                    @{
+                        if (@Model.IsActive)
+                        {
+                            <td>Active<i class="fa-solid fa-check text-primary mx-1"></i> </td>
+                        }
+                        else
+                        {
+                            <td>Inactive <i class="fa-solid fa-xmark mx-1"></i> </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.PermissionTypeDto.Permissions) </th>
+                    <td>  @Model.PermissionTypeDto.Permissions </td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.CreatedAt) </th>
+                    <td>@Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.ModifiedAt) </th>
+                    <td>@Model.ModifiedAt</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div cllass="row d-flex  mt-2 justify-content-end ">
+        <a class="btn btn-outline-primary mx-1 my-2" asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="EditAccount">
+            <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span>
+        </a>
+        <a class="btn btn-outline-danger  mx-1 my-2" asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="DeleteAccount"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+    </div>
+</div>
+
+@section scripts{
+<script>
+        $(document).ready(function(){
+    $(".sidebar ul li.active").removeClass('active');
+    $("#accountManagement").addClass('active');
+    });
+     document.getElementById("nav-system-name").innerHTML="Employee Management";
+      document.getElementById("media-system-name").innerHTML="Employee Management";
+
+    $(".scrollmenu a").on('click',function(){
+        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+
+    });
+    $(".manage-ment ul li a").on('click',function(){
+        $(".scrollmenu a.actives").removeClass('actives');
+        $("#animalGroups").addClass('actives');
+
+    });
+    $("#users").removeClass('actives');
+       $("#lands").removeClass('actives');
+       $("#landProducts").removeClass('actives');
+        $("#confirmation").removeClass('actives');
+        $("#units").removeClass('actives');
+        $("#userMedia").removeClass('actives');
+         $("#accounts").addClass('actives');
+         $("#accountMedia").addClass('actives');
+</script>
+    }

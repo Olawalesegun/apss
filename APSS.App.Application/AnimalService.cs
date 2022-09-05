@@ -79,6 +79,7 @@ public class AnimalService : IAnimalService
             PeriodTaken = periodTaken,
             Unit = unit,
             Producer = animalGroup,
+            AddedBy = farmer.User,
         };
 
         _uow.AnimalProducts.Add(animalProduct);

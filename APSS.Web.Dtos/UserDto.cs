@@ -37,5 +37,5 @@ public sealed class UserDto : BaseAuditbleDto
     /// <summary>
     /// Gets or sets the supervisor
     /// </summary>
-    public UserDto SupervisedBy { get; set; }
+    public User SupervisedBy { get; set; }
 }
