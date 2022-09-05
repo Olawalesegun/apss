@@ -20,13 +20,13 @@ public static class ClaimsPrincipalExtensions
     /// Gets the account id from a claims principal
     /// </summary>
     public static long GetAccountId(this ClaimsPrincipal self)
-        => Convert.ToInt64(GetClaimValue(self, CustomClaims.UserId));
+        => Convert.ToInt64(GetClaimValue(self, CustomClaims.AccountId));
 
     /// <summary>
     /// Gets the user id from a claims principal
     /// </summary>
     public static long GetUserId(this ClaimsPrincipal self)
-        => Convert.ToInt64(GetClaimValue(self, ));
+        => Convert.ToInt64(GetClaimValue(self, CustomClaims.UserId));
 
     /// <summary>
     /// Gets the name from a claims principal
