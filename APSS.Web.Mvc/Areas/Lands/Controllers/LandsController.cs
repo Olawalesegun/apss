@@ -13,7 +13,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILandService _landSvc;
-        private readonly List<LandDto> _landList;
+        private List<LandDto> _landList;
 
         public LandsController(ILandService landService, IMapper mapper)
         {
@@ -24,12 +24,10 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var landList = await _landSvc.GetLandsAsync(User.GetId(), User.GetId()).ToAsyncEnumerable().ToListAsync();
-            foreach (var land in landList)
-            {
-                var item = _mapper.Map<LandDto>(land);
-                _landList.Add(item);
-            }
+            _landList =  await _landSvc.GetLandsAsync(User.GetId(), User.GetId())
+                .ToAsyncEnumerable()
+                .Select(_mapper.Map<LandDto>)
+                .ToListAsync();
 
             return View(_landList);
         }
