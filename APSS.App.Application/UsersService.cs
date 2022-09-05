@@ -121,5 +121,11 @@ public sealed class UsersService : IUsersService
         }
     }
 
+    public async Task<IQueryBuilder<User>> GetUserAsync(long accountId, long userId)
+    {
+        await _permissionsSvc.ValidateUserPatenthoodAsync(accountId, userId, PermissionType.Read);
+        return _uow.Users.Query().Where(u => u.Id == userId);
+    }
+
     #endregion Public Methods
 }
