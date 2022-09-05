@@ -44,7 +44,7 @@ namespace APSS.Web.Dtos
         /// </summary>
 
         [Display(Name = "Social Status")]
-        public SocialStatus SocialStatus { get; set; }
+        public SocialStatusDto SocialStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the job of the user
