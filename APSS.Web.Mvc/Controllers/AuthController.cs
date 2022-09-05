@@ -19,16 +19,18 @@ public class AuthController : Controller
 
     private readonly AuthSettings _settings = new();
     private readonly IAuthService _authSvc;
+    private readonly ISetupService _setupSvc;
 
     #endregion Fields
 
     #region Public Constructors
 
-    public AuthController(IConfigurationService configSvc, IAuthService authSvc)
+    public AuthController(IConfigurationService configSvc, IAuthService authSvc, ISetupService setupSvc)
     {
         configSvc.Bind(nameof(AuthSettings), _settings);
 
         _authSvc = authSvc;
+        _setupSvc = setupSvc;
     }
 
     #endregion Public Constructors
@@ -36,10 +38,13 @@ public class AuthController : Controller
     #region Public Methods
 
     [HttpGet]
-    public IActionResult SignIn()
+    public async Task<IActionResult> SignIn()
     {
         if (User.Identity?.IsAuthenticated == true)
             return LocalRedirect(Routes.Dashboard.Home.FullPath);
+
+        if (await _setupSvc.CanSetupAsync())
+            return LocalRedirect(Routes.Setup.FullPath);
 
         return View(nameof(SignIn));
     }
