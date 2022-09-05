@@ -36,6 +36,10 @@ public enum Icon
     Cheese,
     Seeding,
     Calendar,
+    Plus,
+    Pen,
+    TrashCan,
+    List,
 }
 
 public static class IconExtensoins
@@ -73,6 +77,10 @@ public static class IconExtensoins
         { Icon.Cheese, "fa-solid fa-cheese" },
         { Icon.Seeding, "fa-solid fa-seeding" },
         { Icon.Calendar, "fa-regular fa-calendar" },
+        { Icon.Plus, "fa-solid fa-plus" },
+        { Icon.Pen, "fa-solid fa-pen" },
+        { Icon.TrashCan, "fa-solid fa-trash-can" },
+        { Icon.List, "fa-solid fa-list-ul" },
     };
 
     public static HtmlString? Render(

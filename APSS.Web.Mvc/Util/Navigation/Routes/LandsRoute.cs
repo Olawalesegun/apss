@@ -6,16 +6,16 @@ public sealed class LandsRoute : Route
 {
     public LandsRoute(IRoute parent) : base(parent, "Lands", "Lands", icon: Icon.Mountain)
     {
-        Lands = FromController<LandsController>(icon: Icon.Mountain);
-        Products = FromController<ProductsController>(icon: Icon.Seeding);
-        Units = FromController<UnitsController>(icon: Icon.Ruler);
-        Seasons = FromController<SeasonsController>(icon: Icon.Calendar);
+        Lands = FromCrudController<LandsController>(icon: Icon.Mountain);
+        Products = FromCrudController<ProductsController>(icon: Icon.Seeding);
+        Units = FromCrudController<UnitsController>(icon: Icon.Ruler);
+        Seasons = FromCrudController<SeasonsController>(icon: Icon.Calendar);
     }
 
-    public IRoute Lands { get; init; }
-    public IRoute Products { get; init; }
-    public IRoute Units { get; init; }
-    public IRoute Seasons { get; init; }
+    public CrudRoute Lands { get; init; }
+    public CrudRoute Products { get; init; }
+    public CrudRoute Units { get; init; }
+    public CrudRoute Seasons { get; init; }
 
     public override IRoute DefaultRoute => Lands;
 }

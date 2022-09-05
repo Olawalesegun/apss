@@ -8,6 +8,7 @@ public class LandProfile : Profile
 {
     public LandProfile()
     {
-        CreateMap<Land, LandDto>().ReverseMap();
+        CreateMap<Land, LandDto>();
+        CreateMap<LandDto, Land>();
     }
 }

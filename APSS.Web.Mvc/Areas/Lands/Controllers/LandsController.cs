@@ -5,6 +5,8 @@ using APSS.Domain.ValueTypes;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
 using AutoMapper;
+using APSS.Web.Mvc.Util.Navigation.Routes;
+using APSS.Web.Dtos.Forms;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -32,24 +34,26 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: LandController/Add a new land
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        [HttpGet]
+        //[ApssAuthorized(AccessLevel.Farmer | AccessLevel.Root, PermissionType.Create)]
         public ActionResult Add()
         {
-            return View(new LandDto());
+            return View();
         }
 
         // POST: LandController/Add a new land
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
-        public ActionResult Add(LandDto newLand)
+        //[ApssAuthorized(AccessLevel.Farmer | AccessLevel.Root, PermissionType.Create)]
+        public async Task<IActionResult> Add([FromForm] AddLandForm newLand)
         {
-            if (!ModelState.IsValid || newLand == null)
-            {
+            if (!ModelState.IsValid)
                 return View(newLand);
-            }
+
             Coordinates coordinates = new(newLand.Latitude, newLand.Longitude);
-            _landSvc.AddLandAsync(User.GetAccountId(),
+
+            await _landSvc.AddLandAsync(
+                User.GetAccountId(),
                 newLand.Area,
                 coordinates,
                 newLand.Address,
@@ -57,24 +61,20 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 newLand.IsUsable,
                 newLand.IsUsed);
 
-            return RedirectToAction(nameof(Index));
+            return LocalRedirect(Routes.Dashboard.Lands.Lands.FullPath);
         }
 
-        [ApssAuthorized(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Directorate | AccessLevel.District
-                        | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group | AccessLevel.Farmer, PermissionType.Read)]
-        public async Task<ActionResult> Details(long Id)
+        [HttpGet]
+        //[ApssAuthorized(PermissionType.Read)]
+        public async Task<IActionResult> Details(long landId)
         {
-            if (Id <= 0)
-            {
-            }
-
             return View(_mapper.Map<LandDto>(
-                await _landSvc.GetLandAsync(User.GetAccountId(), Id)));
+                await (await _landSvc.GetLandAsync(User.GetAccountId(), landId)).FirstAsync()));
         }
 
         // GET: LandController/Update land
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
-        public async Task<ActionResult> Update(long Id)
+        public async Task<IActionResult> Update(long Id)
         {
             if (Id <= 0)
             {
@@ -88,7 +88,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
-        public async Task<ActionResult> Update(LandDto landDto)
+        public async Task<IActionResult> Update(LandDto landDto)
         {
             if (!ModelState.IsValid || landDto == null)
             {
@@ -112,7 +112,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         // GET: LandController/Delete land
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-        public async Task<ActionResult> Delete(long Id)
+        public async Task<IActionResult> Delete(long Id)
         {
             if (Id <= 0)
             {
