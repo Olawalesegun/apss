@@ -33,11 +33,11 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a class="btn btn-outline-dark   mx-1 my-2" asp-controller="AnimalProduct" asp-action="Index"><i class="fa-solid fa-arrow-right mx-2"></i><span>Back</span>  </a>
-            <a class="btn btn-outline-primary   mx-1 my-2" asp-controller="ProductExpense" asp-action="AddExpense"><i class="fa-solid fa-plus mx-2"></i><span>Add Expense </span> </a>
+            <a class="btn btn-outline-dark   mx-1 my-2" asp-controller="Products" asp-action="Index"><i class="fa-solid fa-arrow-right mx-2"></i><span>Back</span>  </a>
+            <a class="btn btn-outline-primary   mx-1 my-2" asp-route-id="@Model.Id" asp-controller="ProductExpense" asp-action="AddExpense"><i class="fa-solid fa-plus mx-2"></i><span>Add Expense </span> </a>
             <a class="btn btn-outline-primary   mx-1 my-2" asp-route-id="@Model.Id" asp-controller="ProductExpense" asp-action="Index"><i class=""></i><span>  All Expense </span> </a>
-            <a class="btn btn-outline-primary  mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="AnimalProduct" asp-action="EditAnimalProduct"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span> </a>
-            <a class="btn btn-outline-danger  mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="AnimalProduct" asp-action="DeleteAnimalProduct"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+            <a class="btn btn-outline-primary  mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="Products" asp-action="Edit"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span> </a>
+            <a class="btn btn-outline-danger  mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="ProductS" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
         </div>
     </div>
 </div>

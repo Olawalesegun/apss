@@ -11,9 +11,9 @@ using APSS.Web.Mvc.Models;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Dtos.ValueTypes;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Controllers
 {
-    [Area(Areas.Areas.Animals)]
+    [Area(Areas.Animals)]
     public class GroupsController : Controller
     {
         private IEnumerable<AnimalGroupDto> animal;
@@ -119,7 +119,7 @@ namespace APSS.Web.Mvc.Controllers
             return View(total);
         }
 
-        public async Task<IActionResult> AddAnimalGroup()
+        public async Task<IActionResult> Add()
         {
             var animalGroup = new AnimalGroupDto();
             return View(animalGroup);
@@ -127,28 +127,30 @@ namespace APSS.Web.Mvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddAnimalGroup(AnimalGroupDto animal)
+        public async Task<IActionResult> Add(AnimalGroupDto animal)
         {
+            var resultAdd = await _service.AddAnimalGroupAsync(21, animal.Type, animal.Name!, animal.Quantity, (AnimalSex)animal.Sex);
+
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return Problem("the Animal Group Is Null");
+                    return View(animal);
                 }
                 else
                 {
-                    var resultAdd = await _service.AddAnimalGroupAsync(User.GetId(), animal.Type, animal.Name!, animal.Quantity, (AnimalSex)animal.Sex);
+                    //var resultAdd = await _service.AddAnimalGroupAsync(21, animal.Type, animal.Name!, animal.Quantity, (AnimalSex)animal.Sex);
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Problem("some thing error");
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> AnimalDetails(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
@@ -174,7 +176,7 @@ namespace APSS.Web.Mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> DeleteAnimalGroup(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
@@ -200,7 +202,7 @@ namespace APSS.Web.Mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> ConfirmDeleteAnimalGroup(int id)
+        public async Task<IActionResult> DeleteConfirm(int id)
         {
             try
             {
@@ -214,7 +216,7 @@ namespace APSS.Web.Mvc.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> EditAnimalGroup(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
@@ -239,7 +241,7 @@ namespace APSS.Web.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAnimalGroup(AnimalGroupListDto animalGroupDto)
+        public async Task<IActionResult> Edit(AnimalGroupListDto animalGroupDto)
         {
             if (!animalGroupDto.Equals(""))
             {

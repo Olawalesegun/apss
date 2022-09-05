@@ -4,11 +4,11 @@ using APSS.Web.Dtos;
 namespace APSS.Web.Mvc.Areas.Controllers
 {
     [Area(Areas.Animals)]
-    public class AnimalProductsController : Controller
+    public class ProductsController : Controller
     {
         private IEnumerable<AnimalProductDto> product;
 
-        public AnimalProductsController()
+        public ProductsController()
         {
             product = new List<AnimalProductDto>
             {
@@ -29,7 +29,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(animalProduct);
         }
 
-        public async Task<IActionResult> CreateAnimalProduct(int id)
+        public async Task<IActionResult> Add(int id)
         {
             List<AnimalProductUnitDto> animalProductUnit = new List<AnimalProductUnitDto>
             {
@@ -79,33 +79,33 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(result);
         }
 
-        public async Task<IActionResult> AnimalProductdetails(int Id)
+        public async Task<IActionResult> Details(int Id)
         {
             AnimalProductDto animalProductDto = new AnimalProductDto();
 
             return View(animalProductDto);
         }
 
-        public async Task<IActionResult> EditAnimalProduct(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             AnimalProductDto animalProductDto = new AnimalProductDto();
             return View(animalProductDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAnimalProduct(AnimalProductDto productObj)
+        public async Task<IActionResult> Edit(AnimalProductDto productObj)
         {
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> DeleteAnimalProduct(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             AnimalProductDto animalProductDto = new AnimalProductDto();
             return View(animalProductDto);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmDeleteAnimalProduct(int id)
+        public async Task<IActionResult> DeleteConfirm(int id)
         {
             AnimalProductDto animalProductDto = new AnimalProductDto();
 
@@ -128,7 +128,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> AllAnimalProducts()
+        public async Task<IActionResult> AllProducts()
         {
             AnimalGroupAndProductDto animalGroupProductDto = new AnimalGroupAndProductDto();
             AnimalProductDto animalproducts = new AnimalProductDto();

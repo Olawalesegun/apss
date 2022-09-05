@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using APSS.Web.Dtos;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Controllers
 {
-    [Area(Areas.Areas.AnimalProducts)]
+    [Area(Areas.Animals)]
     public class ProductExpensesController : Controller
     {
         public IActionResult Index(long Id)

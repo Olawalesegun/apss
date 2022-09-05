@@ -1,9 +1,9 @@
 ﻿using APSS.Web.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace APSS.Web.Mvc.Controllers
+namespace APSS.Web.Mvc.Areas.Controllers
 {
-    [Area(Areas.Areas.Animals)]
+    [Area(Areas.Animals)]
     public class AnimalUnitsController : Controller
     {
         public IEnumerable<AnimalProductUnitDto> listUnit = new List<AnimalProductUnitDto>

@@ -5,7 +5,7 @@
 
 <div class="  p-2  col-ms-12  my-0 mt-2  rounded ml-2 " id="">
 
-    <form class="row gx-3 gy-2 align-items-center mb-3 " asp-controller="AnimalProduct" asp-action="Index" method="post">
+    <form class="row gx-3 gy-2 align-items-center mb-3 " asp-controller="Products" asp-action="Index" method="post">
         <div class="col-sm-6">
 
             <div class=" mb-3 col-sm  d-flex">
@@ -74,15 +74,15 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" asp-controller="AnimalProduct" asp-action="AnimalProductDetails"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item" asp-controller="AnimalProduct" asp-action="DeleteAnimalProduct"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Products" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Products" asp-action="Delete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li class="">
-                                            <a class="dropdown-item" asp-controller="ProductExpense" asp-action="AddExpense">
+                                            <a class="dropdown-item" asp-route-id="@item.Id" asp-controller="ProductExpense" asp-action="AddExpense">
                                                 <div class="d-flex justify-content-between"> <span> Add Expense</span>  <span><i class="fa-solid fa-dollar-sign"></i> </span> </div>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a class="dropdown-item " asp-controller="AnimalProduct" asp-action="EditAnimalProduct">
+                                            <a class="dropdown-item " asp-route-id="@item.Id" asp-controller="Products" asp-action="Edit">
                                                 <div class="d-flex justify-content-between"> <span>Edit </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
                                             </a>
                                         </li>
