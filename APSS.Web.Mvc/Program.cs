@@ -8,6 +8,7 @@ using APSS.Domain.Repositories;
 using APSS.Domain.Services;
 using APSS.Infrastructure.Repositores.EntityFramework;
 using APSS.Infrastructure.Services;
+using APSS.Web.Dtos.Profilies;
 using APSS.Web.Mvc.Areas;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Mvc.Util.Navigation.Routes;
@@ -15,7 +16,15 @@ using APSS.Web.Mvc.Util.Navigation.Routes;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(o =>
+{
+    o.AddProfile<FamilyProfile>();
+    o.AddProfile<LandProductProfile>();
+    o.AddProfile<LandProfile>();
+    o.AddProfile<ProductExpenseProfile>();
+    o.AddProfile<SeasonProfile>();
+    o.AddProfile<UserProfile>();
+});
 builder.Services.AddControllersWithViews();
 
 #region Services
