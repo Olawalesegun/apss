@@ -38,7 +38,7 @@ public class AuthController : Controller
     #region Public Methods
 
     [HttpGet]
-    public async Task<IActionResult> SignIn()
+    public async Task<IActionResult> Login()
     {
         if (User.Identity?.IsAuthenticated == true)
             return LocalRedirect(Routes.Dashboard.Home.FullPath);
@@ -46,16 +46,16 @@ public class AuthController : Controller
         if (await _setupSvc.CanSetupAsync())
             return LocalRedirect(Routes.Setup.FullPath);
 
-        return View(nameof(SignIn));
+        return View(nameof(Login));
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     [TypeFilter(typeof(ExceptionHandlingFilter<InvalidAccountIdOrPasswordException>))]
-    public async Task<IActionResult> SignIn([FromForm] SignInForm form, [FromQuery] string? returnUrl)
+    public async Task<IActionResult> Login([FromForm] SignInForm form, [FromQuery] string? returnUrl)
     {
         if (!ModelState.IsValid)
-            return View(nameof(SignIn), form);
+            return View(nameof(Login), form);
 
         var deviceInfo = HttpContext.GetLoginInfo();
         var session = await _authSvc.SignInAsync(long.Parse(form.AccountId), form.Password, deviceInfo);
@@ -80,14 +80,14 @@ public class AuthController : Controller
         return LocalRedirect(Routes.Dashboard.Home.FullPath);
     }
 
-    [HttpGet("Logout", Order = 100)]
+    [HttpGet]
     [Authorize]
-    public async Task<IActionResult> DoSignOut()
+    public async Task<IActionResult> Logout()
     {
         await _authSvc.SignOutAsync(User.GetAccountId(), User.GetClaimValue(CustomClaims.Token));
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        return RedirectToAction(nameof(SignIn));
+        return RedirectToAction(nameof(Login));
     }
 
     #endregion Public Methods
