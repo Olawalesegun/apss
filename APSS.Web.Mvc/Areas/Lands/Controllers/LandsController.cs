@@ -24,7 +24,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         public async Task<IActionResult> Index()
         {
-            _landList =  await _landSvc.GetLandsAsync(User.GetId(), User.GetId())
+            _landList = await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetUserId())
                 .ToAsyncEnumerable()
                 .Select(_mapper.Map<LandDto>)
                 .ToListAsync();
