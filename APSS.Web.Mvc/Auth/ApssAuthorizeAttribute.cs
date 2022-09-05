@@ -10,6 +10,7 @@ namespace APSS.Web.Mvc.Auth;
 public class ApssAuthorizedAttribute : AuthorizeAttribute, IAuthorizationFilter
 {
     private readonly AccessLevel _accessLevel;
+    private readonly PermissionType _permissions;
 
     /// <summary>
     /// Default constructor
@@ -21,19 +22,6 @@ public class ApssAuthorizedAttribute : AuthorizeAttribute, IAuthorizationFilter
         _accessLevel = accessLevel;
         _permissions = permissions;
     }
-
-    /// <summary>
-    /// A constructor use all access levels
-    /// </summary>
-    /// <param name="permissions">The required permissions</param>
-    public ApssAuthorizedAttribute(PermissionType permissions)
-        : this(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Governorate |
-               AccessLevel.Directorate | AccessLevel.District | AccessLevel.Village |
-               AccessLevel.Group | AccessLevel.Farmer, permissions)
-    {
-    }
-
-    private readonly PermissionType _permissions;
 
     public void OnAuthorization(AuthorizationFilterContext context)
     {
