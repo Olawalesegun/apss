@@ -14,14 +14,18 @@ public class ApssAuthorizedAttribute : AuthorizeAttribute, IAuthorizationFilter
     /// <summary>
     /// Default constructor
     /// </summary>
-    /// <param name="accessLevel">The required access</param>
-    /// <param name="permissions"></param>
+    /// <param name="accessLevel">The required access level</param>
+    /// <param name="permissions">The required permissions</param>
     public ApssAuthorizedAttribute(AccessLevel accessLevel, PermissionType permissions)
     {
         _accessLevel = accessLevel;
         _permissions = permissions;
     }
 
+    /// <summary>
+    /// A constructor use all access levels
+    /// </summary>
+    /// <param name="permissions">The required permissions</param>
     public ApssAuthorizedAttribute(PermissionType permissions)
         : this(AccessLevel.Root | AccessLevel.Presedint | AccessLevel.Governorate |
                AccessLevel.Directorate | AccessLevel.District | AccessLevel.Village |
