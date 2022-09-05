@@ -2,7 +2,7 @@
 
 namespace APSS.Web.Dtos.Forms;
 
-public sealed class AddLandForm
+public class AddLandForm
 {
     [Required(ErrorMessage = "Name is required")]
     public string Name { get; set; } = null!;
@@ -12,10 +12,13 @@ public sealed class AddLandForm
     public long Area { get; set; }
 
     [Display(Name = "Longitude")]
+    [Range(-180, 180)]
     [Required(ErrorMessage = "Longitude is required")]
     public double Longitude { get; set; }
 
     [Display(Name = "Latitude")]
+    [Range(-90, 90)]
+    [Required(ErrorMessage = "Latitude is required")]
     public double Latitude { get; set; }
 
     [Required(ErrorMessage = "Address is required")]
