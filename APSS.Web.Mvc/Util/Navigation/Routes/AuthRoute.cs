@@ -6,8 +6,8 @@ public sealed class AuthRoute : Route
 {
     public AuthRoute(IRoute parent) : base(parent, "Authentication", "Auth")
     {
-        SignIn = new Route(this, "Sign In", nameof(AuthController.SignIn));
-        SignOut = new Route(this, "Sign Out", nameof(AuthController.SignOut));
+        SignIn = new Route(this, "Sign In", nameof(AuthController.Login));
+        SignOut = new Route(this, "Sign Out", nameof(AuthController.Logout));
     }
 
     public IRoute SignIn { get; init; }
