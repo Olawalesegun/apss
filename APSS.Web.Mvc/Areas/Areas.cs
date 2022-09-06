@@ -3,7 +3,7 @@
 public static class Areas
 {
     public const string Auth = nameof(Auth);
-    public const string Population = "Population";
+    public const string Setup = nameof(Setup);
     public const string Surveys = "Surveys";
     public const string Animals = "Animals";
     public const string Users = "Users";

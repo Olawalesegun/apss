@@ -92,7 +92,11 @@ app.MapAreaControllerRoute(
     areaName: Areas.Auth,
     pattern: "{controller}/{action}");
 
-foreach (var area in Areas.All)
+// Setup area
+app.MapAreaControllerRoute(
+    name: Areas.Setup,
+    areaName: Areas.Setup,
+    pattern: "{controller}/{action=Index}");
 {
     app.MapAreaControllerRoute(
         name: area,
