@@ -122,5 +122,11 @@ public interface IAnimalService
 
     Task<ProductExpense> UpdateProductExpensesAsync(long accountId, long productExpenseId, Action<ProductExpense> updater);
 
+    Task<IQueryBuilder<ProductExpense>> GetProductExpenses(long accountId, long userId, long productId);
+
+    Task<IQueryBuilder<ProductExpense>> GetExpense(long accountId, long expenseId);
+
+    Task RemoveProductExpenseAsync(long accountId, long expenseId);
+
     #endregion Public Methods
 }
