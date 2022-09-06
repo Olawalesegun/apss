@@ -1,0 +1,21 @@
+﻿body {
+}
+
+.dropend .dropdown-menu {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+    .dropend .dropdown-menu li a {
+        line-height: 35px !important;
+    }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
