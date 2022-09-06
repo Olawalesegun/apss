@@ -19,7 +19,7 @@ public class TokenValidationEvent : CookieAuthenticationEvents
         {
             var principal = context.Principal!;
 
-            var accountId = principal.GetId();
+            var accountId = principal.GetAccountId();
             var token = principal.GetClaimValue(CustomClaims.Token);
             var status = await _authSvc.ValidateTokenAsync(accountId, token);
 

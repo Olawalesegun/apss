@@ -1,7 +1,5 @@
-﻿using APSS.Domain.Entities;
-using APSS.Web.Mvc.Areas.Controllers;
+﻿using APSS.Web.Mvc.Areas.Home.Controllers;
 using APSS.Web.Mvc.Areas.Surveys.Controllers;
-using APSS.Web.Mvc.Controllers;
 
 namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
@@ -20,7 +18,6 @@ public sealed class DashboardRoute : Route
 
     public IRoute Home { get; init; }
     public UsersRoute Users { get; init; }
-    public IRoute Accounts { get; init; }
     public AnimalsRoute Animals { get; init; }
     public LandsRoute Lands { get; init; }
     public SurveysRoute Surveys { get; init; }

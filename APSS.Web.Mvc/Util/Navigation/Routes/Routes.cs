@@ -8,6 +8,8 @@ public static class Routes
 
     public static AuthRoute Auth { get; } = new AuthRoute(Root);
     public static DashboardRoute Dashboard { get; } = new DashboardRoute(Root);
+    public static IRoute Setup { get; } = new Route(Root, "System Setup", "Setup", null);
+
     public static IDictionary<string, IRoute> All { get; } = new Dictionary<string, IRoute>(GenerateRoutes(Root));
 
     private static IEnumerable<KeyValuePair<string, IRoute>> GenerateRoutes(IRoute root)

@@ -63,7 +63,6 @@ public abstract class BasicRandomStringGeneratorService : IRandomGeneratorServic
             var idx = NextInt32(0, accessLevels.Length - 1);
 
             if (accessLevels[idx].IsBelow(min) || accessLevels[idx].IsAbove(max))
-
                 continue;
 
             return accessLevels[idx];

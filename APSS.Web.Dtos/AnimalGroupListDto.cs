@@ -22,7 +22,7 @@ namespace APSS.Web.Dtos
         public SexDto Sex { get; set; }
 
         [Display(Name = "Name")]
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Confirm")]
         public bool Confirm { get; set; }

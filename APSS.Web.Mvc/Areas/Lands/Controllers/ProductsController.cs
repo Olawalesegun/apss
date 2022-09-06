@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
+using APSS.Domain.Services;
+using APSS.Web.Mvc.Auth;
+using AutoMapper;
 using APSS.Web.Dtos;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
@@ -6,245 +10,235 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     [Area(Areas.Lands)]
     public class ProductsController : Controller
     {
-        public IActionResult Index()
+        private readonly IMapper _mapper;
+        private readonly ILandService _landSvc;
+        private List<LandProduct> productsList;
+
+        public ProductsController(ILandService landService, IMapper mapper)
         {
-            var LandList = new List<LandDto>
-                {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
-                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
-                };
-            var ProductList = new List<LandProductDto>
-                {
-                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[0] },
-                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[1] },
-                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[2] },
-                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[0] },
-                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[1] },
-                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[2] },
-                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[0] },
-                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[1] },
-                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[2] },
-                };
-            return View(ProductList);
+            _mapper = mapper;
+            _landSvc = landService;
+            productsList = new List<LandProduct>();
+        }
+
+        //[ApssAuthorized(
+        //    AccessLevel.Presedint |
+        //    AccessLevel.Directorate |
+        //    AccessLevel.District |
+        //    AccessLevel.Village |
+        //    AccessLevel.Farmer |
+        //    AccessLevel.Governorate |
+        //    AccessLevel.Group |
+        //    AccessLevel.Root,
+        //    PermissionType.Read)]
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var result = await (await _landSvc.GetLandProductsAsync(
+                User.GetAccountId(), User.GetAccountId()))
+                .AsAsyncEnumerable()
+                .ToListAsync();
+
+                return View(result.Select(_mapper.Map<LandProductDto>));
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         // GET: LandProduc tController/Add a new landProduct
-        public ActionResult Add(long Id)
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        public async Task<ActionResult> Add(long Id)
         {
-            var landprodut = new LandProductDto
+            //var land = await _landSvc.GetLandAsync(User.GetId(), Id);
+            var seasonsList = _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
+            var unitsList = _landSvc.GetLandProductUnitsAsync().AsAsyncEnumerable().ToListAsync();
+
+            var seasons = new List<SeasonDto>();
+            var units = new List<LandProductUnitDto>();
+
+            foreach (var season in await seasonsList)
             {
-                Seasons = new List<SeasonDto>
-                {
-                    new SeasonDto { Name = "season1", CreatedAt = DateTime.Now, Id = 1 },
-                    new SeasonDto { Name = "season2", CreatedAt = DateTime.Now, Id = 2 },
-                    new SeasonDto { Name = "season3", CreatedAt = DateTime.Now, Id = 3 },
-                },
-                Units = new List<LandProductUnitDto>
-                {
-                    new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},
-                    new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},
-                    new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},
-                },
-                ProducerId = Id,
+                var item = _mapper.Map<SeasonDto>(season);
+                seasons.Add(item);
+            }
+
+            foreach (var unit in await unitsList)
+            {
+                var item = _mapper.Map<LandProductUnitDto>(unit);
+                units.Add(item);
+            }
+
+            var product = new LandProductDto
+            {
+                //Producer = _mapper.Map<LandDto>(land),
+                Units = units,
+                Seasons = seasons,
+                landId = Id,
             };
 
-            return View(landprodut);
+            return View(product);
         }
 
         // POST: LandController/Add a new landProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(LandProductDto landProductDto)
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        public async Task<ActionResult> Add(LandProductDto landProduct)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            await _landSvc.AddLandProductAsync(
+                User.GetAccountId(),
+                landProduct!.landId,
+                landProduct.SeasonId,
+                landProduct.UnitId,
+                landProduct.CropName,
+                landProduct.HarvestStart,
+                landProduct.HarvestEnd,
+                landProduct.Quantity,
+                landProduct.IrrigationCount,
+                landProduct.IrrigationWaterSource,
+                landProduct.IrrigationPowerSource,
+                landProduct.IsGovernmentFunded,
+                landProduct.StoringMethod,
+                landProduct.Category,
+                landProduct.HasGreenhouse,
+                landProduct.Fertilizer,
+                landProduct.Insecticide,
+                landProduct.IrrigationMethod);
+
+            return RedirectToAction("Index", landProduct.Id);
         }
 
-        // GET: LandProductController/_Add a new landProduct
-        public ActionResult XsAdd(long landId)
+        [ApssAuthorized(
+            AccessLevel.Presedint |
+            AccessLevel.Directorate |
+            AccessLevel.District |
+            AccessLevel.Village |
+            AccessLevel.Farmer |
+            AccessLevel.Governorate |
+            AccessLevel.Group |
+            AccessLevel.Root,
+            PermissionType.Read)]
+        public async Task<ActionResult> Details(long Id)
         {
-            var landProductDto = new LandProductDto
+            if (Id <= 0)
             {
-                Seasons = new List<SeasonDto>
-                {
-                    new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },
-                    new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },
-                    new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },
-                },
-                Units = new List<LandProductUnitDto>
-                {
-                    new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},
-                    new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},
-                    new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},
-                }
-            };
-
-            return View(landProductDto);
-        }
-
-        // POST: LandController/_Add a new landProduct
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult _Add(LandProductDto landProduct, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Details(long Id)
-        {
-            var ProductList = new List<LandProductDto>
-                {
-                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash", AddedBy = new UserDto{Name = "User1"},ProducedIn =new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 }, Producer =new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash",AddedBy = new UserDto{Name = "User2"},ProducedIn =new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 }, Producer =new LandDto{Name ="land2",Id=2,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash",AddedBy = new UserDto{Name = "User3"},ProducedIn =new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 }, Producer =new LandDto{Name ="land3",Id=3,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq" ,AddedBy = new UserDto{Name = "User4"},ProducedIn =new SeasonDto{ Name = "season4", CreatedAt = DateTime.Now, Id=4 }, Producer =new LandDto{Name ="land4",Id=4,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq" ,AddedBy = new UserDto{Name = "User5"},ProducedIn =new SeasonDto{ Name = "season5", CreatedAt = DateTime.Now, Id=5 }, Producer =new LandDto{Name ="land5",Id=5,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq",AddedBy = new UserDto{Name = "User6"},ProducedIn =new SeasonDto{ Name = "season6", CreatedAt = DateTime.Now, Id=6 }, Producer =new LandDto{Name ="land6",Id=6,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User7"},ProducedIn =new SeasonDto{ Name = "season7", CreatedAt = DateTime.Now, Id=7 }, Producer =new LandDto{Name ="land7",Id=7,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User8"},ProducedIn =new SeasonDto{ Name = "season8", CreatedAt = DateTime.Now, Id=8 }, Producer =new LandDto{Name ="land8",Id=8,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User9"},ProducedIn =new SeasonDto{ Name = "season9", CreatedAt = DateTime.Now, Id=9 }, Producer =new LandDto{Name ="land9",Id=9,Address="djskhao", Area =123}},
-                };
-            var landProduct = ProductList.Where(i => i.Id == Id).FirstOrDefault();
-            return View(landProduct);
+            return View(_mapper.Map<LandProductDto>(
+                await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)));
         }
 
         // GET: LandController/Update landProduct
-        public ActionResult Update(long Id)
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        public async Task<ActionResult> Update(long Id)
         {
-            var ProductList = new List<LandProductDto>
-                {
-                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash", AddedBy = new UserDto{Name = "User1"},ProducedIn =new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 }, Producer =new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash",AddedBy = new UserDto{Name = "User2"},ProducedIn =new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 }, Producer =new LandDto{Name ="land2",Id=2,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash",AddedBy = new UserDto{Name = "User3"},ProducedIn =new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 }, Producer =new LandDto{Name ="land3",Id=3,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq" ,AddedBy = new UserDto{Name = "User4"},ProducedIn =new SeasonDto{ Name = "season4", CreatedAt = DateTime.Now, Id=4 }, Producer =new LandDto{Name ="land4",Id=4,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq" ,AddedBy = new UserDto{Name = "User5"},ProducedIn =new SeasonDto{ Name = "season5", CreatedAt = DateTime.Now, Id=5 }, Producer =new LandDto{Name ="land5",Id=5,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq",AddedBy = new UserDto{Name = "User6"},ProducedIn =new SeasonDto{ Name = "season6", CreatedAt = DateTime.Now, Id=6 }, Producer =new LandDto{Name ="land6",Id=6,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User7"},ProducedIn =new SeasonDto{ Name = "season7", CreatedAt = DateTime.Now, Id=7 }, Producer =new LandDto{Name ="land7",Id=7,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User8"},ProducedIn =new SeasonDto{ Name = "season8", CreatedAt = DateTime.Now, Id=8 }, Producer =new LandDto{Name ="land8",Id=8,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User9"},ProducedIn =new SeasonDto{ Name = "season9", CreatedAt = DateTime.Now, Id=9 }, Producer =new LandDto{Name ="land9",Id=9,Address="djskhao", Area =123}, Seasons = new List<SeasonDto> {new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 },new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 },new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 },},Units = new List<LandProductUnitDto>{new LandProductUnitDto{Name ="Unit1", CreatedAt =DateTime.Now, Id=1},new LandProductUnitDto{Name ="Unit2", CreatedAt =DateTime.Now, Id=2},new LandProductUnitDto{Name ="Unit3", CreatedAt =DateTime.Now, Id=3},}},
-                };
-
-            LandProductDto landProduct = ProductList.Where(p => p.Id == Id).First();
-            return View(landProduct);
+            if (Id <= 0)
+            {
+            }
+            return View(_mapper.Map<LandProductDto>(
+                await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)));
         }
 
         // POST: LandController/Update landProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(LandProductDto landProduct)
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        public async Task<ActionResult> Update(LandProductDto landProduct)
         {
-            try
+            if (!ModelState.IsValid || landProduct == null)
             {
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            await _landSvc.UpdateLandProductAsync(User.GetAccountId(), landProduct!.Id,
+                f =>
+                {
+                    f.StoringMethod = landProduct.StoringMethod;
+                    f.Category = landProduct.Category;
+                    f.CropName = landProduct.CropName;
+                    f.Fertilizer = landProduct.Fertilizer;
+                    f.HarvestEnd = landProduct.HarvestEnd;
+                    f.HarvestStart = landProduct.HarvestStart;
+                    f.HasGreenhouse = landProduct.HasGreenhouse;
+                    f.Insecticide = landProduct.Insecticide;
+                    f.IrrigationCount = landProduct.IrrigationCount;
+                    f.IrrigationMethod = landProduct.IrrigationMethod;
+                    f.IrrigationPowerSource = _mapper.Map<IrrigationPowerSource>(landProduct.IrrigationPowerSource);
+                    f.IrrigationWaterSource = _mapper.Map<IrrigationWaterSource>(landProduct.IrrigationWaterSource);
+                    f.IsGovernmentFunded = landProduct.IsGovernmentFunded;
+                    f.Quantity = landProduct.Quantity;
+                    //f.ProducedIn = _mapper.Map<Season>(landProduct.ProducedIn);
+                    //f.Unit = _mapper.Map<LandProductUnit>(landProduct.Unit);
+                });
+
+            return RedirectToAction("Index");
         }
 
         // GET: LandController/Delete landProduct
-        public ActionResult Delete(long Id)
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        public async Task<ActionResult> Delete(long Id)
         {
-            var ProductList = new List<LandProductDto>
-                {
-                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash", AddedBy = new UserDto{Name = "User1"},ProducedIn =new SeasonDto{ Name = "season1", CreatedAt = DateTime.Now, Id=1 }, Producer =new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash",AddedBy = new UserDto{Name = "User2"},ProducedIn =new SeasonDto{ Name = "season2", CreatedAt = DateTime.Now, Id=2 }, Producer =new LandDto{Name ="land2",Id=2,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash",AddedBy = new UserDto{Name = "User3"},ProducedIn =new SeasonDto{ Name = "season3", CreatedAt = DateTime.Now, Id=3 }, Producer =new LandDto{Name ="land3",Id=3,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq" ,AddedBy = new UserDto{Name = "User4"},ProducedIn =new SeasonDto{ Name = "season4", CreatedAt = DateTime.Now, Id=4 }, Producer =new LandDto{Name ="land4",Id=4,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq" ,AddedBy = new UserDto{Name = "User5"},ProducedIn =new SeasonDto{ Name = "season5", CreatedAt = DateTime.Now, Id=5 }, Producer =new LandDto{Name ="land5",Id=5,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq",AddedBy = new UserDto{Name = "User6"},ProducedIn =new SeasonDto{ Name = "season6", CreatedAt = DateTime.Now, Id=6 }, Producer =new LandDto{Name ="land6",Id=6,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User7"},ProducedIn =new SeasonDto{ Name = "season7", CreatedAt = DateTime.Now, Id=7 }, Producer =new LandDto{Name ="land7",Id=7,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User8"},ProducedIn =new SeasonDto{ Name = "season8", CreatedAt = DateTime.Now, Id=8 }, Producer =new LandDto{Name ="land8",Id=8,Address="djskhao", Area =123}},
-                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman" ,AddedBy = new UserDto{Name = "User9"},ProducedIn =new SeasonDto{ Name = "season9", CreatedAt = DateTime.Now, Id=9 }, Producer =new LandDto{Name ="land9",Id=9,Address="djskhao", Area =123}},
-                };
-
-            var landProduct = ProductList.Where(i => i.Id == Id).First();
-            return View(landProduct);
+            return View(_mapper.Map<LandProductDto>(
+                await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)));
         }
 
         // POST: LandController/Delete landProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeletePost(long Id)
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        public async Task<ActionResult> DeletePost(long Id)
         {
-            var ProductList = new List<LandProductDto>
-                {
-                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash"},
-                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash" },
-                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash" },
-                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq" },
-                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq" },
-                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq"},
-                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman" },
-                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman" },
-                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman" },
-                };
-            var landProduct = ProductList.Where(i => i.Id == Id).FirstOrDefault();
-            ProductList.Remove(landProduct!);
+            await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
             return RedirectToAction(nameof(Index));
         }
 
         // GET: LandController/Get landProduct
-        public ActionResult GetLandProduct(long landProductId)
+        [ApssAuthorized(
+            AccessLevel.Presedint |
+            AccessLevel.Directorate |
+            AccessLevel.District |
+            AccessLevel.Village |
+            AccessLevel.Farmer |
+            AccessLevel.Governorate |
+            AccessLevel.Group |
+            AccessLevel.Root,
+            PermissionType.Read)]
+        public async Task<ActionResult> GetLandProduct(long Id)
         {
-            return View();
-        }
-
-        // POST: LandController/Get landProduct
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetLandProduct()
-        {
-            return View();
+            return View(_mapper.Map<LandProductDto>(
+                await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)));
         }
 
         // GET: LandController/Get landProducts
-        public ActionResult GetLandProducts(long Id)
+        [ApssAuthorized(
+            AccessLevel.Presedint |
+            AccessLevel.Directorate |
+            AccessLevel.District |
+            AccessLevel.Village |
+            AccessLevel.Farmer |
+            AccessLevel.Governorate |
+            AccessLevel.Group |
+            AccessLevel.Root,
+            PermissionType.Read)]
+        public async Task<ActionResult> GetLandProducts(long Id)
         {
-            var LandList = new List<LandDto>
-                {
-                    new LandDto{Name ="land1",Id=1,Address="djskhao", Area =123},
-                    new LandDto{Name ="land2",Id=2,Address="djskhao2", Area =321},
-                    new LandDto{Name ="land3",Id=3,Address="djskhao3", Area =555},
-                    new LandDto{Name ="land4",Id=4,Address="djskhao3", Area =555},
-                };
-            var ProductList = new List<LandProductDto>
-                {
-                    new LandProductDto{CropName="pro1", Id=1, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[0] },
-                    new LandProductDto{CropName="pro2", Id=2, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[1] },
-                    new LandProductDto{CropName="pro3", Id=3, HarvestEnd=DateTime.Now,Category="Baggash", Producer=LandList[2] },
-                    new LandProductDto{CropName="pro4", Id=4, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[0] },
-                    new LandProductDto{CropName="pro5", Id=5, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[3] },
-                    new LandProductDto{CropName="pro6", Id=6, HarvestEnd=DateTime.Now,Category="farouq", Producer=LandList[2] },
-                    new LandProductDto{CropName="pro7", Id=7, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[3] },
-                    new LandProductDto{CropName="pro8", Id=8, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[3] },
-                    new LandProductDto{CropName="pro9", Id=9, HarvestEnd=DateTime.Now,Category="ayman", Producer=LandList[2] },
-                };
-            if (LandList.Count >= Id)
+            var productsList = await _landSvc.GetLandProductsAsync(
+                User.GetAccountId(), Id)
+                .ToAsyncEnumerable()
+                .ToListAsync();
+            var products = new List<LandProductDto>();
+
+            foreach (var product in productsList)
             {
-                return View(ProductList.Where(l => l.Producer.Id == Id).ToList());
+                var item = _mapper.Map<LandProductDto>(product);
+                products.Add(item);
             }
-            else
-            {
-                return View("ErrorPage", "Out of range");
-            }
+
+            return View(products);
         }
     }
 }

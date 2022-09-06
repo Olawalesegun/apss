@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
+using APSS.Domain.Services;
+using APSS.Web.Mvc.Auth;
+using AutoMapper;
 using APSS.Web.Dtos;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
@@ -6,19 +10,29 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     [Area(Areas.Lands)]
     public class SeasonsController : Controller
     {
-        public IActionResult Index()
+        private readonly ILandService _landSvc;
+        private readonly IMapper _mapper;
+        private List<SeasonDto> _seasonsList;
+
+        public SeasonsController(ILandService landService, IMapper mapper)
         {
-            var seasonList = new List<SeasonDto>
-            {
-                new SeasonDto { Id = 1, Name ="Season1", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 2, Name ="Season2", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 3, Name ="Season3", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 4, Name ="Season4", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-            };
-            return View(seasonList);
+            _landSvc = landService;
+            _mapper = mapper;
+            _seasonsList = new List<SeasonDto>();
+        }
+
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
+        public async Task<IActionResult> Index()
+        {
+            var seasons = await _landSvc.GetSeasonsAsync()
+                .AsAsyncEnumerable()
+                .ToListAsync();
+
+            return View(seasons.Select(_mapper.Map<SeasonDto>));
         }
 
         // GET: SeasonController/Add a new Season
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
         public ActionResult Add()
         {
             return View();
@@ -27,88 +41,78 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: SeasonController/Add a new Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(SeasonDto season)
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
+        public async Task<ActionResult> Add(SeasonDto season)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (!ModelState.IsValid)
+            { }
+            await _landSvc.AddSeasonAsync(
+                User.GetAccountId(),
+                season!.Name,
+                season.StartsAt,
+                season.EndsAt);
+
+            return RedirectToAction("Index");
         }
 
         // GET: SeasonController/Update Season
-        public ActionResult Update(long Id)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
+        public async Task<ActionResult> Update(long Id)
         {
-            var seasonList = new List<SeasonDto>
-            {
-                new SeasonDto { Id = 1, Name ="Season1", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 2, Name ="Season2", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 3, Name ="Season3", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 4, Name ="Season4", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-            };
+            if (Id <= 0)
+            { }
 
-            return View(seasonList.Where(i => i.Id == Id).First());
+            return View(_mapper.Map<SeasonDto>(
+                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
         }
 
         // POST: SeasonController/Update Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(SeasonDto season)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
+        public async Task<ActionResult> Update(SeasonDto season)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (!ModelState.IsValid || season == null)
+            { }
+            await _landSvc.UpdateSeasonAsync(User.GetAccountId(),
+                season!.Id,
+                f =>
+                {
+                    f.Name = season.Name;
+                    f.StartsAt = season.StartsAt;
+                    f.EndsAt = season.EndsAt;
+                });
+
+            return RedirectToAction("Index");
         }
 
         // GET: SeasonController/Delete Season
-        public ActionResult Delete(long Id)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
+        public async Task<ActionResult> Delete(long Id)
         {
-            var seasonList = new List<SeasonDto>
-            {
-                new SeasonDto { Id = 1, Name ="Season1", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 2, Name ="Season2", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 3, Name ="Season3", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 4, Name ="Season4", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-            };
-
-            return View(seasonList.Where(i => i.Id == Id).First());
+            return View(_mapper.Map<SeasonDto>(
+                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
         }
 
         // POST: SeasonController/Delete Season
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(SeasonDto season)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
+        public async Task<ActionResult> DeletePost(long Id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (Id <= 0)
+            { }
+            await _landSvc.RemoveSeasonAsync(User.GetAccountId(), Id);
+
+            return RedirectToAction("Index");
         }
 
         // GET: SeasonController/Get Season
-        public ActionResult GetSeason(long Id)
+        [ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
+        public async Task<ActionResult> GetSeason(long Id)
         {
-            var seasonList = new List<SeasonDto>
-            {
-                new SeasonDto { Id = 1, Name ="Season1", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 2, Name ="Season2", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 3, Name ="Season3", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-                new SeasonDto { Id = 4, Name ="Season4", StartsAt=DateTime.Now, EndsAt=DateTime.Now.AddDays(2), CreatedAt=DateTime.Now, ModifiedAt=DateTime.Now.AddDays(1)},
-            };
-
-            return View(seasonList.Where(i => i.Id == Id).First());
+            return View(_mapper.Map<SeasonDto>(
+                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
         }
     }
 }

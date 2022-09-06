@@ -49,7 +49,8 @@ public enum AccessLevel : uint
     Directorate = 1 << 4,
     Governorate = 1 << 5,
     Presedint = 1 << 6,
-    Root = 0xFFFFFFFF,
+    Root = 1 << 7,
+    All = 0xFFFFFFF,
 }
 
 /// <summary>

@@ -63,7 +63,9 @@ public sealed class AuthService : IAuthService
     /// <inheritdoc/>
     public async Task<Session> SignInAsync(long accountId, string password, LoginInfo info)
     {
-        var account = await _uow.Accounts.Query().FindOrNullAsync(accountId);
+        var account = await _uow.Accounts.Query()
+            .Include(s => s.User)
+            .FindOrNullAsync(accountId);
 
         if (account is null || !await _cryptoHashSvc.VerifyAsync(password, account.PasswordHash, account.PasswordSalt))
             throw new InvalidAccountIdOrPasswordException();

@@ -3,7 +3,7 @@
     <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-8">
         <div class="  shadow-sm pb-3">
             <form class=" mt-3 align-items-center needs-validation" method="post" asp-controller="LandProduct" asp-action="Add" novalidate>
-                <input type="hidden" asp-for="ProducerId" />
+                <input type="hidden" asp-for="landId" />
                 <input type="hidden" asp-for="SeasonId" />
                 <input type="hidden" asp-for="UnitId" />
                 <div asp-validation-summary="ModelOnly"></div>
@@ -201,6 +201,21 @@
                             <input class="form-check-input" type="radio" value="false" asp-for="HasGreenhouse" checked />
                             <label class="form-check-label" asp-for="HasGreenhouse"> No </label>
                         </div>
+                    </div>
+                </div>
+                <div class="row justify-content-between ">
+                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+
+                        <div class="form-check-inline ">
+                            <h5 class="label-inline textOverflow"><label asp-for="IsGovernmentFunded"></label></h5>
+                        </div>
+                        @foreach (var item in Enum.GetValues<IrrigationPowerSource>())
+                        {
+                            <div class="form-check ">
+                                <input class="form-check-input" type="radio" value="@item" asp-for="IrrigationPowerSource" checked />
+                                @Html.Label(item.ToString())
+                            </div>
+                        }
                     </div>
                 </div>
                 <!-- row 9 -->

@@ -32,19 +32,27 @@ namespace APSS.Web.Mvc.Areas.Controllers
         public async Task<IActionResult> Index()
         {
             var animalDto = new List<AnimalGroupListDto>();
-            var accountId = (long)User.GetId();
-            var account = await _uow.Accounts.Query().Include(u => u.User).Where(i => i.Id == accountId).FirstOrNullAsync();
-            var animals = await (await _service.GetAllAnimalGroupsAsync(User.GetId(), account!.User.Id)).AsAsyncEnumerable().ToListAsync();
-            foreach (var item in animals)
+            var accountId = (long)User.GetAccountId();
+            var account = await _uow.Accounts.Query().
+                Include(u => u.User).
+                Where(i => (int)i.Id == User.GetAccountId())
+                .FirstAsync();
+            // var Animals = await _uow.AnimalGroups.Query().Include(a => a.Products).AsAsyncEnumerable().ToListAsync();
+            var Animals = await (await _service.GetAllAnimalGroupsAsync(
+                User.GetAccountId(),
+                account!.User.Id))
+                .AsAsyncEnumerable()
+                .ToListAsync();
+            foreach (var item in Animals)
             {
                 animalDto.Add(new AnimalGroupListDto
                 {
+                    Id = item.Id,
                     Type = item.Type,
                     Quantity = item.Quantity,
                     CreatedAt = item.CreatedAt,
                     Sex = (SexDto)item.Sex,
                     Name = item.Name,
-                    Confirm = (bool)item.IsConfirmed!,
                 });
             }
 
@@ -56,8 +64,10 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             try
             {
-                var accountId = (long)User.GetId();
-                var account = await _uow.Accounts.Query().Include(u => u.User).Where(i => i.Id == accountId).FirstOrNullAsync();
+                var accountId = (long)User.GetAccountId();
+                var account = await _uow.Accounts.Query().Include(u => u.User)
+                    .Where(i => i.Id == accountId)
+                    .FirstOrNullAsync();
                 var searchResult = _service.GetAllAnimalGroupsAsync(account!.Id, account.User.Id);
                 if (!string.IsNullOrEmpty(searchString))
                 {
@@ -119,6 +129,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(total);
         }
 
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<IActionResult> Add()
         {
             var animalGroup = new AnimalGroupDto();
@@ -129,8 +140,6 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AnimalGroupDto animal)
         {
-            var resultAdd = await _service.AddAnimalGroupAsync(21, animal.Type, animal.Name!, animal.Quantity, (AnimalSex)animal.Sex);
-
             try
             {
                 if (!ModelState.IsValid)
@@ -139,7 +148,13 @@ namespace APSS.Web.Mvc.Areas.Controllers
                 }
                 else
                 {
-                    //var resultAdd = await _service.AddAnimalGroupAsync(21, animal.Type, animal.Name!, animal.Quantity, (AnimalSex)animal.Sex);
+                    var resultAdd = await _service.AddAnimalGroupAsync(
+                        User.GetAccountId(),
+                        animal.Type,
+                        animal.Name!,
+                        animal.Quantity,
+                        (AnimalSex)animal.Sex);
+                    if (resultAdd == null) return View(animal);
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -156,12 +171,16 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    var animal = await (await _service.GetAnimalGroupAsync(User.GetId(), id)).AsAsyncEnumerable().ToListAsync();
+                    var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
+                        .Include(a => a.Name).
+                        Include(t => t.Type)
+                        .AsAsyncEnumerable()
+                        .ToListAsync();
                     var item = animal.FirstOrDefault();
                     var animalGroupDto = new AnimalGroupListDto
                     {
                         Name = item!.Name,
-                        Type = item!.Type,
+                        Type = item.Type,
                         Quantity = item!.Quantity,
                         Sex = (SexDto)item!.Sex,
                         Confirm = (bool)item.IsConfirmed!,
@@ -170,10 +189,10 @@ namespace APSS.Web.Mvc.Areas.Controllers
                     };
                     return View(animalGroupDto);
                 }
-                else return RedirectToAction(nameof(Index));
             }
             catch (Exception) { }
-            return RedirectToAction(nameof(Index));
+            var animals = new AnimalGroupListDto();
+            return View(animals);
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -182,15 +201,17 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    var animal = await (await _service.GetAnimalGroupAsync(User.GetId(), id)).AsAsyncEnumerable().ToListAsync();
+                    var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
+                        .AsAsyncEnumerable()
+                        .ToListAsync();
                     var item = animal.FirstOrDefault();
                     var animalGroupDto = new AnimalGroupListDto
                     {
+                        Id = item!.Id,
                         Name = item!.Name,
-                        Type = item!.Type,
+                        Type = item.Type,
                         Quantity = item!.Quantity,
                         Sex = (SexDto)item!.Sex,
-                        Confirm = (bool)item.IsConfirmed!,
                         CreatedAt = item!.CreatedAt,
                         ModifiedAt = item!.ModifiedAt,
                     };
@@ -199,7 +220,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                 else return RedirectToAction(nameof(Index));
             }
             catch (Exception) { }
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
         public async Task<IActionResult> DeleteConfirm(int id)
@@ -208,12 +229,12 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    await _service.RemoveAnimalGroupAsync(User.GetId(), id);
+                    await _service.RemoveAnimalGroupAsync(User.GetAccountId(), id);
                     return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception) { }
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -222,7 +243,9 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    var animal = await (await _service.GetAnimalGroupAsync(User.GetId(), id)).AsAsyncEnumerable().ToListAsync();
+                    var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
+                        .AsAsyncEnumerable()
+                        .ToListAsync();
                     var delete = animal.FirstOrDefault();
                     var animalGroupDto = new AnimalGroupListDto
                     {
@@ -241,27 +264,27 @@ namespace APSS.Web.Mvc.Areas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AnimalGroupListDto animalGroupDto)
         {
-            if (!animalGroupDto.Equals(""))
+            try
             {
-                try
-                {
-                    var resultEdit = await _service.UpdateAnimalGroupAsync(User.GetId(), animalGroupDto.Id, A =>
-                     {
-                         A.Type = animalGroupDto.Type;
-                         A.Quantity = animalGroupDto.Quantity;
-                         A.Sex = (AnimalSex)animalGroupDto.Sex;
-                         A.Name = animalGroupDto.Name!;
-                     });
-                    if (resultEdit == null) return View(animalGroupDto);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception)
-                {
-                    return Problem("error");
-                }
+                var resultEdit = await _service.UpdateAnimalGroupAsync(User.GetAccountId(), animalGroupDto.Id, A =>
+             {
+                 A.Type = animalGroupDto.Type;
+                 A.Quantity = animalGroupDto.Quantity;
+                 A.Sex = (AnimalSex)animalGroupDto.Sex;
+                 A.Name = animalGroupDto.Name;
+             });
+                if (resultEdit == null) return View(animalGroupDto);
+                return RedirectToAction(nameof(Index));
             }
+            catch (Exception)
+            {
+                return Problem("error");
+            }
+            TempData["Action"] = "Model is not valid";
+            TempData["success"] = "Edit Password is not successed";
             return View(animalGroupDto);
         }
     }

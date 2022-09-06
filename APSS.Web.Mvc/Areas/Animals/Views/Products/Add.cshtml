@@ -5,6 +5,7 @@
         <form class="mt-3 needs-validation" id="ProductForm" method="post" asp-controller="Products" asp-action="Add" novalidate>
             <!-- 2 column puts for the National number and Phome Number-->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProducerId" />
             <div class="d-flex justify-content-center mb-4"><h4>Add Animal Product  </h4></div>
             <div class="row d-flex justify-content-between">
                 <div class="col-sm-6 mb-4 ">

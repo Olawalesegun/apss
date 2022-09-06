@@ -7,8 +7,8 @@
         <input type="hidden" asp-for="UserId" />
         <input type="hidden" asp-for="Id" />
         <!-- 2 column puts for the National number and Phome Number-->
-        <div class="center d-flex mb-2 ">
-            <h3 class="">
+        <div class="center d-flex  ">
+            <h3 class="fw-light">
                 Edit Employee Information
             </h3>
         </div>
@@ -19,7 +19,7 @@
                     <span class="input-group-text">
                         <i class="fa-solid fa-user"></i>
                     </span>
-                    <div class="form-floating col">
+                    <div class="form-floating flex-grow-1">
                         <input type="text" id="account-name" asp-for="HolderName" placeholder="Holder Name" class="form-control w-100 " required />
                         <label class="form-label" asp-for="HolderName"></label>
                     </div>
@@ -33,7 +33,7 @@
                     <span class="input-group-text">
                         <i class="fa-solid fa-id-card"></i>
                     </span>
-                    <div class="form-floating col">
+                    <div class="form-floating flex-grow-1">
                         <input type="text" id="account-nationalID" asp-for="NationalId" placeholder="National ID" class="form-control d-inline " />
                         <label class="form-label" id="valid" asp-for="NationalId"></label>
                     </div>
@@ -45,7 +45,7 @@
             <div class="col-sm-6 mt-4 flex-column form-group d-flex  ">
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa-solid fa-phone-flip"></i></span>
-                    <div class="form-floating col">
+                    <div class="form-floating flex-grow-1">
                         <input type="text" id="account-phonenumber" asp-for="PhoneNumber" placeholder="phoneNumber" class="form-control d-inline" />
                         <label class="form-label" asp-for="PhoneNumber"></label>
                     </div>
@@ -54,7 +54,7 @@
             <div class="col-sm-6 mt-4 flex-column form-group d-flex ">
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
-                    <div class="form-floating col">
+                    <div class="form-floating flex-grow-1">
                         <input type="text" id="account-job" asp-for="Job" placeholder="job" class="form-control d-inline" />
                         <label class="form-label" asp-for="Job"></label>
                     </div>
@@ -72,10 +72,20 @@
                     </div>*@
                 @foreach (var item in Enum.GetValues<SocialStatus>())
                 {
-                    <div class="form-check  mx-2">
-                        <input class="form-check-input " type="radio" asp-for="SocialStatus" id="socialstatus" value="@Convert.ToInt64(@item)" />
-                        <label class="form-check-label"> @Html.Label(item.ToString())</label>
-                    </div>
+                    if (@Model.SocialStatus == (SocialStatusDto)@item)
+                    {
+                        <div class="form-check  mx-2">
+                            <input class="form-check-input " type="radio" asp-for="SocialStatus" id="socialstatus" value="@Convert.ToInt64(@item)" checked />
+                            <label class="form-check-label"> @Html.Label(item.ToString())</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-check  mx-2">
+                            <input class="form-check-input " type="radio" asp-for="SocialStatus" id="socialstatus" value="@Convert.ToInt64(@item)" />
+                            <label class="form-check-label"> @Html.Label(item.ToString())</label>
+                        </div>
+                    }
                 }
             </div>
         </div>
@@ -117,7 +127,7 @@
         <!-- Submit button -->
         <div class="row d-flex  justify-content-between ">
             <div class="col-sm-6 mt-4  d-flex flex-row bd-highlight">
-                <a asp-route-id="" asp-action="EditPassword" class="btn btn-link text-primary " style=""><i class="fa-solid fa-lock"></i>Change Password</a>
+                <a asp-route-id="@Model.Id" asp-action="EditPassword" class="btn btn-link text-primary " style=""><i class="fa-solid fa-lock"></i>Change Password</a>
             </div>
             <div class="col-sm-6 mt-4 d-flex flex-row-reverse bd-highlight ">
                 <button type="submit" class="btn btn-primary  w-50  ">Edit</button>

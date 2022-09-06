@@ -21,7 +21,7 @@
                     <div class="input-group">
                         <span class="input-group-text">00:00:00</span>
                         <div class="form-floating col">
-                            <input type="number" asp-for="PeriodTaken" placeholder="PeriodTaken" class="form-control" />
+                            <input type="time" asp-for="PeriodTaken" asp-format="[-][d'.']hh':'mm':'ss['.'fffffff]" placeholder="PeriodTaken" class="form-control" />
                             <label class="form-label" asp-for="PeriodTaken"></label>
                             <span asp-validation-for="PeriodTaken" class="text-danger"></span>
                         </div>

@@ -28,7 +28,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         public async Task<IActionResult> Index()
         {
             List<UserDto> userDto = new List<UserDto>();
-            var user = await (await _userService.GetSubuserAsync((int)User.GetId())).AsAsyncEnumerable().ToListAsync();
+            var user = await (await _userService.GetSubuserAsync((int)User.GetAccountId())).AsAsyncEnumerable().ToListAsync();
             foreach (var userDtoItem in user)
             {
                 userDto.Add(new UserDto
@@ -75,11 +75,20 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(UserDto user)
         {
-            var accountis = 1;
-            var add = await _userService.CreateAsync(User.GetId(), user.Name);
-
-            return RedirectToAction(nameof(Index));
-
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var add = await _userService.CreateAsync(User.GetAccountId(), user.Name);
+                    TempData["Action"] = "Add Erea";
+                    TempData["success"] = $"{user.Name} is addedd successfully";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception)
+            {
+                return Problem("Some Thing error");
+            }
             return View(user);
         }
 
@@ -91,7 +100,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> UserDetials(int id)
         {
-            var user = await (await _userService.GetUserAsync(1, User.GetId())).AsAsyncEnumerable().ToListAsync();
+            var user = await (await _userService.GetUserAsync(1, User.GetAccountId())).AsAsyncEnumerable().ToListAsync();
             if (user == null) return NotFound();
             var users = user.FirstOrDefault();
             var userDto = new UserDto
@@ -188,34 +197,28 @@ namespace APSS.Web.Mvc.Areas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(UserDto userDto)
         {
             try
             {
-                if (!ModelState.IsValid)
+                var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
+                     {
+                         p.Name = userDto.Name;
+                         p.UserStatus = userDto.userStatus;
+                     });
+                if (edit == null)
                 {
-                    return View(userDto);
+                    TempData["Action"] = "Update Erea";
+                    TempData["success"] = "Update Failed!!!";
                 }
                 else
                 {
-                    var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
-                         {
-                             p.Name = userDto.Name;
-                             p.UserStatus = userDto.userStatus;
-                         });
-                    if (edit == null)
-                    {
-                        TempData["Action"] = "Update Erea";
-                        TempData["success"] = "Update Failed!!!";
-                    }
-                    else
-                    {
-                        TempData["Action"] = "Update Erea";
-                        TempData["success"] = "Erea Updated Successfully";
-                    }
-
-                    return RedirectToAction("Index");
+                    TempData["Action"] = "Update Erea";
+                    TempData["success"] = "Erea Updated Successfully";
                 }
+
+                return RedirectToAction("Index");
             }
             catch (Exception) { }
             return View(userDto);

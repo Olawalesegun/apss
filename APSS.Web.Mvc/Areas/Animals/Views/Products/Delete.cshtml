@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.AnimalProductDto
+﻿@model APSS.Web.Dtos.AnimalProductDetailsDto
 
 <div class="card mt-2">
     <div class="card-body">
@@ -13,6 +13,10 @@
                 <tr>
                     <th>@Html.DisplayNameFor(m=>m.Quantity)</th>
                     <td> @Model.Quantity</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.UnitName)</th>
+                    <td> @Model.UnitName</td>
                 </tr>
                 <tr>
                     <th>@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
@@ -30,7 +34,7 @@
         </table>
         <br />
         <div class=" d-inline pt-2 my-4">
-            <a class="btn btn-danger btn-rounded  " asp-controller="Products" asp-action="DeleteConfirm">Confirm</a>
+            <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Products" asp-action="DeleteConfirm">Confirm</a>
             <a onClick="history.go(-1); return false;" class="btn btn-link  mx-3" style="background-color:#DCEEFB">Cancel</a>
         </div>
     </div>

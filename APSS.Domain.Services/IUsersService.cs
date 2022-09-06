@@ -23,7 +23,7 @@ public interface IUsersService
     /// </summary>
     /// <param name="accountId">The id of the account which to get the subusers for</param>
     /// <returns></returns>
-    Task<IQueryBuilder<User>> GetSubuserAsync(int accountId);
+    Task<IQueryBuilder<User>> GetSubuserAsync(long accountId);
 
     /// <summary>
     /// Asynchronously set the user status of a user
