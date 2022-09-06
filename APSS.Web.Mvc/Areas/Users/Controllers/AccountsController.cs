@@ -102,28 +102,13 @@ namespace APSS.Web.Mvc.Areas.Controllers
                | AccessLevel.Directorate
                | AccessLevel.Root, PermissionType.Create)]*/
 
-        public async Task<IActionResult> AddAccount(long id)
+        public IActionResult AddAccount(long id)
         {
             try
             {
-                if (id > 0)
-                {
-                    var account = await _accountsService.GetAccountAsync(User.GetId(), id);
-                    if (account != null)
-                    {
-                        AccountDto result = new AccountDto();
-                        result.UserId = account.Id;
-                        return View(result);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index");
-                    }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "User");
-                }
+                AccountDto result = new AccountDto();
+                result.UserId = id;
+                return View(result);
             }
             catch (Exception)
             {
