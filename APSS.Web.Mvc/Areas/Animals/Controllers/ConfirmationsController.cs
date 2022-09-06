@@ -2,6 +2,8 @@
 using APSS.Web.Dtos;
 using APSS.Domain.Services;
 using APSS.Web.Dtos.ValueTypes;
+using AutoMapper;
+using APSS.Domain.Entities;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
@@ -9,15 +11,57 @@ namespace APSS.Web.Mvc.Areas.Controllers
     public class ConfirmationsController : Controller
     {
         private readonly IAnimalService _confirm;
+        private readonly IMapper _mappper;
 
-        public ConfirmationsController(IAnimalService confirm)
+        public ConfirmationsController(IAnimalService confirm, IMapper mapper)
         {
             _confirm = confirm;
+            _mappper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            var animal = await (await _confirm.GetAllAnimalGroupsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
+            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
+            var animalDto = new List<AnimalGroupConfirmDto>();
+            var v = animal.FirstOrDefault();
+            foreach (var a in animal)
+            {
+                animalDto.Add(new AnimalGroupConfirmDto
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Quantity = a.Quantity,
+                    CreatedAt = a.CreatedAt,
+                    ModifiedAt = a.ModifiedAt,
+                    Sex = a.Sex,
+                    UserName = a.OwnedBy.Name,
+                    UserID = a.OwnedBy.Id,
+                });
+            }
+
+            var product = new List<AnimalProductDetailsDto>();
+            foreach (var products in animalProduct)
+            {
+                product.Add(new AnimalProductDetailsDto
+                {
+                    Id = products.Id,
+                    Name = products.Name,
+                    Quantity = products.Quantity,
+                    CreatedAt = products.CreatedAt,
+                    ModifiedAt = products.ModifiedAt,
+                    PeriodTaken = products.PeriodTaken,
+                    SingleUnit = products.Unit,
+                    Producer = products.Producer,
+                    Ownerby = products.Producer.OwnedBy.Name,
+                });
+            }
+            var confirm = new ConfirmationDto();
+
+            confirm.AnimalProducts = product;
+            confirm.AnimalGroups = animalDto;
+
+            return View(confirm);
         }
 
         public async Task<IActionResult> ConfirmAnimalGroup(long id)
@@ -33,7 +77,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                     Name = single.Name,
                     Type = single.Type,
                     Quantity = single!.Quantity,
-                    Sex = (SexDto)single!.Sex,
+                    Sex = single!.Sex,
                     CreatedAt = single!.CreatedAt,
                     ModifiedAt = single!.ModifiedAt,
                     IsConfirmed = single!.IsConfirmed,
@@ -46,6 +90,13 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> ConfirmAnimal(long id, bool value)
         {
+            try
+            {
+                if (value)
+                {
+                    // var animal=_confirm.ConfirmAnimalGroup()
+                }
+            }
             return RedirectToAction("Index");
         }
 

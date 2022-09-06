@@ -1,101 +1,185 @@
 ﻿@model APSS.Web.Dtos.ConfirmationDto
 @await Html.PartialAsync("_dataNavBar")
-<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
+@*<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
     <form class="row d-flex justify-content-start d-inline mb-3 ">
-        <div class=" mb-2 col-sm col-lg-6  d-flex">
-            <div class="input-group">
-            <button type="button" class="btn btn-primary search-btn">
-                <i class="fas fa-search"></i>
-            </button>
-            <input type="search" class="form-control" id="search" onkeyup="searchTable()" placeholder="Search..." />
-        </div>
-        </div>
+    <div class=" mb-2 col-sm col-lg-6  d-flex">
+    <div class="input-group">
+    <button type="button" class="btn btn-primary search-btn">
+    <i class="fas fa-search"></i>
+    </button>
+    <input type="search" class="form-control" id="search" onkeyup="searchTable()" placeholder="Search..." />
+    </div>
+    </div>
     </form>
 
     <div class="col-sm-12  ">
 
-        <div class=" my-3 bg-light table-rsponsive  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
+    <div class=" my-3 bg-light table-rsponsive  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
 
-            <table class="table table-hover table-responsive table-bordered   table-striped mb-0 " id="myTable">
+    <table class="table table-hover table-responsive table-bordered   table-striped mb-0 " id="myTable">
 
-                <thead>
-                    <tr class="header  bg-fixed border border-bottom fw-bold">
-                        <th  class=" fw-bold align-middle">ID</th>
-                        <th  class=" fw-bold align-middle">Name</th>
-                        <th class="fw-bold align-middle">Quantity</th>
-                        <th  class="fw-bold align-middle"> Create Date</th>
-                        <th style="width:20px;" class="fw-bold align-middle"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.AnimalGroups)
-                    {
+    <thead>
+    <tr class="header  bg-fixed border border-bottom fw-bold">
+    <th class=" fw-bold align-middle">ID</th>
+    <th class=" fw-bold align-middle">Name</th>
+    <th class="fw-bold align-middle">Quantity</th>
+    <th class="fw-bold align-middle"> Create Date</th>
+    <th style="width:20px;" class="fw-bold align-middle"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.AnimalGroups)
+    {
 
-                        <tr class="align-top">
+    <tr class="align-top">
 
-                            <td class=" align-middle">@item.Id</td>
-                            <td class=" align-middle"> @item.Type</td>
-                            <td class=" align-middle">@item.Quantity</td>
-                            <td class=" align-middle">
-                                @item.CreatedAt
-                            </td>
-                            <td class="align-middle center">
-                                <a class="text-decoration-none fw-600 text-danger" asp-route-id="@item.Id" asp-controller="Confirmation" asp-action="ConfirmAnimalGroup"><div class="d-flex justify-content-between"> <span><i class="fa-solid fa-circle-check"></i></span></div> </a>
-                            </td>
-                        </tr>
-                    }
+    <td class=" align-middle">@item.Id</td>
+    <td class=" align-middle"> @item.Type</td>
+    <td class=" align-middle">@item.Quantity</td>
+    <td class=" align-middle">
+    @item.CreatedAt
+    </td>
+    <td class="align-middle center">
+    <a class="text-decoration-none fw-600 text-danger" asp-route-id="@item.Id" asp-controller="Confirmation" asp-action="ConfirmAnimalGroup"><div class="d-flex justify-content-between"> <span><i class="fa-solid fa-circle-check"></i></span></div> </a>
+    </td>
+    </tr>
+    }
 
-                    @foreach (var item in Model.AnimalProducts)
-                    {
+    @foreach (var item in Model.AnimalProducts)
+    {
 
-                        <tr class="align-top">
+    <tr class="align-top">
 
-                            <td class="text-break text-capitalize align-middle">@item.Id</td>
-                            <td class="text-break text-capitalize align-middle"> @item.Name</td>
-                            <td class="text-break text-capitalize align-middle">@item.Quantity</td>
-                            <td class="text-break text-capitalize align-middle">
-                                @item.CreatedAt
-                            </td>
-                            <td class="align-middle center">
-                                <a class="text-decoration-none fw-600 text-danger" asp-route-id="@item.Id" asp-controller="Confirmation" asp-action="ConfirmAnimalProduct"><div class="d-flex justify-content-between"> <span><i class="fa-solid fa-circle-check"></i></span></div> </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+    <td class="text-break text-capitalize align-middle">@item.Id</td>
+    <td class="text-break text-capitalize align-middle"> @item.Name</td>
+    <td class="text-break text-capitalize align-middle">@item.Quantity</td>
+    <td class="text-break text-capitalize align-middle">
+    @item.CreatedAt
+    </td>
+    <td class="align-middle center">
+    <a class="text-decoration-none fw-600 text-danger" asp-route-id="@item.Id" asp-controller="Confirmation" asp-action="ConfirmAnimalProduct"><div class="d-flex justify-content-between"> <span><i class="fa-solid fa-circle-check"></i></span></div> </a>
+    </td>
+    </tr>
+    }
+    </tbody>
+    </table>
+    </div>
     </div>
     <div class="d-flex justify-content-center">
-        <div class="container col-sm-12 col-lg-4 col-md-4">
-            <ul class="pagination d-flex justify-content-between">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </div>
+    <div class="container col-sm-12 col-lg-4 col-md-4">
+    <ul class="pagination d-flex justify-content-between">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">4</a></li>
+    <li class="page-item"><a class="page-link" href="#">5</a></li>
+    <li class="page-item"><a class="page-link" href="#">6</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
     </div>
-</div>
+    </div>
+    </div>*@
+<div class="row row-cols-1 row-cols-md-2 g-4 ">
+    @foreach (var product in @Model.AnimalProducts)
+    {
+        <div class="col">
 
-@section scripts{
-<script>
+            <div class="card mt-2  box-shadow">
+                <div class="card-body">
+                    <div class="d-flex align-items-center" style="line-height:40px !important">
+                        <i class="fa-solid fa-circle-user fs-1 me-2 " style="padding-left:4px"></i>
+                        <h3 class="fw-light">
+                            @product.Producer.OwnedBy.Name
+                        </h3>
+                    </div>
 
-     $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-     $("#dataManagement").addClass('active');
-    });
-     document.getElementById("nav-system-name").innerHTML="Emoplyees Management";
-    document.getElementById("media-system-name").innerHTML=" Emoplyees Management ";
-
-       $("#animalProducts").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-
-       $("#animalGroups").removeClass('actives');
-       $("#confirmation").addClass('actives');
-</script>
+                    <table class="table user-view-table m-0  ">
+                        <tbody style="font-size:14px">
+                            <tr class="">
+                                <th>@Html.DisplayNameFor(m=>m.Products.Name)</th>
+                                <td> @product.Name</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(m=>m.Products.Quantity)</th>
+                                <td> @product.Quantity</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(m=>m.Products.Unit)</th>
+                                <td> @product.SingleUnit.Name</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(m=>m.Products.PeriodTaken)</th>
+                                <td> @product.PeriodTaken</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(m=>m.Products.CreatedAt)</th>
+                                <td> @product.CreatedAt</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(m=>m.Products.ModifiedAt)</th>
+                                <td> @product.ModifiedAt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <div class="table-responsive  d-flex justify-content-end">
+                        @Html.ActionLink("Decline", "ConfirmAnimal", new { id=product.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                        <a role="button" class="btn btn-primary  mx-2  " asp-route-id="@product.Id" asp-controller="Confirmation" asp-action="ConfirmAnimal"> Confirm <span><i class="fa-solid fa-check "></i></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
+    @foreach (var animal in @Model.AnimalGroups)
+    {
+        <div class="col">
+            <div class="card mt-2  box-shadow">
+                <div class="card-body">
+                    <div class="d-flex   align-items-center" style="line-height:40px !important">
+
+                        <i class="fa-solid fa-circle-user fs-1 me-2 " style="padding-left:4px"></i> <h3 style="line-height:40px !important" class="fw-light">@animal.UserName </h3>
+                    </div>
+                    <table class="table user-view-table m-0  ">
+                        <tbody>
+                            <tr class="">
+                                <td class="label"><label>@Html.DisplayNameFor(m => m.AnimalGroup.Type)</label></td>
+                                <td>@animal.Type </td>
+                            </tr>
+                            <tr class="">
+                                <td class="label"><label>@Html.DisplayNameFor(m => m.AnimalGroup.Name)</label></td>
+                                <td>@animal.Name </td>
+                            </tr>
+                            <tr>
+                                <td> <label>@Html.DisplayNameFor(m => m.AnimalGroup.Quantity);</label></td>
+                                <td>@animal.Quantity  </td>
+                            </tr>
+                            <tr>
+                                <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.Sex)</label>  </td>
+                                <td> @animal.Sex </td>
+                            </tr>
+                            <tr>
+                                <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.CreatedAt)</label>  </td>
+                                <td>
+                                    @animal.CreatedAt
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label>@Html.DisplayNameFor(m => m.AnimalGroup.ModifiedAt)</label>  </td>
+                                <td>
+                                    @animal.ModifiedAt
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <div class=" mx-2 d-flex justify-content-end">
+                        @Html.ActionLink("Decline", "ConfirmAnimal", new { id=animal.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                        <a role="button" class="btn btn-primary text-white mx-2  shadow-0" asp-route-id="@animal.Id" asp-controller="Confirmation" asp-action="ConfirmAnimal"> Confirm <span><i class="fa-solid fa-check "></i></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

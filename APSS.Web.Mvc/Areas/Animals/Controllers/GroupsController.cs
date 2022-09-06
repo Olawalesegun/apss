@@ -51,7 +51,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                     Type = item.Type,
                     Quantity = item.Quantity,
                     CreatedAt = item.CreatedAt,
-                    Sex = (SexDto)item.Sex,
+                    Sex = item.Sex,
                     Name = item.Name,
                 });
             }
@@ -182,7 +182,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                         Name = item!.Name,
                         Type = item.Type,
                         Quantity = item!.Quantity,
-                        Sex = (SexDto)item!.Sex,
+                        Sex = item!.Sex,
                         Confirm = (bool)item.IsConfirmed!,
                         CreatedAt = item!.CreatedAt,
                         ModifiedAt = item!.ModifiedAt,
@@ -211,7 +211,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                         Name = item!.Name,
                         Type = item.Type,
                         Quantity = item!.Quantity,
-                        Sex = (SexDto)item!.Sex,
+                        Sex = item!.Sex,
                         CreatedAt = item!.CreatedAt,
                         ModifiedAt = item!.ModifiedAt,
                     };
@@ -252,7 +252,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                         Name = delete!.Name,
                         Type = delete.Type,
                         Quantity = delete.Quantity,
-                        Sex = (SexDto)delete.Sex,
+                        Sex = delete.Sex,
                         CreatedAt = delete.CreatedAt,
                         ModifiedAt = delete.ModifiedAt,
                     };
