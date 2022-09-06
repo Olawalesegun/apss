@@ -37,7 +37,7 @@ namespace APSS.Web.Mvc.Controllers
                     Type = item.Type,
                     Quantity = item.Quantity,
                     CreatedAt = item.CreatedAt,
-                    Sex = (SexDto)item.Sex,
+                    Sex = item.Sex,
                     Name = item.Name,
                     Confirm = (bool)item.IsConfirmed!,
                 });
