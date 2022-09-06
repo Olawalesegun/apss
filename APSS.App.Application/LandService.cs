@@ -133,7 +133,6 @@ public class LandService : ILandService
             Name = name,
             StartsAt = startsAt,
             EndsAt = endsAt,
-            CreatedAt = DateTime.Now
         };
 
         _uow.Sessions.Add(season);
@@ -418,6 +417,7 @@ public class LandService : ILandService
         udapter(season);
 
         _uow.Sessions.Update(season);
+        await _uow.CommitAsync();
 
         return season;
     }
@@ -456,6 +456,7 @@ public class LandService : ILandService
         udapter(landProductUnit);
 
         _uow.LandProductUnits.Update(landProductUnit);
+        await _uow.CommitAsync();
 
         return landProductUnit;
     }
@@ -500,6 +501,8 @@ public class LandService : ILandService
             _uow.Lands.Decline(land);
         }
 
+        await _uow.CommitAsync();
+
         return land;
     }
 
@@ -526,6 +529,7 @@ public class LandService : ILandService
         {
             _uow.LandProducts.Decline(landProduct);
         }
+        await _uow.CommitAsync();
 
         return landProduct;
     }
