@@ -24,24 +24,41 @@ namespace APSS.Web.Mvc.Areas.Controllers
             };
         }
 
+        /* [ApssAuthorized(AccessLevel.Group
+             | AccessLevel.District
+             | AccessLevel.Village
+             | AccessLevel.Presedint
+             | AccessLevel.Farmer
+             | AccessLevel.Governorate
+             | AccessLevel.Directorate
+             | AccessLevel.Root, PermissionType.Read)]*/
+
         public async Task<IActionResult> Index()
         {
-            var entityAccount3 = await (await _accountsService.GetUserAccounts(1, User.GetId())).AsAsyncEnumerable().ToListAsync();
-            var account = new List<AccountDto>();
-            foreach (var accountDto in entityAccount3)
+            try
             {
-                account.Add(new AccountDto
+                var userAccount = await _uow.Accounts.Query().Include(u => u.User).Where(i => i.Id == (long)User.GetId()).FirstAsync();
+                var accountsObject = await (await _accountsService.GetUserAccounts(User.GetId(), userAccount.User.Id)).AsAsyncEnumerable().ToListAsync();
+                var account = new List<AccountDto>();
+                foreach (var accountDto in accountsObject)
                 {
-                    HolderName = accountDto.HolderName,
-                    Id = accountDto.Id,
-                    PhoneNumber = accountDto.PhoneNumber,
-                    NationalId = accountDto.NationalId,
-                    IsActive = accountDto.IsActive,
-                    Job = accountDto.Job
-                });
-            }
+                    account.Add(new AccountDto
+                    {
+                        HolderName = accountDto.HolderName,
+                        Id = accountDto.Id,
+                        PhoneNumber = accountDto.PhoneNumber,
+                        NationalId = accountDto.NationalId,
+                        IsActive = accountDto.IsActive,
+                        Job = accountDto.Job
+                    });
+                }
 
-            return View(account);
+                return View(account);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Index), "Home");
+            }
         }
 
         [HttpPost]
@@ -76,6 +93,15 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(account);
         }
 
+        /*   [ApssAuthorized(AccessLevel.Group
+               | AccessLevel.District
+               | AccessLevel.Village
+               | AccessLevel.Presedint
+               | AccessLevel.Farmer
+               | AccessLevel.Governorate
+               | AccessLevel.Directorate
+               | AccessLevel.Root, PermissionType.Create)]*/
+
         public async Task<IActionResult> AddAccount(long id)
         {
             try
@@ -107,18 +133,23 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // [ApssAuthorized(AccessLevel.Root | AccessLevel.District | AccessLevel.Group | AccessLevel.Presedint | AccessLevel.Village | AccessLevel.Directorate, PermissionType.Create)]
+        /*  [ApssAuthorized(AccessLevel.Group
+          | AccessLevel.District
+          | AccessLevel.Village
+          | AccessLevel.Presedint
+          | AccessLevel.Farmer
+          | AccessLevel.Governorate
+          | AccessLevel.Directorate
+          | AccessLevel.Root, PermissionType.Create)]*/
         public async Task<IActionResult> AddAccount(AccountDto accountDto)
         {
-            var accountId = 1;
-            var userID = 1;
             try
             {
                 if (accountDto == null)
                     return View(accountDto);
                 else
                 {
-                    var add = await _accountsService.CreateAsync(User.GetId(), User.GetId(), accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
+                    var add = await _accountsService.CreateAsync(User.GetId(), accountDto.UserId, accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
                     if (add != null)
                     {
                         TempData["Action"] = "Employee Management";
@@ -139,12 +170,14 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(accountDto);
         }
 
-        public async Task<IActionResult> AdditionalAccountInfo(long id)
-        {
-            var account = new AccountDto();
-            account.Id = id;
-            return View(account);
-        }
+        /*     [ApssAuthorized(AccessLevel.Group
+              | AccessLevel.District
+              | AccessLevel.Village
+              | AccessLevel.Presedint
+              | AccessLevel.Farmer
+              | AccessLevel.Governorate
+              | AccessLevel.Directorate
+              | AccessLevel.Root, PermissionType.Read)]*/
 
         public async Task<IActionResult> AccountDetails(long id)
         {
@@ -174,6 +207,15 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(account);
         }
 
+        /*[ApssAuthorized(AccessLevel.Group
+           | AccessLevel.District
+           | AccessLevel.Village
+           | AccessLevel.Presedint
+           | AccessLevel.Farmer
+           | AccessLevel.Governorate
+           | AccessLevel.Directorate
+           | AccessLevel.Root, PermissionType.Delete)]*/
+
         public async Task<IActionResult> DeleteAccount(long id)
         {
             if (id > 0)
@@ -199,20 +241,39 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return RedirectToAction("Index");
         }
 
+        /* [ApssAuthorized(AccessLevel.Group
+             | AccessLevel.District
+             | AccessLevel.Village
+             | AccessLevel.Presedint
+             | AccessLevel.Farmer
+             | AccessLevel.Governorate
+             | AccessLevel.Directorate
+             | AccessLevel.Root, PermissionType.Delete)]*/
+
         public async Task<IActionResult> ConfirmDeleteAccount(long id)
         {
             try
             {
                 if (id > 0)
                 {
-                    await _accountsService.RemoveAsync(1, id);
+                    await _accountsService.RemoveAsync(User.GetId(), id);
                     TempData["Action"] = "الموظفين";
                     TempData["success"] = "تم حذف الموظف بنجاح";
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception) { }
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
+
+        /*  [ApssAuthorized(AccessLevel.Group
+             | AccessLevel.District
+             | AccessLevel.Village
+             | AccessLevel.Presedint
+             | AccessLevel.Farmer
+             | AccessLevel.Governorate
+             | AccessLevel.Directorate
+             | AccessLevel.Root, PermissionType.Update)]*/
 
         public async Task<IActionResult> EditAccount(long id)
         {
@@ -243,6 +304,14 @@ namespace APSS.Web.Mvc.Areas.Controllers
         }
 
         [HttpPost]
+        /*      [ApssAuthorized(AccessLevel.Group
+                  | AccessLevel.District
+                  | AccessLevel.Village
+                  | AccessLevel.Presedint
+                  | AccessLevel.Farmer
+                  | AccessLevel.Governorate
+                  | AccessLevel.Directorate
+                  | AccessLevel.Root, PermissionType.Update)]*/
         public async Task<IActionResult> EditAccount(AccountDto account)
         {
             try
@@ -275,9 +344,18 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View();
         }
 
+        /* [ApssAuthorized(AccessLevel.Group
+            | AccessLevel.District
+            | AccessLevel.Village
+            | AccessLevel.Presedint
+            | AccessLevel.Farmer
+            | AccessLevel.Governorate
+            | AccessLevel.Directorate
+            | AccessLevel.Root, PermissionType.Read)]*/
+
         public async Task<IActionResult> UserAccounts(long id)
         {
-            var entityAccount3 = await (await _accountsService.GetUserAccounts(1, User.GetId())).AsAsyncEnumerable().ToListAsync();
+            var entityAccount3 = await (await _accountsService.GetUserAccounts(User.GetId(), id)).AsAsyncEnumerable().ToListAsync();
             var account = new List<AccountDto>();
             foreach (var accountDto in entityAccount3)
             {
@@ -294,6 +372,15 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(account);
         }
 
+        /* [ApssAuthorized(AccessLevel.Group
+            | AccessLevel.District
+            | AccessLevel.Village
+            | AccessLevel.Presedint
+            | AccessLevel.Farmer
+            | AccessLevel.Governorate
+            | AccessLevel.Directorate
+            | AccessLevel.Root, PermissionType.Update)]*/
+
         public async Task<IActionResult> EditPassword(long id)
         {
             var accountDto = new AccountDto();
@@ -304,6 +391,14 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        /* [ApssAuthorized(AccessLevel.Group
+             | AccessLevel.District
+             | AccessLevel.Village
+             | AccessLevel.Presedint
+             | AccessLevel.Farmer
+             | AccessLevel.Governorate
+             | AccessLevel.Directorate
+             | AccessLevel.Root, PermissionType.Update)]*/
         public async Task<IActionResult> EditPassword(AccountDto accountDto)
         {
             try
@@ -331,6 +426,13 @@ namespace APSS.Web.Mvc.Areas.Controllers
             }
             catch (Exception) { }
             return View(accountDto);
+        }
+
+        public async Task<IActionResult> test()
+        {
+            var accounts = await _uow.Accounts.Query().Include(u => u.User).AsAsyncEnumerable().ToListAsync();
+
+            return View(accounts);
         }
     }
 }

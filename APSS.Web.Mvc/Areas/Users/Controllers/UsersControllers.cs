@@ -75,10 +75,20 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(UserDto user)
         {
-            var accountis = 1;
-            var add = await _userService.CreateAsync(User.GetId(), user.Name);
-            return RedirectToAction(nameof(Index));
-
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var add = await _userService.CreateAsync(User.GetId(), user.Name);
+                    TempData["Action"] = "Add Erea";
+                    TempData["success"] = $"{user.Name} is addedd successfully";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception)
+            {
+                return Problem("Some Thing error");
+            }
             return View(user);
         }
 
@@ -187,34 +197,28 @@ namespace APSS.Web.Mvc.Areas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(UserDto userDto)
         {
             try
             {
-                if (!ModelState.IsValid)
+                var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
+                     {
+                         p.Name = userDto.Name;
+                         p.UserStatus = userDto.userStatus;
+                     });
+                if (edit == null)
                 {
-                    return View(userDto);
+                    TempData["Action"] = "Update Erea";
+                    TempData["success"] = "Update Failed!!!";
                 }
                 else
                 {
-                    var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
-                         {
-                             p.Name = userDto.Name;
-                             p.UserStatus = userDto.userStatus;
-                         });
-                    if (edit == null)
-                    {
-                        TempData["Action"] = "Update Erea";
-                        TempData["success"] = "Update Failed!!!";
-                    }
-                    else
-                    {
-                        TempData["Action"] = "Update Erea";
-                        TempData["success"] = "Erea Updated Successfully";
-                    }
-
-                    return RedirectToAction("Index");
+                    TempData["Action"] = "Update Erea";
+                    TempData["success"] = "Erea Updated Successfully";
                 }
+
+                return RedirectToAction("Index");
             }
             catch (Exception) { }
             return View(userDto);

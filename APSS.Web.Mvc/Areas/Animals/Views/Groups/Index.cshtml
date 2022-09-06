@@ -66,11 +66,11 @@
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
                         <th class=" fw-bold align-middle"> #</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Type)</th>
-                        <th style="width:20px;" class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Name)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Name)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Quantity)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Sex)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Confirm)</th>
-                        <th class="fw-bold align-middle"></th>
+                        <th style="width:20px" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,11 +102,11 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Groups" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
                                         <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Groups" asp-action="Delete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Groups" asp-action="Edit"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
                                         <li class="">
-                                            <a class="dropdown-item text-decoration-none" role="button" asp-route-Id="@item.Id" asp-controller="Product" asp-action="Add">
+                                            <a class="dropdown-item text-decoration-none" role="button" asp-route-Id="@item.Id" asp-controller="Products" asp-action="Add">
 
                                                 <div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
                                             </a>

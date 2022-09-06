@@ -1,4 +1,6 @@
-﻿using APSS.Web.Dtos;
+﻿using APSS.Domain.Services;
+using APSS.Web.Dtos;
+using APSS.Web.Mvc.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Controllers
@@ -6,28 +8,33 @@ namespace APSS.Web.Mvc.Areas.Controllers
     [Area(Areas.Animals)]
     public class AnimalUnitsController : Controller
     {
+        private readonly IAnimalService _aps;
+
         public IEnumerable<AnimalProductUnitDto> listUnit = new List<AnimalProductUnitDto>
-         {
-                new AnimalProductUnitDto{Id=1,Name="unit 1",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=2,Name="unit 2",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=3,Name="unit 3",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=4,Name="unit 4",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=5,Name="unit 5",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=6,Name="unit 6",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=7,Name="unit 7",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=8,Name="unit 8",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=8,Name="unit 9",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=8,Name="unit 10",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=8,Name="unit 11",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=8,Name="unit 12",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-                new AnimalProductUnitDto{Id=8,Name="unit 13",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Today},
-            };
-
-        public IActionResult Index()
         {
-            var unit = listUnit;
+        };
 
-            return View(unit);
+        public AnimalUnitsController(IAnimalService aps)
+        {
+            _aps = aps;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var unitDto = new List<AnimalProductUnitDto>();
+            var units = await (await _aps.GetAnimalProductUnitAsync(User.GetId())).Where(i => i.Id > 0).AsAsyncEnumerable().ToListAsync();
+            foreach (var unit in units)
+            {
+                unitDto.Add(new AnimalProductUnitDto
+                {
+                    Id = unit.Id,
+                    Name = unit.Name,
+                    CreatedAt = unit.CreatedAt,
+                    ModifiedAt = unit.ModifiedAt
+                });
+            }
+
+            return View(unitDto);
         }
 
         public async Task<IActionResult> AddUnit()
@@ -37,10 +44,13 @@ namespace APSS.Web.Mvc.Areas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUnit(AnimalProductUnitDto animalProductUnitDto)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                var add = await _aps.CreateAnimalProductUnitAsync(User.GetId(), animalProductUnitDto.Name);
+                if (add == null) return RedirectToAction(nameof(Index));
                 return RedirectToAction("Index");
             }
 

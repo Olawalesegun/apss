@@ -8,10 +8,10 @@
             <div class=" mb-3 col-sm  d-flex">
                 <div class="input-group">
                     <button type="button" class="btn btn-primary search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-                <input type="search" id="form1" class="form-control" />
-            </div>
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="search" id="form1" class="form-control" />
+                </div>
             </div>
         </div>
         <div class="col-sm-2 col-lg-1 mb-3 ">
@@ -32,7 +32,7 @@
             </select>
         </div>
         <div class="col-sm d-flex   d-inline mb-3   ">
-            <a class=" btn btn-primary mx-2" role="button" asp-controller="Units" asp-action="AddUnit">
+            <a class=" btn btn-primary mx-2" role="button" asp-controller="AnimalUnits" asp-action="AddUnit">
                 <i class="fa-solid fa-plus"></i>
                 وحدة
             </a>
@@ -48,9 +48,9 @@
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
                         <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
-                        <th  class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
-                        <th  class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
-                        <th  class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
                         <th style="width:20px" class=" text-capitalize align-middle"></th>
                     </tr>
                 </thead>

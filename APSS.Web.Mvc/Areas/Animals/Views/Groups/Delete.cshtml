@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.AnimalGroupDto
+﻿@model APSS.Web.Dtos.AnimalGroupListDto
 @await Html.PartialAsync("_dataNavBar")
 <div class="card mt-2">
     <div class="card-body">
@@ -27,10 +27,10 @@
                 </tr>
             </tbody>
         </table>
-       @ViewData["action"]
+        @ViewData["action"]
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model.Id" asp-controller="Groups" asp-action="ConfirmDeleteAnimalGroup">Confirm</a>
+            <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="DeleteConfirm">Confirm</a>
             <a onclick="history.back()" class="btn btn-link my-4  mx-3" style="background-color:#DCEEFB">Cancel</a>
         </div>
 

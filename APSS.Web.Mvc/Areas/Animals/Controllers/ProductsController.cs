@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using APSS.Web.Dtos;
+using APSS.Domain.Services;
+using APSS.Web.Mvc.Auth;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
@@ -7,48 +9,88 @@ namespace APSS.Web.Mvc.Areas.Controllers
     public class ProductsController : Controller
     {
         private IEnumerable<AnimalProductDto> product;
+        private readonly IAnimalService _aps;
 
-        public ProductsController()
+        public ProductsController(IAnimalService aps)
         {
+            _aps = aps;
             product = new List<AnimalProductDto>
             {
-                new AnimalProductDto{Id=1, Name ="product 1",Quantity=10,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-                new AnimalProductDto{Id=2, Name ="one 1",Quantity=13,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-                new AnimalProductDto{Id=3, Name ="two 1",Quantity=18,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-                new AnimalProductDto{Id=4, Name ="one 1",Quantity=16,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-                new AnimalProductDto{Id=5, Name ="product 2",Quantity=33,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-                new AnimalProductDto{Id=6, Name ="product 3",Quantity=155,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-                new AnimalProductDto{Id=7, Name ="product 5",Quantity=177,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-                new AnimalProductDto{Id=8, Name ="product 0",Quantity=100,CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
             };
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var animalProduct = product;
-            return View(animalProduct);
+            var products = await (await _aps.GetAllAnimalProductsAsync(3, 3))
+                .AsAsyncEnumerable()
+                .ToListAsync();
+            var productDto = new List<AnimalProductDto>();
+            foreach (var product in products)
+            {
+                productDto.Add(new AnimalProductDto
+                {
+                    Name = product.Name,
+                    Quantity = product.Quantity,
+                    Id = product.Id,
+                    PeriodTaken = product.PeriodTaken,
+                    CreatedAt = product.CreatedAt,
+                    ModifiedAt = product.ModifiedAt,
+                });
+            }
+
+            return View(productDto);
         }
 
         public async Task<IActionResult> Add(int id)
         {
-            List<AnimalProductUnitDto> animalProductUnit = new List<AnimalProductUnitDto>
+            if (id > 0)
             {
-                new AnimalProductUnitDto{Id=1,Name="كيلو"},
-                new AnimalProductUnitDto{Id=3,Name="طن"},
-                new AnimalProductUnitDto{Id=5,Name="جرام"},
-                new AnimalProductUnitDto{Id=6,Name="1كيلو"},
-            };
-            ViewBag.units = animalProductUnit;
-            var animalProductDto = new AnimalProductDto
-            {
-                ProducerId = id,
-            };
-
-            return View(animalProductDto);
+                var units = await (await _aps.GetAnimalProductUnitAsync(User.GetId()))
+                    .AsAsyncEnumerable()
+                    .ToListAsync();
+                var unitlist = new List<AnimalProductUnitDto>();
+                foreach (var item in units)
+                {
+                    unitlist.Add(new AnimalProductUnitDto
+                    {
+                        Id = id,
+                        Name = item.Name,
+                    });
+                }
+                var animalProductDto = new AnimalProductDto
+                {
+                    ProducerId = id,
+                    Unit = unitlist,
+                };
+                return View(animalProductDto);
+            }
+            else return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string searchString, string searchBy)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(AnimalProductDto product)
+        {
+            try
+            {
+                var add = await _aps.AddAnimalProductAsync(3,
+                    product.ProducerId,
+                    product.UnitId,
+                    product.Name,
+                    product.Quantity,
+                    product.PeriodTaken);
+                if (add == null) return View(product);
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception) { }
+
+            return View(product);
+        }
+
+        /*public async Task<IActionResult> Index(string searchString, string searchBy)
         {
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -78,38 +120,139 @@ namespace APSS.Web.Mvc.Areas.Controllers
             var result = new List<AnimalProductDto>();
             return View(result);
         }
+*/
 
-        public async Task<IActionResult> Details(int Id)
+        public async Task<IActionResult> Details(int id)
         {
-            AnimalProductDto animalProductDto = new AnimalProductDto();
+            try
+            {
+                if (id > 0)
+                {
+                    var product = await (await _aps.GetAnimalProductAsync(3, id))
+                        .Include(u => u.Unit)
+                        .AsAsyncEnumerable().ToListAsync();
+                    var single = product.FirstOrDefault();
+                    if (product == null) return RedirectToAction(nameof(Index));
+                    var productDto = new AnimalProductDetailsDto
+                    {
+                        Id = single!.Id,
+                        Name = single.Name,
+                        Quantity = single.Quantity,
+                        PeriodTaken = single.PeriodTaken,
+                        CreatedAt = single.CreatedAt,
+                        ModifiedAt = single.ModifiedAt,
+                        UnitName = single.Unit.Name,
+                    };
+                    return View(productDto);
+                }
+            }
+            catch (Exception) { }
 
-            return View(animalProductDto);
+            return View();
         }
 
         public async Task<IActionResult> Edit(int id)
         {
+            try
+            {
+                if (id > 0)
+                {
+                    var units = await (await _aps.GetAnimalProductUnitAsync(User.GetId()))
+                        .AsAsyncEnumerable()
+                        .ToListAsync();
+                    var unitDto = new List<AnimalProductUnitDto>();
+                    foreach (var unit in units)
+                    {
+                        unitDto.Add(new AnimalProductUnitDto
+                        {
+                            Name = unit.Name,
+                            Id = id,
+                        });
+                    }
+                    var edit = await (await _aps.GetAnimalProductAsync(3, id))
+                        .AsAsyncEnumerable()
+                        .ToListAsync();
+                    var single = edit.FirstOrDefault();
+                    var productDto = new AnimalProductDto
+                    {
+                        Id = single!.Id,
+                        Name = single.Name,
+                        Quantity = single.Quantity,
+                        UnitId = (int)single.Unit.Id,
+                        PeriodTaken = single.PeriodTaken,
+                        Unit = unitDto,
+                    };
+                    return View(productDto);
+                }
+            }
+            catch (Exception) { }
             AnimalProductDto animalProductDto = new AnimalProductDto();
             return View(animalProductDto);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AnimalProductDto productObj)
         {
-            return RedirectToAction("Index");
+            try
+            {
+                var unit = await (await _aps.GetAnimalProductUnitAsync(User.GetId()))
+                    .Where(i => i.Id == productObj.UnitId)
+                    .AsAsyncEnumerable()
+                    .ToListAsync();
+                var singleUnit = unit.FirstOrDefault();
+                var edit = await _aps.UpdateAnimalProductAsync(3, productObj.Id, p =>
+                  {
+                      p.Name = productObj.Name;
+                      p.Quantity = productObj.Quantity;
+                      p.PeriodTaken = productObj.PeriodTaken;
+                      p.Unit = singleUnit!;
+                  });
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception) { }
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            AnimalProductDto animalProductDto = new AnimalProductDto();
+            try
+            {
+                if (id > 0)
+                {
+                    var delete = await (await _aps.GetAnimalProductAsync(3, id)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
+                    var single = delete.FirstOrDefault();
+                    if (single == null) return RedirectToAction(nameof(Index));
+                    var productDto = new AnimalProductDetailsDto
+                    {
+                        Id = single.Id,
+                        Name = single.Name,
+                        Quantity = single.Quantity,
+                        PeriodTaken = single.PeriodTaken,
+                        UnitName = single.Unit.Name,
+                        CreatedAt = single.CreatedAt,
+                        ModifiedAt = single.ModifiedAt,
+                    };
+                    return View(productDto);
+                }
+            }
+            catch (Exception) { return BadRequest(); }
+            var animalProductDto = new AnimalProductDetailsDto();
             return View(animalProductDto);
         }
 
-        [HttpGet]
         public async Task<IActionResult> DeleteConfirm(int id)
         {
-            AnimalProductDto animalProductDto = new AnimalProductDto();
-
-            return RedirectToAction("Index");
+            try
+            {
+                if (id > 0)
+                {
+                    await _aps.RemoveAnimalProductAsync(3, id);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception) { return BadRequest(); }
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> AddProductExpense(int id)
