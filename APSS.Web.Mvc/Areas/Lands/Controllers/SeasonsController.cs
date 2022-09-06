@@ -56,23 +56,23 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: SeasonController/Update Season
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
         public async Task<ActionResult> Update(long Id)
         {
             if (Id <= 0)
             { }
 
             return View(_mapper.Map<SeasonDto>(
-                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
+                await (await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
 
         // POST: SeasonController/Update Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
         public async Task<ActionResult> Update(SeasonDto season)
         {
-            if (!ModelState.IsValid || season == null)
+            if (!ModelState.IsValid)
             { }
             await _landSvc.UpdateSeasonAsync(User.GetAccountId(),
                 season!.Id,
@@ -87,17 +87,17 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: SeasonController/Delete Season
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
         public async Task<ActionResult> Delete(long Id)
         {
             return View(_mapper.Map<SeasonDto>(
-                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
+                await (await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
 
         // POST: SeasonController/Delete Season
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
         public async Task<ActionResult> DeletePost(long Id)
         {
             if (Id <= 0)
@@ -108,11 +108,11 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: SeasonController/Get Season
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
         public async Task<ActionResult> GetSeason(long Id)
         {
             return View(_mapper.Map<SeasonDto>(
-                await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)));
+                await (await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
     }
 }
