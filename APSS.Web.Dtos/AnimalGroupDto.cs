@@ -25,5 +25,6 @@ namespace APSS.Web.Dtos
 
         [Display(Name = "Name")]
         public string? Name { get; set; }
+        public bool? IsConfirmed { get; set; }
     }
 }

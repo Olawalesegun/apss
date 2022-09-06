@@ -14,7 +14,7 @@ namespace APSS.Web.Dtos
         [Display(Name = "Type Expense ")]
         public string Type { get; set; } = null!;
 
-        [Required(ErrorMessage = "Ptice is Require")]
+        [Required(ErrorMessage = "Price is Require")]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
 

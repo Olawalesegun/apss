@@ -14,14 +14,15 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the name of the peron who holds this account
         /// </summary>
-        [Required(ErrorMessage = "Employe Name is Required")]
+        [Required(ErrorMessage = "Employee Name Field is Required")]
         [Display(Name = "Name")]
         public string HolderName { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the password hash of the user
         /// </summary>
-        [Required(ErrorMessage = "Passwor is Required")]
+        [Required(ErrorMessage = "Password  Field is Required")]
+        [MinLength(6, ErrorMessage = "The Min length Password Is 8 Digit")]
         [Display(Name = "Password")]
         public string PasswordHash { get; set; } = null!;
 
