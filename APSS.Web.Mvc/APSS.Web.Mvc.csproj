@@ -45,4 +45,9 @@
     <ProjectReference Include="..\APSS.Web.Dtos\APSS.Web.Dtos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Auth\Controllers\" />
+    <Folder Include="Areas\Setup\Controllers\" />
+  </ItemGroup>
+
 </Project>
