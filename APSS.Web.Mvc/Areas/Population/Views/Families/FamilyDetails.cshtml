@@ -24,8 +24,8 @@
                     <td> @Model.LivingLocation </td>
                 </tr>
                 <tr>
-                    <th class="align-middle">@Html.DisplayNameFor(m => m.User)</th>
-                    <td> @Model.User.Name </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.UserName)</th>
+                    <td> @Model.UserName </td>
                 </tr>
                 
                 <tr>
@@ -54,16 +54,3 @@
     </div>
 </div>
 
-@section scripts{
-<script>
-          $(document).ready(function() {
-            $(".sidebar ul li.active").removeClass('active');
-            $("#populationManagement").addClass('active');
-        });
-        document.getElementById("nav-system-name").innerHTML = "Populatoin Management";
-        document.getElementById("media-system-name").innerHTML = "Populatoin Management";
-
-        $("#family").AddClass('actives');
-        $("#individual").removeClass('actives');
-</script>
-    }
