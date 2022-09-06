@@ -1,6 +1,7 @@
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 
 using APSS.Application.App;
@@ -105,6 +106,12 @@ foreach (var area in Areas.Dashboard)
         areaName: area,
         pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}");
 }
+
+// Redirects
+var rewriteOpts = new RewriteOptions();
+rewriteOpts.AddRedirect("^$", Areas.Home);
+
+app.UseRewriter(rewriteOpts);
 
 #endregion Routes
 
