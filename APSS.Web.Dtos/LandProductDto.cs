@@ -7,6 +7,8 @@ namespace APSS.Web.Dtos;
 public class LandProductDto : ProductDto
 {
     [Display(Name = "Storing Method")]
+    [MinLength(2, ErrorMessage = "must be more than 2 digit")]
+    [MaxLength(8, ErrorMessage = "must be les than 9 digit")]
     public string StoringMethod { get; set; } = null!;
 
     [Display(Name = "Unit")]

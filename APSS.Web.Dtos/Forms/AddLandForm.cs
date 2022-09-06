@@ -25,6 +25,7 @@ public class AddLandForm
 
     [Required(ErrorMessage = "Address is required")]
     [Display(Name = "Address")]
+    [MinLength(5, ErrorMessage = "Address must be more than 4 charectars")]
     public string Address { get; set; } = null!;
 
     [Display(Name = "Is Usable")]
