@@ -4,6 +4,7 @@ using APSS.Domain.Repositories;
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Dtos.ValueTypes;
 
 namespace APSS.Web.Mvc.Controllers
 {
@@ -74,67 +75,25 @@ namespace APSS.Web.Mvc.Controllers
             return View(account);
         }
 
-        public async Task<IActionResult> AddAccount(long id)
+        public IActionResult AddAccount(long id)
         {
-            try
+            AccountDto accountDto = new AccountDto
             {
-                if (id > 0)
-                {
-                    var account = await _accountsService.GetAccountAsync(User.GetId(), id);
-                    if (account != null)
-                    {
-                        AccountDto result = new AccountDto();
-                        result.UserId = account.Id;
-                        return View(result);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index");
-                    }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "User");
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return RedirectToAction("Index", "User");
+                UserId = id,
+            };
+            return View(accountDto);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // [ApssAuthorized(AccessLevel.Root | AccessLevel.District | AccessLevel.Group | AccessLevel.Presedint | AccessLevel.Village | AccessLevel.Directorate, PermissionType.Create)]
         public async Task<IActionResult> AddAccount(AccountDto accountDto)
         {
-            var accountId = 1;
-            var userID = 1;
-            try
-            {
-                if (accountDto == null)
-                    return View(accountDto);
-                else
-                {
-                    var add = await _accountsService.CreateAsync(User.GetId(), User.GetId(), accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
-                    if (add != null)
-                    {
-                        TempData["Action"] = "Employee Management";
-                        TempData["success"] = "Add Employee is Successfully";
-                    }
-                    else
-                    {
-                        TempData["Action"] = "Employee Management";
-                        TempData["success"] = "Add Failed!!!";
-                    }
-                    return RedirectToAction("Index");
-                }
-            }
-            catch (Exception)
-            {
-            }
+            if (!ModelState.IsValid)
+                return View(accountDto);
 
-            return View(accountDto);
+            var account = await _accountsService.CreateAsync(User.GetId(), accountDto.Id,
+                    accountDto.HolderName, accountDto.PasswordHash, accountDto.permissionType);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> AdditionalAccountInfo(long id)
@@ -151,7 +110,7 @@ namespace APSS.Web.Mvc.Controllers
             {
                 Id = account.Id,
                 HolderName = account.HolderName,
-                SocialStatus = account.SocialStatus,
+                SocialStatus = (SocialStatusDto)account.SocialStatus,
                 IsActive = account.IsActive,
                 Job = account.Job,
                 NationalId = account.NationalId,
@@ -182,7 +141,7 @@ namespace APSS.Web.Mvc.Controllers
                 accountDto.Id = account.Id;
                 accountDto.IsActive = account.IsActive;
                 accountDto.PhoneNumber = account.PhoneNumber;
-                accountDto.SocialStatus = account.SocialStatus;
+                accountDto.SocialStatus = (SocialStatusDto)account.SocialStatus;
                 accountDto.UserId = 1;
                 accountDto.permissionType = account.Permissions;
                 accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
@@ -224,7 +183,7 @@ namespace APSS.Web.Mvc.Controllers
                     accountDto.Id = account.Id;
                     accountDto.IsActive = account.IsActive;
                     accountDto.PhoneNumber = account.PhoneNumber;
-                    accountDto.SocialStatus = account.SocialStatus;
+                    accountDto.SocialStatus = (SocialStatusDto)account.SocialStatus;
                     accountDto.Job = account.Job;
                     accountDto.permissionType = account.Permissions;
                     accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
@@ -251,10 +210,9 @@ namespace APSS.Web.Mvc.Controllers
                         p.Job = account.Job;
                         p.NationalId = account.NationalId;
                         p.PhoneNumber = account.PhoneNumber;
-                        p.SocialStatus = account.SocialStatus;
+                        p.SocialStatus = (SocialStatus)account.SocialStatus;
                         p.Permissions = account.PermissionTypeDto.Permissions;
                         p.IsActive = account.IsActive;
-                        p.SocialStatus = account.SocialStatus;
                     });
                 if (resultEdit != null)
                 {

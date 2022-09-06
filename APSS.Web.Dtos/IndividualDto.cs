@@ -33,7 +33,9 @@ public class IndividualDto : BaseAuditbleDto
     public DateTime? DateOfBirth { get; set; }
 
     [Display(Name = "Family")]
-    public FamilyDto Family { get; set; } = null!;
+    public String Family { get; set; } = null!;
 
-    public UserDto? User { get; set; }
+    public string? User { get; set; }
+    public bool Isparent { get; set; } = false;
+    public bool Isprovider { get; set; } = true;
 }

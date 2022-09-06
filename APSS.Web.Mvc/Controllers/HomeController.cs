@@ -7,7 +7,6 @@ namespace APSS.Web.Mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AnimalGroupsController _contextAccessor;
 
         public HomeController(ILogger<HomeController> logger)
         {

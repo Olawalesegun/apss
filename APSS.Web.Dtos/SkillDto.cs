@@ -17,5 +17,5 @@ public class SkillDto : BaseAuditbleDto
 
     [Display(Name = "Person")]
     [Required(ErrorMessage = "Field Persone is required")]
-    public IndividualDto Individual { get; set; } = null!;
+    public string IndividualName { get; set; } = null!;
 }

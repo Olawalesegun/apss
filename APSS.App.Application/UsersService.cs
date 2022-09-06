@@ -121,5 +121,14 @@ public sealed class UsersService : IUsersService
         }
     }
 
+    public async Task<IQueryBuilder<User>> GetUserAsync(long accountId, long userId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        return _uow.Users.Query().Where(u => u.Id == userId);
+    }
+
     #endregion Public Methods
 }

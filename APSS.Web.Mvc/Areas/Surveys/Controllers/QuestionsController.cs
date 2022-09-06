@@ -2,6 +2,7 @@
 
 namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 
+[Area(Areas.Surveys)]
 public class QuestionsController : Controller
 {
     public IActionResult AddQuestion(long id)

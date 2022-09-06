@@ -1,6 +1,10 @@
 ﻿using APSS.Domain.Entities;
+using APSS.Domain.Services;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.Forms;
 using APSS.Web.Dtos.ValueTypes;
+
+using APSS.Web.Mvc.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
@@ -8,102 +12,109 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 [Area(Areas.Population)]
 public class VoluntariesController : Controller
 {
-    private readonly UserDto _userDto;
-    private readonly List<FamilyDto> families;
-    private readonly List<IndividualDto> individuals;
-    private readonly List<VoluntaryDto> voluntaries;
+    private readonly IPopulationService _populationSvc;
 
-    public VoluntariesController()
+    public VoluntariesController(IPopulationService populationService)
     {
-        _userDto = new UserDto
-        {
-            Id = 1,
-            Name = "aden",
-            AccessLevel = AccessLevel.Root,
-            userStatus = UserStatus.Active,
-        };
-
-        families = new List<FamilyDto>
-            {
-              new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
-              new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
-            };
-
-        individuals = new List<IndividualDto>
-            {
-                new IndividualDto{Id=53, Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=SexDto.Male,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
-                    PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
-                new IndividualDto{Id=43,  Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=SexDto.Female,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
-                    PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
-            };
-
-        voluntaries = new List<VoluntaryDto>
-        {
-            new VoluntaryDto{Id=543,Individual=individuals.First(),Name="skill1",
-                Field="anyfiald",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-            new VoluntaryDto{Id=85,Individual=individuals.Last(),Name="skill2",
-                Field="anyfiald",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-        };
+        _populationSvc = populationService;
     }
 
     // GET: VoluntaryController/GetVoluntaries/5
-    public ActionResult Index(int id)
+    public async Task<ActionResult> Index(long id)
     {
-        var voluntary = voluntaries.Where(v => v.Individual.Id == id);
-        return View("GetVoluntaries", voluntary);
+        var Voluntaries = await _populationSvc.GetVoluntaryOfindividualAsync(User.GetId(), id);
+        var VoluntariesDto = new List<VoluntaryDto>();
+
+        foreach (var Voluntary in await Voluntaries.AsAsyncEnumerable().ToListAsync())
+        {
+            VoluntariesDto.Add(new VoluntaryDto
+            {
+                Id = Voluntary.Id,
+                Name = Voluntary.Name,
+                Field = Voluntary.Field
+            });
+        }
+        return View("GetVoluntaries", VoluntariesDto.ToList());
     }
 
     // GET: VoluntaryController/AddVoluntary/5
-    public ActionResult AddVoluntary(int id)
+    public ActionResult AddVoluntary(long id)
     {
-        var voluntary = new VoluntaryDto();
-        var individual = individuals.Find(i => i.Id == id);
-        voluntary.Individual = individual!;
-        return View(voluntary);
+        var Voluntary = new VoluntaryAddForm
+        {
+            IndividualId = id
+        };
+
+        return View(Voluntary);
     }
 
-    // POST:VoluntaryController/AddVoluntary
+    // POST: VoluntaryController/AddVoluntary
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult AddVoluntary(VoluntaryDto voluntary)
+    public async Task<ActionResult> AddVoluntary([FromForm] VoluntaryAddForm Voluntary)
     {
-        return View(voluntary);
+        if (!ModelState.IsValid)
+            return View(Voluntary);
+
+        await _populationSvc
+            .AddVoluntaryAsync(User.GetId(), Voluntary.IndividualId, Voluntary.Name, Voluntary.Field);
+
+        return RedirectToAction(nameof(Index), new { id = Voluntary.IndividualId });
     }
 
     //GET:VoluntaryController/UpdateVoluntary/5
-    public ActionResult UpdateVoluntary(int id)
+    public async Task<ActionResult> UpdateVoluntary(long id)
     {
-        var voluntary = voluntaries.Find(v => v.Id == id);
-        return View("EditVoluntary", voluntary);
+        var Voluntary = await _populationSvc.GetVoluntaryAsync(User.GetId(), id);
+        var Voluntaryform = new VoluntaryEditForm
+        {
+            Id = Voluntary.Id,
+            IndividualId = Voluntary.OfferedBy.Id,
+            Name = Voluntary.Name,
+            Field = Voluntary.Field
+        };
+        return View("EditVoluntary", Voluntaryform);
     }
 
     // POST: VoluntaryController/UpdateVoluntary/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult UpdateVoluntary(int id, VoluntaryDto newvoluntary)
+    public async Task<ActionResult> UpdateVoluntary([FromForm] VoluntaryEditForm Voluntary)
     {
-        return View("EditVoluntary", newvoluntary);
+        if (!ModelState.IsValid)
+            return View("EditVoluntary", Voluntary);
+
+        await _populationSvc
+            .UpdateVoluntaryAsync(User.GetId(), Voluntary.Id,
+            v =>
+            {
+                v.Name = Voluntary.Name;
+                v.Field = Voluntary.Field;
+            });
+        return RedirectToAction(nameof(Index),new { id = Voluntary.IndividualId });
     }
 
-    public IActionResult ConfirmDeleteVoluntary(int id)
+    public async Task<IActionResult> ConfirmDeleteVoluntary(long id)
     {
-        var voluntary = voluntaries.Find(v => v.Id == id);
-        return View(voluntary);
-    }
+        var Voluntary = await _populationSvc.GetVoluntaryAsync(User.GetId(), id);
+        var Voluntarydto = new VoluntaryDto
+        {
+            Id = Voluntary.Id,
+            Name = Voluntary.Name,
+            Field = Voluntary.Field,
+            IndividualName = Voluntary.OfferedBy.Name
+        };
 
-    // GET: VoluntaryController/DeleteVoluntary/5
-    public ActionResult DeleteVoluntary(int id)
-    {
-        return RedirectToAction(nameof(Index), voluntaries);
+        return View(Voluntarydto);
     }
 
     // POST: VoluntaryController/DeleteVoluntary/5
-    [HttpPost]
+    [HttpPost, ActionName("DeleteVoluntary")]
     [ValidateAntiForgeryToken]
-    public ActionResult DeleteVoluntary(int id, VoluntaryDto voluntaryDto)
+    public async Task<ActionResult> DeleteVoluntary(long id)
     {
-        return RedirectToAction(nameof(Index), voluntaries);
+       var v=await _populationSvc.GetVoluntaryAsync(User.GetId(), id);
+       await _populationSvc.RemoveVoluntaryAsync(User.GetId(), id);
+        return RedirectToAction(nameof(Index), new {id=v.OfferedBy.Id});
     }
 }

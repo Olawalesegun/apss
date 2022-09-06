@@ -37,7 +37,7 @@
                 <option value="1">@Html.DisplayNameFor(f=>f.Id)</option>
                 <option value="2">@Html.DisplayNameFor(f=>f.Name)</option>
                 <option value="3">@Html.DisplayNameFor(f=>f.LivingLocation)</option>
-                <option value="4">@Html.DisplayNameFor(f=>f.User)</option>
+                <option value="4">@Html.DisplayNameFor(f=>f.UserName)</option>
             </select>
         </div>
         <div class="col-sm d-flex d-inline mb-3">
@@ -63,7 +63,7 @@
                         <th   class=" fw-bold align-middle">@Html.DisplayNameFor(f=>f.Id)</th>
                         <th   class=" fw-bold align-middle">@Html.DisplayNameFor(f=>f.Name)</th>
                         <th   class=" fw-bold align-middle">@Html.DisplayNameFor(f=>f.LivingLocation)</th>
-                        <th   class=" fw-bold align-middle">@Html.DisplayNameFor(f=>f.User)</th>
+                        <th   class=" fw-bold align-middle">@Html.DisplayNameFor(f=>f.UserName)</th>
                         <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -76,7 +76,7 @@
                             <td>@item.Id</td>
                             <td>@item.Name</td>
                             <td>@item.LivingLocation</td>
-                            <td>@item.User.Name</td>
+                            <td>@item.UserName</td>
 
                             <td class="align-middle center">
 

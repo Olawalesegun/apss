@@ -76,67 +76,22 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(account);
         }
 
-        public async Task<IActionResult> AddAccount(long id)
+        public IActionResult AddAccount(long id)
         {
-            try
+            AccountDto accountDto = new AccountDto
             {
-                if (id > 0)
-                {
-                    var account = await _accountsService.GetAccountAsync(User.GetId(), id);
-                    if (account != null)
-                    {
-                        AccountDto result = new AccountDto();
-                        result.UserId = account.Id;
-                        return View(result);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index");
-                    }
-                }
-                else
-                {
-                    return RedirectToAction("Index", "User");
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return RedirectToAction("Index", "User");
+                UserId = id,
+            };
+            return View(accountDto);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // [ApssAuthorized(AccessLevel.Root | AccessLevel.District | AccessLevel.Group | AccessLevel.Presedint | AccessLevel.Village | AccessLevel.Directorate, PermissionType.Create)]
         public async Task<IActionResult> AddAccount(AccountDto accountDto)
         {
-            var accountId = 1;
-            var userID = 1;
-            try
-            {
-                if (accountDto == null)
-                    return View(accountDto);
-                else
-                {
-                    var add = await _accountsService.CreateAsync(User.GetId(), User.GetId(), accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
-                    if (add != null)
-                    {
-                        TempData["Action"] = "Employee Management";
-                        TempData["success"] = "Add Employee is Successfully";
-                    }
-                    else
-                    {
-                        TempData["Action"] = "Employee Management";
-                        TempData["success"] = "Add Failed!!!";
-                    }
-                    return RedirectToAction("Index");
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            return View(accountDto);
+            var account = await _accountsService.CreateAsync(User.GetId(), accountDto.UserId,
+                    accountDto.HolderName, accountDto.PasswordHash, PermissionType.Full);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> AdditionalAccountInfo(long id)
