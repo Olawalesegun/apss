@@ -97,14 +97,16 @@ app.MapAreaControllerRoute(
     name: Areas.Setup,
     areaName: Areas.Setup,
     pattern: "{controller}/{action=Index}");
+
+foreach (var area in Areas.Dashboard)
 {
     app.MapAreaControllerRoute(
         name: area,
         areaName: area,
-        pattern: "{area:exists}/{controller}/{action=Index}/{id?}");
+        pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}");
 }
 
-#endregion Areas
+#endregion Routes
 
 app.MapControllerRoute(
     name: "default",
