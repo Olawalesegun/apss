@@ -108,7 +108,4 @@ foreach (var area in Areas.Dashboard)
 
 #endregion Routes
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}");
 app.Run();
