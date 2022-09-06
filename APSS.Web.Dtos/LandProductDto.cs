@@ -58,8 +58,6 @@ public class LandProductDto : ProductDto
     [Display(Name = "Producer")]
     public LandDto Producer { get; set; } = null!;
 
-    public long ProducerId { get; set; }
-
     [Display(Name = "ProducedIn")]
     public SeasonDto ProducedIn { get; set; } = null!;
 

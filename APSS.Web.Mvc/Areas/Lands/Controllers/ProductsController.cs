@@ -12,7 +12,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILandService _landSvc;
-        private readonly List<LandProduct> productsList;
+        private List<LandProduct> productsList;
 
         public ProductsController(ILandService landService, IMapper mapper)
         {
@@ -21,35 +21,28 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             productsList = new List<LandProduct>();
         }
 
-        [ApssAuthorized(
-            AccessLevel.Presedint |
-            AccessLevel.Directorate |
-            AccessLevel.District |
-            AccessLevel.Village |
-            AccessLevel.Farmer |
-            AccessLevel.Governorate |
-            AccessLevel.Group |
-            AccessLevel.Root,
-            PermissionType.Read)]
+        //[ApssAuthorized(
+        //    AccessLevel.Presedint |
+        //    AccessLevel.Directorate |
+        //    AccessLevel.District |
+        //    AccessLevel.Village |
+        //    AccessLevel.Farmer |
+        //    AccessLevel.Governorate |
+        //    AccessLevel.Group |
+        //    AccessLevel.Root,
+        //    PermissionType.Read)]
         public async Task<IActionResult> Index()
         {
-            var productsList = await _landSvc.GetLandProductsAsync(
-                User.GetAccountId(), User.GetAccountId())
-                .ToAsyncEnumerable()
+            var result = await (await _landSvc.GetLandProductsAsync(
+                User.GetAccountId(), User.GetAccountId()))
+                .AsAsyncEnumerable()
                 .ToListAsync();
-            var products = new List<LandProductDto>();
 
-            foreach (var product in productsList)
-            {
-                var item = _mapper.Map<LandProductDto>(product);
-                products.Add(item);
-            }
-
-            return View(products);
+            return View(result.Select(_mapper.Map<LandProductDto>));
         }
 
         // GET: LandProduc tController/Add a new landProduct
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<ActionResult> Add(long Id)
         {
             //var land = await _landSvc.GetLandAsync(User.GetId(), Id);
@@ -85,10 +78,10 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: LandController/Add a new landProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<ActionResult> Add(LandProductDto landProduct)
         {
-            if (!ModelState.IsValid || landProduct == null)
+            if (!ModelState.IsValid)
             {
             }
             await _landSvc.AddLandProductAsync(
@@ -101,8 +94,8 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 landProduct.HarvestEnd,
                 landProduct.Quantity,
                 landProduct.IrrigationCount,
-                _mapper.Map<IrrigationWaterSource>(landProduct.IrrigationWaterSource),
-                _mapper.Map<IrrigationPowerSource>(landProduct.IrrigationPowerSource),
+                landProduct.IrrigationWaterSource,
+                landProduct.IrrigationPowerSource,
                 landProduct.IsGovernmentFunded,
                 landProduct.StoringMethod,
                 landProduct.Category,
