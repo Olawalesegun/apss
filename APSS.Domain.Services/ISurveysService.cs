@@ -128,7 +128,7 @@ public interface ISurveysService
     /// <param name="accountId">the id of the account who wants to access the survey</param>
     /// <param name="surveyId">The id of the survey to acess</param>
     /// <returns>A query builder to the relevant survey</returns>
-    Task<IQueryBuilder<Survey>> GetSurveyAsync(long accountId, long surveyId);
+    Task<Survey> GetSurveyAsync(long accountId, long surveyId);
 
     /// <summary>
     /// Asynchrnonously gets survey entries for a user
@@ -163,12 +163,13 @@ public interface ISurveysService
     Task<Survey> SetSurveyActiveStatusAsync(long accountId, long surveyId, bool activeStatus);
 
     /// <summary>
-    /// Asynchrnously updates a survey
+    /// Asynchrnously update the survey
     /// </summary>
-    /// <param name="accountId">The id of the account updating the survey</param>
-    /// <param name="survey">The updated version of the survey</param>
-    /// <returns>The updated survey object</returns>
-    Task<Survey> UpdateSurveyAsync(long accountId, Survey survey);
+    /// <param name="accountId">The id of the account update the survey</param>
+    /// <param name="surveyId"></param>
+    /// <param name="updater"></param>
+    /// <returns></returns>
+    Task<Survey> UpdateSurveyAsync(long accountId, long surveyId, Action<Survey> updater);
 
     #endregion Public Methods
 }
