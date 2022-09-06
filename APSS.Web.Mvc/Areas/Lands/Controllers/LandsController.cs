@@ -15,22 +15,28 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILandService _landSvc;
-        private List<LandDto> _landList;
 
         public LandsController(ILandService landService, IMapper mapper)
         {
             _mapper = mapper;
             _landSvc = landService;
-            _landList = new List<LandDto>();
         }
 
         public async Task<IActionResult> Index()
         {
-            var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetUserId()))
-                .AsAsyncEnumerable()
-                .ToListAsync();
+            try
+            {
+                var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetUserId()))
+                    .AsAsyncEnumerable()
+                    .ToListAsync();
 
-            return View(result.Select(_mapper.Map<LandDto>));
+                return View(result.Select(_mapper.Map<LandDto>));
+            }
+            catch (Exception ex)
+            {
+                TempData["success"] = ex.ToString();
+                return View();
+            }
         }
 
         // GET: LandController/Add a new land
@@ -131,13 +137,20 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // GET: LandController/Get lands
         public async Task<ActionResult> GetLands(long Id)
         {
-            var landList = await _landSvc.GetLandsAsync(User.GetAccountId(), Id).ToAsyncEnumerable().ToListAsync();
-            foreach (var land in landList)
+            try
             {
-                var item = _mapper.Map<LandDto>(land);
-                _landList.Add(item);
+                var landList = await (
+                await _landSvc.GetLandsAsync(User.GetAccountId(), Id))
+                .FirstAsync().
+                ToAsyncEnumerable().ToListAsync();
+
+                return View(landList.Select(_mapper.Map<LandDto>));
             }
-            return View(_landList);
+            catch (Exception ex)
+            {
+                TempData["success"] = ex.ToString();
+                return View(Id);
+            }
         }
     }
 }

@@ -41,9 +41,9 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
                 return View(result.Select(_mapper.Map<LandProductDto>));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View("ErrorPage");
+                return View("ErrorPage", ex.ToString());
             }
         }
 
@@ -51,13 +51,19 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<ActionResult> Add(long Id)
         {
-            //var land = await _landSvc.GetLandAsync(User.GetId(), Id);
-            var seasonsList = await _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
-            var unitsList = await _landSvc.GetLandProductUnitsAsync().AsAsyncEnumerable().ToListAsync();
-
+            var seasonsList = new List<Season>();
+            var unitsList = new List<LandProductUnit>();
+            try
+            {
+                seasonsList = await _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
+                unitsList = await _landSvc.GetLandProductUnitsAsync().AsAsyncEnumerable().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage", ex.ToString());
+            }
             var product = new LandProductDto
             {
-                //Producer = _mapper.Map<LandDto>(land),
                 Units = unitsList.Select(_mapper.Map<LandProductUnitDto>),
                 Seasons = seasonsList.Select(_mapper.Map<SeasonDto>),
                 landId = Id,
@@ -110,16 +116,32 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //    PermissionType.Read)]
         public async Task<ActionResult> Details(long Id)
         {
-            return View(_mapper.Map<LandProductDto>(
+            try
+            {
+                return View(_mapper.Map<LandProductDto>(
                 await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage", ex.ToString());
+            }
         }
 
         // GET: LandController/Update landProduct
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
         public async Task<ActionResult> Update(long Id)
         {
-            var seasonsList = await _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
-            var unitsList = await _landSvc.GetLandProductUnitsAsync().AsAsyncEnumerable().ToListAsync();
+            var seasonsList = new List<Season>();
+            var unitsList = new List<LandProductUnit>();
+            try
+            {
+                seasonsList = await _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
+                unitsList = await _landSvc.GetLandProductUnitsAsync().AsAsyncEnumerable().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage", ex.ToString());
+            }
             var products = _mapper.Map<LandProductDto>(
                 await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync());
             products.Seasons = seasonsList.Select(_mapper.Map<SeasonDto>);
@@ -137,7 +159,10 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             if (!ModelState.IsValid)
             {
             }
-            await _landSvc.UpdateLandProductAsync(User.GetAccountId(), landProduct.Id,
+
+            try
+            {
+                await _landSvc.UpdateLandProductAsync(User.GetAccountId(), landProduct.Id,
                 async f =>
                 {
                     f.StoringMethod = landProduct.StoringMethod;
@@ -158,27 +183,43 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                     f.Unit = await (await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), landProduct.UnitId)).FirstAsync();
                 });
 
-            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
+                return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage", ex.ToString());
+            }
         }
 
         // GET: LandController/Delete landProduct
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<ActionResult> Delete(long Id)
         {
-            return View(_mapper.Map<LandProductDto>(
+            try
+            {
+                return View(_mapper.Map<LandProductDto>(
                 await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage", ex.ToString());
+            }
         }
 
         // POST: LandController/Delete landProduct
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [HttpPost, ActionName("Delete")]
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<ActionResult> DeletePost(long Id)
         {
-            await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
-            return LocalRedirect(Routes.Dashboard.Lands.FullPath);
-        }
+            try 
+            { 
+                await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
+                return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage", ex.ToString());
+            }
+}
 
         // GET: LandController/Get landProduct
         //[ApssAuthorized(
@@ -193,8 +234,15 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //    PermissionType.Read)]
         public async Task<ActionResult> GetLandProduct(long Id)
         {
-            return View(_mapper.Map<LandProductDto>(
+            try
+            {
+                return View(_mapper.Map<LandProductDto>(
                 await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
+            }
+            catch (Exception ex)
+            {
+                return View("ErrorPage", ex.ToString());
+            }
         }
 
         // GET: LandController/Get landProducts
@@ -219,9 +267,9 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
                 return View(result.Select(_mapper.Map<LandProductDto>));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View("ErrorPage");
+                return View("ErrorPage", ex.ToString());
             }
         }
     }
