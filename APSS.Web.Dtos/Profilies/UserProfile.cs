@@ -5,11 +5,8 @@ namespace APSS.Web.Dtos.Profilies;
 
 public class UserProfile : Profile
 {
-    public class FamilyProfile : Profile
+    public UserProfile()
     {
-        public FamilyProfile()
-        {
-            CreateMap<User, UserDto>().ReverseMap();
-        }
+        CreateMap<User, UserDto>().ReverseMap();
     }
 }
