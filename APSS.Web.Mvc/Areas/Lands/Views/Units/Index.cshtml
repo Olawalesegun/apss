@@ -66,8 +66,8 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="LandProductUnit" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductUnit" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-area="Lands" asp-controller="Units" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-area="Lands" asp-controller="Units" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     </ul>
                                 </div>
                             </td>

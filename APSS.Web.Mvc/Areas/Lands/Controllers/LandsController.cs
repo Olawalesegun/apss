@@ -107,10 +107,6 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<IActionResult> Delete(long Id)
         {
-            if (Id <= 0)
-            {
-            }
-
             return View(_mapper.Map<LandDto>(await (
                 await _landSvc.GetLandAsync(User.GetAccountId(), Id)).FirstAsync()));
         }

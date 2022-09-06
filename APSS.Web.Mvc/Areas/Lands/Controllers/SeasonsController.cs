@@ -4,6 +4,7 @@ using APSS.Domain.Services;
 using APSS.Web.Mvc.Auth;
 using AutoMapper;
 using APSS.Web.Dtos;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -12,13 +13,11 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     {
         private readonly ILandService _landSvc;
         private readonly IMapper _mapper;
-        private List<SeasonDto> _seasonsList;
 
         public SeasonsController(ILandService landService, IMapper mapper)
         {
             _landSvc = landService;
             _mapper = mapper;
-            _seasonsList = new List<SeasonDto>();
         }
 
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
@@ -42,7 +41,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
-        public async Task<ActionResult> Add(SeasonDto season)
+        public async Task<IActionResult> Add(SeasonDto season)
         {
             if (!ModelState.IsValid)
             { }
@@ -52,16 +51,13 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 season.StartsAt,
                 season.EndsAt);
 
-            return RedirectToAction("Index");
+            return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
         }
 
         // GET: SeasonController/Update Season
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
-        public async Task<ActionResult> Update(long Id)
+        public async Task<IActionResult> Update(long Id)
         {
-            if (Id <= 0)
-            { }
-
             return View(_mapper.Map<SeasonDto>(
                 await (await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
@@ -70,7 +66,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
-        public async Task<ActionResult> Update(SeasonDto season)
+        public async Task<IActionResult> Update(SeasonDto season)
         {
             if (!ModelState.IsValid)
             { }
@@ -83,33 +79,29 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                     f.EndsAt = season.EndsAt;
                 });
 
-            return RedirectToAction("Index");
+            return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
         }
 
         // GET: SeasonController/Delete Season
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
-        public async Task<ActionResult> Delete(long Id)
+        public async Task<IActionResult> Delete(long Id)
         {
             return View(_mapper.Map<SeasonDto>(
                 await (await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
 
         // POST: SeasonController/Delete Season
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
-        public async Task<ActionResult> DeletePost(long Id)
+        public async Task<IActionResult> DeletePost(long Id)
         {
-            if (Id <= 0)
-            { }
             await _landSvc.RemoveSeasonAsync(User.GetAccountId(), Id);
 
-            return RedirectToAction("Index");
+            return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
         }
 
         // GET: SeasonController/Get Season
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
-        public async Task<ActionResult> GetSeason(long Id)
+        public async Task<IActionResult> GetSeason(long Id)
         {
             return View(_mapper.Map<SeasonDto>(
                 await (await _landSvc.GetSeasonAsync(User.GetAccountId(), Id)).FirstAsync()));
