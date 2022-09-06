@@ -130,12 +130,19 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
         public async Task<ActionResult> GetLand(long Id)
         {
-            return View(_mapper.Map<LandDto>(
+            try
+            {
+                return View(_mapper.Map<LandDto>(
                 await (await _landSvc.GetLandAsync(User.GetAccountId(), Id)).FirstAsync()));
+            }
+            catch (Exception ex)
+            {
+                return NoContent();
+            }
         }
 
         // GET: LandController/Get lands
-        public async Task<ActionResult> GetLands(long Id)
+        public async Task<IActionResult> GetLands(long Id)
         {
             try
             {
@@ -151,6 +158,54 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 TempData["success"] = ex.ToString();
                 return View(Id);
             }
+        }
+
+        //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
+        public async Task<IActionResult> DeclinedLands()
+        {
+            try
+            {
+                var landList = await (
+                    await _landSvc.DeclinedLandsAsync(User.GetAccountId()))
+                    .FirstAsync()
+                    .ToAsyncEnumerable()
+                    .ToListAsync();
+
+                return View("DeclinedLands", landList.Select(_mapper.Map<LandDto>));
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
+        public async Task<IActionResult> ConfirmedLands(long Id)
+        {
+            try
+            {
+                var landList = await (
+                    await _landSvc.ConfirmedLandsAsync(User.GetAccountId()))
+                    .FirstAsync()
+                    .ToAsyncEnumerable()
+                    .ToListAsync();
+
+                return View(landList.Select(_mapper.Map<LandDto>));
+            }
+            catch (Exception ex)
+            {
+                return NoContent();
+            }
+        }
+
+        [HttpGet]
+        //[ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
+        public async Task<IActionResult> ConfirmeLand(long id, bool value)
+        {
+            await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
+
+            return LocalRedirect(Routes.Dashboard.Users.FullPath);
         }
     }
 }
