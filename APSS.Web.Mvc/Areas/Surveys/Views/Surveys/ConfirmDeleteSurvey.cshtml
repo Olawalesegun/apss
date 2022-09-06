@@ -21,8 +21,8 @@
                     <td> @Model.ExpirationDate</td>
                 </tr>
                  <tr>
-                    <th> @Html.DisplayNameFor(s=>s.CreatedBy)</th>
-                    <td>  @Model.CreatedBy.Name</td>
+                    <th> @Html.DisplayNameFor(s=>s.UserName)</th>
+                    <td>  @Model.Name</td>
                 </tr>
                  <tr>
                     <th>@Html.DisplayNameFor(s=>s.CreatedAt)</th>
@@ -36,9 +36,11 @@
             </tbody>
         </table>
         <br />
-        <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  "  asp-controller="Survey" asp-action="DeleteSurvey">Confirm</a>
-            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
-        </div>
+        <div class="mb-4  mt-4">
+            <form method="post" asp-area="Surveys" asp-controller="Surveys" asp-action="DeleteSurvey" asp-route-Id="@Model.Id">
+                <button type="submit" class="btn btn-danger">Confirm</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
+                </form>
+            </div>
     </div>
 </div>
