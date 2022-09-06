@@ -19,7 +19,7 @@
                 </tr>
                 <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m => m.Family)</th>
-                    <td> @Model.Family.Name</td>
+                    <td> @Model.Family</td>
                 </tr>
                  <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m => m.Job)</th>
@@ -43,7 +43,7 @@
                 </tr>
                  <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m => m.User)</th>
-                    <td> @Model.User!.Name</td>
+                    <td> @Model.User</td>
                 </tr>
                 <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m => m.DateOfBirth)</th>
@@ -60,9 +60,11 @@
             </tbody>
         </table>
         <br />
-        <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded" asp-area="Population" asp-route-Id="@Model.Id" asp-controller="Individuals" asp-action="DeleteIndividual">Confirm</a>
-            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
-        </div>
+        <div class="mb-4  mt-4">
+            <form asp-area="Population" asp-route-Id="@Model.Id" asp-controller="Individuals" asp-action="DeleteIndividual">
+            <button type="submit" class="btn btn-danger btn-rounded" >Confirm</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
+                </form>
+            </div>
     </div>
 </div>

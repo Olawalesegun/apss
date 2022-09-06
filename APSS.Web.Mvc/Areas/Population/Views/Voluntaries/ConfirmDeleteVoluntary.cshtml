@@ -18,8 +18,8 @@
                     <td> @Model.Field</td>
                 </tr>
                 <tr>
-                    <th class="align-middle">@Html.DisplayNameFor(m => m.Individual)</th>
-                    <td> @Model.Individual.Name</td>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.IndividualName)</th>
+                    <td> @Model.IndividualName</td>
                 </tr>
                  <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m => m.CreatedAt)</th>
@@ -32,9 +32,11 @@
             </tbody>
         </table>
         <br />
-        <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded" asp-route-id="@Model.Id" asp-area="Population" asp-controller="Voluntaries" asp-action="DeleteVoluntary">Confirm</a>
-            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
-        </div>
+       <div class="mb-4  mt-4">
+           <form method="post" asp-route-Id="@Model.Id" asp-area="Population" asp-controller="Voluntaries" asp-action="DeleteVoluntary">
+               <button type="submit" class="btn btn-danger btn-rounded" >Confirm</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
+                </form>
+            </div>
     </div>
 </div>

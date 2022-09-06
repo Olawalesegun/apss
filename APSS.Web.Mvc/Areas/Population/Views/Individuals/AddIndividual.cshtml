@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-center">
             <h4 > Add Individual</h4>
         </div>
-       <form method="post" asp-area="Population" asp-controller="Individuals" asp-action="AddIndividual" class="needs-validation" novalidate>
+       <form method="post" asp-area="Population" asp-controller="Individuals" asp-action="AddIndividual" asp-route-Id="@Model.FamilyId" class="needs-validation" novalidate>
             <!-- ID input -->
             <input type="number" asp-for="FamilyId" hidden/>
             <div class="input-group has-validation mb-3">
@@ -60,10 +60,9 @@
             </div>
             <span asp-validation-for="Sex" class="text-danger"></span>
             
-            <div >
-               
-                <button class="btn btn-primary mt-4 mx-1" type="submit" asp-route-Id="@Model.FamilyId"> <i class="fa-solid fa-plus mx-2"></i><span>Add</span>  </button>
-<a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
+          <div class="mb-4  mt-4">
+                <button type="submit" class="btn btn-primary  ">Add</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
             </div>
       </form>
     </div>
