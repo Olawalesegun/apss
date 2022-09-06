@@ -2,7 +2,7 @@
 
 namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
-public sealed class LandsRoute : Route
+public sealed class LandsRoute : CrudRoute
 {
     public LandsRoute(IRoute parent) : base(parent, "Lands", "Lands", icon: Icon.Mountain)
     {
