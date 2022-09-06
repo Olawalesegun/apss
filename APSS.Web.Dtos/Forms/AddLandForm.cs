@@ -5,9 +5,11 @@ namespace APSS.Web.Dtos.Forms;
 public class AddLandForm
 {
     [Required(ErrorMessage = "Name is required")]
+    [MinLength(4, ErrorMessage = "Name must be more than 4 charectars")]
     public string Name { get; set; } = null!;
 
     [Display(Name = "Area")]
+    [MinLength(1, ErrorMessage = "Area must have at least 1 digit")]
     [Required(ErrorMessage = "Area is required")]
     public long Area { get; set; }
 
