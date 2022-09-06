@@ -8,7 +8,6 @@ public class ExpensesProfile : Profile
     public ExpensesProfile()
     {
         CreateMap<ProductExpense, ProductExpenseDto>()
-            .ForMember(d => d.SpentOn, f => f.MapFrom(s => CreateMap<LandProductDto, LandProduct>()))
             .ReverseMap();
     }
 }
