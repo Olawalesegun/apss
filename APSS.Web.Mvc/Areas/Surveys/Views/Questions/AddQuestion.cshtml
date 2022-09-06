@@ -6,8 +6,7 @@
             <div class="d-flex  justify-content-center pb-4 pt-4">
                 <div class=""> <h3 class="text-decoration-underline "> Add Question </h3></div>
             </div>
-            <form class="" method="post" asp-action="AddQuestion">
-
+            <form class="" method="post" asp-route-Id="@Model.Survey.Id" asp-area="Surveys" asp-controller="Questions"  asp-action="AddQuestion">
 
 
                 <div class="row d-flex justify-content-between mb-3">
