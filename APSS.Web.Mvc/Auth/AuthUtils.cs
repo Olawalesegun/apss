@@ -17,7 +17,8 @@ public static class AuthUtils
 
         var claims = new List<Claim>()
         {
-            new Claim(CustomClaims.Id, account.Id.ToString(), ClaimValueTypes.Integer64),
+            new Claim(CustomClaims.AccountId, account.Id.ToString(), ClaimValueTypes.Integer64),
+            new Claim(CustomClaims.UserId, account.User.Id.ToString(), ClaimValueTypes.Integer64),
             new Claim(ClaimTypes.NameIdentifier, account.User.Name),
             new Claim(ClaimTypes.Name, account.HolderName),
             new Claim(ClaimTypes.Role, account.User.AccessLevel.ToString()),

@@ -273,5 +273,19 @@ public interface ILandService
         long accountId,
         long landProductId);
 
+    /// <summary>
+    /// Asynchronously Gets all Unconfirmed lands for group access level account
+    /// </summary>
+    /// <param name="accountId">The id of the account who wants to show the Unconfirmed lands</param>
+    /// <returns>list of the unconfirmed lands under that user</returns>
+    Task<IQueryBuilder<Land>> UnConfirmedLands(long accountId);
+
+    /// <summary>
+    /// Asynchronously Gets all Unconfirmed land products for group access level account
+    /// </summary>
+    /// <param name="accountId">The id of the account who wants to show the Unconfirmed land products</param>
+    /// <returns>list of the unconfirmed land products under that user</returns>
+    Task<IQueryBuilder<LandProduct>> UnConfirmedLandProducts(long accountId);
+
     #endregion Public Methods
 }

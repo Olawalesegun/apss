@@ -1,7 +1,7 @@
-﻿@model APSS.Web.Dtos.LandDto
+﻿@model AddLandForm
 <div class="container-fluid">
     <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
-        <form class=" mt-3 align-items-center needs-validation" method="post" asp-action="Add" novalidate>
+        <form method="post" action="@Routes.Dashboard.Lands.Add.FullPath" asp-antiforgery="true" class="needs-validation" novalidate>
             <div asp-validation-summary="ModelOnly"></div>
             <div class="center d-flex justify-content-center mb-3 ">
                 <h3 class=" ">
@@ -65,36 +65,18 @@
                 </div>
             </div>
             <!-- IsUsable input -->
-            <div class="form-check-inline">
-
-                <h5 class="inline"><label asp-for="IsUsed"></label></h5>
-            </div>
             <div class="form-check form-check-inline">
 
-                <input class="form-check-input hiden" type="radio" value="true" checked />
-                <label class="form-check-label" asp-for="IsUsed">Yes</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" value="false" />
-                <label class="form-check-label" asp-for="IsUsed"> No </label>
+                <input class="form-check-input hiden" asp-for="IsUsed" type="checkbox" value="true" checked />
+                <label class="form-check-label" asp-for="IsUsed"></label>
             </div>
 
             <br />
             <!-- IsUsed input -->
-            <div class="form-check-inline">
-
-                <h5 class="inline"> <label asp-for="IsUsable"> </label> </h5>
-            </div>
             <div class="form-check form-check-inline">
 
-                <input class="form-check-input hiden" type="radio" asp-for="IsUsable" value="true" checked />
-                <label class="form-check-label" asp-for="IsUsable">Yes</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" asp-for="IsUsable" value="false" />
-                <label class="form-check-label" asp-for="IsUsable"> No </label>
+                <input class="form-check-input hiden" type="checkbox" asp-for="IsUsable" value="true" checked />
+                <label asp-for="IsUsable"> </label>
             </div>
 
             <!-- Submit button -->

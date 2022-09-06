@@ -81,5 +81,14 @@ public class Route : IRoute
         return new Route(this, displayName ?? baseName, baseName, children, icon);
     }
 
+    protected CrudRoute FromCrudController<T>(
+        string? displayName = null,
+        Icon icon = Icon.None)
+    {
+        var baseName = typeof(T).Name.Replace("Controller", string.Empty);
+
+        return new CrudRoute(this, displayName ?? baseName, baseName, icon: icon);
+    }
+
     #endregion Protected Methods
 }

@@ -27,7 +27,7 @@ namespace APSS.Web.Mvc.Controllers
         public async Task<IActionResult> Index()
         {
             List<UserDto> userDto = new List<UserDto>();
-            var user = await (await _userService.GetSubuserAsync((int)User.GetId())).AsAsyncEnumerable().ToListAsync();
+            var user = await (await _userService.GetSubuserAsync((int)User.GetAccountId())).AsAsyncEnumerable().ToListAsync();
             foreach (var userDtoItem in user)
             {
                 userDto.Add(new UserDto
@@ -89,7 +89,7 @@ namespace APSS.Web.Mvc.Controllers
 
         public async Task<IActionResult> UserDetials(int id)
         {
-            var user = await (await _userService.GetUserAsync(1, User.GetId())).AsAsyncEnumerable().ToListAsync();
+            var user = await (await _userService.GetUserAsync(1, User.GetAccountId())).AsAsyncEnumerable().ToListAsync();
             if (user == null) return NotFound();
             var users = user.FirstOrDefault();
             var userDto = new UserDto

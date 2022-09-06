@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using APSS.Domain.Services;
 using APSS.Web.Dtos.Forms;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
-namespace APSS.Web.Mvc.Controllers;
+namespace APSS.Web.Mvc.Areas.Setup.Controllers;
 
+[Area(Areas.Setup)]
 public class SetupController : Controller
 {
     private readonly ISetupService _setupSvc;
@@ -29,11 +31,11 @@ public class SetupController : Controller
         if (!ModelState.IsValid)
             return View(form);
 
-        var account = await _setupSvc.SetupAsync(form.HolderName, form.Password);
+        _ = await _setupSvc.SetupAsync(form.HolderName, form.Password);
 
         return RedirectToAuth();
     }
 
     private IActionResult RedirectToAuth()
-        => RedirectToAction(nameof(AuthController.SignIn), "Auth");
+        => LocalRedirect(Routes.Auth.SignIn.FullPath);
 }

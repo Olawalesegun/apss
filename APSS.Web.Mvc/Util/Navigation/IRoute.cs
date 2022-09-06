@@ -36,4 +36,22 @@ public interface IRoute
     /// Gets the default route of this route
     /// </summary>
     public IRoute DefaultRoute { get; }
+
+    /// <summary>
+    /// Gets the route heirarchy
+    /// </summary>
+    public IEnumerable<IRoute> Heirarchy
+    {
+        get
+        {
+            IRoute? route = this;
+
+            while (route is not null)
+            {
+                yield return route;
+
+                route = route.Parent;
+            }
+        }
+    }
 }

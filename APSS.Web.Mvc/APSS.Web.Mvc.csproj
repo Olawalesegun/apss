@@ -7,6 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Family\**" />
+    <Compile Remove="Views\LandProduct\**" />
+    <Compile Remove="Views\Skill\**" />
+    <Compile Remove="Views\Voluntary\**" />
+    <Content Remove="Views\Family\**" />
+    <Content Remove="Views\LandProduct\**" />
+    <Content Remove="Views\Skill\**" />
+    <Content Remove="Views\Voluntary\**" />
+    <EmbeddedResource Remove="Views\Family\**" />
+    <EmbeddedResource Remove="Views\LandProduct\**" />
+    <EmbeddedResource Remove="Views\Skill\**" />
+    <EmbeddedResource Remove="Views\Voluntary\**" />
+    <None Remove="Views\Family\**" />
+    <None Remove="Views\LandProduct\**" />
+    <None Remove="Views\Skill\**" />
+    <None Remove="Views\Voluntary\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
       <PrivateAssets>all</PrivateAssets>
@@ -27,11 +46,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Lands\" />
-    <Folder Include="Views\Family\" />
-    <Folder Include="Views\LandProduct\" />
-    <Folder Include="Views\Skill\" />
-    <Folder Include="Views\Voluntary\" />
+    <Folder Include="Areas\Auth\Controllers\" />
+    <Folder Include="Areas\Setup\Controllers\" />
   </ItemGroup>
 
 </Project>

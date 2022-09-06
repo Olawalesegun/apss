@@ -22,7 +22,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         public async Task<IActionResult> Index()
         {
             var unitDto = new List<AnimalProductUnitDto>();
-            var units = await (await _aps.GetAnimalProductUnitAsync(User.GetId())).Where(i => i.Id > 0).AsAsyncEnumerable().ToListAsync();
+            var units = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId())).Where(i => i.Id > 0).AsAsyncEnumerable().ToListAsync();
             foreach (var unit in units)
             {
                 unitDto.Add(new AnimalProductUnitDto
@@ -49,7 +49,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             if (ModelState.IsValid)
             {
-                var add = await _aps.CreateAnimalProductUnitAsync(User.GetId(), animalProductUnitDto.Name);
+                var add = await _aps.CreateAnimalProductUnitAsync(User.GetAccountId(), animalProductUnitDto.Name);
                 if (add == null) return RedirectToAction(nameof(Index));
                 return RedirectToAction("Index");
             }

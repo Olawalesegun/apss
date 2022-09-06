@@ -18,15 +18,11 @@ public sealed class UserDto : BaseAuditbleDto
     [Display(Name = "Access Level")]
     public AccessLevel AccessLevel { get; set; }
 
-    /// <summary>
-    /// Gets or sets the user status
-    /// </summary>
-
     [Display(Name = "Area Status")]
     public UserStatus userStatus { get; set; }
 
     /// <summary>
     /// Gets or sets the supervisor
     /// </summary>
-    public UserDto? SupervisedBy { get; set; }
+    public User? SupervisedBy { get; set; }
 }

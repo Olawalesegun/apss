@@ -32,14 +32,14 @@ namespace APSS.Web.Mvc.Areas.Controllers
         public async Task<IActionResult> Index()
         {
             var animalDto = new List<AnimalGroupListDto>();
-            var accountId = (long)User.GetId();
+            var accountId = (long)User.GetAccountId();
             var account = await _uow.Accounts.Query().
                 Include(u => u.User).
-                Where(i => (int)i.Id == User.GetId())
+                Where(i => (int)i.Id == User.GetAccountId())
                 .FirstAsync();
             // var Animals = await _uow.AnimalGroups.Query().Include(a => a.Products).AsAsyncEnumerable().ToListAsync();
             var Animals = await (await _service.GetAllAnimalGroupsAsync(
-                User.GetId(),
+                User.GetAccountId(),
                 account!.User.Id))
                 .AsAsyncEnumerable()
                 .ToListAsync();
@@ -64,7 +64,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             try
             {
-                var accountId = (long)User.GetId();
+                var accountId = (long)User.GetAccountId();
                 var account = await _uow.Accounts.Query().Include(u => u.User)
                     .Where(i => i.Id == accountId)
                     .FirstOrNullAsync();
@@ -149,7 +149,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                 else
                 {
                     var resultAdd = await _service.AddAnimalGroupAsync(
-                        User.GetId(),
+                        User.GetAccountId(),
                         animal.Type,
                         animal.Name!,
                         animal.Quantity,
@@ -171,7 +171,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    var animal = await (await _service.GetAnimalGroupAsync(User.GetId(), id))
+                    var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
                         .Include(a => a.Name).
                         Include(t => t.Type)
                         .AsAsyncEnumerable()
@@ -201,7 +201,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    var animal = await (await _service.GetAnimalGroupAsync(User.GetId(), id))
+                    var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
                         .AsAsyncEnumerable()
                         .ToListAsync();
                     var item = animal.FirstOrDefault();
@@ -229,7 +229,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    await _service.RemoveAnimalGroupAsync(User.GetId(), id);
+                    await _service.RemoveAnimalGroupAsync(User.GetAccountId(), id);
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -243,7 +243,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    var animal = await (await _service.GetAnimalGroupAsync(User.GetId(), id))
+                    var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
                         .AsAsyncEnumerable()
                         .ToListAsync();
                     var delete = animal.FirstOrDefault();
@@ -269,7 +269,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             try
             {
-                var resultEdit = await _service.UpdateAnimalGroupAsync(User.GetId(), animalGroupDto.Id, A =>
+                var resultEdit = await _service.UpdateAnimalGroupAsync(User.GetAccountId(), animalGroupDto.Id, A =>
              {
                  A.Type = animalGroupDto.Type;
                  A.Quantity = animalGroupDto.Quantity;

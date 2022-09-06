@@ -45,7 +45,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             if (id > 0)
             {
-                var units = await (await _aps.GetAnimalProductUnitAsync(User.GetId()))
+                var units = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
                     .AsAsyncEnumerable()
                     .ToListAsync();
                 var unitlist = new List<AnimalProductUnitDto>();
@@ -157,7 +157,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    var units = await (await _aps.GetAnimalProductUnitAsync(User.GetId()))
+                    var units = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
                         .AsAsyncEnumerable()
                         .ToListAsync();
                     var unitDto = new List<AnimalProductUnitDto>();
@@ -196,7 +196,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             try
             {
-                var unit = await (await _aps.GetAnimalProductUnitAsync(User.GetId()))
+                var unit = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
                     .Where(i => i.Id == productObj.UnitId)
                     .AsAsyncEnumerable()
                     .ToListAsync();

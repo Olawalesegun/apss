@@ -37,8 +37,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             try
             {
-                var userAccount = await _uow.Accounts.Query().Include(u => u.User).Where(i => i.Id == (long)User.GetId()).FirstAsync();
-                var accountsObject = await (await _accountsService.GetUserAccounts(User.GetId(), userAccount.User.Id)).AsAsyncEnumerable().ToListAsync();
+                var userAccount = await _uow.Accounts.Query().Include(u => u.User).Where(i => i.Id == (long)User.GetAccountId()).FirstAsync();
+                var accountsObject = await (await _accountsService.GetUserAccounts(User.GetAccountId(), userAccount.User.Id)).AsAsyncEnumerable().ToListAsync();
                 var account = new List<AccountDto>();
                 foreach (var accountDto in accountsObject)
                 {
@@ -102,13 +102,28 @@ namespace APSS.Web.Mvc.Areas.Controllers
                | AccessLevel.Directorate
                | AccessLevel.Root, PermissionType.Create)]*/
 
-        public IActionResult AddAccount(long id)
+        public async Task<IActionResult> AddAccount(long id)
         {
             try
             {
-                AccountDto result = new AccountDto();
-                result.UserId = id;
-                return View(result);
+                if (id > 0)
+                {
+                    var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
+                    if (account != null)
+                    {
+                        AccountDto result = new AccountDto();
+                        result.UserId = account.Id;
+                        return View(result);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Index", "User");
+                }
             }
             catch (Exception)
             {
@@ -134,7 +149,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                     return View(accountDto);
                 else
                 {
-                    var add = await _accountsService.CreateAsync(User.GetId(), accountDto.UserId, accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
+                    var add = await _accountsService.CreateAsync(User.GetAccountId(), accountDto.UserId, accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
                     if (add != null)
                     {
                         TempData["Action"] = "Employee Management";
@@ -166,7 +181,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> AccountDetails(long id)
         {
-            var account = await _accountsService.GetAccountAsync(User.GetId(), id);
+            var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
             AccountDto accountDto = new AccountDto
             {
                 Id = account.Id,
@@ -205,7 +220,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             if (id > 0)
             {
-                var account = await _accountsService.GetAccountAsync(User.GetId(), id);
+                var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
                 var accountDto = new AccountDto();
                 accountDto.HolderName = account!.HolderName;
                 accountDto.Id = account.Id;
@@ -241,7 +256,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    await _accountsService.RemoveAsync(User.GetId(), id);
+                    await _accountsService.RemoveAsync(User.GetAccountId(), id);
                     TempData["Action"] = "الموظفين";
                     TempData["success"] = "تم حذف الموظف بنجاح";
                     return RedirectToAction(nameof(Index));
@@ -266,7 +281,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    var account = await _accountsService.GetAccountAsync(User.GetId(), id);
+                    var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
                     var accountDto = new AccountDto();
                     accountDto.HolderName = account!.HolderName;
                     accountDto.Id = account.Id;
@@ -301,7 +316,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             try
             {
-                var resultEdit = await _accountsService.UpdateAsync(User.GetId(), account.Id, p =>
+                var resultEdit = await _accountsService.UpdateAsync(User.GetAccountId(), account.Id, p =>
                     {
                         p.HolderName = account.HolderName;
                         p.Job = account.Job;
@@ -340,7 +355,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> UserAccounts(long id)
         {
-            var entityAccount3 = await (await _accountsService.GetUserAccounts(User.GetId(), id)).AsAsyncEnumerable().ToListAsync();
+            var entityAccount3 = await (await _accountsService.GetUserAccounts(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
             var account = new List<AccountDto>();
             foreach (var accountDto in entityAccount3)
             {

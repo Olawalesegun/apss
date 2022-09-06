@@ -82,7 +82,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
                        | AccessLevel.Village | AccessLevel.Governorate | AccessLevel.Group, PermissionType.Read)]
         public IActionResult FamilyDetails(long id)
         {
-            var family = _populationSvc.GetFamilies(User.GetId()).Where(f => f.Id == id);
+            var family = _populationSvc.GetFamilies(User.GetAccountId()).Where(f => f.Id == id);
             var familyDto = _mapper.Map<FamilyDto>(family);
             /* var familyDto= await  family.Where(f => f.Id == id)
                     .AsAsyncEnumerable()
@@ -104,7 +104,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         public async Task<IActionResult> GetFamilyIndividuals(long id)
         {
             var familyindividualsDto = await _populationSvc
-                .GetIndividualsOfFamilyAsync(User.GetId(), id);
+                .GetIndividualsOfFamilyAsync(User.GetAccountId(), id);
 
             var indiviudalofFamilyDtoMap = _mapper.Map<FamilyIndividualDto>(familyindividualsDto);
 
@@ -129,7 +129,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
             {
                 return View(family);
             }
-            _populationSvc.AddFamilyAsync(User.GetId(), family.Name, family.LivingLocation);
+            _populationSvc.AddFamilyAsync(User.GetAccountId(), family.Name, family.LivingLocation);
 
             return RedirectToAction(nameof(family));
         }
@@ -138,7 +138,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
         public async Task<IActionResult> UpdateFamily(long id)
         {
-            var family = await _populationSvc.GetFamilyAsync(User.GetId(), id);
+            var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
             var familyDto = _mapper.Map<FamilyDto>(family);
 
             return View("Editfamily", familyDto);
@@ -155,7 +155,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
                 return View(family);
             }
             var familynew = await _populationSvc
-                .UpdateFamilyAsync(User.GetId(), id,
+                .UpdateFamilyAsync(User.GetAccountId(), id,
                 f =>
                 {
                     f.Name = family.Name;
@@ -169,7 +169,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
         public async Task<IActionResult> DeleteFamily(long id)
         {
-            var family = await _populationSvc.GetFamilyAsync(User.GetId(), id);
+            var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
             if (family == null)
             {
                 return RedirectToAction(nameof(Index));
@@ -183,12 +183,12 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
         public async Task<IActionResult> DeleteFamily(long id, FamilyDto family)
         {
-            var Oldfamily = await _populationSvc.GetFamilyAsync(User.GetId(), id);
+            var Oldfamily = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
             if (family == null | Oldfamily.Id != family!.Id)
             {
                 return View("ConfirmDeleteFamily", family);
             }
-            await _populationSvc.RemoveFamilyAsync(User.GetId(), id);
+            await _populationSvc.RemoveFamilyAsync(User.GetAccountId(), id);
             return RedirectToAction(nameof(Index));
         }
     }
