@@ -4,8 +4,9 @@ using APSS.Domain.Services;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 
-namespace APSS.Web.Mvc.Controllers;
+namespace APSS.Web.Mvc.Areas.Setup.Controllers;
 
+[Area(Areas.Setup)]
 public class SetupController : Controller
 {
     private readonly ISetupService _setupSvc;

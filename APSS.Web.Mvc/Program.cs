@@ -1,6 +1,7 @@
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 
 using APSS.Application.App;
@@ -84,19 +85,34 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 
-#region Areas
+#region Routes
 
-foreach (var area in Areas.All)
+// Auth area
+app.MapAreaControllerRoute(
+    name: Areas.Auth,
+    areaName: Areas.Auth,
+    pattern: "{controller}/{action}");
+
+// Setup area
+app.MapAreaControllerRoute(
+    name: Areas.Setup,
+    areaName: Areas.Setup,
+    pattern: "{controller}/{action=Index}");
+
+foreach (var area in Areas.Dashboard)
 {
     app.MapAreaControllerRoute(
         name: area,
         areaName: area,
-        pattern: "{area:exists}/{controller}/{action=Index}/{id?}");
+        pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}");
 }
 
-#endregion Areas
+// Redirects
+var rewriteOpts = new RewriteOptions();
+rewriteOpts.AddRedirect("^$", Areas.Home);
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+app.UseRewriter(rewriteOpts);
+
+#endregion Routes
+
 app.Run();
