@@ -11,8 +11,9 @@ using APSS.Web.Mvc.Filters;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
 
-namespace APSS.Web.Mvc.Controllers;
+namespace APSS.Web.Mvc.Areas.Auth.Controllers;
 
+[Area(Areas.Auth)]
 public class AuthController : Controller
 {
     #region Fields

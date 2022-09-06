@@ -84,7 +84,13 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 
-#region Areas
+#region Routes
+
+// Auth area
+app.MapAreaControllerRoute(
+    name: Areas.Auth,
+    areaName: Areas.Auth,
+    pattern: "{controller}/{action}");
 
 foreach (var area in Areas.All)
 {
