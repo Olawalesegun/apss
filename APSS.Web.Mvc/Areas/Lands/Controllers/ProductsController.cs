@@ -33,12 +33,19 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //    PermissionType.Read)]
         public async Task<IActionResult> Index()
         {
-            var result = await (await _landSvc.GetLandProductsAsync(
+            try
+            {
+                var result = await (await _landSvc.GetLandProductsAsync(
                 User.GetAccountId(), User.GetAccountId()))
                 .AsAsyncEnumerable()
                 .ToListAsync();
 
-            return View(result.Select(_mapper.Map<LandProductDto>));
+                return View(result.Select(_mapper.Map<LandProductDto>));
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         // GET: LandProduc tController/Add a new landProduct

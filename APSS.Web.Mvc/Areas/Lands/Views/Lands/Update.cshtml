@@ -3,7 +3,8 @@
     <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
         <form method="post" action="@Routes.Dashboard.Lands.Lands.Update.FullPath" class="needs-validation" novalidate>
             <div asp-validation-summary="ModelOnly"></div>
-            <input type="hidden" asp-for="Id" />            <div class="center d-flex justify-content-center mb-3 ">
+            <input type="hidden" asp-for="Id" />
+            <div class="center d-flex justify-content-center mb-3 ">
                 <h3 class=" ">
                     Update  land
                 </h3>
@@ -11,7 +12,8 @@
             <div class="input-group mb-3 has-validation">
                 <span class="input-group-text">@@</span>
                 <div class="form-floating col">
-                    <input type="text" asp-for="Name" class="form-control" placeholder=" "                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    <input type="text" asp-for="Name" class="form-control" placeholder=" " />
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                     <label class="form-label" asp-for="Name"></label>
                 </div>
             </div>

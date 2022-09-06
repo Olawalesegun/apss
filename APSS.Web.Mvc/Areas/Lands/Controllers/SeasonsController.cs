@@ -12,7 +12,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     {
         private readonly ILandService _landSvc;
         private readonly IMapper _mapper;
-        private readonly List<SeasonDto> _seasonsList;
+        private List<SeasonDto> _seasonsList;
 
         public SeasonsController(ILandService landService, IMapper mapper)
         {
@@ -21,23 +21,18 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             _seasonsList = new List<SeasonDto>();
         }
 
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
         public async Task<IActionResult> Index()
         {
             var seasons = await _landSvc.GetSeasonsAsync()
                 .AsAsyncEnumerable()
                 .ToListAsync();
-            foreach (var season in seasons)
-            {
-                var item = _mapper.Map<SeasonDto>(season);
-                _seasonsList.Add(item);
-            }
 
-            return View(_seasonsList);
+            return View(seasons.Select(_mapper.Map<SeasonDto>));
         }
 
         // GET: SeasonController/Add a new Season
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
         public ActionResult Add()
         {
             return View();
@@ -46,10 +41,10 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: SeasonController/Add a new Season
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
         public async Task<ActionResult> Add(SeasonDto season)
         {
-            if (!ModelState.IsValid || season == null)
+            if (!ModelState.IsValid)
             { }
             await _landSvc.AddSeasonAsync(
                 User.GetAccountId(),

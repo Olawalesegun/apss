@@ -33,7 +33,7 @@
             </select>
         </div>
         <div class="col-sm d-flex   d-inline mb-3   ">
-            <a class=" btn btn-primary " role="button" asp-action="Add">
+            <a class=" btn btn-primary " role="button" asp-area="Lands" asp-controller="Seasons" asp-action="Add">
                 <i class="fa-solid fa-plus"></i>
                 Add
             </a>
@@ -73,8 +73,8 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="Season" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="Season" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-area="Lands" asp-controller="Seasons" asp-action="Update"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-area="Lands" asp-controller="Seasons" asp-action="Delete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     </ul>
                                 </div>
                             </td>
