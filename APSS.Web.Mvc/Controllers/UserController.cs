@@ -12,13 +12,13 @@ using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
 
 namespace APSS.Web.Mvc.Controllers
 {
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         private List<UserDto> _userDtos;
         private readonly IUsersService _userService;
         private readonly IUnitOfWork _uow;
 
-        public UsersController(IUsersService userService, IUnitOfWork uow)
+        public UserController(IUsersService userService, IUnitOfWork uow)
         {
             _userService = userService;
             _uow = uow;

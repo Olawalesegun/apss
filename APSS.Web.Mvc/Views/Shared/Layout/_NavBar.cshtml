@@ -8,11 +8,11 @@
     <div class="dropdown p-2 bg-super-light">
         <button class="btn btn-light dropdown-toggle rounded-pill border border-1 px-1" id="userDropDownButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
             <span class="ps-2">@User.GetHolderName()</span>
-            <img src="~/resources/user.jpg" alt="" width="32" height="32px" class="rounded-circle border border-1 mx-2"/>
+            <img src="~/resources/user.jpg" alt="" width="32" height="32px" class="rounded-circle border border-1 mx-2 " />
         </button>
         <ul class="dropdown-menu shadow" aria-labelledby="userDropDown">
             <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" asp-route-id="@((long)User.GetId())" asp-controller="Accounts" asp-action="AccountDetails">Settings</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="@(Routes.Auth.SignOut.FullPath)">Sign out</a></li>
         </ul>
