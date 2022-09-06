@@ -77,6 +77,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             var accountis = 1;
             var add = await _userService.CreateAsync(User.GetId(), user.Name);
+
             return RedirectToAction(nameof(Index));
 
             return View(user);

@@ -33,7 +33,7 @@ public interface IUsersService
     /// <param name="newStatus">The new status value</param>
     /// <returns></returns>
     Task<User> SetUserStatusAsync(long accountId, long userId, UserStatus newStatus);
-
+   
     /// <summary>
     /// Asynchronously updates a user
     /// </summary>
