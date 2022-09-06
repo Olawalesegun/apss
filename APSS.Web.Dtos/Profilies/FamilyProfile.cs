@@ -18,8 +18,8 @@ public class FamilyProfile : Profile
         dest.LivingLocation,
         f => f.MapFrom(src => src.LivingLocation))
     .ForMember(dest =>
-        dest.User,
-        f => f.MapFrom(src => CreateMap<User, UserDto>()))
+        dest.UserName,
+        f => f.MapFrom(src => src.AddedBy.Name))
     .ReverseMap();
     }
 }
