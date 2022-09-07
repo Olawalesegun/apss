@@ -24,19 +24,11 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         public async Task<IActionResult> Index()
         {
-            try
-            {
-                var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetUserId()))
-                    .AsAsyncEnumerable()
-                    .ToListAsync();
+            var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetUserId()))
+                .AsAsyncEnumerable()
+                .ToListAsync();
 
-                return View(result.Select(_mapper.Map<LandDto>));
-            }
-            catch (Exception ex)
-            {
-                TempData["success"] = ex.ToString();
-                return View();
-            }
+            return View(result.Select(_mapper.Map<LandDto>));
         }
 
         // GET: LandController/Add a new land
