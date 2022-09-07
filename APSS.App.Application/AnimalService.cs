@@ -275,7 +275,7 @@ public class AnimalService : IAnimalService
     {
         var animalGroup = await _uow.AnimalGroups.Query().
             Include(u => u.OwnedBy!)
-            .FindAsync(animalGroupId);
+            .Where(s => s.Id == animalGroupId).FirstAsync();
 
         await _permissionsService.ValidateUserPatenthoodAsync(accountId, animalGroup.OwnedBy.Id, PermissionType.Update);
 
