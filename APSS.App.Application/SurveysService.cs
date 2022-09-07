@@ -303,15 +303,15 @@ public sealed class SurveysService : ISurveysService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<Survey>> GetSurveyAsync(long accountId, long surveyId)
+    public async Task<Survey> GetSurveyAsync(long accountId, long surveyId)
     {
         var account = await _uow.Accounts.Query()
             .Include(a => a.User)
             .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
-        return _uow.Surveys
+        return await _uow.Surveys
             .Query()
-            .Where(s => s.Id == surveyId && s.CreatedBy.Id == account.User.Id);
+            .Where(s => s.Id == surveyId && s.CreatedBy.Id == account.User.Id).FirstAsync();
     }
 
     /// <inheritdoc/>
@@ -342,20 +342,17 @@ public sealed class SurveysService : ISurveysService
     /// <inheritdoc/>
     public async Task<Survey> SetSurveyActiveStatusAsync(long accountId, long surveyId, bool activeStatus)
     {
-        var (survey, _) = await GetSurveyWithAuthorizationAsync(accountId, surveyId, PermissionType.Update);
-
-        survey.IsActive = activeStatus;
-
-        _uow.Surveys.Update(survey);
-        await _uow.CommitAsync();
-
-        return survey;
+            return await UpdateSurveyAsync(accountId, surveyId, s=> s.IsActive = activeStatus);
     }
 
     /// <inheritdoc/>
-    public async Task<Survey> UpdateSurveyAsync(long accountId, Survey survey)
+    public async Task<Survey> UpdateSurveyAsync(long accountId, long surveyId, Action<Survey> updater)
     {
+        var survey = await _uow.Surveys.Query().Include(s => s.CreatedBy).FindAsync(surveyId);
+
         await _permissionsSvc.ValidatePermissionsAsync(accountId, survey.CreatedBy.Id, PermissionType.Update);
+
+        updater(survey);
 
         _uow.Surveys.Update(survey);
         await _uow.CommitAsync();

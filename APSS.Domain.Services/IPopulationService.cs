@@ -46,6 +46,30 @@ public interface IPopulationService
     Task<IQueryBuilder<FamilyIndividual>> GetIndividualsOfFamilyAsync(long accountId, long familyId);
 
     /// <summary>
+    /// Asynnchrosuly Gets a query for the get individual in family
+    /// </summary>
+    /// <param name="accountId">The id of the account which has reading permssion </param>
+    /// <param name="individualId">The id of the individual which to get the family for </param>
+    /// <returns></returns>
+    Task<FamilyIndividual?> GetFamilyIndividual(long accountId, long individualId);
+
+    /// <summary>
+    /// Asynnchrosuly Gets a query for the get voluntary
+    /// </summary>
+    /// <param name="accountId">The id of the account which has reading permssion </param>
+    /// <param name="VoluntaryId">The id of the voluntary which to get its</param>
+    /// <returns></returns>
+    Task<Voluntary> GetVoluntaryAsync(long accountId, long VoluntaryId);
+
+    /// <summary>
+    /// Asynnchrosuly Gets a query for the get Skill
+    /// </summary>
+    /// <param name="accountId">The id of the account which has reading permssion </param>
+    /// <param name="skillId">The id of the skill which to get its</param>
+    /// <returns></returns>
+    Task<Skill> GetSkillAsync(long accountId, long skillId);
+
+    /// <summary>
     /// Asynnchrosuly Gets a query for the get skill of individual
     /// </summary>
     /// <param name="accountId">The id of the account which  has reading permssion </param>
@@ -86,22 +110,19 @@ public interface IPopulationService
     ///  Asynchronosuly update a Individual
     /// </summary>
     /// <param name="accountId">The id of the account of the individual to update</param>
-    /// <param name="individualId">The id of individual to update</param>
+    /// <param name="accountId">The id of the account of the individual to update</param>
     /// <param name="updater">The updating callback</param>
     /// <returns>The Updated individual</returns>
     Task<Individual> UpdateIndividualAsync(long accountId, long individualId, Action<Individual> updater);
 
     /// <summary>
-    ///  Asynchronosuly update a FamilyIndividual
+    ///  Asynchronosuly update a familyindividual
     /// </summary>
     /// <param name="accountId">The id of the account of the familyindividual to update</param>
-    /// <param name="familyIndividualId">The id of individual to update</param>
+    /// <param name="accountId">The id of the account of the individual in familyindividual to update</param>
     /// <param name="updater">The updating callback</param>
-    /// <returns>The Updated familyindividual</returns>
-    Task<FamilyIndividual> UpdateSkillAsync(
-            long accountId,
-            long familyIndividualId,
-            Action<FamilyIndividual> updater);
+    /// <returns>The Updated individual</returns>
+    Task<FamilyIndividual> UpdateFamilyIndividualAsync(long accountId, long individualId, Action<FamilyIndividual> updater);
 
     /// <summary>
     /// Asynchronosuly  delete a Individual
@@ -156,7 +177,7 @@ public interface IPopulationService
     /// <summary>
     /// Asynchronosy update a skill
     /// </summary>
-    /// <param name="accountId">The id of account of the individual which this skill to</param>
+    /// <param name="accountId">The id of account of the user which this skill to</param>
     /// <param name="skillId">The id of skill to update</param>
     /// <param name="updater">The updating callback</param>
     /// <returns>The updated family</returns>

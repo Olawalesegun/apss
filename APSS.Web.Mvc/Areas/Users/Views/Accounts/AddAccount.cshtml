@@ -1,7 +1,7 @@
 ﻿@model APSS.Web.Dtos.AccountDto
  @await Html.PartialAsync("_requiredStyle.cshtml")
-<div class="row col-sm-12 col-lg-8 d-flex mx-sm-2   p-3">
-    <form class=" mt-2 needs-validation" method="post" asp-controller="Accounts" asp-action="AddAccount" novalidate>
+<div class="row col-sm-12 col-lg-5 d-flex mx-sm-2 m-lg-4 border rounded p-3">
+    <form class=" mt-2 needs-validation" method="post" asp-area="Users" asp-controller="Accounts" asp-action="AddAccount" novalidate>
         <div asp-validation-summary="ModelOnly"></div>
         <input type="hidden" asp-for="UserId" />
         <!-- 2 column puts for the National number and Phome Number-->

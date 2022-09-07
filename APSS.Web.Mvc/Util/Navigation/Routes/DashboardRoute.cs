@@ -11,7 +11,7 @@ public sealed class DashboardRoute : Route
         Users = new UsersRoute(this);
         Animals = new AnimalsRoute(this);
         Lands = new LandsRoute(this);
-        Surveys = FromController<SurveysController>(icon: Icon.Poll);
+        Surveys = new SurveysRoute(this);
         Population = new PopulationRoute(this);
         Settings = new Route(this, "Application Settings", "Settings", icon: Icon.Gear);
     }
@@ -20,7 +20,7 @@ public sealed class DashboardRoute : Route
     public UsersRoute Users { get; init; }
     public AnimalsRoute Animals { get; init; }
     public LandsRoute Lands { get; init; }
-    public IRoute Surveys { get; init; }
+    public SurveysRoute Surveys { get; init; }
     public PopulationRoute Population { get; init; }
     public IRoute Settings { get; init; }
 

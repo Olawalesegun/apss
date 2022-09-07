@@ -1,12 +1,12 @@
-﻿@model APSS.Web.Dtos.SurveyDto
+﻿@model SurveyEditForm
 <div class="container-fluid px-3 py-3  mx-4 my-1">
     <div class="col-sm-6">
         <div class="d-flex justify-content-center">
             <h4 >Update Survey </h4>
         </div>
 
-        <form class=" mt-3 ">
-           
+        <form class="mt-3" method="post" asp-area="Surveys" asp-controller="Surveys" asp-action="EditSurvey">
+           <input type="number" asp-for="Id" hidden />
               <!-- survey Name -->
           <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
@@ -32,9 +32,9 @@
                     <label class="form-check-label" asp-for="IsActive"> </label>
                 </div> 
 
-                        <div >
-                <button class="btn btn-primary mt-4 mx-1" asp-controller="Survey" asp-action="AddSurvey"> <i class="fa-solid fa-pen-to-square mx-2"></i><span>Edit</span>  </button>
-            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
+                  <div class="mb-4  mt-4">
+                <button type="submit" class="btn btn-primary">Edit</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
             </div>
         </form>
         </div>

@@ -14,5 +14,5 @@ public class VoluntaryDto : BaseAuditbleDto
 
     [Display(Name = "Person")]
     [Required(ErrorMessage = "Field Person is required")]
-    public IndividualDto Individual { get; set; } = null!;
+    public string IndividualName { get; set; } = null!;
 }

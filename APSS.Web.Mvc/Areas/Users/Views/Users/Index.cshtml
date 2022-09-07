@@ -25,7 +25,7 @@
         </div>
         <div class="col-sm d-flex   d-inline mb-2">
 
-            <a class=" btn btn-primary " role="button" asp-controller="Users" asp-action="AddUser">
+            <a class=" btn btn-primary " role="button" asp-area="Users" asp-controller="Users" asp-action="AddUser">
                 <i class="fa-solid fa-plus"></i>
                 اضافة
             </a>
@@ -74,7 +74,7 @@
                                         <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="UserAccounts"><div class="d-flex justify-content-between"> <span>Employess</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>
                                         <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-area="Animals" asp-controller="Confirmations" asp-action="Index"><div class="d-flex justify-content-between"> <span>Confirm data</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>
                                         <li class="">
-                                            <a class="dropdown-item text-decoration-none" role="button" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="AddAccount">
+                                            <a class="dropdown-item text-decoration-none" role="button" asp-route-id="@item.Id" asp-area="Users" asp-controller="Accounts" asp-action="AddAccount">
 
                                                 <div class="d-flex justify-content-between"> <span> Add Employee</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
                                             </a>
