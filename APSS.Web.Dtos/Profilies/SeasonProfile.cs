@@ -8,7 +8,7 @@ public class SeasonProfile : Profile
 {
     public SeasonProfile()
     {
-        CreateMap<Season, SeasonDto>()
-            .ReverseMap();
+        CreateMap<Season, SeasonDto>();
+        CreateMap<SeasonDto, Season>();
     }
 }

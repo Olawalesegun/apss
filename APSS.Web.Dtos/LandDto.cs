@@ -10,10 +10,11 @@ public class LandDto : OwnableDto
 
     [Display(Name = "Longitude")]
     [Required(ErrorMessage = "Longitude is required")]
+    [Range(-180, 180, ErrorMessage = "Area must be between [-180, 180]")]
     public double Longitude { get; set; }
 
     [Display(Name = "Latitude")]
-    [Range(0, 23, ErrorMessage = "Area must be between [0, 23]")]
+    [Range(-90, 90, ErrorMessage = "Area must be between [-90, 90]")]
     public double Latitude { get; set; }
 
     [Required(ErrorMessage = "Address is required")]

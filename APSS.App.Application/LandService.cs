@@ -56,7 +56,6 @@ public class LandService : ILandService
             IsUsable = isUsable,
             IsUsed = isUsed,
             OwnedBy = account.User,
-            IsConfirmed = false
         };
 
         _uow.Lands.Add(newLand);
@@ -112,7 +111,6 @@ public class LandService : ILandService
             StoringMethod = storingMethod,
             IrrigationMethod = irrigationMethod,
             AddedBy = account.User,
-            IsConfirmed = false,
         };
 
         _uow.LandProducts.Add(product);
@@ -177,15 +175,12 @@ public class LandService : ILandService
             .Include(u => u.User)
             .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Farmer, PermissionType.Create);
         var landProduct = await _uow.LandProducts.Query()
-            .Include(l => l.Producer)
-            .Include(u => u.Producer.OwnedBy)
             .FindWithOwnershipValidationAync(landProductId, u => u.AddedBy, account);
 
         var landProductExpense = new ProductExpense
         {
             Type = type,
             Price = price,
-            CreatedAt = DateTime.Now,
             SpentOn = landProduct
         };
 
@@ -350,9 +345,10 @@ public class LandService : ILandService
     {
         var landProductExpense = await _uow.ProductExpenses.Query()
             .Include(p => p.SpentOn)
+            .Include(p => p.SpentOn.AddedBy)
             .FindAsync(landProductExpenseId);
 
-        await _permissionsSvc.ValidatePermissionsAsync(accountId, landProductExpense.SpentOn.Id, PermissionType.Read);
+        await _permissionsSvc.ValidatePermissionsAsync(accountId, landProductExpense.SpentOn.AddedBy.Id, PermissionType.Read);
 
         return _uow.ProductExpenses.Query().Where(e => e.Id == landProductExpenseId);
     }
@@ -368,14 +364,17 @@ public class LandService : ILandService
 
         await _permissionsSvc.ValidatePermissionsAsync(accountId, landProduct.AddedBy.Id, PermissionType.Read);
 
-        return _uow.ProductExpenses.Query().Where(p => p.SpentOn.Id == landProductId);
+        return _uow.ProductExpenses.Query()
+            .Include(s => s.SpentOn)
+            .Include(u => u.SpentOn.AddedBy)
+            .Where(p => p.SpentOn.Id == landProductId);
     }
 
     /// <inheritdoc/>
     public async Task<IQueryBuilder<Season>> GetSeasonAsync(long accountId, long seasonId)
     {
         await _uow.Accounts.Query()
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Root, PermissionType.Read);
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
         return _uow.Seasons.Query().Where(i => i.Id == seasonId);
     }
@@ -394,6 +393,7 @@ public class LandService : ILandService
             .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Farmer, PermissionType.Update);
         var land = await _uow.Lands.Query()
             .FindWithOwnershipValidationAync(landId, account);
+        land.IsConfirmed = null;
 
         udapter(land);
 
@@ -411,9 +411,8 @@ public class LandService : ILandService
             .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Farmer, PermissionType.Update);
         var landProduct = await _uow.LandProducts.Query()
             .Include(u => u.AddedBy)
-            .Include(p => p.ProducedIn)
-            .Include(p => p.Producer)
             .FindWithOwnershipValidationAync(landProductId, u => u.AddedBy, account);
+        landProduct.IsConfirmed = null;
 
         udapter(landProduct);
 
@@ -487,7 +486,7 @@ public class LandService : ILandService
         long landProductUnitId)
     {
         await _uow.Accounts.Query()
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Root, PermissionType.Read);
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
         return _uow.LandProductUnits.Query().Where(i => i.Id == landProductUnitId);
     }
@@ -558,6 +557,19 @@ public class LandService : ILandService
     }
 
     /// <inhertdoc/>
+    public async Task<IQueryBuilder<Land>> UnConfirmedLandsAsync(long accountId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
+
+        return _uow.Lands.Query()
+            .Include(u => u.OwnedBy)
+            .Include(u => u.OwnedBy.SupervisedBy!)
+            .Where(l => l.OwnedBy.SupervisedBy!.Id == account.User.Id && l.IsConfirmed == null);
+    }
+
+    /// <inhertdoc/>
     public async Task<IQueryBuilder<Land>> ConfirmedLandsAsync(long accountId)
     {
         var account = await _uow.Accounts.Query()
@@ -572,6 +584,22 @@ public class LandService : ILandService
 
     /// <inhertdoc/>
     public async Task<IQueryBuilder<LandProduct>> DeclinedProductsAsync(long accountId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
+
+        return _uow.LandProducts.Query()
+            .Include(u => u.AddedBy)
+            .Include(u => u.Unit)
+            .Include(s => s.ProducedIn)
+            .Include(p => p.Producer)
+            .Include(s => s.AddedBy.SupervisedBy!)
+            .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == false);
+    }
+
+    /// <inhertdoc/>
+    public async Task<IQueryBuilder<LandProduct>> UnConfirmedProductsAsync(long accountId)
     {
         var account = await _uow.Accounts.Query()
             .Include(u => u.User)
