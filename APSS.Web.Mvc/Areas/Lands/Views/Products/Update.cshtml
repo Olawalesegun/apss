@@ -5,10 +5,8 @@
 <div class="container-fluid w-100">
     <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-8">
         <div class="  shadow-sm pb-3">
-            <form class=" mt-3 align-items-center needs-validation" method="post" asp-controller="LandProduct" asp-action="Update" novalidate>
-                <input type="hidden" asp-for="landId" />
-                <input type="hidden" asp-for="SeasonId" />
-                <input type="hidden" asp-for="UnitId" />
+            <form method="post" action="@Routes.Dashboard.Lands.Products.Update.FullPath" asp-antiforgery="true" class="needs-validation" novalidate>
+                <input type="hidden" asp-for="Id" />
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="center d-flex justify-content-center mb-3 ">
                     <h3 class=" ">
@@ -16,31 +14,31 @@
                     </h3>
                 </div>
                 <!-- row 1 -->
-                <div class="row mb-lg-4 justify-content-between  ">
+                @*<div class="row mb-lg-4 justify-content-between  ">
 
                     <div class="col-sm-6 mb-3 flex-column form-group ">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <select class="form-select" asp-for="SeasonId" asp-items="@(new SelectList(Model?.Seasons,"Id","Name"))">
-                                    <option selected> select season</option>
-                                </select>
-                                <label asp-for="Seasons" class="form-label textOverflow"> Select Season</label>
-                            </div>
-                        </div>
+                    <div class="input-group">
+                    <span class="input-group-text">#</span>
+                    <div class="form-floating col">
+                    <select class="form-select" asp-for="SeasonId" asp-items="@(new SelectList(Model?.Seasons,"Id","Name"))">
+                    <option selected> select season</option>
+                    </select>
+                    <label asp-for="Seasons" class="form-label textOverflow"> Select Season</label>
+                    </div>
+                    </div>
                     </div>
                     <div class="col-sm-6 mb-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model?.Units,"Id","Name"))">
-                                    <option selected>Select Product Unit</option>
-                                </select>
-                                <label asp-for="Unit" class="form-label textOverflow"> Select Product Unit</label>
-                            </div>
-                        </div>
+                    <div class="input-group">
+                    <span class="input-group-text">#</span>
+                    <div class="form-floating col">
+                    <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model?.Units,"Id","Name"))">
+                    <option selected>Select Product Unit</option>
+                    </select>
+                    <label asp-for="Unit" class="form-label textOverflow"> Select Product Unit</label>
                     </div>
-                </div>
+                    </div>
+                    </div>
+                    </div>*@
 
                 <!-- row 2 -->
                 <div class="row mb-lg-4 d-flex justify-content-between  ">
@@ -69,34 +67,24 @@
                         </div>
                     </div>
                 </div>
-                <!-- row 3 -->
-                <div class="row justify-content-between ">
-                    <!-- 1 -->
+                <!-- row 3-->
+                <div class="row mb-lg-4 justify-content-between  ">
 
-                    <div class=" col-sm-6 mt-3 flex-column form-group d-flex">
+                    <div class="col-sm-6 mb-3 flex-column form-group ">
                         <div class="input-group">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <select class="form-select" name="irrigationPowerSource" aria-label="water source power" id="">
-                                    <option value="none">None</option>
-                                    <option value="Renewable"> Renewable</option>
-                                    <option value="FossileFuel">FossileFuel</option>
-                                </select>
-                                <label for="irrigationPowerSource" class="form-label textOverflow">Water  power Source</label>
+                                <input type="date" asp-for="HarvestStart" class="form-control" placeholder=" " />
+                                <label asp-for="HarvestStart" class="form-label textOverflow"></label>
                             </div>
                         </div>
                     </div>
-                    <!-- 2 -->
-                    <div class=" col-sm-6 mt-3 flex-column d-flex">
+                    <div class="col-sm-6 mb-3 flex-column form-group d-flex">
                         <div class="input-group">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <select class="form-select" name="irrigationWaterSource" aria-label="water source" id="">
-                                    <option value="Natural">Natural</option>
-                                    <option value="HumanStored"> HumanStored</option>
-                                    <option value="OnDemand">OnDemand</option>
-                                </select>
-                                <label for="irrigationWaterSource" class="form-label textOverflow">Water Source</label>
+                                <input type="date" asp-for="HarvestEnd" class="form-control" placeholder=" " />
+                                <label asp-for="HarvestEnd" class="form-label textOverflow"></label>
                             </div>
                         </div>
                     </div>
@@ -151,12 +139,12 @@
                 <!-- row 7 -->
                 <div class="row justify-content-between ">
                     <!-- 1 -->
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex ">
+                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
                         <div class="input-group">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <input type="text" name="insecticideName" class="form-control" placeholder="" />
-                                <label for="insecticideName" class="form-label">Insecticide Name</label>
+                                <input type="text" asp-for="Insecticide" class="form-control" placeholder=" " />
+                                <label asp-for="Insecticide" class="form-label"></label>
                             </div>
                         </div>
                     </div>
@@ -165,8 +153,8 @@
                         <div class="input-group">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <input type="text" class="form-control" asp-for="IrrigationMethod" placeholder=" " />
-                                <label asp-for="IrrigationMethod" class="form-label"></label>
+                                <input type="number" class="form-control" asp-for="IrrigationCount" placeholder=" " />
+                                <label asp-for="IrrigationCount" class="form-label"></label>
                             </div>
                         </div>
                     </div>
@@ -174,38 +162,50 @@
                 <!-- row 8 -->
                 <div class="row justify-content-between ">
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-
-                        <div class="form-check-inline ">
-                            <h5 class="label-inline textOverflow"><label asp-for="IsGovernmentFunded"></label></h5>
-                        </div>
                         <!--used -->
                         <div class="form-check   ">
-                            <input class="form-check-input hiden" type="radio" asp-for="IsGovernmentFunded" value="true" />
-                            <label class="form-check-label" asp-for="IsGovernmentFunded">Yes</label>
-                        </div>
-                        <!--unused -->
-                        <div class="form-check ">
-                            <input class="form-check-input" type="radio" value="false" asp-for="IsGovernmentFunded" checked />
-                            <label class="form-check-label" asp-for="IsGovernmentFunded"> No </label>
+                            <input class="form-check-input hiden" type="checkbox" asp-for="IsGovernmentFunded" value="true" />
+                            <label class="form-check-label" asp-for="IsGovernmentFunded"></label>
                         </div>
                     </div>
                     <!-- 2 -->
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="form-check-inline ">
-                            <h5 class="label-inline textOverflow"><label asp-for="HasGreenhouse"></label></h5>
-                        </div>
                         <!--used -->
                         <div class="form-check form-check-inline offset-xl-5">
-                            <input class="form-check-input hiden" type="radio" asp-for="HasGreenhouse" value="true" />
-                            <label class="form-check-label" asp-for="HasGreenhouse"> Yes </label>
-                        </div>
-                        <!--unused -->
-                        <div class="form-check form-check-inline offset-xl-5">
-                            <input class="form-check-input" type="radio" value="false" asp-for="HasGreenhouse" checked />
-                            <label class="form-check-label" asp-for="HasGreenhouse"> No </label>
+                            <input class="form-check-input hiden" type="checkbox" asp-for="HasGreenhouse" value="true" />
+                            <label class="form-check-label" asp-for="HasGreenhouse"></label>
                         </div>
                     </div>
                 </div>
+                <div class="row justify-content-between ">
+                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+
+                        <div class="form-check-inline ">
+                            <h5 class="label-inline textOverflow"><label asp-for="IrrigationPowerSource"></label></h5>
+                        </div>
+                        @foreach (var item in Enum.GetValues<IrrigationPowerSource>())
+                        {
+                            <div class="form-check ">
+                                <input class="form-check-input" type="radio" value="@item" asp-for="IrrigationPowerSource" />
+                                @Html.Label(item.ToString())
+                            </div>
+                        }
+                    </div>
+                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+
+                        <div class="form-check-inline ">
+                            <h5 class="label-inline textOverflow"><label asp-for="IrrigationWaterSource"></label></h5>
+                        </div>
+                        @foreach (var item in Enum.GetValues<IrrigationWaterSource>())
+                        {
+                            <div class="form-check ">
+                                <input class="form-check-input" type="radio" value="@item" asp-for="IrrigationWaterSource" />
+                                @Html.Label(item.ToString())
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- row 9 -->
                 <!-- row 9 -->
                 <div class="row justify-content-between   mt-3"></div>
                 <button class="btn btn-primary  "><i class="fa-solid fa-plus"></i>Update</button>

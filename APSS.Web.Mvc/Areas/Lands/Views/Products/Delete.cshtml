@@ -2,7 +2,7 @@
 
 <div class="card mt-2">
     <div class="card-body">
-        <div class="d-flex "><h5>تأكيد حذف المنتج</h5> </div>
+        <div class="d-flex "><h5>Confirm Deletion Proccess</h5> </div>
         <table class="table user-view-table m-0  ">
             <tbody style="font-size:14px">
                 <tr>
@@ -90,6 +90,10 @@
                     <td>@Model?.ProducedIn.Name</td>
                 </tr>
                 <tr>
+                    <td>@Html.DisplayNameFor(p => p.Unit)</td>
+                    <td>@Model?.Unit.Name</td>
+                </tr>
+                <tr>
                     <td>@Html.DisplayNameFor(p => p.Producer)</td>
                     <td>@Model?.Producer.Name</td>
                 </tr>
@@ -101,8 +105,8 @@
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-controller="LandProduct" asp-action="Delete">تأكيد</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-controller="LandProduct" asp-action="Index">رجوع</a>
+            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-area="Lands" asp-controller="Products" asp-action="DeletePost">Confirm</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-area="Lands" asp-controller="Products" asp-action="Index">Back</a>
         </div>
 
         @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@

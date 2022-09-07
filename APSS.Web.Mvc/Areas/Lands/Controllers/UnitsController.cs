@@ -4,6 +4,7 @@ using APSS.Domain.Services;
 using APSS.Web.Mvc.Auth;
 using AutoMapper;
 using APSS.Web.Dtos;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -12,33 +13,26 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
     {
         private readonly ILandService _landSvc;
         private readonly IMapper _mapper;
-        private readonly List<LandProductUnitDto> _unitsList;
 
         public UnitsController(ILandService landService, IMapper mapper)
         {
             _landSvc = landService;
             _mapper = mapper;
-            _unitsList = new List<LandProductUnitDto>();
         }
 
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
         public async Task<IActionResult> Index()
         {
             var unitList = await _landSvc.
                 GetLandProductUnitsAsync()
                 .AsAsyncEnumerable()
                 .ToListAsync();
-            foreach (var unit in unitList)
-            {
-                var item = _mapper.Map<LandProductUnitDto>(unit);
-                _unitsList.Add(item);
-            }
 
-            return View(_unitsList);
+            return View(unitList.Select(_mapper.Map<LandProductUnitDto>));
         }
 
         // GET: LandProductUnitController/Add a new LandProductUnit
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
         public ActionResult Add()
         {
             return View();
@@ -47,32 +41,33 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: LandProductUnitController/Add a new LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Create)]
         public async Task<ActionResult> Add(LandProductUnitDto landProductUnit)
         {
-            if (!ModelState.IsValid || landProductUnit == null)
+            if (!ModelState.IsValid)
             {
             }
             await _landSvc.AddLandProductUnitAsync(User.GetAccountId(), landProductUnit!.Name);
 
-            return RedirectToAction("Index");
+            return LocalRedirect(Routes.Dashboard.Lands.Units.FullPath);
         }
 
         // GET: LandProductUnitController/Update LandProductUnit
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
+        [HttpGet]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
         public async Task<ActionResult> Update(long Id)
         {
             return View(_mapper.Map<LandProductUnitDto>(
-                await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)));
+                await (await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
 
         // POST: LandProductUnit/Update LandProductUnit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Update)]
         public async Task<ActionResult> Update(LandProductUnitDto landProductUnit)
         {
-            if (!ModelState.IsValid || landProductUnit == null)
+            if (!ModelState.IsValid)
             {
             }
             await _landSvc.UpdateLandProductUnitAsync(User.GetAccountId(),
@@ -82,40 +77,31 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                     f.Name = landProductUnit.Name;
                 });
 
-            return RedirectToAction("Index");
+            return LocalRedirect(Routes.Dashboard.Lands.Units.FullPath);
         }
 
         // GET: LandProductUnitController/Delete LandProductUnit
-        [ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
         public async Task<ActionResult> Delete(long Id)
         {
-            if (Id <= 0)
-            { }
-
             return View(_mapper.Map<LandProductUnitDto>(
-                await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)));
+                await (await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
 
         // POST: LandProductUnitController/Delete LandProductUnit
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [HttpPost, ActionName("Delete")]
+        //[ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
         public async Task<ActionResult> DeletePost(long Id)
         {
-            if (Id <= 0)
-            { }
             await _landSvc.RemoveLandProductUnitAsync(User.GetAccountId(), Id);
 
-            return RedirectToAction("Index");
+            return LocalRedirect(Routes.Dashboard.Lands.Units.FullPath);
         }
 
         // GET: LandProductUnitController/Get LandProductUnit
         public async Task<ActionResult> GetLandProductUnit(long Id)
         {
-            if (Id <= 0)
-            { }
             return View(_mapper.Map<LandProductUnitDto>(
-                await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)));
+                await (await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
     }
 }

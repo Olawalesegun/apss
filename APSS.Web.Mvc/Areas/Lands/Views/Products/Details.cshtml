@@ -98,6 +98,10 @@
                     <td>@Model?.ProducedIn?.Name</td>
                 </tr>
                 <tr>
+                    <td>@Html.DisplayNameFor(p => p.Unit)</td>
+                    <td>@Model?.Unit.Name</td>
+                </tr>
+                <tr>
                     <td>@Html.DisplayNameFor(p => p.Producer)</td>
                     <td>@Model?.Producer?.Name</td>
                 </tr>
@@ -109,11 +113,11 @@
         </table>
         <br />
         <div cllass="d-inline pt-2">
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="LandProduct" asp-action="Index"> <i class="fa-solid fa-share mx-2"></i><span> Back </span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProductExpense" asp-action="add"> <i class="fa-solid fa-plus mx-2"></i><span> Add Expense </span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProductExpense" asp-action="Index"><i class="fa-solid fa-angle-down"></i><span class="">All Product Expenses </span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProduct" asp-action="Update"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Update</span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProduct" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span> Delete</span>  </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-area="Lands" asp-controller="Products" asp-action="Index"> <i class="fa-solid fa-share mx-2"></i><span> Back </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-area="Lands" asp-controller="Expenses" asp-action="Add"> <i class="fa-solid fa-plus mx-2"></i><span> Add Expense </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-area="Lands" asp-controller="Expenses" asp-action="Index"><i class="fa-solid fa-angle-down"></i><span class="">All Product Expenses </span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-area="Lands" asp-controller="Products" asp-action="Update"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Update</span> </a>
+            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-area="Lands" asp-controller="Products" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span> Delete</span>  </a>
         </div>
         @*<a id="III" class="btn text-primary shadow-0 btn-link text-decoration-none"><span class=""><i class="fa-solid fa-angles-left"></i></span> المنتجات</a>*@
     </div>

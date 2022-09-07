@@ -4,7 +4,7 @@
 }
 <div class="card mt-2">
     <div class="card-body">
-        <div class="d-flex "><h5>تأكيد حذف الموسم</h5> </div>
+        <div class="d-flex "><h5>Confirm Deletion Proccess</h5> </div>
         <table class="table user-view-table m-0  ">
             <tbody style="font-size:14px">
                 <tr>
@@ -15,12 +15,20 @@
                     <td>@Html.DisplayNameFor(m => m.Name)</td>
                     <td>@Model?.Name</td>
                 </tr>
+                <tr class="">
+                    <td>@Html.DisplayNameFor(m => m.CreatedAt)</td>
+                    <td>@Model?.CreatedAt</td>
+                </tr>
+                <tr class="">
+                    <td>@Html.DisplayNameFor(m => m.ModifiedAt)</td>
+                    <td>@Model?.ModifiedAt</td>
+                </tr>
             </tbody>
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-controller="LandProductUnit" asp-action="Delete">تأكيد</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-controller="LandProductUnit" asp-action="Index">رجوع</a>
+            <a class="btn btn-danger btn-rounded " asp-area="Lands" asp-route-Id="@Model?.Id" asp-controller="Units" asp-action="DeletePost">Confirm</a>
+            <a class="btn btn-primary btn-rounded mx-3" asp-area="Lands" asp-controller="Units" asp-action="Index">Back</a>
         </div>
     </div>
 </div>

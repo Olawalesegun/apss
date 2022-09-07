@@ -1,7 +1,8 @@
 ﻿@model LandDto
 <div class="container-fluid">
     <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
-        <form method="post" action="@Routes.Dashboard.Lands.Update.FullPath" class="needs-validation" novalidate>
+        @*action="@Routes.Dashboard.Lands.Update.FullPath"*@
+        <form method="post" asp-area="Lands" asp-controller="Lands" asp-action="Update" class="needs-validation" novalidate>
             <div asp-validation-summary="ModelOnly"></div>
             <input type="hidden" asp-for="Id" />
             <div class="center d-flex justify-content-center mb-3 ">

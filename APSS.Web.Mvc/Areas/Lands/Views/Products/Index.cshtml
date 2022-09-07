@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.LandProductDto>
+﻿@model IEnumerable<LandProductDto>
 <partial name="_dataNavBar" />
 <div class="aling" id="loader"></div>
 
@@ -29,6 +29,16 @@
                 <option value="2">@Html.DisplayNameFor(i => i.Id)</option>
                 <option value="3">@Html.DisplayNameFor(a => a.Category)</option>
             </select>
+        </div>
+        <div class="col-sm d-flex   d-inline mb-3   ">
+            <a class=" btn btn-primary " role="button" asp-action="ConfirmedProducts">
+                <i class="fa-solid fa-plus"></i>
+                Co products
+            </a>
+            <a class=" btn btn-primary " role="button" asp-action="UnConfirmedProducts">
+                <i class="fa-solid fa-plus"></i>
+                De products
+            </a>
         </div>
     </form>
 
@@ -62,10 +72,10 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Details" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="add" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Add Expense</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProduct" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-area="Lands" asp-controller="Products" asp-action="Details"><div class="d-flex justify-content-between"><span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-area="Lands" asp-controller="Products" asp-action="Update"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-area="Lands" asp-controller="Expenses" asp-action="Add"><div class="d-flex justify-content-between"> <span>Add Expense</span>  <span><i class="fa-solid fa-plus"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-area="Lands" asp-controller="Products" asp-action="Delete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     </ul>
                                 </div>
                             </td>
