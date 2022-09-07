@@ -2,9 +2,14 @@
     var currentDashboardRoute = Context.GetCurrentDashboardRoute()!;
     var currentRoute = Context.GetCurrentRoute();
 
-    var subRoutes = currentDashboardRoute.Children.Where(r => r.IsNavigatable)
+    var subRoutes = currentDashboardRoute.Children
+        .Where(r => r.IsNavigatable)
         .Prepend(currentDashboardRoute.DefaultRoute)
         .ToHashSet();
+
+    var selectedRoute = subRoutes
+        .OrderByDescending(r => r.FullPath.Length)
+        .First(r => currentRoute.FullPath.StartsWith(r.FullPath));
 }
 
 <nav class="d-flex py-3 ps-2">
@@ -45,7 +50,7 @@
         @foreach (var route in subRoutes)
         {
             <li class="nav-item">
-                <a class="nav-link @(currentRoute?.FullPath == route.FullPath ? "active" : "")" href="@route.FullPath">
+                <a class="nav-link @(selectedRoute == route ? "active" : "")" href="@route.FullPath">
                     @route.Name
                 </a>
             </li>
