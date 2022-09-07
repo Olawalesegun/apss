@@ -4,6 +4,7 @@ using APSS.Domain.Services;
 using APSS.Web.Dtos.ValueTypes;
 using AutoMapper;
 using APSS.Domain.Entities;
+using APSS.Domain.Repositories;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
@@ -12,6 +13,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
     {
         private readonly IAnimalService _confirm;
         private readonly IMapper _mappper;
+        private readonly IUnitOfWork _uow;
 
         public ConfirmationsController(IAnimalService confirm, IMapper mapper)
         {
@@ -94,9 +96,24 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (value)
                 {
-                    // var animal=_confirm.ConfirmAnimalGroup()
+                    var animal = await _confirm.ConfirmAnimalGroup(10, id, value);
+                    if (animal == null) return NotFound();
                 }
             }
+            catch (Exception) { }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> AnimalConfirm(long id)
+        {
+            try
+            {
+                var animal = await _confirm.ConfirmAnimalGroup(10, id, false);
+                if (animal == null) return NotFound();
+            }
+            catch (Exception) { }
+            TempData["Action"] = "Add Erea";
+            TempData["success"] = $"{id } null";
             return RedirectToAction("Index");
         }
 
