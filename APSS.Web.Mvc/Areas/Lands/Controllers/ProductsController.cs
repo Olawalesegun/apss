@@ -43,7 +43,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             }
             catch (Exception ex)
             {
-                return View("ErrorPage", ex.ToString());
+                return View(new List<LandProductDto>());
             }
         }
 
@@ -131,21 +131,8 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
         public async Task<ActionResult> Update(long Id)
         {
-            var seasonsList = new List<Season>();
-            var unitsList = new List<LandProductUnit>();
-            try
-            {
-                seasonsList = await _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
-                unitsList = await _landSvc.GetLandProductUnitsAsync().AsAsyncEnumerable().ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                return View("ErrorPage", ex.ToString());
-            }
             var products = _mapper.Map<LandProductDto>(
                 await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync());
-            products.Seasons = seasonsList.Select(_mapper.Map<SeasonDto>);
-            products.Units = unitsList.Select(_mapper.Map<LandProductUnitDto>);
 
             return View(products);
         }
@@ -159,36 +146,28 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             if (!ModelState.IsValid)
             {
             }
-
-            try
+            await _landSvc.UpdateLandProductAsync(
+                User.GetAccountId(),
+                landProduct.Id,
+            async f =>
             {
-                await _landSvc.UpdateLandProductAsync(User.GetAccountId(), landProduct.Id,
-                async f =>
-                {
-                    f.StoringMethod = landProduct.StoringMethod;
-                    f.Category = landProduct.Category;
-                    f.CropName = landProduct.CropName;
-                    f.Fertilizer = landProduct.Fertilizer;
-                    f.HarvestEnd = landProduct.HarvestEnd;
-                    f.HarvestStart = landProduct.HarvestStart;
-                    f.HasGreenhouse = landProduct.HasGreenhouse;
-                    f.Insecticide = landProduct.Insecticide;
-                    f.IrrigationCount = landProduct.IrrigationCount;
-                    f.IrrigationMethod = landProduct.IrrigationMethod;
-                    f.IrrigationPowerSource = _mapper.Map<IrrigationPowerSource>(landProduct.IrrigationPowerSource);
-                    f.IrrigationWaterSource = _mapper.Map<IrrigationWaterSource>(landProduct.IrrigationWaterSource);
-                    f.IsGovernmentFunded = landProduct.IsGovernmentFunded;
-                    f.Quantity = landProduct.Quantity;
-                    f.ProducedIn = await (await _landSvc.GetSeasonAsync(User.GetAccountId(), landProduct.SeasonId)).FirstAsync();
-                    f.Unit = await (await _landSvc.GetLandProductUnitAsync(User.GetAccountId(), landProduct.UnitId)).FirstAsync();
-                });
+                f.StoringMethod = landProduct.StoringMethod;
+                f.Category = landProduct.Category;
+                f.CropName = landProduct.CropName;
+                f.Fertilizer = landProduct.Fertilizer;
+                f.HarvestEnd = landProduct.HarvestEnd;
+                f.HarvestStart = landProduct.HarvestStart;
+                f.HasGreenhouse = landProduct.HasGreenhouse;
+                f.Insecticide = landProduct.Insecticide;
+                f.IrrigationCount = landProduct.IrrigationCount;
+                f.IrrigationMethod = landProduct.IrrigationMethod;
+                f.IrrigationPowerSource = _mapper.Map<IrrigationPowerSource>(landProduct.IrrigationPowerSource);
+                f.IrrigationWaterSource = _mapper.Map<IrrigationWaterSource>(landProduct.IrrigationWaterSource);
+                f.IsGovernmentFunded = landProduct.IsGovernmentFunded;
+                f.Quantity = landProduct.Quantity;
+            });
 
-                return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
-            }
-            catch (Exception ex)
-            {
-                return View("ErrorPage", ex.ToString());
-            }
+            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
 
         // GET: LandController/Delete landProduct
@@ -276,51 +255,41 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // GET: ProducsController/Get UnConfirmedLandProducts
         [HttpGet]
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
-        public async Task<IActionResult> DeclinedProducts()
+        public async Task<IActionResult> UnConfirmedProducts()
         {
-            try
-            {
-                var landProductList = await (
-                    await _landSvc.DeclinedProductsAsync(User.GetAccountId()))
-                    .FirstAsync()
-                    .ToAsyncEnumerable()
-                    .ToListAsync();
+            var landProductList = await (
+                await _landSvc.UnConfirmedProductsAsync(User.GetAccountId()))
+                .AsAsyncEnumerable()
+                .ToListAsync();
 
-                return View(landProductList.Select(_mapper.Map<LandDto>));
-            }
-            catch (Exception ex)
-            {
-                return NoContent();
-            }
+            return View(landProductList.Select(_mapper.Map<LandProductDto>));
         }
 
         [HttpGet]
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
         public async Task<IActionResult> ConfirmedProducts(long Id)
         {
-            try
-            {
-                var landProductList = await (
-                    await _landSvc.ConfirmedProductsAsync(User.GetAccountId()))
-                    .FirstAsync()
-                    .ToAsyncEnumerable()
-                    .ToListAsync();
+            var landProductList = await (
+                await _landSvc.ConfirmedProductsAsync(User.GetAccountId()))
+                .AsAsyncEnumerable()
+                .ToListAsync();
 
-                return View(landProductList.Select(_mapper.Map<LandDto>));
-            }
-            catch (Exception ex)
-            {
-                return NoContent();
-            }
+            return View(landProductList.Select(_mapper.Map<LandProductDto>));
         }
 
         [HttpGet]
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
-        public async Task<IActionResult> ConfirmeProduct(long id, bool value)
+        public async Task<IActionResult> ConfirmProduct(long id, bool value)
         {
             await _landSvc.ConfirmProductAsync(User.GetAccountId(), id, value);
 
-            return LocalRedirect(Routes.Dashboard.Lands.FullPath);
+            //return LocalRedirect(Routes.Dashboard.Lands.FullPath);
+            TempData["success"] = value ? "Product confirmed successfully" : "Product declined successfully";
+
+            if (value)
+                return RedirectToAction("DeclinedProducts");
+            else
+                return RedirectToAction("ConfirmedProducts");
         }
     }
 }
