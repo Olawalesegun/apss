@@ -14,12 +14,7 @@ public class FilterParameters<T>
     /// Gets or sets the query string to filter by
     /// </summary>
     public string? Query { get; set; }
-
-    public IEnumerable<string> PropertyNames()
-    {
-
     }
-}
 
 public class FilterParameters
 {
