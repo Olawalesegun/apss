@@ -25,3 +25,13 @@ public class FilterBuilder<TArgs, TModel> where TModel : AuditableEntity
 
     public IQueryBuilder<TModel> Build() => _query;
 }
+
+public static class QueryBuilderExtensions
+{
+    public static FilterBuilder<TArgs, TModel> BuildFilter<TArgs, TModel>(
+        this IQueryBuilder<TModel> self,
+        TArgs args) where TModel : AuditableEntity
+    {
+        return new FilterBuilder<TArgs, TModel>(args, self);
+    }
+}
