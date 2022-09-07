@@ -38,6 +38,11 @@ public interface IRoute
     public IRoute DefaultRoute { get; }
 
     /// <summary>
+    /// Gets whether this route is navigatable
+    /// </summary>
+    public bool IsNavigatable { get; }
+
+    /// <summary>
     /// Gets the route heirarchy
     /// </summary>
     public IEnumerable<IRoute> Heirarchy
