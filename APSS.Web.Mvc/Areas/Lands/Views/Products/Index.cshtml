@@ -30,6 +30,16 @@
                 <option value="3">@Html.DisplayNameFor(a => a.Category)</option>
             </select>
         </div>
+        <div class="col-sm d-flex   d-inline mb-3   ">
+            <a class=" btn btn-primary " role="button" asp-action="ConfirmedProducts">
+                <i class="fa-solid fa-plus"></i>
+                Co products
+            </a>
+            <a class=" btn btn-primary " role="button" asp-action="UnConfirmedProducts">
+                <i class="fa-solid fa-plus"></i>
+                De products
+            </a>
+        </div>
     </form>
 
     <div class="col-sm-12  ">

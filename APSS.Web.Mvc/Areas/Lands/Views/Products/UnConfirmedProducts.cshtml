@@ -49,8 +49,8 @@
                         </table>
                         <br />
                         <div class="table-responsive  d-flex justify-content-end">
-                            @Html.ActionLink("ConfirmeProduct", "Products", new { id=product.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
-                            @Html.ActionLink("ConfirmeProduct", "Products", new { id=product.Id,value=true },new{@class="btn btn-danger text-white  shadow-0"})
+                            @Html.ActionLink("Confirm","ConfirmProduct", "Products", new { id=product.Id,value=true },new{@class="btn btn-danger text-white  shadow-0"})
+                            @Html.ActionLink("Decline","ConfirmProduct", "Products", new { id=product.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
                         </div>
                     </div>
                 </div>
