@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<ProductExpenseDto>
 <partial name="_dataNavBar" />
-<div class="aling" id="loader"></div>
 
 <div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 needs-validation " id="table">
     <form class="row d-flex justify-content-between  d-inline mb-3 ">
@@ -42,6 +41,9 @@
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(i => i.Id)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(t => t.Type)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.Price)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.SpentOn)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.CreatedAt)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.ModifiedAt)</th>
                         <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -52,6 +54,9 @@
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
                             <td class="text-break text-capitalize align-middle">@item.Type</td>
                             <td class="text-break text-capitalize align-middle">@item.Price</td>
+                            <td class="text-break text-capitalize align-middle">@item.SpentOn.AddedBy.Name</td>
+                            <td class="text-break text-capitalize align-middle">@item.CreatedAt</td>
+                            <td class="text-break text-capitalize align-middle">@item.ModifiedAt</td>
                             <td class="align-middle center">
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"
@@ -59,9 +64,8 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Details" asp-route-id="@item.Id"><div class="d-flex justify-content-between"><span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item" asp-controller="LandProductExpense" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-area="Lands" asp-controller="Expenses" asp-action="Update" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-area="Lands" asp-controller="Expenses" asp-action="Delete" asp-route-id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                     </ul>
                                 </div>
                             </td>
