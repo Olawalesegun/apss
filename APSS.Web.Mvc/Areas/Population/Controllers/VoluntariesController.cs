@@ -1,11 +1,11 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Dtos.ValueTypes;
 
 using APSS.Web.Mvc.Auth;
-using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
@@ -22,7 +22,7 @@ public class VoluntariesController : Controller
     // GET: VoluntaryController/GetVoluntaries/5
     public async Task<ActionResult> Index(long id)
     {
-        var Voluntaries = await _populationSvc.GetVoluntaryOfindividualAsync(User.GetId(), id);
+        var Voluntaries = await _populationSvc.GetVoluntaryOfindividualAsync(User.GetAccountId(), id);
         var VoluntariesDto = new List<VoluntaryDto>();
 
         foreach (var Voluntary in await Voluntaries.AsAsyncEnumerable().ToListAsync())
@@ -57,7 +57,7 @@ public class VoluntariesController : Controller
             return View(Voluntary);
 
         await _populationSvc
-            .AddVoluntaryAsync(User.GetId(), Voluntary.IndividualId, Voluntary.Name, Voluntary.Field);
+            .AddVoluntaryAsync(User.GetAccountId(), Voluntary.IndividualId, Voluntary.Name, Voluntary.Field);
 
         return RedirectToAction(nameof(Index), new { id = Voluntary.IndividualId });
     }
@@ -65,7 +65,7 @@ public class VoluntariesController : Controller
     //GET:VoluntaryController/UpdateVoluntary/5
     public async Task<ActionResult> UpdateVoluntary(long id)
     {
-        var Voluntary = await _populationSvc.GetVoluntaryAsync(User.GetId(), id);
+        var Voluntary = await _populationSvc.GetVoluntaryAsync(User.GetAccountId(), id);
         var Voluntaryform = new VoluntaryEditForm
         {
             Id = Voluntary.Id,
@@ -85,18 +85,18 @@ public class VoluntariesController : Controller
             return View("EditVoluntary", Voluntary);
 
         await _populationSvc
-            .UpdateVoluntaryAsync(User.GetId(), Voluntary.Id,
+            .UpdateVoluntaryAsync(User.GetAccountId(), Voluntary.Id,
             v =>
             {
                 v.Name = Voluntary.Name;
                 v.Field = Voluntary.Field;
             });
-        return RedirectToAction(nameof(Index),new { id = Voluntary.IndividualId });
+        return RedirectToAction(nameof(Index), new { id = Voluntary.IndividualId });
     }
 
     public async Task<IActionResult> ConfirmDeleteVoluntary(long id)
     {
-        var Voluntary = await _populationSvc.GetVoluntaryAsync(User.GetId(), id);
+        var Voluntary = await _populationSvc.GetVoluntaryAsync(User.GetAccountId(), id);
         var Voluntarydto = new VoluntaryDto
         {
             Id = Voluntary.Id,
@@ -113,8 +113,8 @@ public class VoluntariesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> DeleteVoluntary(long id)
     {
-       var v=await _populationSvc.GetVoluntaryAsync(User.GetId(), id);
-       await _populationSvc.RemoveVoluntaryAsync(User.GetId(), id);
-        return RedirectToAction(nameof(Index), new {id=v.OfferedBy.Id});
+        var v = await _populationSvc.GetVoluntaryAsync(User.GetAccountId(), id);
+        await _populationSvc.RemoveVoluntaryAsync(User.GetAccountId(), id);
+        return RedirectToAction(nameof(Index), new { id = v.OfferedBy.Id });
     }
 }

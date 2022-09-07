@@ -1,8 +1,8 @@
-﻿using APSS.Domain.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
-using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 
@@ -19,7 +19,7 @@ public class SurveysController : Controller
     // GET: Survey/GetSurveys
     public async Task<ActionResult> Index()
     {
-        var surveys = await _surveySvc.GetAvailableSurveysAsync(User.GetId());
+        var surveys = await _surveySvc.GetAvailableSurveysAsync(User.GetAccountId());
         List<SurveyDto> surveysDto = new List<SurveyDto>();
         foreach (var survey in await surveys.AsAsyncEnumerable().ToListAsync())
         {
@@ -38,7 +38,7 @@ public class SurveysController : Controller
     // GET: Survey/SurveyDetails/5
     public async Task<ActionResult> SurveyDetails(long id)
     {
-        var survey = await _surveySvc.GetSurveyAsync(User.GetId(), id);
+        var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
 
         var surveydto = new SurveyDto
         {
@@ -64,7 +64,7 @@ public class SurveysController : Controller
     {
         if (!ModelState.IsValid)
             return View(survey);
-        await _surveySvc.CreateSurveyAsync(User.GetId(), survey.Name, survey.ExpirationDate);
+        await _surveySvc.CreateSurveyAsync(User.GetAccountId(), survey.Name, survey.ExpirationDate);
         return RedirectToAction(nameof(Index));
     }
 
@@ -72,7 +72,7 @@ public class SurveysController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> ActiveSurvey(long id, bool active)
     {
-        await _surveySvc.SetSurveyActiveStatusAsync(User.GetId(), id, active);
+        await _surveySvc.SetSurveyActiveStatusAsync(User.GetAccountId(), id, active);
 
         return RedirectToAction(nameof(Index));
     }
@@ -80,7 +80,7 @@ public class SurveysController : Controller
     // GET: Survey/EditSurvey/5
     public async Task<ActionResult> EditSurvey(long id)
     {
-        var survey = await _surveySvc.GetSurveyAsync(User.GetId(), id);
+        var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
         var surveyform = new SurveyEditForm
         {
             Id = survey.Id,
@@ -101,7 +101,7 @@ public class SurveysController : Controller
             return View(survey);
         }
 
-        await _surveySvc.UpdateSurveyAsync(User.GetId(), survey.Id, s =>
+        await _surveySvc.UpdateSurveyAsync(User.GetAccountId(), survey.Id, s =>
         {
             s.Name = survey.Name;
             s.IsActive = survey.IsActive;
@@ -113,7 +113,7 @@ public class SurveysController : Controller
     //GET:Survey/confirmDeleteSurvey/5
     public async Task<IActionResult> ConfirmDeleteSurvey(long id)
     {
-        var survey = await _surveySvc.GetSurveyAsync(User.GetId(), id);
+        var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
         var surveydto = new SurveyDto
         {
             Id = survey.Id,
@@ -131,7 +131,7 @@ public class SurveysController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> DeleteSurvey(long id)
     {
-        await _surveySvc.RemoveSurveyAsync(User.GetId(), id);
+        await _surveySvc.RemoveSurveyAsync(User.GetAccountId(), id);
         return RedirectToAction(nameof(Index));
     }
 }

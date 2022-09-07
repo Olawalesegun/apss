@@ -1,8 +1,8 @@
-﻿using APSS.Domain.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
-using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
@@ -19,7 +19,7 @@ public class SkillsController : Controller
     // GET: SkillController/GetSkills/5
     public async Task<ActionResult> Index(long id)
     {
-        var skills = await _populationSvc.GetSkillOfindividualAsync(User.GetId(), id);
+        var skills = await _populationSvc.GetSkillOfindividualAsync(User.GetAccountId(), id);
         var skillsDto = new List<SkillDto>();
 
         foreach (var skill in await skills.AsAsyncEnumerable().ToListAsync())
@@ -56,7 +56,7 @@ public class SkillsController : Controller
             return View(skill);
 
         await _populationSvc
-            .AddSkillAsync(User.GetId(), skill.IndividualId, skill.Name, skill.Field, skill.Description);
+            .AddSkillAsync(User.GetAccountId(), skill.IndividualId, skill.Name, skill.Field, skill.Description);
 
         return RedirectToAction(nameof(Index), new { id = skill.IndividualId });
     }
@@ -64,7 +64,7 @@ public class SkillsController : Controller
     //GET:SkillController/UpdateSkill/5
     public async Task<ActionResult> UpdateSkill(long id)
     {
-        var skill = await _populationSvc.GetSkillAsync(User.GetId(), id);
+        var skill = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
         var skillform = new SkillEditForm
         {
             Id = skill.Id,
@@ -85,7 +85,7 @@ public class SkillsController : Controller
             return View("EditSkill", skill);
 
         await _populationSvc
-            .UpdateSkillAsync(User.GetId(), skill.Id,
+            .UpdateSkillAsync(User.GetAccountId(), skill.Id,
             s =>
             {
                 s.Name = skill.Name;
@@ -98,7 +98,7 @@ public class SkillsController : Controller
 
     public async Task<IActionResult> ConfirmDeleteSkill(long id)
     {
-        var skill = await _populationSvc.GetSkillAsync(User.GetId(), id);
+        var skill = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
         var skilldto = new SkillDto
         {
             Id = skill.Id,
@@ -116,8 +116,8 @@ public class SkillsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> DeleteSkill(long id)
     {
-        var s = await _populationSvc.GetSkillAsync(User.GetId(), id);
-        await _populationSvc.RemoveSkillAsync(User.GetId(), id);
-        return RedirectToAction(nameof(Index),new {id=s.BelongsTo.Id});
+        var s = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
+        await _populationSvc.RemoveSkillAsync(User.GetAccountId(), id);
+        return RedirectToAction(nameof(Index), new { id = s.BelongsTo.Id });
     }
 }

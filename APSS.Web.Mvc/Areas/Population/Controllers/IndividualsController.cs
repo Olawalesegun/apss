@@ -1,10 +1,10 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Dtos.ValueTypes;
 using APSS.Web.Mvc.Auth;
-using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
@@ -21,7 +21,7 @@ public class IndividualsController : Controller
     // GET: Individual/GetIndividuals
     public async Task<IActionResult> Index()
     {
-        var individuals = await _populationSvc.GetIndividuals(User.GetId()).AsAsyncEnumerable().ToListAsync();
+        var individuals = await _populationSvc.GetIndividuals(User.GetAccountId()).AsAsyncEnumerable().ToListAsync();
         List<IndividualDto> individualsDto = new List<IndividualDto>();
         foreach (var individual in individuals)
         {
@@ -58,7 +58,7 @@ public class IndividualsController : Controller
             return View(individual);
         }
         await _populationSvc.AddIndividualAsync(
-            User.GetId(), individual.FamilyId, individual.Name, individual.Address, (IndividualSex)individual.Sex);
+            User.GetAccountId(), individual.FamilyId, individual.Name, individual.Address, (IndividualSex)individual.Sex);
 
         return RedirectToAction(nameof(Index));
     }
@@ -66,7 +66,7 @@ public class IndividualsController : Controller
     // Get: IndividualController/UpdateIndividual/5
     public async Task<IActionResult> UpdateIndividual(long id)
     {
-        var individual = await _populationSvc.GetIndividualAsync(User.GetId(), id);
+        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
         var individualForm = new IndividualEditForm
         {
             Id = individual.Id,
@@ -79,7 +79,7 @@ public class IndividualsController : Controller
             Sex = (SexDto)individual.Sex,
             SocialStatus = (SocialStatusDto)individual.SocialStatus!,
         };
-        var family = await _populationSvc.GetFamilyIndividual(User.GetId(), id);
+        var family = await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id);
         individualForm.FamilyId = family!.Family.Id;
         individualForm.FamilyName = family!.Family.Name;
         individualForm.Isparent = family.IsParent;
@@ -97,7 +97,7 @@ public class IndividualsController : Controller
             return View("EditIndividual", individual);
 
         await _populationSvc.UpdateIndividualAsync(
-            User.GetId(), individual.Id,
+            User.GetAccountId(), individual.Id,
             i =>
             {
                 i.Sex = (IndividualSex)individual.Sex;
@@ -109,9 +109,9 @@ public class IndividualsController : Controller
                 i.Job = individual.Job;
                 i.Name = individual.Name;
             });
-        var family = await _populationSvc.GetFamilyAsync(User.GetId(), individual.FamilyId);
+        var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), individual.FamilyId);
 
-        await _populationSvc.UpdateFamilyIndividualAsync(User.GetId(), individual.Id,
+        await _populationSvc.UpdateFamilyIndividualAsync(User.GetAccountId(), individual.Id,
             i =>
             {
                 i.Family = family;
@@ -125,7 +125,7 @@ public class IndividualsController : Controller
     // GET: IndividualController/ConfirmDeleteIndividual/5
     public async Task<IActionResult> ConfirmDeleteIndividual(long id)
     {
-        var individual = await _populationSvc.GetIndividualAsync(User.GetId(), id);
+        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
         var individualDto = new IndividualDto
         {
             Id = individual.Id,
@@ -143,13 +143,13 @@ public class IndividualsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteIndividual(long id)
     {
-        await _populationSvc.RemoveIndividualAsync(User.GetId(), id);
+        await _populationSvc.RemoveIndividualAsync(User.GetAccountId(), id);
         return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> IndividualDetails(long id)
     {
-        var individual = await _populationSvc.GetIndividualAsync(User.GetId(), id);
+        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
         var individualDto = new IndividualDto
         {
             Id = individual.Id,
@@ -165,7 +165,7 @@ public class IndividualsController : Controller
             SocialStatus = (SocialStatusDto)individual.SocialStatus,
             User = individual.AddedBy.Name
         };
-        var familyindividual = await _populationSvc.GetFamilyIndividual(User.GetId(), id);
+        var familyindividual = await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id);
         individualDto.Family = familyindividual!.Family.Name;
         individualDto.Isparent = familyindividual.IsParent;
         individualDto.Isprovider = familyindividual.IsProvider;
