@@ -1,0 +1,36 @@
+﻿body {
+}
+
+.dropend .dropdown-menu {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+    .dropend .dropdown-menu li a {
+        line-height: 35px !important;
+    }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.card-body:hover .row .col .card {
+    box-shadow: inherit;
+    cursor: pointer;
+    border: 3px red solid;
+}
+
+#box1, #box2, #box3, #box, #box4, #box5, #box6, #box7, #box8, #box9, #AddIcon {
+    display: none;
+}
+
+.initialism {
+    text-transform: lowercase !important;
+    line-height: 24px;
+}

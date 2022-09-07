@@ -1,9 +1,9 @@
 ﻿@model APSS.Web.Dtos.AnimalGroupDto
 @await Html.PartialAsync("_dataNavBar")
-<div class="card mt-2 mx-lg-4 mx-sm-2 confirm-data">
+<div class="card mt-2  mx-sm-2 confirm-data mx-0 border-0">
     <div class="card-body">
-        <div class="d-flex "> <i class=" " style="padding-left:2px"></i> <h4>Confirm information  </h4></div>
-        <table class="table user-view-table m-0  table-borderless">
+        <div class="d-flex mb-3"> <i class=" " style="padding-left:2px"></i> <h4>Confirm information  </h4></div>
+        <table class="table user-view-table m-0  border p-2">
             <tbody>
                 <tr class="">
                     <td class="text-break">@Html.DisplayNameFor(m=>m.Id) </td>
@@ -29,6 +29,10 @@
                     <td class="text-break">@Html.DisplayNameFor(m=>m.ModifiedAt) </td>
                     <td class="text-break"> @Model.ModifiedAt </td>
                 </tr>
+                <tr>
+                    <td class="text-break">@Html.DisplayNameFor(m=>m.IsConfirmed) </td>
+                    <td class="text-break"> @Model.IsConfirmed </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -36,8 +40,8 @@
         long id = Model.Id;
     }
 
-    <div class="table-responsive m-4">
-        <a role="button" class="btn btn-primary text-white  shadow-0" asp-route-id="@Model.Id" asp-controller="Confirmation" asp-action="ConfirmAnimal"> صحيحة <span><i class="fa-solid fa-check "></i></span></a>
-        @Html.ActionLink("غير صحيحة", "ConfirmAnimal", new { id=Model.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+    <div class="table-responsive m-3 d-flex justify-content-end">
+        @Html.ActionLink("Decline", "ConfirmAnimal", new { id=Model.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+        <a role="button" class="btn btn-primary text-white  mx-2 shadow-0" asp-route-id="@Model.Id" asp-controller="Confirmation" asp-action="ConfirmAnimal"> Confirm <span><i class="fa-solid fa-check "></i></span></a>
     </div>
 </div>

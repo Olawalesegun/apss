@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace APSS.Web.Dtos
 {
-    public class AnimalGroupDto : BaseAuditbleDto
+    public class AnimalGroupDto : OwnableDto
     {
         [Display(Name = "Type")]
         [Required(ErrorMessage = "Type is Required")]
@@ -21,9 +21,6 @@ namespace APSS.Web.Dtos
         public int Quantity { get; set; }
 
         [Display(Name = "Sex")]
-        public SexDto Sex { get; set; }
-
-        [Display(Name = "Name")]
-        public string? Name { get; set; }
+        public AnimalSex Sex { get; set; }
     }
 }

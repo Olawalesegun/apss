@@ -9,9 +9,9 @@ public class ProductExpenseDto : BaseAuditbleDto
     [Display(Name = "Type Expense ")]
     public string Type { get; set; } = null!;
 
-    [Required(ErrorMessage = "Ptice is Require")]
-    [Display(Name = "Price")]
-    public decimal Price { get; set; }
+        [Required(ErrorMessage = "Price is Require")]
+        [Display(Name = "Price")]
+        public decimal Price { get; set; }
 
     public long ProductId { get; set; }
 

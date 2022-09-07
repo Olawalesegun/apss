@@ -8,7 +8,9 @@ namespace APSS.Web.Dtos
 {
     public class ConfirmationDto
     {
-        public IEnumerable<AnimalGroupDto> AnimalGroups { get; set; } = new List<AnimalGroupDto>();
-        public IEnumerable<AnimalProductDto> AnimalProducts { get; set; } = new List<AnimalProductDto>();
+        public IEnumerable<AnimalGroupConfirmDto> AnimalGroups { get; set; } = new List<AnimalGroupConfirmDto>();
+        public IEnumerable<AnimalProductDetailsDto> AnimalProducts { get; set; } = new List<AnimalProductDetailsDto>();
+        public AnimalGroupDto AnimalGroup { get; set; } = new AnimalGroupDto();
+        public AnimalProductDto Products { get; set; } = new AnimalProductDto();
     }
 }

@@ -1,0 +1,110 @@
+﻿@model APSS.Web.Dtos.ConfirmationDto
+
+@await Html.PartialAsync("_dataNavBar")
+<div class="my-2">
+    <div class="row row-cols-1 row-cols-md-2 g-4 ">
+        @foreach (var product in @Model.AnimalProducts)
+        {
+            <div class="col">
+
+                <div class="card mt-2  shadow">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center" style="line-height:40px !important">
+                            <i class="fa-solid fa-circle-user fs-1 me-2 " style="padding-left:4px"></i>
+                            <h3 class="fw-light">
+                                @product.Producer.OwnedBy.Name
+                            </h3>
+                        </div>
+
+                        <table class="table user-view-table m-0  ">
+                            <tbody style="font-size:14px">
+                                <tr class="">
+                                    <th>@Html.DisplayNameFor(m=>m.Products.Name)</th>
+                                    <td> @product.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.Products.Quantity)</th>
+                                    <td> @product.Quantity</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.Products.Unit)</th>
+                                    <td> @product.SingleUnit.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.Products.PeriodTaken)</th>
+                                    <td> @product.PeriodTaken</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.Products.CreatedAt)</th>
+                                    <td> @product.CreatedAt</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.Products.ModifiedAt)</th>
+                                    <td> @product.ModifiedAt</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <div class="table-responsive  d-flex justify-content-end">
+                            @Html.ActionLink("Decline", "AnimalConfirm", new { id=product.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                            @Html.ActionLink("Confirm", "AnimalConfirm", new { id=product.Id,value=true },new{@class="btn btn-danger text-white  shadow-0"})
+                            @*/ <a role="button" class="btn btn-primary  mx-2  " asp-route-id="@product.Id" asp-controller="Confirmations" asp-action="AnimalConfirm"> Confirm <span><i class="fa-solid fa-check "></i></span></a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @foreach (var animal in @Model.AnimalGroups)
+        {
+            <div class="col">
+                <div class="card mt-2  shadow">
+                    <div class="card-body">
+                        <div class="d-flex   align-items-center" style="line-height:40px !important">
+
+                            <i class="fa-solid fa-circle-user fs-1 me-2 " style="padding-left:4px"></i> <h3 style="line-height:40px !important" class="fw-light">@animal.UserName </h3>
+                        </div>
+                        <table class="table user-view-table m-0  ">
+                            <tbody>
+                                <tr class="">
+                                    <th class="label"><label>@Html.DisplayNameFor(m => m.AnimalGroup.Type)</label></th>
+                                    <td>@animal.Type </td>
+                                </tr>
+                                <tr class="">
+                                    <th class="label"><label>@Html.DisplayNameFor(m => m.AnimalGroup.Name)</label></th>
+                                    <td>@animal.Name </td>
+                                </tr>
+                                <tr>
+                                    <th> <label>@Html.DisplayNameFor(m => m.AnimalGroup.Quantity);</label></th>
+                                    <td>@animal.Quantity  </td>
+                                </tr>
+                                <tr>
+                                    <th><label>@Html.DisplayNameFor(m => m.AnimalGroup.Sex)</label>  </th>
+                                    <td> @animal.Sex </td>
+                                </tr>
+                                <tr>
+                                    <th><label>@Html.DisplayNameFor(m => m.AnimalGroup.CreatedAt)</label>  </th>
+                                    <td>
+                                        @animal.CreatedAt
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><label>@Html.DisplayNameFor(m => m.AnimalGroup.ModifiedAt)</label>  </th>
+                                    <td>
+                                        @animal.ModifiedAt
+                                    </td>
+                                </tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <div class=" mx-2 d-flex justify-content-end">
+                            @Html.ActionLink("Decline", "ConfirmProduct", new { id=animal.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                            @Html.ActionLink("Confirm", "ConfirmProduct", new { id=animal.Id,value=true },new{@class="btn btn-danger text-white  shadow-0"})
+                            <a role="button" class="btn btn-primary text-white mx-2  shadow-0" asp-route-id="@animal.Id" asp-controller="Confirmations" asp-action="AnimalConfirm"> Confirm <span><i class="fa-solid fa-check "></i></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
