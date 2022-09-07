@@ -10,6 +10,7 @@ public class Route : IRoute
     private readonly string _name;
     private readonly IRoute? _parent;
     private readonly string _pathSegment;
+    private readonly bool _isNavigatable;
 
     #endregion Fields
 
@@ -20,7 +21,8 @@ public class Route : IRoute
         string name,
         string? pathSegment = null,
         IList<IRoute>? children = null,
-        Icon icon = Icon.None)
+        Icon icon = Icon.None,
+        bool isNavigatable = true)
     {
         if (parent is not null)
             parent.Children.Add(this);
@@ -40,6 +42,7 @@ public class Route : IRoute
         }
 
         _fullPath = "/" + string.Join('/', segments.Reverse());
+        _isNavigatable = isNavigatable;
     }
 
     #endregion Public Constructors
@@ -66,6 +69,9 @@ public class Route : IRoute
 
     /// <inheritdoc/>
     public virtual IRoute DefaultRoute => this;
+
+    /// <inheritdoc/>
+    public bool IsNavigatable => _isNavigatable;
 
     #endregion Properties
 

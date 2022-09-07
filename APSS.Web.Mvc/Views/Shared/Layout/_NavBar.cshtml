@@ -1,6 +1,10 @@
 ﻿@{
-    var currentDashboardRoute = Context.GetCurrentDashboardRoute();
+    var currentDashboardRoute = Context.GetCurrentDashboardRoute()!;
     var currentRoute = Context.GetCurrentRoute();
+
+    var subRoutes = currentDashboardRoute.Children.Where(r => r.IsNavigatable)
+        .Prepend(currentDashboardRoute.DefaultRoute)
+        .ToHashSet();
 }
 
 <nav class="d-flex py-3 ps-2">
@@ -19,25 +23,26 @@
     </div>
 </nav>
 
-@if (currentDashboardRoute is not null && currentDashboardRoute.Children.Any())
+@if (currentRoute is not null)
 {
-    @if (currentRoute is not null)
-    {
-        <nav aria-label="breadcrumb p-1 bg-secondary">
-            <ol class="breadcrumb">
+<nav aria-label="breadcrumb p-1 bg-secondary">
+    <ol class="breadcrumb">
 
-                @foreach (var route in currentRoute.Heirarchy.Skip(1).Reverse().Skip(1))
-                {
-                    <li class="breadcrumb-item"><a href="@route.FullPath">@route.Name</a></li>
-                }
+        @foreach (var route in currentRoute!.Heirarchy.Skip(1).Reverse().Skip(1))
+        {
+            <li class="breadcrumb-item"><a href="@route.FullPath">@route.Name</a></li>
+        }
 
-                <li class="breadcrumb-item active" aria-current="page">@currentRoute.Name</li>
-            </ol>
-        </nav>
-    }
-    
+        <li class="breadcrumb-item active" aria-current="page">@currentRoute!.Name</li>
+    </ol>
+</nav>
+}
+
+
+@if (subRoutes.Count > 1)
+{
     <ul class="nav nav-tabs">
-        @foreach (var route in currentDashboardRoute.Children)
+        @foreach (var route in subRoutes)
         {
             <li class="nav-item">
                 <a class="nav-link @(currentRoute?.FullPath == route.FullPath ? "active" : "")" href="@route.FullPath">

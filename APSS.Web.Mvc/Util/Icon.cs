@@ -40,6 +40,8 @@ public enum Icon
     Pen,
     TrashCan,
     List,
+    Search,
+    Filter,
 }
 
 public static class IconExtensoins
@@ -81,6 +83,8 @@ public static class IconExtensoins
         { Icon.Pen, "fa-solid fa-pen" },
         { Icon.TrashCan, "fa-solid fa-trash-can" },
         { Icon.List, "fa-solid fa-list-ul" },
+        { Icon.Search, "fa-solid fa-magnifying-glass" },
+        { Icon.Filter, "fa-solid fa-filter" },
     };
 
     public static HtmlString? Render(
