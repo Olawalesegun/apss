@@ -19,3 +19,9 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+.card-body:hover .row .col .card {
+    box-shadow: inherit;
+    cursor: pointer;
+    border: 3px red solid;
+}
