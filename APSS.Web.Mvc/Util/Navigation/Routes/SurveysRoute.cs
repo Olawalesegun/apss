@@ -4,14 +4,14 @@ namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
 public sealed class SurveysRoute : Route
 {
-    public SurveysRoute(IRoute parent) : base(parent, "Surveys", "Surveys", icon: Icon.Poll)
+    public SurveysRoute(IRoute parent) : base(parent, "Survey Managment", "Surveys", icon: Icon.Poll)
     {
-        Surveys = FromController<SurveysController>(icon: Icon.Poll);
-        Entries = FromController<SurveyEntriesController>(icon: Icon.Poll);
+        Surveys = FromCrudController<SurveysController>(icon: Icon.Poll);
+        Entries = FromCrudController<SurveyEntriesController>(icon: Icon.Poll);
     }
 
-    public IRoute Surveys { get; init; }
-    public IRoute Entries { get; init; }
+    public CrudRoute Surveys { get; init; }
+    public CrudRoute Entries { get; init; }
 
     public override IRoute DefaultRoute => Surveys;
 }
