@@ -9,10 +9,10 @@ public class CrudRoute : Route, ICrudRoute
         IList<IRoute>? children = null,
         Icon icon = Icon.None) : base(parent, name, pathSegment, children, icon)
     {
-        Add = new Route(this, "Add item", "Add", icon: Icon.Plus);
-        Update = new Route(this, "Update item", "Update", icon: Icon.Pen);
-        Delete = new Route(this, "Delete item", "Delete", icon: Icon.TrashCan);
-        Details = new Route(this, "Show details", "Details", icon: Icon.List);
+        Add = new Route(this, "Add item", "Add", icon: Icon.Plus, isNavigatable: false);
+        Update = new Route(this, "Update item", "Update", icon: Icon.Pen, isNavigatable: false);
+        Delete = new Route(this, "Delete item", "Delete", icon: Icon.TrashCan, isNavigatable: false);
+        Details = new Route(this, "Show details", "Details", icon: Icon.List, isNavigatable: false);
     }
 
     /// <inheritdoc/>

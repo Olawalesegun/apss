@@ -1,0 +1,38 @@
+﻿@{
+    var currentRoute = Context.GetCurrentRoute();
+}
+
+@if (currentRoute is not null && currentRoute is CrudRoute crudRoute)
+{
+    <nav class="navbar navbar-light bg-light navbar-expand-lg">
+        <div class="container-fluid justify-content-between">
+            <a class="navbar-brand" href="#">@crudRoute.Name</a>
+
+            <div class=" d-flex gap-2">
+                <div class="btn-group m-0">
+                    <input class="form-control rounded-start" type="search" placeholder="Search" aria-label="Search">
+                    <button type="button" class="btn btn-secondary">@Icon.Search.Render()</button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu  dropdown-menu-end p-3">
+                        @foreach (var prop in typeof(User).GetProperties().Select(p => p.Name))
+                        {
+                            <li>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        @prop
+                                    </label>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <button class="btn btn-primary" type="button">@Icon.Plus.Render()</button>
+            </div>
+        </div>
+    </nav>
+    <hr class="mt-0" />
+}
