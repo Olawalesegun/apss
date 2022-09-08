@@ -5,12 +5,9 @@
 }
 
 <div class="card mt-2 ">
-    <div class="d-inline">
-    </div>
     <div class="card-body">
         <div class="d-flex bg-primary text-white rounded align-items-center" style="line-height:40px !important">
-
-            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3 style="line-height:40px !important">Animal Information </h3>
+            <h3 style="line-height:40px !important">Animal Information </h3>
         </div>
         <table class="table user-view-table m-0 t ">
             <tbody>
@@ -49,13 +46,16 @@
                 <tr></tr>
             </tbody>
         </table>
-        <br />
-        <div cllass="d-inline pt-2">
-            <a id="III" class="btn btn-outline-dark   my-2  text-decoration-none mx-1 " asp-controller="Groups" asp-action="Index"><i class="fa-solid fa-arrow-left px-1"></i><span class="">Back </span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Add"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Product</span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Edit"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
-            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="AnimalGroups" asp-action="Groups" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
-            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="Products" asp-action="AllProducts"><span class="">Products </span> </a>
+        <div cllass="d-flex justify-content-between bg-primary  pt-2">
+            <div class="d-flex">
+                <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1 " asp-controller="Groups" asp-action="Index"><i class="fa-solid fa-arrow-left px-1"></i><span class="">Back </span> </a>
+            </div>
+            <div>
+                <a class="btn btn-outline-primary mx-1 pr-1 my-2" asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Add"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Product</span> </a>
+                <a class="btn btn-outline-primary mx-1 pr-1 my-2" asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Edit"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
+                <a class="btn btn-outline-danger mx-1 my-2 " asp-controller="AnimalGroups" asp-action="Groups" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
+                <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="Products" asp-action="AllProducts"><span class="">Products </span> </a>
+            </div>
         </div>
     </div>
 </div>
