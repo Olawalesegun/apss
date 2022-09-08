@@ -33,7 +33,7 @@ public sealed class UsersService : IUsersService
     #region Public Methods
 
     /// <inheritdoc/>
-    public async Task<User> CreateAsync(long accountId, string name)
+    public async Task<User> CreateAsync(long accountId, string name, UserStatus status)
     {
         var superAccount = await _uow.Accounts.Query()
             .Include(a => a.User)
@@ -50,7 +50,8 @@ public sealed class UsersService : IUsersService
         {
             Name = name,
             SupervisedBy = superAccount.User,
-            AccessLevel = superAccount.User.AccessLevel.NextLevelBelow()
+            AccessLevel = superAccount.User.AccessLevel.NextLevelBelow(),
+            UserStatus = status,
         };
 
         _uow.Users.Add(user);

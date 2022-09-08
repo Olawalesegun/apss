@@ -16,7 +16,7 @@ public interface IUsersService
     /// <param name="accountId">The id of the account of the user to add the new user under</param>
     /// <param name="name">The name of the user to be created</param>
     /// <returns>The created user object</returns>
-    Task<User> CreateAsync(long accountId, string name);
+    Task<User> CreateAsync(long accountId, string name, UserStatus status);
 
     /// <summary>
     /// Asynchronously gets a query for the users set
@@ -33,7 +33,7 @@ public interface IUsersService
     /// <param name="newStatus">The new status value</param>
     /// <returns></returns>
     Task<User> SetUserStatusAsync(long accountId, long userId, UserStatus newStatus);
-   
+
     /// <summary>
     /// Asynchronously updates a user
     /// </summary>
