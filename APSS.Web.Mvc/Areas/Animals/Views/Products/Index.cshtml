@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.AnimalProductDto>
+﻿@model IEnumerable<APSS.Web.Dtos.AnimalProductListDto>
 <partial name="_dataNavBar" />
 
 <!--table-->
@@ -63,7 +63,7 @@
 
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
                             <td class="text-break text-capitalize align-middle"> @item.Name</td>
-                            <td class="text-break text-capitalize align-middle">@item.Quantity</td>
+                            <td class="text-break text-capitalize align-middle">@item.Quantity @item.Unit.Name</td>
                             <td class="text-break text-capitalize align-middle">@item.PeriodTaken</td>
                             <td class="text-break text-capitalize align-middle">
                                 @item.CreatedAt

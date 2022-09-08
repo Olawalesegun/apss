@@ -24,8 +24,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> Index(long id)
         {
-            var animal = await (await _confirm.GetAllAnimalGroupsAsync(User.GetAccountId(), id)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
-            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(User.GetAccountId(), id)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
+            var animal = await (await _confirm.GetAllAnimalGroupsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
+            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
             var animalDto = new List<AnimalGroupConfirmDto>();
             var v = animal.FirstOrDefault();
             foreach (var a in animal)
@@ -105,14 +105,10 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> AnimalConfirm(long id)
+        public async Task<IActionResult> AnimalConfirm(long id, bool value)
         {
-            try
-            {
-                var animal = await _confirm.ConfirmAnimalGroup(10, id, false);
-                if (animal == null) return NotFound();
-            }
-            catch (Exception) { }
+            var animal = await _confirm.ConfirmAnimalGroup(User.GetAccountId(), id, value);
+
             TempData["Action"] = "Add Erea";
             TempData["success"] = $"{id } null";
             return RedirectToAction("Index");
@@ -125,6 +121,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> ConfirmProduct(long id, bool value)
         {
+            var confrom = await _confirm.ConfirmAnimalProduct(User.GetAccountId(), id, value);
             return RedirectToAction("Index");
         }
     }

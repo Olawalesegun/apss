@@ -15,11 +15,9 @@ namespace APSS.Web.Dtos
         [Required(ErrorMessage = "Name is Required")]
         public string Name { get; set; } = null!;
 
-        public int UnitId { get; set; }
-
         [Display(Name = "Unit ")]
         [Required(ErrorMessage = "Unit is Required ")]
-        public IEnumerable<AnimalProductUnit> Unit { get; set; } = new List<AnimalProductUnit>();
+        public AnimalProductUnit Unit { get; set; } = null!;
 
         [Display(Name = "Unit")]
         public AnimalProductUnit SingleUnit { get; set; } = new AnimalProductUnit();
@@ -36,9 +34,6 @@ namespace APSS.Web.Dtos
         [Display(Name = "Owner Name")]
         public string? Ownerby { get; set; }
 
-        public string? OwnerbyId { get; set; }
-
         public AnimalGroup Producer { get; set; } = null!;
-        public int ProducerId { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Animal Product Detials";
 }
 
-<div class="card mt-2 border-0">
+<div class="card mt-2 border-0 mx-0">
     <div class="card-body">
         <div class="d-flex mb-2">
             <h4 class="">Animal Product information </h4>
@@ -17,11 +17,11 @@
                 </tr>
                 <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m=>m.Quantity)</th>
-                    <td> @Model.Quantity</td>
+                    <td> @Model.Quantity @Model.Unit.Name</td>
                 </tr>
                 <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m=>m.UnitName)</th>
-                    <td> @Model.UnitName</td>
+                    <td> @Model.Unit.Name</td>
                 </tr>
                 <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
@@ -35,18 +35,24 @@
                     <th class="align-middle">@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
                     <td> @Model.ModifiedAt</td>
                 </tr>
+                <tr>
+                    <th>Producer Animal</th>
+                    <td> @Model.Producer.Name</td>
+                </tr>
             </tbody>
         </table>
         <br />
-        <div cllass="row d-inline d-flex justify-content-between bg-primary w-100">
-            <div class="col d-flex">
-                <a class="btn btn-outline-dark   mx-1 my-2" asp-controller="Products" asp-action="Index"><i class="fa-solid fa-arrow-left mx-2"></i><span>Back</span>  </a>
-            </div>
-            <div class="col d-flex">
-                <a class="btn btn-outline-primary mx-1 my-2" asp-route-id="@Model.Id" asp-controller="ProductExpense" asp-action="AddExpense"><i class="fa-solid fa-plus mx-2"></i><span>Add Expense </span> </a>
-                <a class="btn btn-outline-primary mx-1 my-2" asp-route-id="@Model.Id" asp-controller="ProductExpense" asp-action="Index"><i class=""></i><span>  All Expense </span> </a>
-                <a class="btn btn-outline-primary mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="Products" asp-action="Edit"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span> </a>
-                <a class="btn btn-outline-danger mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="ProductS" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+        <div class="d-inline">
+            <div class=" d-inline d-flex justify-content-between w-100">
+                <div class="">
+                    <a class="btn btn-outline-dark   mx-1 my-2" onclick="history.go(-1)"><i class="fa-solid fa-arrow-left me-2"></i><span>Back</span>  </a>
+                </div>
+                <div class="">
+                    <a class="btn btn-outline-primary mx-1 my-2 " asp-route-id="@Model.Id" asp-controller="Expenses" asp-action="Add"><i class="fa-solid fa-plus me-2"></i><span>Add Expense </span> </a>
+                    <a class="btn btn-outline-primary mx-1 my-2" href="@Url.Action("Index","Expenses",new { accountId=User.GetAccountId(),userId=@Model.Producer.OwnedBy.Id,productId=@Model.Id})"><i class="fa-solid fa-dollar-sign me-1"></i><span>  All Expense </span> </a>
+                    <a class="btn btn-outline-primary mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="Products" asp-action="Edit"> <i class="fa-solid fa-pen-to-square me-2"> </i><span>Edit</span> </a>
+                    <a class="btn btn-outline-danger mx-1 my-2" asp-route-Id="@Model.Id" asp-controller="ProductS" asp-action="Delete"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
+                </div>
             </div>
         </div>
     </div>

@@ -46,8 +46,9 @@
                         </table>
                         <br />
                         <div class="table-responsive  d-flex justify-content-end">
-                            @Html.ActionLink("Decline", "Confirmations", new { id=product.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
-                            <a role="button" class="btn btn-primary  mx-2  " asp-route-id="@product.Id" asp-controller="Confirmations" asp-action="AnimalConfirm"> Confirm <span><i class="fa-solid fa-check "></i></span></a>
+                            @Html.ActionLink("Decline", "AnimalConfirm", new { id=product.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                            @Html.ActionLink("Confirm", "AnimalConfirm", new { id=product.Id,value=true },new{@class="btn btn-danger text-white  shadow-0"})
+                            @*/ <a role="button" class="btn btn-primary  mx-2  " asp-route-id="@product.Id" asp-controller="Confirmations" asp-action="AnimalConfirm"> Confirm <span><i class="fa-solid fa-check "></i></span></a>*@
                         </div>
                     </div>
                 </div>
@@ -97,7 +98,8 @@
                         </table>
                         <br />
                         <div class=" mx-2 d-flex justify-content-end">
-                            @Html.ActionLink("Decline", "Confirmations", new { id=animal.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                            @Html.ActionLink("Decline", "ConfirmProduct", new { id=animal.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                            @Html.ActionLink("Confirm", "ConfirmProduct", new { id=animal.Id,value=true },new{@class="btn btn-danger text-white  shadow-0"})
                             <a role="button" class="btn btn-primary text-white mx-2  shadow-0" asp-route-id="@animal.Id" asp-controller="Confirmations" asp-action="AnimalConfirm"> Confirm <span><i class="fa-solid fa-check "></i></span></a>
                         </div>
                     </div>

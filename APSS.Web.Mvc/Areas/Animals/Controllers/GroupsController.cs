@@ -275,6 +275,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                  A.Quantity = animalGroupDto.Quantity;
                  A.Sex = (AnimalSex)animalGroupDto.Sex;
                  A.Name = animalGroupDto.Name;
+                 A.IsConfirmed = null;
              });
                 if (resultEdit == null) return View(animalGroupDto);
                 return RedirectToAction(nameof(Index));

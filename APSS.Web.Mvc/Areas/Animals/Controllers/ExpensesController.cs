@@ -2,6 +2,7 @@
 using APSS.Web.Dtos;
 using APSS.Domain.Services;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
@@ -15,9 +16,10 @@ namespace APSS.Web.Mvc.Areas.Controllers
             _pes = pes;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(long accountId, long userId, long productId)
         {
-            var result = await (await _pes.GetProductExpenses(3, 3, 10)).AsAsyncEnumerable().ToListAsync();
+            var result = await (await _pes.GetProductExpenses(accountId, userId, productId)).AsAsyncEnumerable().ToListAsync();
             var expense = new List<ProductExpenseDto>();
             foreach (var item in result)
             {
@@ -27,15 +29,16 @@ namespace APSS.Web.Mvc.Areas.Controllers
                     Type = item.Type,
                     CreatedAt = item.CreatedAt,
                     ModifiedAt = item.ModifiedAt,
-                    Id = item.Id
+                    Id = item.Id,
                 });
             }
             return View(expense);
         }
 
-        public async Task<IActionResult> ListExpense(long Id)
+        [HttpGet]
+        public async Task<IActionResult> ListExpense(long accountId, long userId, long productId)
         {
-            var result = await (await _pes.GetProductExpenses(3, 3, Id)).AsAsyncEnumerable().ToListAsync();
+            var result = await (await _pes.GetProductExpenses(3, 3, productId)).AsAsyncEnumerable().ToListAsync();
             var expence = new List<ProductExpenseDto>();
             if (result.Any())
             {
@@ -51,11 +54,6 @@ namespace APSS.Web.Mvc.Areas.Controllers
                     });
                 }
             }
-            else
-            {
-                return BadRequest();
-            }
-            //var expense = new List<ProductExpenseDto>();
             return View(expence);
         }
 
@@ -70,19 +68,11 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(ProductExpenseDto productExpense)
         {
-            try
-            {
-                var add = await _pes.CreateProductExpenseAsync(3,
-                    productExpense.ProductId,
-                    productExpense.Type,
-                    productExpense.Price);
-                if (add == null) return View("Error");
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            var add = await _pes.CreateProductExpenseAsync(3,
+                productExpense.ProductId,
+                productExpense.Type,
+                productExpense.Price);
+            return LocalRedirect(Routes.Dashboard.Animals.Products.FullPath);
         }
 
         public ActionResult Details(long Id)
@@ -112,60 +102,33 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(ProductExpenseDto productExpense)
         {
-            try
-            {
-                var update = await _pes.UpdateProductExpensesAsync(3, productExpense.ProductId, expense =>
-                  {
-                      expense.Price = productExpense.Price;
-                      expense.Type = productExpense.Type;
-                  });
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View(productExpense);
-            }
+            var update = await _pes.UpdateProductExpensesAsync(3, productExpense.ProductId, expense =>
+              {
+                  expense.Price = productExpense.Price;
+                  expense.Type = productExpense.Type;
+              });
+            return LocalRedirect(Routes.Dashboard.Animals.Products.FullPath);
         }
 
-        // GET: landProductExpense/Delete landProductExpense
         public async Task<ActionResult> Delete(long id)
         {
-            try
-            {
-                var delete = await (await _pes.GetExpense(3, id)).AsAsyncEnumerable().ToListAsync();
-                var single = delete.FirstOrDefault();
-                if (single != null)
-                {
-                    var expense = new ProductExpenseDto
-                    {
-                        Price = single!.Price,
-                        Id = single.Id,
-                        Type = single.Type,
-                    };
-                    return View(expense);
-                }
-                return View();
-            }
-            catch (Exception)
-            {
-            }
+            var delete = await (await _pes.GetExpense(3, id)).AsAsyncEnumerable().ToListAsync();
+            var single = delete.FirstOrDefault();
 
-            return View();
+            var expense = new ProductExpenseDto
+            {
+                Price = single!.Price,
+                Id = single.Id,
+                Type = single.Type,
+            };
+            return View(expense);
         }
 
-        // POST: landProductExpense/Delete landProductExpense
         [HttpGet]
         public async Task<ActionResult> DeleteConfirm(long id)
         {
-            try
-            {
-                await _pes.RemoveProductExpenseAsync(3, id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            await _pes.RemoveProductExpenseAsync(User.GetAccountId(), id);
+            return LocalRedirect(Routes.Dashboard.Animals.Products.FullPath);
         }
     }
 }
