@@ -97,10 +97,10 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> AddAccount(long id)
         {
-            var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
+            // var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
 
             AccountDto result = new AccountDto();
-            result.UserId = account.Id;
+            result.UserId = id;
             return View(result);
         }
 
@@ -121,7 +121,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             TempData["Action"] = "Employee Management";
             TempData["success"] = "Add Employee is Successfully";
 
-            return View(accountDto);
+            return LocalRedirect(Routes.Dashboard.Users.Accounts.FullPath);
         }
 
         /*     [ApssAuthorized(AccessLevel.Group
@@ -199,14 +199,6 @@ namespace APSS.Web.Mvc.Areas.Controllers
              | AccessLevel.Governorate
              | AccessLevel.Directorate
              | AccessLevel.Root, PermissionType.Delete)]*/
-
-        public async Task<IActionResult> ConfirmDeleteAccount(long id)
-        {
-            await _accountsService.RemoveAsync(User.GetAccountId(), id);
-            TempData["Action"] = "";
-            TempData["success"] = " ";
-            return LocalRedirect(Routes.Dashboard.Users.FullPath);
-        }
 
         /*  [ApssAuthorized(AccessLevel.Group
              | AccessLevel.District
