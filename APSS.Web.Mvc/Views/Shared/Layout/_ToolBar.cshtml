@@ -9,12 +9,12 @@
             <a class="navbar-brand" href="#">@crudRoute.Name</a>
 
             <div class=" d-flex gap-2">
-                <div class="btn-group">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <button type="button" class="btn btn-secondary">@Icon.Search.Render()</button>
-                </div>
+                <form class="btn-group" method="get">
+                    <input class="form-control" type="search" placeholder="Search" name="query" aria-label="Search">
+                    <button type="submit" class="btn btn-secondary">@Icon.Search.Render()</button>
+                </form>
 
-                <button class="btn btn-primary" type="button">@Icon.Plus.Render()</button>
+                <a class="btn btn-primary" href="@currentRoute.FullPath/Add">@Icon.Plus.Render()</a>
             </div>
         </div>
     </nav>
