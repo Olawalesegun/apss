@@ -63,7 +63,7 @@ public sealed class UsersService : IUsersService
     public async Task<IQueryBuilder<User>> GetSubuserAsync(long accountId)
     {
         var account = await _uow.Accounts.Query()
-            .Include(u=>u.User)
+            .Include(u => u.User)
             .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
         return _uow.Users.Query().Where(u => u.SupervisedBy != null && u.SupervisedBy.Id == account.User.Id);
@@ -124,6 +124,11 @@ public sealed class UsersService : IUsersService
 
     public async Task<IQueryBuilder<User>> GetUserAsync(long accountId, long userId)
     {
+        var myAccount = await _uow.Accounts.Query().Include(u => u.User).FindAsync(accountId);
+
+        if (myAccount.User.Id == userId)
+            return _uow.Users.Query().Where(u => u.Id == userId);
+
         await _permissionsSvc.ValidateUserPatenthoodAsync(accountId, userId, PermissionType.Read);
         return _uow.Users.Query().Where(u => u.Id == userId);
     }
