@@ -322,7 +322,6 @@ namespace APSS.Web.Mvc.Areas.Controllers
         public async Task<IActionResult> test()
         {
             var accounts = await _uow.Accounts.Query().Include(u => u.User).AsAsyncEnumerable().ToListAsync();
-
             return View(accounts);
         }
     }
