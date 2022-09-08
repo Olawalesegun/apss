@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 using APSS.Domain.Entities;
 
 namespace APSS.Web.Dtos;
@@ -19,6 +18,8 @@ public class LandProductDto : ProductDto
     public long UnitId { get; set; }
 
     [Display(Name = "Quantity")]
+    [Required(ErrorMessage = "Quantity is required")]
+    [Range(1, double.MaxValue, ErrorMessage = " must be more than 1")]
     public double Quantity { get; set; }
 
     [Display(Name = "CropName ")]
@@ -49,6 +50,9 @@ public class LandProductDto : ProductDto
     public string Insecticide { get; set; } = null!;
 
     [Display(Name = " Harvest Start")]
+    [DataType(DataType.Date)]
+    [Required(ErrorMessage = "Required")]
+    [CustomValidation.StartDate(ErrorMessage = "back date is not allowd")]
     public DateTime HarvestStart { get; set; }
 
     [Display(Name = "Harvest End")]
