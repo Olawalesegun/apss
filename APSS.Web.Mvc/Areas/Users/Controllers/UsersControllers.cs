@@ -29,6 +29,9 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             List<UserDto> userDto = new List<UserDto>();
             var user = await (await _userService.GetSubuserAsync((int)User.GetAccountId())).AsAsyncEnumerable().ToListAsync();
+            var myUser = await (await _userService.GetUserAsync(User.GetAccountId(), User.GetUserId())).AsAsyncEnumerable().ToListAsync();
+            user.Insert(0, myUser.FirstOrDefault()!);
+
             foreach (var userDtoItem in user)
             {
                 userDto.Add(new UserDto
