@@ -5,6 +5,7 @@ using APSS.Web.Dtos.ValueTypes;
 using AutoMapper;
 using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
+using APSS.Web.Mvc.Auth;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
@@ -21,10 +22,10 @@ namespace APSS.Web.Mvc.Areas.Controllers
             _mappper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(long id)
         {
-            var animal = await (await _confirm.GetAllAnimalGroupsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
-            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
+            var animal = await (await _confirm.GetAllAnimalGroupsAsync(User.GetAccountId(), id)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
+            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(User.GetAccountId(), id)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
             var animalDto = new List<AnimalGroupConfirmDto>();
             var v = animal.FirstOrDefault();
             foreach (var a in animal)
@@ -96,7 +97,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (value)
                 {
-                    var animal = await _confirm.ConfirmAnimalGroup(10, id, value);
+                    var animal = await _confirm.ConfirmAnimalGroup(User.GetAccountId(), id, value);
                     if (animal == null) return NotFound();
                 }
             }
