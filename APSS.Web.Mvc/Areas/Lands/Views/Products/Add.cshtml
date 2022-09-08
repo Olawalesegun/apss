@@ -40,27 +40,23 @@
                 <!-- row 2 -->
                 <div class="row mb-lg-4 d-flex justify-content-between  ">
                     <div class="col-sm-6 mb-3 flex-column form-group">
-                        <div class="input-group">
+                        <div class="input-group has-validation">
                             <span class="input-group-text">@@</span>
                             <div class="form-floating col">
-                                <input type="text" asp-for="CropName" class="form-control" placeholder=" " />
+                                <input type="text" asp-for="CropName" class="form-control" placeholder=" " aria-describedby="CropNameValidation" />
                                 <label class="form-label textOverflow" asp-for="CropName"></label>
-                                <div class="invalid-feedback">
-                                    <span asp-validation-for="CropName"></span>
-                                </div>
                             </div>
+                            <span id="CropNameValidation" class="d-block invalid-feedback" asp-validation-for="CropName"></span>
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3 flex-column form-group">
-                        <div class="input-group">
+                        <div class="input-group has-validation">
                             <span class="input-group-text">@@</span>
                             <div class="form-floating col">
-                                <input type="text" asp-for="Quantity" class="form-control" />
+                                <input type="text" asp-for="Quantity" class="form-control" placeholder=" " aria-describedby="QuantityValidation" />
                                 <label asp-for="Quantity" class="form-label textOverflow"></label>
-                                <div class="invalid-feedback">
-                                    <span asp-validation-for="Quantity"></span>
-                                </div>
                             </div>
+                            <span id="QuantityValidation" class="d-block invalid-feedback" asp-validation-for="Quantity"></span>
                         </div>
                     </div>
                 </div>
@@ -68,21 +64,23 @@
                 <div class="row mb-lg-4 justify-content-between  ">
 
                     <div class="col-sm-6 mb-3 flex-column form-group ">
-                        <div class="input-group">
+                        <div class="input-group has-validation">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <input type="date" asp-for="HarvestStart" class="form-control" placeholder=" " />
+                                <input type="date" asp-for="HarvestStart" class="form-control" placeholder=" " aria-describedby="harvestSValidation" />
                                 <label asp-for="HarvestStart" class="form-label textOverflow"></label>
                             </div>
+                            <span id="harvestSValidation" class="d-block invalid-feedback" asp-validation-for="HarvestStart"></span>
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3 flex-column form-group d-flex">
-                        <div class="input-group">
+                        <div class="input-group has-validation">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <input type="date" asp-for="HarvestEnd" class="form-control" placeholder=" " />
+                                <input type="date" asp-for="HarvestEnd" class="form-control" placeholder=" " aria-describedby="harvestEValidation" />
                                 <label asp-for="HarvestEnd" class="form-label textOverflow"></label>
                             </div>
+                            <span id="harvestEValidation" class="d-block invalid-feedback" asp-validation-for="HarvestEnd"></span>
                         </div>
                     </div>
                 </div>
@@ -90,22 +88,24 @@
                 <div class="row justify-content-between ">
                     <!-- 1 -->
                     <div class=" col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text"><i class="fa-light fa-hose"></i></span>
                             <div class="form-floating col">
-                                <input type="text" asp-for="IrrigationMethod" class="form-control" placeholder=" " />
+                                <input type="text" asp-for="IrrigationMethod" class="form-control" placeholder=" " aria-describedby="irrigationMValidation" />
                                 <label asp-for="IrrigationMethod" class="form-label textOverflow"></label>
                             </div>
+                            <span id="irrigationMValidation" class="d-block invalid-feedback" asp-validation-for="IrrigationMethod"></span>
                         </div>
                     </div>
                     <!-- 2 -->
                     <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                             <div class="form-floating col">
-                                <input type="text" class="form-control" asp-for="StoringMethod" placeholder=" " />
+                                <input type="text" class="form-control" asp-for="StoringMethod" placeholder=" " aria-describedby="storingValidation" />
                                 <label asp-for="StoringMethod" class="form-label"></label>
                             </div>
+                            <span id="storingValidation" class="d-block invalid-feedback" asp-validation-for="StoringMethod"></span>
                         </div>
                     </div>
                 </div>
@@ -116,9 +116,10 @@
                         <div class="input-group">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <input type="text" asp-for="Fertilizer" class="form-control" placeholder=" " />
+                                <input type="text" asp-for="Fertilizer" class="form-control" placeholder=" " aria-describedby="FertilizerValidation" />
                                 <label asp-for="Fertilizer" class="form-label"></label>
                             </div>
+                            <span id="FertilizerValidation" class="d-block invalid-feedback" asp-validation-for="Fertilizer"></span>
                         </div>
                     </div>
                     <!-- 2 -->
@@ -126,9 +127,10 @@
                         <div class="input-group">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <input type="text" asp-for="Category" class="form-control" placeholder=" " />
+                                <input type="text" asp-for="Category" class="form-control" placeholder=" " aria-describedby="CategoryValidation" />
                                 <label asp-for="Category" class="form-label"></label>
                             </div>
+                            <span id="CategoryValidation" class="d-block invalid-feedback" asp-validation-for="Category"></span>
                         </div>
                     </div>
                 </div>
@@ -140,9 +142,10 @@
                         <div class="input-group">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <input type="text" asp-for="Insecticide" class="form-control" placeholder=" " />
+                                <input type="text" asp-for="Insecticide" class="form-control" placeholder=" " aria-describedby="InsecticideValidation" />
                                 <label asp-for="Insecticide" class="form-label"></label>
                             </div>
+                            <span id="InsecticideValidation" class="d-block invalid-feedback" asp-validation-for="Insecticide"></span>
                         </div>
                     </div>
                     <!-- 2 -->
@@ -150,9 +153,10 @@
                         <div class="input-group">
                             <span class="input-group-text">#</span>
                             <div class="form-floating col">
-                                <input type="number" class="form-control" asp-for="IrrigationCount" placeholder=" " />
+                                <input type="number" class="form-control" asp-for="IrrigationCount" placeholder=" " aria-aria-describedby="IrrigationCValidation" />
                                 <label asp-for="IrrigationCount" class="form-label"></label>
                             </div>
+                            <span id="IrrigationCValidation" class="d-block invalid-feedback" asp-validation-for="IrrigationCount"></span>
                         </div>
                     </div>
                 </div>
