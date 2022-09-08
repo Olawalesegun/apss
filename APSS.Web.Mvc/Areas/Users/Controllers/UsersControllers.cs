@@ -9,13 +9,13 @@ using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
 using CustomClaims = APSS.Web.Mvc.Auth.CustomClaims;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
     [Area(Areas.Users)]
     public class UsersController : Controller
     {
-        private List<UserDto> _userDtos;
         private readonly IUsersService _userService;
         private readonly IUnitOfWork _uow;
 
@@ -43,27 +43,6 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(userDto);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Index(string searchString, string searchBy)
-        {
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                searchString = searchString.Trim();
-                var result = new List<UserDto>();
-                if (searchBy == "2")
-                {
-                    result = _userDtos.Where(u => u.Id == Convert.ToInt64(searchString)).ToList();
-                    return View(result);
-                }
-                else
-                {
-                    result = _userDtos.Where(u => u.Name.Contains(searchString)).ToList();
-                }
-            }
-            var user = new List<User>();
-            return View(user);
-        }
-
         public async Task<IActionResult> AddUser()
         {
             var userDto = new UserDto();
@@ -77,7 +56,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var add = await _userService.CreateAsync(User.GetAccountId(), user.Name);
                     TempData["Action"] = "Add Erea";
@@ -87,7 +66,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             }
             catch (Exception)
             {
-                return Problem("Some Thing error");
+                return LocalRedirect(Routes.Dashboard.Users.FullPath);
             }
             return View(user);
         }
@@ -100,7 +79,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> UserDetials(int id)
         {
-            var user = await (await _userService.GetUserAsync(1, User.GetAccountId())).AsAsyncEnumerable().ToListAsync();
+            var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
             if (user == null) return NotFound();
             var users = user.FirstOrDefault();
             var userDto = new UserDto
@@ -117,111 +96,59 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> DeleteUser(long id)
         {
-            try
+            var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
+            if (user == null) return RedirectToAction(nameof(Index));
+            var users = user.FirstOrDefault();
+            var userDto = new UserDto
             {
-                if (id > 0)
-                {
-                    var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
-                    if (user == null) return RedirectToAction(nameof(Index));
-                    var users = user.FirstOrDefault();
-                    var userDto = new UserDto
-                    {
-                        Name = users!.Name,
-                        Id = users.Id,
-                        AccessLevel = users.AccessLevel,
-                        userStatus = users.UserStatus,
-                        CreatedAt = users.CreatedAt,
-                    };
-                    return View(userDto);
-                }
-                else
-                {
-                    TempData["Action"] = "Delete Erea";
-                    TempData["success"] = "Erea Id Is Null!!!";
-                    return RedirectToAction("Index");
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return RedirectToAction(nameof(Index));
+                Name = users!.Name,
+                Id = users.Id,
+                AccessLevel = users.AccessLevel,
+                userStatus = users.UserStatus,
+                CreatedAt = users.CreatedAt,
+            };
+            return View(userDto);
         }
 
         public async Task<IActionResult> ConfirmDeleteUser(long id)
         {
-            try
-            {
-                if (id > 0)
-                {
-                    var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
-                    if (user == null) return NotFound();
-                    var delete = await _userService.SetUserStatusAsync(1, id, UserStatus.Terminated);
-                    if (delete == null) return RedirectToAction(nameof(Index));
-                    TempData["Action"] = "Delete Erea";
-                    TempData["success"] = "Erea Deleted Successfully";
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    TempData["Action"] = "Delete Erea";
-                    TempData["success"] = "Erea Id Is Null!!!";
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (Exception) { }
-            var userDto = new UserDto();
-            return View(userDto);
+            var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
+            if (user == null) return NotFound();
+            var delete = await _userService.SetUserStatusAsync(1, id, UserStatus.Terminated);
+            if (delete == null) return RedirectToAction(nameof(Index));
+            TempData["Action"] = "Delete Erea";
+            TempData["success"] = "Erea Deleted Successfully";
+            return LocalRedirect(Routes.Dashboard.Users.FullPath);
         }
 
         public async Task<IActionResult> EditUser(long id)
         {
-            try
+            var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
+            if (user == null) return RedirectToAction(nameof(Index));
+            var users = user.FirstOrDefault();
+            var userDto = new UserDto
             {
-                if (id > 0)
-                {
-                    var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
-                    if (user == null) return RedirectToAction(nameof(Index));
-                    var users = user.FirstOrDefault();
-                    var userDto = new UserDto
-                    {
-                        Name = users!.Name,
-                        Id = users.Id,
-                        userStatus = users.UserStatus,
-                        CreatedAt = users.CreatedAt,
-                    };
-                    return View(userDto);
-                }
-            }
-            catch (Exception) { }
-            return RedirectToAction(nameof(Index));
+                Name = users!.Name,
+                Id = users.Id,
+                userStatus = users.UserStatus,
+                CreatedAt = users.CreatedAt,
+            };
+            return View(userDto);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(UserDto userDto)
         {
-            try
-            {
-                var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
-                     {
-                         p.Name = userDto.Name;
-                         p.UserStatus = userDto.userStatus;
-                     });
-                if (edit == null)
-                {
-                    TempData["Action"] = "Update Erea";
-                    TempData["success"] = "Update Failed!!!";
-                }
-                else
-                {
-                    TempData["Action"] = "Update Erea";
-                    TempData["success"] = "Erea Updated Successfully";
-                }
+            var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
+                 {
+                     p.Name = userDto.Name;
+                     p.UserStatus = userDto.userStatus;
+                 });
+            TempData["Action"] = "Update Erea";
+            TempData["success"] = "Update Failed!!!";
 
-                return RedirectToAction("Index");
-            }
-            catch (Exception) { }
-            return View(userDto);
+            return LocalRedirect(Routes.Dashboard.Users.FullPath);
         }
     }
 }
