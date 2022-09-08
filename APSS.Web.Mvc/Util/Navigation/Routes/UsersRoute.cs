@@ -1,13 +1,18 @@
 ﻿using APSS.Web.Mvc.Areas.Controllers;
+using APSS.Web.Mvc.Areas.Users.Controllers;
 
 namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
-public sealed class UsersRoute : Route
+public sealed class UsersRoute : CrudRoute
 {
-    public UsersRoute(IRoute parent) : base(parent, "Users", "Users", icon: Icon.Users)
+    public UsersRoute(IRoute parent) : base(parent, "User Managment", "Users", icon: Icon.Users)
     {
-        Accounts = FromController<AccountsController>(icon: Icon.Key);
+        Users = FromCrudController<UsersController>(icon: Icon.Key);
+        Accounts = FromCrudController<AccountsController>(icon: Icon.Key);
     }
 
-    public IRoute Accounts { get; init; }
+    public CrudRoute Users { get; init; }
+    public CrudRoute Accounts { get; init; }
+
+    public override IRoute DefaultRoute => Users;
 }
