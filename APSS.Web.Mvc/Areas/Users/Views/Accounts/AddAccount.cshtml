@@ -1,11 +1,11 @@
 ﻿@model APSS.Web.Dtos.AccountDto
  @await Html.PartialAsync("_requiredStyle.cshtml")
-<div class="row col-sm-12 col-lg-5 d-flex mx-sm-2 m-lg-4 border rounded p-3">
+<div class="row col-sm-12 col-lg-8 d-flex mx-sm-2   p-3">
     <form class=" mt-2 needs-validation" method="post" asp-controller="Accounts" asp-action="AddAccount" novalidate>
         <div asp-validation-summary="ModelOnly"></div>
         <input type="hidden" asp-for="UserId" />
         <!-- 2 column puts for the National number and Phome Number-->
-        <div class="center d-flex justify-content-center mb-2 ">
+        <div class="center d-flex  mb-2 ">
             <h3 class="text-muted">
                 Add New Employee
             </h3>
@@ -29,13 +29,18 @@
                 <i class="fa-solid fa-key"></i>
             </span>
             <div class="form-floating flex-grow-1">
-                <input type="password" id="id_password" asp-for="PasswordHash" min="8" placeholder="Password" aria-describledby="Password" class="form-control " required />
+                <input type="password" id="id_password" asp-for="PasswordHash" placeholder="Password" aria-describledby="Password" class="form-control " />
                 <label class="form-label" asp-for="PasswordHash"></label>
             </div>
             <div class="input-group-text"><i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i></div>
             <span class="d-block invalid-feedback" id="Password" asp-validation-for="PasswordHash"></span>
         </div>
-        <div class=" mb-3 mt-4 ">
+        <div class="mb-1 mt-3">
+            <h5>
+                @Html.DisplayNameFor(m=>m.permissionType)
+            </h5>
+        </div>
+        <div class=" mb-3 ">
             <div class="input-group d-flex justify-content-between">
                 <div class="form-check  ">
                     <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Read" id="" value="true" checked />
