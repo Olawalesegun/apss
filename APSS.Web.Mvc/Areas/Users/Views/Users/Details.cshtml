@@ -17,20 +17,20 @@
                     <td>@Model.ModifiedAt</td>
                 </tr>
                 <tr>
-                    <th class="align-middle">@Html.DisplayNameFor(m=>m.userStatus)  </th>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.UserStatus)  </th>
 
                     @{
-                        if (@Model.userStatus == APSS.Domain.Entities.UserStatus.Active)
+                        if (@Model.UserStatus == APSS.Domain.Entities.UserStatus.Active)
                         {
                             <td>
-                                <span class="fa fa-check text-primary mx-1"></span> @Model.userStatus
+                                <span class="fa fa-check text-primary mx-1"></span> @Model.UserStatus
                             </td>
                         }
 
                         else
                         {
                             <td>
-                                @Model.userStatus
+                                @Model.UserStatus
                             </td>
                         }
                     }

@@ -1,0 +1,80 @@
+﻿@model AddUserForm
+
+<!-- Modal -->
+
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Users.Users.Add.FullPath" asp-antiforgery="true" novalidate>
+    <div class="d-flex mt-5">
+
+    </div>
+    <div class="modal fade" id="addUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Add a new user</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- User name -->
+                    <div class="input-group has-validation mb-3">
+                        <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                        <div class="form-floating flex-grow-1">
+                            <input type="text" class="form-control" placeholder="User name" asp-for="Name" aria-describedby="userNameValidation">
+                            <label>User name</label>
+                        </div>
+                        <span id="userNameValidation" class="d-block invalid-feedback" asp-validation-for="Name"></span>
+                    </div>
+
+                    <!-- Enabled check -->
+                    <div class="form-check flex-grow-1">
+                        <input class="form-check-input" type="checkbox" id="enabledCheck" asp-for="IsActive">
+                        <label class="form-check-label" for="enabledCheck">Enabled</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Users.Users.FullPath">Cancel</a>
+                    
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section scripts {
+    <script>
+
+        $(window).on('load', function () {
+            $('#addUserModal').modal('show');
+        });
+
+    </script>
+}
+
+    @*
+<h4 class="my-3">ADD A NEW USER</h4>
+
+@await Html.PartialAsync("_UnhandledExceptionMessage")
+
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Users.Users.Add" asp-antiforgery="true" novalidate>
+    <!-- User name -->
+    <div class="input-group has-validation mb-3">
+        <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+        <div class="form-floating flex-grow-1">
+            <input type="text" class="form-control" placeholder="User name" asp-for="Name" pattern="^[0-9]{6,}$" aria-describedby="userNameValidation">
+            <label>User name</label>
+        </div>
+        <span id="userNameValidation" class="d-block invalid-feedback" asp-validation-for="Name"></span>
+    </div>
+
+    <div class="d-flex mt-5">
+        <!-- Enabled check -->
+        <div class="form-check flex-grow-1">
+            <input class="form-check-input" type="checkbox" id="enabledCheck" asp-for="IsActive">
+            <label class="form-check-label" for="enabledCheck">Enabled</label>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary px-3">Add</button>
+    </div>
+</form>*@
