@@ -262,7 +262,7 @@ public class AnimalService : IAnimalService
             .FindAsync(animalProductId);
         var farmer = await _uow.Users.Query().Include(a => a.Accounts).FindAsync(animalProduct.Producer.OwnedBy.Id);
 
-        await _permissionsService.ValidateUserPatenthoodAsync(accountId, animalProductId, PermissionType.Update);
+        await _permissionsService.ValidateUserPatenthoodAsync(accountId, farmer.Id, PermissionType.Update);
 
         if (isConfirm) _uow.AnimalProducts.Confirm(animalProduct);
         else _uow.AnimalProducts.Decline(animalProduct);
