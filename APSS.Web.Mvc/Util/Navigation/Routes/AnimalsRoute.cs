@@ -1,5 +1,4 @@
 ﻿using APSS.Web.Mvc.Areas.Controllers;
-using APSS.Web.Mvc.Controllers;
 
 namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
