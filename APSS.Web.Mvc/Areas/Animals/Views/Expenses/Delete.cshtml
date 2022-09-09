@@ -1,0 +1,33 @@
+﻿@model APSS.Web.Dtos.ProductExpenseDto
+@{
+    ViewData["title"] = "صفحة حذف التكلفة";
+}
+
+<div class="card mt-2 border-0">
+    <div class="card-body">
+        <div class="d-flex mb-3"><h4> Confirm Deletion </h4> </div>
+        <table class="table user-view-table m-0 border">
+            <tbody style="font-size:14px">
+                <tr class="">
+                    <td>@Html.DisplayNameFor(t => t.Id)</td>
+                    <td>@Model?.Id</td>
+                </tr>
+                <tr class="">
+                    <td>@Html.DisplayNameFor(t => t.Type)</td>
+                    <td>@Model?.Type</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(p => p.Price)</td>
+                    <td>@Model?.Price</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class="d-flex justify-content-end">
+            <div class=" d-inline pt-2">
+                <a class="btn btn-outline-dark mx-3 px-5" onclick="history.back()">Back</a>
+                <a class="btn btn-danger btn-rounded px-5 " asp-route-Id="@Model?.Id" asp-controller="Expenses" asp-action="DeleteConfirm">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>

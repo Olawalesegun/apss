@@ -15,11 +15,12 @@ namespace APSS.Web.Dtos
         [Required(ErrorMessage = "Name is Required")]
         public string Name { get; set; } = null!;
 
-        public int UnitId { get; set; }
-
         [Display(Name = "Unit ")]
         [Required(ErrorMessage = "Unit is Required ")]
-        public IEnumerable<AnimalProductUnit> Unit { get; set; } = new List<AnimalProductUnit>();
+        public AnimalProductUnit Unit { get; set; } = null!;
+
+        [Display(Name = "Unit")]
+        public AnimalProductUnit SingleUnit { get; set; } = new AnimalProductUnit();
 
         [Display(Name = "Quantity")]
         [Required(ErrorMessage = "Quantity is Required")]
@@ -28,10 +29,11 @@ namespace APSS.Web.Dtos
         [Display(Name = "Period Taken ")]
         public TimeSpan PeriodTaken { get; set; }
 
-        [Display(Name = "Unit Name")]
-        public string UnitName { get; set; }
+        public string? UnitName { get; set; }
 
-        public AnimalGroupDto Producer { get; set; } = null!;
-        public int ProducerId { get; set; }
+        [Display(Name = "Owner Name")]
+        public string? Ownerby { get; set; }
+
+        public AnimalGroup Producer { get; set; } = null!;
     }
 }

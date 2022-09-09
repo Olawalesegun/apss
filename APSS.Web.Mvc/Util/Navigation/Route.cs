@@ -7,10 +7,10 @@ public class Route : IRoute
     private readonly IList<IRoute> _children;
     private readonly string _fullPath;
     private readonly Icon _icon;
+    private readonly bool _isNavigatable;
     private readonly string _name;
     private readonly IRoute? _parent;
     private readonly string _pathSegment;
-    private readonly bool _isNavigatable;
 
     #endregion Fields
 
@@ -53,10 +53,16 @@ public class Route : IRoute
     public IList<IRoute> Children => _children;
 
     /// <inheritdoc/>
+    public virtual IRoute DefaultRoute => this;
+
+    /// <inheritdoc/>
     public string FullPath => _fullPath;
 
     /// <inheritdoc/>
     public Icon Icon => _icon;
+
+    /// <inheritdoc/>
+    public bool IsNavigatable => _isNavigatable;
 
     /// <inheritdoc/>
     public string Name => _name;
@@ -67,13 +73,14 @@ public class Route : IRoute
     /// <inheritdoc/>
     public string PathSegment => _pathSegment;
 
-    /// <inheritdoc/>
-    public virtual IRoute DefaultRoute => this;
-
-    /// <inheritdoc/>
-    public bool IsNavigatable => _isNavigatable;
-
     #endregion Properties
+
+    #region Public Methods
+
+    /// <inheritdoc/>
+    public override string ToString() => FullPath;
+
+    #endregion Public Methods
 
     #region Protected Methods
 

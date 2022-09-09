@@ -33,46 +33,49 @@
             <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-people-roof"></i></span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Family"  asp-for="Family" >
-                    <label asp-for="Family"></label>
+                    <input type="text" class="form-control" placeholder="Family"  asp-for="FamilyName" >
+                    <label asp-for="FamilyName"></label>
                 </div>
-                <span  class="d-block invalid-feedback" asp-validation-for="Family"></span>
+                <span  class="d-block invalid-feedback" asp-validation-for="FamilyName"></span>
             </div>
-
+            <input type="number" asp-for="FamilyId" hidden/>
 
             <!-- Text input for job -->
+               <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="Job"  asp-for="Job" >
                     <label asp-for="Job"></label>
                 </div>
-              
+              </div>
             <!-- Text input for phonenumber -->
+               <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-phone-flip"></i></span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="Phone Number" asp-for="PhonNumber" >
                     <label asp-for="PhonNumber"></label>
                 </div>
-               
+               </div>
 
             <!-- Text input for NationalId -->
+             <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="National ID"  asp-for="NationalId" >
                     <label asp-for="NationalId"></label>
                 </div>
-
+                </div>
             <!-- Text input for DateOfBirth -->
+            <div class="input-group has-validation mb-3">
             <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
             <div class=" datepicker input-group.date-p form-floating flex-grow-1">
                 <label class="form-label" asp-for="DateOfBirth"></label>
-                <input type="date" id="sandbox-container-p" placeholder="Birth Date" asp-for="DateOfBirth"  class="form-control" />
+                <input type="date" id="sandbox-container-p"  asp-for="DateOfBirth"  class="form-control" />
             </div>
-
+            </div>
             <!-- Gender input -->
-            <div class="input-group has-validation mb-3">
-            <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
-                <label asp-for="Sex"></label>
+            <div class="input-group has-validation">
+                <label asp-for="Sex" class="form-label"></label>
             @foreach (var value in Enum.GetValues(typeof(SexDto)))
             {
                 @if (value.ToString() == SexDto.Female.ToString())
@@ -95,7 +98,7 @@
 
             <!-- Social Status input -->
             <div class="form-check mt-3">
-                <label asp-for="SocialStatus"></label>
+                <label asp-for="SocialStatus" class="form-label"></label>
 
             <select asp-for="SocialStatus"
             asp-items="Html.GetEnumSelectList<SocialStatusDto>()"
@@ -103,24 +106,21 @@
             </select>
           </div>
 
-           <div class="form-check flex-grow-1">
-                    <input class="form-check-input" type="checkbox"  asp-for="Isprovider">
+           <div class="form-check my-4 flex-grow-1">
+                    <input class="form-check-input" type="checkbox"  asp-for="Isparent">
                     <label class="form-check-label" asp-for="Isparent"> </label>
                 </div> 
 
-                 <div class="form-check flex-grow-1">
+                 <div class="form-check my-4 flex-grow-1">
                     <input class="form-check-input" type="checkbox"  asp-for="Isprovider">
-                    <label class="form-check-label" asp-for="Isparent"> </label>
+                    <label class="form-check-label" asp-for="Isprovider"> </label>
                 </div> 
 
 
             <!-- Submit button -->
-            <div class="d-inline">
-                <button class="btn btn-primary mt-4 mx-1" type="submit"> 
-                    <i class="fa-solid fa-pen-to-square fa-lg mx-2"></i><span>Edit</span> 
-                </button>
-            <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
-
+            <div class="mb-4  mt-4">
+                <button type="submit" class="btn btn-primary "> <i class="fa-solid fa-pen-to-square fa-lg mx-2"></i><span>Edit</span> </button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link mx-2" style="background-color:#DCEEFB">Cancel</a>
             </div>
         </form>
     </div>

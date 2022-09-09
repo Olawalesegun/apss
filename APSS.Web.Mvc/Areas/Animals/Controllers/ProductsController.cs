@@ -22,12 +22,13 @@ namespace APSS.Web.Mvc.Areas.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await (await _aps.GetAllAnimalProductsAsync(3, 3))
+                .Include(u => u.Unit)
                 .AsAsyncEnumerable()
                 .ToListAsync();
-            var productDto = new List<AnimalProductDto>();
+            var productDto = new List<AnimalProductListDto>();
             foreach (var product in products)
             {
-                productDto.Add(new AnimalProductDto
+                productDto.Add(new AnimalProductListDto
                 {
                     Name = product.Name,
                     Quantity = product.Quantity,
@@ -35,6 +36,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                     PeriodTaken = product.PeriodTaken,
                     CreatedAt = product.CreatedAt,
                     ModifiedAt = product.ModifiedAt,
+                    Unit = product.Unit,
                 });
             }
 
@@ -130,6 +132,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                 {
                     var product = await (await _aps.GetAnimalProductAsync(3, id))
                         .Include(u => u.Unit)
+                        .Include(A => A.Producer)
                         .AsAsyncEnumerable().ToListAsync();
                     var single = product.FirstOrDefault();
                     if (product == null) return RedirectToAction(nameof(Index));
@@ -141,7 +144,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
                         PeriodTaken = single.PeriodTaken,
                         CreatedAt = single.CreatedAt,
                         ModifiedAt = single.ModifiedAt,
-                        UnitName = single.Unit.Name,
+                        Unit = single.Unit,
+                        Producer = single.Producer,
                     };
                     return View(productDto);
                 }
@@ -207,6 +211,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                       p.Quantity = productObj.Quantity;
                       p.PeriodTaken = productObj.PeriodTaken;
                       p.Unit = singleUnit!;
+                      p.IsConfirmed = null;
                   });
                 return RedirectToAction(nameof(Index));
             }

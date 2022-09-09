@@ -1,135 +1,67 @@
-﻿@model IEnumerable<APSS.Web.Dtos.UserDto>
+﻿@model CrudViewModel<UserDto>
 
 <!--the main account view-->
-<div>
-    @await Html.PartialAsync("_AccountNavBar")
-</div>
-<div class=" col-sm-12  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
+<div class="table-rsponsive">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>@Icon.Hashtag.Render()</th>
+                <th>@Html.DisplayNameFor(m => m.First().Name)</th>
+                <th>@Html.DisplayNameFor(m => m.First().AccessLevel)</th>
+                <th>@Html.DisplayNameFor(m => m.First().CreatedAt)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
 
-    <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="Users" asp-action="Index">
-        <div class=" mb-2 col-sm col-lg-6 d-flex">
-            <div class="input-group">
-                <button type="submit" class="btn btn-primary search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-                <input type="search" class="form-control" id="search" onkeyup="searchTable()" name="searchString" />
-            </div>
-        </div>
-        <div class="col-sm-2 col-lg-1 mb-2 ">
-        </div>
-        <div class="col-sm mb-2 ">
+            @foreach (var item in Model)
+            {
+                <tr class="@(item.UserStatus == UserStatus.Inactive ? "bg-warning" : item.UserStatus == UserStatus.Terminated ? "bg-danger" : string.Empty)">
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.AccessLevel</td>
+                    <td>@item.CreatedAt</td>
 
-            <select class="form-select " id="searchby" name="searchBy">
-                <option selected> search by</option>
-                <option value="1">Name</option>
-                <option value="2">ID</option>
-            </select>
-        </div>
-        <div class="col-sm d-flex   d-inline mb-2">
-
-            <a class=" btn btn-primary " role="button" asp-controller="Users" asp-action="AddUser">
-                <i class="fa-solid fa-plus"></i>
-                اضافة
-            </a>
-        </div>
-    </form>
-
-    <div class="col-sm-12  ">
-
-        <div class=" my-3 bg-light col-lg-12  table-rsponsive  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
-
-            <table class="table table-hover table-responsive table-bordered   table-striped mb-0 " id="myTable">
-
-                <thead>
-                    <tr class="header  bg-fixed border border-bottom fw-bold">
-                        <th class=" fw-bold align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.AccessLevel)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.userStatus)</th>
-                        <th style="width:20px" class="fw-bold align-middle"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-
-                        <tr class="align-top">
-
-                            <td class="text-break text-capitalize align-middle">@item.Id</td>
-                            <td class="text-break text-capitalize align-middle"> @item.Name</td>
-                            <td class="text-break text-capitalize align-middle">@item.AccessLevel</td>
-                            <td class="text-break text-capitalize align-middle">
-                                @item.CreatedAt
-                            </td>
-                            <td class="text-break text-capitalize align-middle">@item.userStatus</td>
-                            <td class="align-middle center">
-                                <div class=" dropend">
-                                    <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    <td class="align-middle center">
+                        <div class=" dropdown">
+                            <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                @Icon.Bars.Render()
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Details)/@item.Id">
+                                        Details @Icon.Info.Render()
+                                     </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Delete)/@item.Id">
+                                        Delete @Icon.TrashCan.Render()
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Users" asp-action="UserDetials"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Users" asp-action="DeleteUser"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Users" asp-action="EditUser"><div class="d-flex justify-content-between"> <span>Edit</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="UserAccounts"><div class="d-flex justify-content-between"> <span>Employess</span>  <span><i class="fa-solid fa-users"></i> </span> </div></a></li>
-                                        <li class="">
-                                            <a class="dropdown-item text-decoration-none" role="button" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="AddAccount">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Update)/@item.Id">
+                                        Update @Icon.Pen.Render()
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Accounts)/@item.Id">
+                                        Manage Accounts @Icon.UsersGear.Render()
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Accounts.Add)/@item.Id">
+                                        Add Account @Icon.UserPlus.Render()
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
 
-                                                <div class="d-flex justify-content-between"> <span> Add Employee</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="d-flex justify-content-center">
-        <div class="container col-sm-12 col-lg-4 col-md-4">
-            <ul class="pagination d-flex justify-content-between">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </div>
-    </div>
+        </tbody>
+    </table>
 </div>
 
-<!--
-    canvas for add user in parial view
--->
-@section scripts{
-<script>
-        $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#accountManagement").addClass('active');
-    });
-
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-    document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
-    $(".scrollmenu a").on('click',function(){
-        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-
-    });
-    $(".manage-ment ul li a").on('click',function(){
-        $(".scrollmenu a.actives").removeClass('actives');
-        $("#accounts").addClass('actives');
-
-    });
-    $(".scrollmenu ul li a").on('click',function(){
-        $(".scrollmenu ul li a.actives").removeClass('actives');
-        $("#accounts").addClass('actives');
-    });
-    $("#userMedia").addClass("actives")
-</script>
-}
+<partial name="Layout/Paginator" model="@Model.Params.Page" />

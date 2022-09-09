@@ -1,10 +1,10 @@
 ﻿@model APSS.Web.Dtos.AccountDto
-@await Html.PartialAsync("_requiredStyle.cshtml")
+@*@await Html.PartialAsync("_requiredStyle.cshtml")*@
 
-<div class="card my-3 shadow-0 ">
+<div class="card  shadow-0 border-0">
     <div class="card-body ">
-        <h3 class="mt-2 mb-3">Employee Information </h3>
-        <table class="table user-view-table m-0 ">
+        <h3 class="mt-1 mb-3">Employee Information </h3>
+        <table class="table user-view-table m-0 border ">
             <tbody>
                 <tr class="">
                     <th class="align-middle" style="width:30%">@Html.DisplayNameFor(m=>m.Id) </th>
@@ -58,11 +58,13 @@
             </tbody>
         </table>
     </div>
-    <div cllass="row d-flex  mt-2 justify-content-end ">
-        <a class="btn btn-outline-primary mx-1 my-2" asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="EditAccount">
-            <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span>
-        </a>
-        <a class="btn btn-outline-danger  mx-1 my-2" asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="DeleteAccount"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+    <div cllass="">
+        <div class="d-flex justify-content-end mx-3">
+            <a class="btn btn-outline-primary mx-1 my-2" asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="EditAccount">
+                <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span>
+            </a>
+            <a class="btn btn-danger  mx-1 my-2" asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="DeleteAccount"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+        </div>
     </div>
 </div>
 

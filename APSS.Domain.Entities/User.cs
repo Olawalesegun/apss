@@ -56,9 +56,9 @@ public enum AccessLevel : uint
 /// <summary>
 /// An enum to represent the access level
 /// </summary>
-public enum UserStatus
+public enum UserStatus : int
 {
-    Active,
-    Inactive,
-    Terminated,
+    Active = 0,
+    Inactive = 1,
+    Terminated = 2,
 }

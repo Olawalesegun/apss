@@ -247,7 +247,7 @@ public class AnimalService : IAnimalService
     public async Task<ProductExpense> UpdateProductExpensesAsync(long accountId, long productExpenseId, Action<ProductExpense> updater)
     {
         var account = await _uow.Accounts.Query().FindWithAccessLevelValidationAsync(accountId, AccessLevel.Farmer, PermissionType.Update);
-        var expense = await _uow.ProductExpenses.Query().FindWithOwnershipValidationAync(productExpenseId, u => u.SpentOn.AddedBy, account);
+        var expense = await _uow.ProductExpenses.Query().Include(s => s.SpentOn).FindWithOwnershipValidationAync(productExpenseId, u => u.SpentOn.AddedBy, account);
         updater(expense);
 
         _uow.ProductExpenses.Update(expense);
@@ -275,7 +275,7 @@ public class AnimalService : IAnimalService
     {
         var animalGroup = await _uow.AnimalGroups.Query().
             Include(u => u.OwnedBy!)
-            .FindAsync(animalGroupId);
+            .Where(s => s.Id == animalGroupId).FirstAsync();
 
         await _permissionsService.ValidateUserPatenthoodAsync(accountId, animalGroup.OwnedBy.Id, PermissionType.Update);
 
@@ -299,6 +299,34 @@ public class AnimalService : IAnimalService
             .Include(u => u.User)
             .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
         return _uow.AnimalProductUnits.Query();
+    }
+
+    public async Task<IQueryBuilder<ProductExpense>> GetProductExpenses(long accountId, long userId, long productId)
+    {
+        await _permissionsService.ValidatePermissionsAsync(accountId, userId, PermissionType.Read);
+
+        return _uow.ProductExpenses.Query().Where(p => p.SpentOn.Id == productId);
+    }
+
+    public async Task<IQueryBuilder<ProductExpense>> GetExpense(long accountId, long expenseId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        return _uow.ProductExpenses.Query().Where(p => p.Id == expenseId);
+    }
+
+    public async Task RemoveProductExpenseAsync(long accountId, long expenseId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Delete);
+
+        var expense = await _uow.ProductExpenses.Query().Find(expenseId).FirstAsync();
+
+        _uow.ProductExpenses.Remove(expense);
+        await _uow.CommitAsync();
     }
 
     #endregion Public Methods

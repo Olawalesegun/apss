@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.AnimalProductDto>
+﻿@model IEnumerable<APSS.Web.Dtos.AnimalProductListDto>
 <partial name="_dataNavBar" />
 
 <!--table-->
@@ -63,7 +63,7 @@
 
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
                             <td class="text-break text-capitalize align-middle"> @item.Name</td>
-                            <td class="text-break text-capitalize align-middle">@item.Quantity</td>
+                            <td class="text-break text-capitalize align-middle">@item.Quantity @item.Unit.Name</td>
                             <td class="text-break text-capitalize align-middle">@item.PeriodTaken</td>
                             <td class="text-break text-capitalize align-middle">
                                 @item.CreatedAt
@@ -79,7 +79,7 @@
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Products" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Products" asp-action="Delete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li class="">
-                                            <a class="dropdown-item" asp-route-id="@item.Id" asp-controller="ProductExpense" asp-action="AddExpense">
+                                            <a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Expenses" asp-action="Add">
                                                 <div class="d-flex justify-content-between"> <span> Add Expense</span>  <span><i class="fa-solid fa-dollar-sign"></i> </span> </div>
                                             </a>
                                         </li>

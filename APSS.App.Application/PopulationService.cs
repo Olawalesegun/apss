@@ -145,7 +145,6 @@ public sealed class PopulationService : IPopulationService
         var family = await _uow.Families.Query()
             .Include(f => f.AddedBy)
             .FindWithOwnershipValidationAync(familyId, f => f.AddedBy, account);
-
         _uow.Families.Remove(family);
         await _uow.CommitAsync();
     }
@@ -160,6 +159,7 @@ public sealed class PopulationService : IPopulationService
         var individual = await _uow.Individuals.Query()
             .Include(i => i.AddedBy)
             .FindWithOwnershipValidationAync(individualId, i => i.AddedBy, account);
+
         var relationships = await _uow.FamilyIndividuals.Query()
             .Where(f => f.Individual.Id == individualId)
             .AsAsyncEnumerable()
@@ -205,7 +205,7 @@ public sealed class PopulationService : IPopulationService
         var family = _uow.Families
             .Query()
             .Include(f => f.AddedBy)
-            .Where(f => GetSubuserDistanceAsync(accountId, f.AddedBy.Id).Result >= 0);
+            .Where(f => f.AddedBy.Id == accountId);
 
         return family;
     }
@@ -216,7 +216,7 @@ public sealed class PopulationService : IPopulationService
         var individuals = _uow.Individuals
             .Query()
             .Include(i => i.AddedBy)
-            .Where(i => GetSubuserDistanceAsync(accountId, i.AddedBy.Id).Result >= 0);
+            .Where(f => f.AddedBy.Id == accountId);
 
         return individuals;
     }
@@ -238,7 +238,7 @@ public sealed class PopulationService : IPopulationService
         var account = await GetAuthorizedGroupAccountAsync(accountId, PermissionType.Update);
 
         var individual = await _uow.Individuals.Query()
-            .Include(f => f.AddedBy)
+            .Include(i => i.AddedBy)
             .FindWithOwnershipValidationAync(IndividualId, f => f.AddedBy, account);
         return individual;
     }
@@ -257,9 +257,67 @@ public sealed class PopulationService : IPopulationService
 
         if (account.User.AccessLevel == AccessLevel.Farmer)
             throw new InsufficientPermissionsException(
-                accountId, $"farmer #{account.User.Id} with account #{accountId} cannot add surveys");
+                accountId, $"farmer #{account.User.Id} with account #{accountId} cannot read indviduals of Family{family.Name} ");
 
-        return _uow.FamilyIndividuals.Query().Where(f => f.Family.Id == familyId);
+        return _uow.FamilyIndividuals.Query().Include(f=>f.Family).Include(f=>f.Individual).Where(f => f.Family.Id == familyId);
+    }
+
+    public async Task<FamilyIndividual?> GetFamilyIndividual(long accountId, long individualId)
+    {
+        var indvidual = await _uow.Individuals.Query()
+           .Include(f => f.AddedBy)
+           .FindAsync(individualId);
+
+        await _permissionsSvc
+            .ValidatePermissionsAsync(accountId, indvidual.AddedBy.Id, PermissionType.Read);
+
+        var account = await _uow.Accounts.Query().FindAsync(accountId);
+
+        if (account.User.AccessLevel == AccessLevel.Farmer)
+            throw new InsufficientPermissionsException(
+                accountId,
+                $"farmer #{account.User.Id} with account #{accountId} cannot read date individual{indvidual.Name}");
+
+        return await _uow.FamilyIndividuals.Query().Include(i => i.Family).Where(f => f.Individual.Id == individualId).FirstOrNullAsync();
+    }
+
+    public async Task<Skill> GetSkillAsync(long accountId, long SkillId)
+    {
+        var skill = await _uow.Skills.Query()
+            .Include(s => s.BelongsTo)
+           .Include(s => s.BelongsTo.AddedBy)
+           .FindAsync(SkillId);
+
+        await _permissionsSvc
+            .ValidatePermissionsAsync(accountId, skill.BelongsTo.AddedBy.Id, PermissionType.Read);
+
+        var account = await _uow.Accounts.Query().FindAsync(accountId);
+
+        if (account.User.AccessLevel == AccessLevel.Farmer)
+            throw new InsufficientPermissionsException(
+                accountId,
+                $"farmer #{account.User.Id} with account #{accountId} cannot read skill individual{skill.BelongsTo.Name}");
+
+        return skill;
+    }
+
+    public async Task<Voluntary> GetVoluntaryAsync(long accountId, long VoluntaryId)
+    {
+        var voluntary = await _uow.Volantaries.Query()
+           .Include(v => v.OfferedBy.AddedBy)
+           .FindAsync(VoluntaryId);
+
+        await _permissionsSvc
+            .ValidatePermissionsAsync(accountId, voluntary.OfferedBy.AddedBy.Id, PermissionType.Read);
+
+        var account = await _uow.Accounts.Query().FindAsync(accountId);
+
+        if (account.User.AccessLevel == AccessLevel.Farmer)
+            throw new InsufficientPermissionsException(
+                accountId,
+                $"farmer #{account.User.Id} with account #{accountId} cannot read voluntary individual{voluntary.OfferedBy.Name}");
+
+        return voluntary;
     }
 
     ///<inheritdoc/>
@@ -278,7 +336,7 @@ public sealed class PopulationService : IPopulationService
             throw new InsufficientPermissionsException(
                 accountId, $"farmer #{account.User.Id} with account #{accountId} cannot add surveys");
 
-        return _uow.Skills.Query().Where(s => s.BelongsTo.Id == individualId);
+        return _uow.Skills.Query().Include(s => s.BelongsTo).Where(s => s.BelongsTo.Id == individualId);
     }
 
     ///<inheritdoc/>
@@ -295,9 +353,9 @@ public sealed class PopulationService : IPopulationService
 
         if (account.User.AccessLevel == AccessLevel.Farmer)
             throw new InsufficientPermissionsException(
-                accountId, $"farmer #{account.User.Id} with account #{accountId} cannot add surveys");
+                accountId, $"farmer #{account.User.Id} with account #{accountId} have not read permission on individual{individualId}");
 
-        return _uow.Volantaries.Query().Where(v => v.OfferedBy.Id == individualId);
+        return _uow.Volantaries.Query().Include(v => v.OfferedBy).Where(v => v.OfferedBy.Id == individualId);
     }
 
     ///<inheritdoc/>
@@ -332,6 +390,26 @@ public sealed class PopulationService : IPopulationService
         await _uow.CommitAsync();
 
         return individual;
+    }
+
+    public async Task<FamilyIndividual> UpdateFamilyIndividualAsync(long accountId, long individualId, Action<FamilyIndividual> updater)
+    {
+        var account = await GetAuthorizedGroupAccountAsync(accountId, PermissionType.Update);
+
+        await _uow.Individuals.Query()
+           .Include(i => i.AddedBy)
+           .FindWithOwnershipValidationAync(individualId, i => i.AddedBy, account);
+
+        var familyindividual = await _uow.FamilyIndividuals.Query()
+            .Include(i => i.Individual)
+            .Include(i => i.Family)
+            .Where(i => i.Individual.Id == individualId).FirstAsync();
+        updater(familyindividual);
+
+        _uow.FamilyIndividuals.Update(familyindividual);
+        await _uow.CommitAsync();
+
+        return familyindividual;
     }
 
     public async Task<FamilyIndividual> UpdateSkillAsync(

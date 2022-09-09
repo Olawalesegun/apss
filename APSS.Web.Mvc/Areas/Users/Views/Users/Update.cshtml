@@ -2,11 +2,11 @@
 @model APSS.Web.Dtos.UserDto
 @await Html.PartialAsync("_accountNavBar")
 <div class="container-fluid ">
-    <div class="col-sm-5 mx-sm-2 m-lg-4 rounded border px-2">
+    <div class="col-sm-5 mx-0 col-lg-8">
         <form class=" mt-3 " method="post" asp-controller="Users" asp-action="EditUser">
             <div asp-validation-summary="ModelOnly"></div>
             <!-- 2 column puts for the National number and Phome Number-->
-            <div class="center d-flex justify-content-center mb-3  " style="line-height:35px;">
+            <div class=" d-flex mb-3  " style="line-height:35px;">
                 <h3 class="">
                     Edit Area Information
                 </h3>
@@ -27,52 +27,31 @@
 
             <div class="d-inline">
                 <h5 class="inline">
-                    <label asp-for="userStatus"></label>
+                    <label asp-for="UserStatus"></label>
                 </h5>
             </div>
             <!--used -->
             @foreach (var item in Enum.GetValues<UserStatus>())
             {
-                if (@Model.userStatus == @item)
+                if (@Model.UserStatus == @item)
                 {
                     <div class="form-check form-check-inline mx-1 ">
-                        <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@item" checked />
+                        <input class="form-check-input hiden" type="radio" asp-for="UserStatus" id="used" value="@item" checked />
                         <label class="form-check-label">@item</label>
                     </div>
                 }
                 else
                 {
                     <div class="form-check form-check-inline mx-1 ">
-                        <input class="form-check-input hiden" type="radio" asp-for="userStatus" id="used" value="@item" />
+                        <input class="form-check-input hiden" type="radio" asp-for="UserStatus" id="used" value="@item" />
                         <label class="form-check-label">@item</label>
                     </div>
                 }
             }
-            @*}*@
-
-            @*<div class=" ">
-                <h5 class="inline">حالة المنطقة:</h5>
-                </div>
-                <div class="d-inline d-flex justify-content-between">
-                <!--used -->
-                <div class="form-check-inline  ">
-                <input class="form-check-input hiden" name="userstatus" type="radio" asp-for="userStatus" value="Active" />
-                <label class="form-check-label" asp-for="Active"></label>
-                </div>
-                <!--unused -->
-                <div cl ass=" form-check px-2">
-                <input class="form-check-input" type="radio" name="userstatus" value="Inactive" asp-for="userStatus" />
-                <label class="form-check-label" asp-for="Inactive">  </label>
-                </div>
-                <div cl ass="form-check  px-2">
-                <input class="form-check-input" type="radio" name="userstatus" value="Terminated" asp-for="userStatus " />
-                <label class="form-check-label" asp-for="Terminated">  </label>
-                </div>
-                </div>*@
-            <div class="">
+            <div class=" d-flex justify-content-end">
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary w-25 my-4">Edit</button>
-                <a onClick="history.go(-1); return false;" class="btn btn-link  w-25 my-4 mx-2" style="background-color:#DCEEFB">Cancel</a>
+                <a onClick="history.go(-1); return false;" class="btn btn-link text-decoration-none  px-5 my-4 mx-2" style="background-color:#DCEEFB">Cancel</a>
+                <button type="submit" class="btn btn-primary px-5 my-4">Edit</button>
             </div>
         </form>
     </div>

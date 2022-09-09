@@ -1,116 +1,123 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Services;
 using APSS.Web.Dtos;
-using APSS.Web.Dtos.ValueTypes;
-using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Dtos.Forms;
+using APSS.Web.Mvc.Auth;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
 [Area(Areas.Population)]
 public class SkillsController : Controller
 {
-    private readonly UserDto _userDto;
-    private readonly List<FamilyDto> families;
-    private readonly List<IndividualDto> individuals;
+    private readonly IPopulationService _populationSvc;
 
-    private List<SkillDto> skills;
-
-    public SkillsController()
+    public SkillsController(IPopulationService populationService)
     {
-        _userDto = new UserDto
-        {
-            Id = 1,
-            Name = "aden",
-            AccessLevel = AccessLevel.Root,
-            userStatus = UserStatus.Active,
-        };
-
-        families = new List<FamilyDto>
-            {
-              new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
-              new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
-            };
-
-        individuals = new List<IndividualDto>
-            {
-                new IndividualDto{Id=53, Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=SexDto.Male,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
-                    PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
-                new IndividualDto{Id=43,  Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                    Sex=SexDto.Female,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
-                    PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
-            };
-        skills = new List<SkillDto>
-        {
-            new SkillDto{Id=543,Individual=individuals.First(),Name="skill1",Description="anyskill",
-                Field="anyfiald",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-            new SkillDto{Id=85,Individual=individuals.Last(),Name="skill2",Description="anyskill",
-                Field="anyfiald",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now},
-        };
+        _populationSvc = populationService;
     }
 
     // GET: SkillController/GetSkills/5
-    public ActionResult Index(int id)
+    public async Task<ActionResult> Index(long id)
     {
-        var skill = skills.Where(s => s.Individual.Id == id);
-        return View("GetSkills", skill);
+        var skills = await _populationSvc.GetSkillOfindividualAsync(User.GetAccountId(), id);
+        var skillsDto = new List<SkillDto>();
+
+        foreach (var skill in await skills.AsAsyncEnumerable().ToListAsync())
+        {
+            skillsDto.Add(new SkillDto
+            {
+                Id = skill.Id,
+                Name = skill.Name,
+                Description = skill.Description,
+                IndividualName = skill.BelongsTo.Name,
+                Field = skill.Field
+            });
+        }
+        return View("GetSkills", skillsDto.ToList());
     }
 
     // GET: SkillController/AddSkill/5
-    public ActionResult AddSkill(int id)
+    public ActionResult AddSkill(long id)
     {
-        var individual = individuals.Find(individual => individual.Id == id);
-        var skill = new SkillDto
+        var skill = new SkillAddForm
         {
-            Individual = individual!
+            IndividualId = id
         };
+
         return View(skill);
     }
 
     // POST: skillController/AddSkill
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult AddSkill(int id, SkillDto skill)
+    public async Task<ActionResult> AddSkill([FromForm] SkillAddForm skill)
     {
-        skill.Individual = individuals.Find(i => i.Id == id)!;
+        if (!ModelState.IsValid)
+            return View(skill);
 
-        return View(skill);
+        await _populationSvc
+            .AddSkillAsync(User.GetAccountId(), skill.IndividualId, skill.Name, skill.Field, skill.Description);
+
+        return RedirectToAction(nameof(Index), new { id = skill.IndividualId });
     }
 
     //GET:SkillController/UpdateSkill/5
-    public ActionResult UpdateSkill(int id)
+    public async Task<ActionResult> UpdateSkill(long id)
     {
-        var skill = skills.Find(s => s.Id == id);
-        var individual = individuals.Find(i => i.Id == skill!.Individual.Id);
-        skill!.Individual = individual!;
-        return View("EditSkill", skill!);
+        var skill = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
+        var skillform = new SkillEditForm
+        {
+            Id = skill.Id,
+            IndividualId = skill.BelongsTo.Id,
+            Name = skill.Name,
+            Description = skill.Description,
+            Field = skill.Field
+        };
+        return View("EditSkill", skillform);
     }
 
     // POST: SkillController/UpdateSkill/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult UpdateSkill(int id, SkillDto newskill)
+    public async Task<ActionResult> UpdateSkill([FromForm] SkillEditForm skill)
     {
-        newskill.Individual = individuals.Find(i => i.Id == id)!;
-        return View("EditSkill", newskill);
+        if (!ModelState.IsValid)
+            return View("EditSkill", skill);
+
+        await _populationSvc
+            .UpdateSkillAsync(User.GetAccountId(), skill.Id,
+            s =>
+            {
+                s.Name = skill.Name;
+                s.Description = skill.Description;
+                s.Field = skill.Field;
+            });
+        long id = skill.IndividualId;
+        return RedirectToAction(nameof(Index), new { id = skill.IndividualId });
     }
 
-    public IActionResult ConfirmDeleteSkill(int id)
+    public async Task<IActionResult> ConfirmDeleteSkill(long id)
     {
-        var skill = skills.Find(s => s.Id == id);
-        return View(skill);
-    }
+        var skill = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
+        var skilldto = new SkillDto
+        {
+            Id = skill.Id,
+            Name = skill.Name,
+            Description = skill.Field,
+            Field = skill.Field,
+            IndividualName = skill.BelongsTo.Name
+        };
 
-    // GET: SkillController/DeleteSkill/5
-    public ActionResult DeleteSkill(int id)
-    {
-        return View(nameof(Index), skills);
+        return View(skilldto);
     }
 
     // POST: SkillController/DeleteSkill/5
-    [HttpPost]
+    [HttpPost, ActionName("DeleteSkill")]
     [ValidateAntiForgeryToken]
-    public ActionResult DeleteSkill(int id, SkillDto skilldto)
+    public async Task<ActionResult> DeleteSkill(long id)
     {
-        return View(nameof(Index), skills);
+        var s = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
+        await _populationSvc.RemoveSkillAsync(User.GetAccountId(), id);
+        return RedirectToAction(nameof(Index), new { id = s.BelongsTo.Id });
     }
 }
