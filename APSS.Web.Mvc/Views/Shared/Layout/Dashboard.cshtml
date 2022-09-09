@@ -14,12 +14,26 @@
     }
 }
 
-    <!-- main div  -->
-<div class="row w-100">
-    <aside class="col-lg-2 col-md-4 p-0 min-vh-100">
-        @await Html.PartialAsync("Layout/_SideNav")
+<!-- main div  -->
+<div class="row m-0">
+    <aside class="col-xs-12 col-md-4 col-lg-3 col-xl-2 py-2 bg-light">
+        <div class="d-flex justify-content-between">
+            <a href="@Routes.Dashboard.Home" class="d-flex align-items-center link-dark text-decoration-none">
+                <div class="bg-primary text-light p-2 me-2 rounded-3">
+                    @Icon.Wheat.Render(IconSize.ExtraLarge)
+                </div>
+                <p class="col-8 fs-3 fw-light mb-0">APSS</p>
+            </a>
+            <buttn class="btn btn-light d-inline-block d-md-none" onclick="toggleSideNav()">
+                @Icon.Bars.Render(IconSize.Large)
+            </buttn>
+        </div>
+        <div id="side-nav" class="d-none d-md-block">
+            <hr />
+            @await Html.PartialAsync("Layout/_SideNav")
+        </div>
     </aside>
-    <main class="col-lg-10 col-md-8">
+    <main class="col-xs-12 col-md-8 col-lg-9 col-xl-10" id="main-content">
         @await Html.PartialAsync("Layout/_NavBar")
 
         @if (Context.GetCurrentRoute() is CrudRoute)
@@ -38,6 +52,7 @@
 }
 
 @section scripts {
+    <script src="~/assets/js/dashboard.js"></script>
     <script src="~/js/modelFunction.js"></script>
     @await RenderSectionAsync("scripts", required: false)
 }
