@@ -1,7 +1,7 @@
 ﻿@model int
 
 @{
-    const int PAGES_COUNT = 8;
+    const int PAGES_COUNT = 6;
     const int PAGES_HALF = PAGES_COUNT / 2;
 
     var max = Model < PAGES_HALF ? PAGES_COUNT : Model + PAGES_HALF;
@@ -11,7 +11,9 @@
 <nav aria-label="pagination">
     <ul class="pagination justify-content-center">
         <li class="page-item @(Model == min ? "disabled" : string.Empty)">
-            <a class="page-link" href="?Page=@(Model - 1)" tabindex="-1" aria-disabled="true">Previous</a>
+            <a class="page-link " href="?Page=@(Model - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
         </li>
 
         @for (int i = min; i <= max; ++i)
@@ -20,7 +22,9 @@
         }
 
         <li class="page-item">
-            <a class="page-link" href="?Page=@(Model + 1)">Next</a>
+            <a class="page-link" href="?Page=@(Model + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
         </li>
     </ul>
 </nav>
