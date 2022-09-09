@@ -615,7 +615,7 @@ public sealed class SurveysServiceTest
     [Theory]
     [InlineData(PermissionType.Read, true)]
     [InlineData(PermissionType.Update | PermissionType.Delete | PermissionType.Create, false)]
-    public async Task<IQueryBuilder<Survey>?> GetSurveysTheory(
+    public async Task<Survey>? GetSurveysTheory(
         PermissionType permissions = PermissionType.Read,
         bool shouldSucceed = true)
     {
@@ -643,14 +643,13 @@ public sealed class SurveysServiceTest
         var surveys = await surveysTask;
         var secondSurveys = await secondSurveysTask;
 
-        await foreach (var s in surveys.AsAsyncEnumerable())
-            Assert.Equal(s.Id, survey.Id);
+        Assert.Equal(surveys.Id, survey.Id);
 
-        await foreach (var s in secondSurveys.AsAsyncEnumerable())
-            Assert.Null(s);
+        Assert.Null(secondSurveys);
 
         return surveys;
     }
+
 
     [Theory]
     [InlineData(PermissionType.Read, true)]
