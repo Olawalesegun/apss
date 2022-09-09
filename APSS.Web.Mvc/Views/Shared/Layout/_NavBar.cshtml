@@ -9,7 +9,7 @@
 
     var selectedRoute = subRoutes
         .OrderByDescending(r => r.FullPath.Length)
-        .First(r => currentRoute.FullPath.StartsWith(r.FullPath));
+        .First(r => r.FullPath.StartsWith(r.FullPath));
 }
 
 <nav class="d-flex py-3 ps-2">
@@ -42,7 +42,6 @@
     </ol>
 </nav>
 }
-
 
 @if (subRoutes.Count > 1)
 {

@@ -1,5 +1,4 @@
 ﻿@model APSS.Web.Dtos.AccountDto
- @*@await Html.PartialAsync("_requiredStyle.cshtml")*@
 <div class="card mt-2 border-0">
     <div class="card-body">
         <div class="d-flex mb-2 "><h5> Confirm Delete Employee </h5> </div>
@@ -52,7 +51,7 @@
         <br />
         <div class=" mx-2 d-flex justify-content-end">
             <a onClick="history.go(-1); return false;" class="btn btn-link text-decoration-none mx-3" style="background-color:#DCEEFB">Cancel</a>
-            <a class="btn btn-danger   " asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="ConfirmDeleteAccount"> <span></span> <i class="fa-solid fa-trash-can mx-2"></i>Confirm</a>
+            <a class="btn btn-danger   " asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="ConfirmDelete"> <span></span> <i class="fa-solid fa-trash-can mx-2"></i>Confirm</a>
         </div>
 
         @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@

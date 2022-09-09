@@ -1,6 +1,7 @@
 ﻿using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Controllers
@@ -37,7 +38,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(unitDto);
         }
 
-        public async Task<IActionResult> AddUnit()
+        public IActionResult Add()
         {
             var productUnit = new AnimalProductUnitDto();
             return View(productUnit);
@@ -45,31 +46,31 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddUnit(AnimalProductUnitDto animalProductUnitDto)
+        public async Task<IActionResult> Add(AnimalProductUnitDto animalProductUnitDto)
         {
             if (ModelState.IsValid)
             {
                 var add = await _aps.CreateAnimalProductUnitAsync(User.GetAccountId(), animalProductUnitDto.Name);
                 if (add == null) return RedirectToAction(nameof(Index));
-                return RedirectToAction("Index");
+                return LocalRedirect(Routes.Dashboard.Animals.Units.FullPath);
             }
 
             return View(animalProductUnitDto);
         }
 
-        public async Task<IActionResult> EditUnit(long id)
+        public async Task<IActionResult> Update(long id)
         {
             var uints = new AnimalProductUnitDto();
             return View(uints);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUnit(AnimalProductUnitDto animalProductUnitDto)
+        public async Task<IActionResult> Update(AnimalProductUnitDto animalProductUnitDto)
         {
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> DeleteUnit(long id)
+        public async Task<IActionResult> Delete(long id)
         {
             var units = new AnimalProductUnitDto();
             units = listUnit.Where(u => u.Id == id).FirstOrDefault();
@@ -78,7 +79,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmDeletUhnit(long id)
+        public async Task<IActionResult> ConfirmDelete(long id)
         {
             return RedirectToAction("Index");
         }

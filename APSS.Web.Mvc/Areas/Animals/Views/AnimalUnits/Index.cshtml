@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<APSS.Web.Dtos.AnimalProductUnitDto>
-<partial name="_dataNavBar" />
 
 <div class="  p-2  col-ms-12  my-0 mt-2  rounded ml-2 " id="">
 
@@ -32,7 +31,7 @@
             </select>
         </div>
         <div class="col-sm d-flex   d-inline mb-3   ">
-            <a class=" btn btn-primary mx-2" role="button" asp-controller="AnimalUnits" asp-action="AddUnit">
+            <a class=" btn btn-primary mx-2" role="button" asp-controller="AnimalUnits" asp-action="Add">
                 <i class="fa-solid fa-plus"></i>
                 وحدة
             </a>
@@ -76,10 +75,10 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Units" asp-action="DeleteUnit"><div class="d-flex justify-content-between"> <span>حذف</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Units" asp-action="Delete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
                                         <li class="">
-                                            <a class="dropdown-item " asp-route-id="@item.Id" asp-controller="Units" asp-action="EditUnit">
-                                                <div class="d-flex justify-content-between"> <span>تعدل </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
+                                            <a class="dropdown-item " asp-route-id="@item.Id" asp-controller="Units" asp-action="Update">
+                                                <div class="d-flex justify-content-between"> <span>Update </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
                                             </a>
                                         </li>
                                     </ul>

@@ -1,52 +1,7 @@
-﻿@model IEnumerable<APSS.Web.Dtos.AnimalGroupListDto>
+﻿@model IEnumerable<APSS.Web.Dtos.AnimalGroupDto>
 <!--table-->
-@{
-    ViewData["controllar"] = "AnimalGroups";
-    ViewData["action"] = "Index";
-}
-<partial name="_dataNavBar" />
 
 <div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 needs-validation " id="">
-
-    <form class="row d-flex justify-content-between  d-inline mb-3 " asp-controller="AnimalGroups" asp-action="Index" method="post">
-        <div class=" mb-3 col-sm  d-flex">
-            <div class="input-group">
-                <button type="submit" class="btn btn-primary ">
-                    <i class="fas fa-search"></i>
-                </button>
-                <input type="search" class="form-control" id="search" placeholder="Search..." name="searchString" onkeyup="searchTable()" required />
-            </div>
-        </div>
-        <div class="col-sm-2 col-lg-1 mb-2 ">
-
-            <select class="form-select " id="searchby">
-                <option selected>20</option>
-                <option value="1">40</option>
-                <option value="2">80</option>
-                <option value="3">100</option>
-            </select>
-        </div>
-        <div class="col-sm mb-3 ">
-
-            <select class="form-select " id="searchby" name="searchBy">
-                <option selected>Search By </option>
-                <option value="1">Type</option>
-                <option value="2">Number</option>
-                <option value="3">Quantity</option>
-                <option value="4">Sex</option>
-            </select>
-        </div>
-        <div class="col-sm d-flex   d-inline mb-3   ">
-            <a class=" btn btn-primary mx-2" role="button" data-bs-toggle="offcanvas" data-bs-target="#AddUnit">
-                <i class="fa-solid fa-plus"></i>
-                Unit
-            </a>
-            <a class=" btn btn-primary " role="button" asp-controller="Groups" asp-action="Add">
-                <i class="fa-solid fa-plus"></i>
-                Animal
-            </a>
-        </div>
-    </form>
 
     <div class="col-sm-12  ">
 
@@ -69,7 +24,9 @@
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Name)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Quantity)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Sex)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Confirm)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.CreatedAt)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.ModifiedAt)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.IsConfirmed)</th>
                         <th style="width:20px" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -85,16 +42,11 @@
                             <td>@item.Name</td>
                             <td>@item.Quantity</td>
                             <td>@item.Sex</td>
-                            @{
-                                if (@item.Confirm)
-                                {
-                                    <td class="text-break text-capitalize text-center "> <div class=""><label class="activeLabel bg-success"></label></div> </td>
-                                }
-                                else
-                                {
-                                    <td class="text-break text-capitalize text-center "> <div class=""><label class="activeLabel bg-danger"></label></div> </td>
-                                }
-                            }
+                            <td>@item.CreatedAt</td>
+                            <td>@item.ModifiedAt</td>
+
+                            <td class="text-break text-capitalize text-center "> <div class=""><label class="  @(item.IsConfirmed==true?"fa-solid fa-circle-check text-success fa-xl":"fa-solid fa-circle-xmark text-danger fa-xl")"></label></div> </td>
+
                             <td class="align-middle center">
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"

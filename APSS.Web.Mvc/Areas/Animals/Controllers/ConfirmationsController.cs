@@ -13,25 +13,23 @@ namespace APSS.Web.Mvc.Areas.Controllers
     public class ConfirmationsController : Controller
     {
         private readonly IAnimalService _confirm;
-        private readonly IMapper _mappper;
-        private readonly IUnitOfWork _uow;
 
         public ConfirmationsController(IAnimalService confirm, IMapper mapper)
         {
             _confirm = confirm;
-            _mappper = mapper;
         }
 
         public async Task<IActionResult> Index(long id)
         {
-            var animal = await (await _confirm.GetAllAnimalGroupsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
-            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
+            var animal = await (await _confirm.GetAllAnimalGroupsAsync(User.GetAccountId(), 8)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
+            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(User.GetAccountId(), 8)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
             var animalDto = new List<AnimalGroupConfirmDto>();
             var v = animal.FirstOrDefault();
             foreach (var a in animal)
             {
                 animalDto.Add(new AnimalGroupConfirmDto
                 {
+                    Type = a.Type,
                     Id = a.Id,
                     Name = a.Name,
                     Quantity = a.Quantity,
@@ -71,7 +69,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             try
             {
-                var animal = await (await _confirm.GetAnimalGroupAsync(3, id)).AsAsyncEnumerable().ToListAsync();
+                var animal = await (await _confirm.GetAnimalGroupAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
                 var single = animal.FirstOrDefault();
                 if (animal == null) return NotFound();
                 var animalDto = new AnimalGroupDto

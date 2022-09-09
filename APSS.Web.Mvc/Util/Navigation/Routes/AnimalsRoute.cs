@@ -1,5 +1,7 @@
 ﻿using APSS.Web.Mvc.Areas.Controllers;
 
+using APSS.Web.Mvc.Areas.Controllers;
+
 namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
 public sealed class AnimalsRoute : Route

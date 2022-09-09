@@ -2,7 +2,7 @@
 @model APSS.Web.Dtos.AccountDto
  @await Html.PartialAsync("_requiredStyle.cshtml")
 <div class="col-lg-8 col-sm-12  col-md-12   mx-lg-4  my-3 d-flex px-0">
-    <form class="row  mt-2 d-flex justify-content-center  needs-validation " method="post" asp-controller="Accounts" asp-action="EditAccount" novalidate>
+    <form class="row  mt-2 d-flex justify-content-center  needs-validation " method="post" asp-controller="Accounts" asp-action="Update" novalidate>
         <div asp-validation-summary="ModelOnly"></div>
         <input type="hidden" asp-for="UserId" />
         <input type="hidden" asp-for="Id" />
@@ -127,10 +127,10 @@
         <!-- Submit button -->
         <div class="row d-flex  justify-content-between ">
             <div class="col-sm-6 mt-4  d-flex flex-row bd-highlight">
-                <a asp-route-id="@Model.Id" asp-action="EditPassword" class="btn btn-link text-primary " style=""><i class="fa-solid fa-lock"></i>Change Password</a>
+                <a asp-route-id="@Model.Id" asp-action="UpdatePassword" class="btn btn-link text-primary " style=""><i class="fa-solid fa-lock"></i>Change Password</a>
             </div>
             <div class="col-sm-6 mt-4 d-flex flex-row-reverse bd-highlight ">
-                <button type="submit" class="btn btn-primary  w-50  ">Edit</button>
+                <button type="submit" class="btn btn-primary  w-50  ">Update</button>
                 <a onClick="history.go(-1); return false;" class="btn btn-link  w-25  mx-3" style="background-color:#DCEEFB">Cancel</a>
             </div>
         </div>

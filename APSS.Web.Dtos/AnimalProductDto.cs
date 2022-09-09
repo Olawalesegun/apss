@@ -15,7 +15,7 @@ namespace APSS.Web.Dtos
         [Required(ErrorMessage = "Name is Required")]
         public string Name { get; set; } = null!;
 
-        public int UnitId { get; set; }
+        public long UnitId { get; set; }
 
         [Display(Name = "Unit ")]
         [Required(ErrorMessage = "Unit is Required ")]
