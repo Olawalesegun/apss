@@ -38,7 +38,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [HttpGet]
         public async Task<IActionResult> ListExpense(long accountId, long userId, long productId)
         {
-            var result = await (await _pes.GetProductExpenses(3, 3, productId)).AsAsyncEnumerable().ToListAsync();
+            var result = await (await _pes.GetProductExpenses(User.GetAccountId(), User.GetUserId(), productId)).AsAsyncEnumerable().ToListAsync();
             var expence = new List<ProductExpenseDto>();
             if (result.Any())
             {
@@ -68,7 +68,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(ProductExpenseDto productExpense)
         {
-            var add = await _pes.CreateProductExpenseAsync(3,
+            var add = await _pes.CreateProductExpenseAsync(User.GetAccountId(),
                 productExpense.ProductId,
                 productExpense.Type,
                 productExpense.Price);
@@ -85,7 +85,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         // GET: landProductExpense/Update landProductExpense
         public async Task<IActionResult> Update(long id)
         {
-            var update = await (await _pes.GetExpense(3, id)).AsAsyncEnumerable().ToListAsync();
+            var update = await (await _pes.GetExpense(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
             var single = update.FirstOrDefault();
             var expense = new ProductExpenseDto
             {
