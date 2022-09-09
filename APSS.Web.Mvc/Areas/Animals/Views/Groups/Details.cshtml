@@ -4,12 +4,10 @@
     ViewData["Title"] = "Animal Details";
 }
 
-<div class="card mt-2 ">
+<div class="card mt-2 border-0">
     <div class="card-body">
-        <div class="d-flex bg-primary text-white rounded align-items-center" style="line-height:40px !important">
-            <h3 style="line-height:40px !important">Animal Information </h3>
-        </div>
-        <table class="table user-view-table m-0 t ">
+        <h4 class="" style="line-height:40px !important">Animal Information </h4>
+        <table class="table user-view-table m-0 border ">
             <tbody>
                 <tr class="">
                     <th class="label"><label>@Html.DisplayNameFor(m => m.Type)</label></th>
@@ -45,7 +43,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="d-flex justify-content-between bg-primary  pt-2">
+        <div class="d-flex justify-content-between pt-3">
             <div class="d-flex">
                 <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1 " asp-controller="Groups" asp-action="Index"><i class="fa-solid fa-arrow-left me-2"></i><span class="">Back </span> </a>
             </div>
