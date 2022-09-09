@@ -4,6 +4,7 @@ namespace APSS.Web.Dtos;
 
 public class OwnableDto : ConfirmableDto
 {
+    [Display(Name = "Name")]
     [Required(ErrorMessage = "Name is required")]
     public string Name { get; set; } = null!;
 

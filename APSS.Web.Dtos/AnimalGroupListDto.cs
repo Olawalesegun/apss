@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace APSS.Web.Dtos
 {
-    public class AnimalGroupListDto : BaseAuditbleDto
+    public class AnimalGroupListDto : Ownable
     {
         [Display(Name = "Type")]
         [Required(ErrorMessage = "Type is Required")]
