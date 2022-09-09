@@ -97,8 +97,6 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> AddAccount(long id)
         {
-            // var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
-
             AccountDto result = new AccountDto();
             result.UserId = id;
             return View(result);
@@ -154,22 +152,14 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(accountDto);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AdditionalAccountInfo(AccountDto accountDto)
-        {
-            var account = new AccountDto();
-            return View(account);
-        }
-
-        /*[ApssAuthorized(AccessLevel.Group
+        [ApssAuthorized(AccessLevel.Group
            | AccessLevel.District
            | AccessLevel.Village
            | AccessLevel.Presedint
            | AccessLevel.Farmer
            | AccessLevel.Governorate
            | AccessLevel.Directorate
-           | AccessLevel.Root, PermissionType.Delete)]*/
-
+           | AccessLevel.Root, PermissionType.Delete)]
         public async Task<IActionResult> DeleteAccount(long id)
         {
             var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
@@ -200,15 +190,14 @@ namespace APSS.Web.Mvc.Areas.Controllers
              | AccessLevel.Directorate
              | AccessLevel.Root, PermissionType.Delete)]*/
 
-        /*  [ApssAuthorized(AccessLevel.Group
-             | AccessLevel.District
-             | AccessLevel.Village
-             | AccessLevel.Presedint
-             | AccessLevel.Farmer
-             | AccessLevel.Governorate
-             | AccessLevel.Directorate
-             | AccessLevel.Root, PermissionType.Update)]*/
-
+        [ApssAuthorized(AccessLevel.Group
+           | AccessLevel.District
+           | AccessLevel.Village
+           | AccessLevel.Presedint
+           | AccessLevel.Farmer
+           | AccessLevel.Governorate
+           | AccessLevel.Directorate
+           | AccessLevel.Root, PermissionType.Update)]
         public async Task<IActionResult> EditAccount(long id)
         {
             var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
@@ -230,14 +219,14 @@ namespace APSS.Web.Mvc.Areas.Controllers
         }
 
         [HttpPost]
-        /*      [ApssAuthorized(AccessLevel.Group
+        [ApssAuthorized(AccessLevel.Group
                   | AccessLevel.District
                   | AccessLevel.Village
                   | AccessLevel.Presedint
                   | AccessLevel.Farmer
                   | AccessLevel.Governorate
                   | AccessLevel.Directorate
-                  | AccessLevel.Root, PermissionType.Update)]*/
+                  | AccessLevel.Root, PermissionType.Update)]
         public async Task<IActionResult> EditAccount(AccountDto account)
         {
             var resultEdit = await _accountsService.UpdateAsync(User.GetAccountId(), account.Id, p =>
