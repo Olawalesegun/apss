@@ -3,6 +3,9 @@ using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Dtos.Parameters;
+using AutoMapper;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
@@ -10,34 +13,29 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 public class SkillsController : Controller
 {
     private readonly IPopulationService _populationSvc;
+    private readonly IMapper _mapper;
 
-    public SkillsController(IPopulationService populationService)
+    public SkillsController(IPopulationService populationService, IMapper mapper)
     {
         _populationSvc = populationService;
+        _mapper = mapper;
     }
 
     // GET: SkillController/GetSkills/5
-    public async Task<ActionResult> Index(long id)
+    public async Task<IActionResult> Index([FromQuery] FilteringParameters args, long id)
     {
-        var skills = await _populationSvc.GetSkillOfindividualAsync(User.GetAccountId(), id);
-        var skillsDto = new List<SkillDto>();
+        var ret = await (await _populationSvc.GetSkillOfindividualAsync(User.GetAccountId(), id))
+            .Where(s => s.Name.Contains(args.Query))
+            .Page(args.Page, args.PageLength)
+            .AsAsyncEnumerable()
+            .Select(_mapper.Map<SkillDto>)
+            .ToListAsync();
 
-        foreach (var skill in await skills.AsAsyncEnumerable().ToListAsync())
-        {
-            skillsDto.Add(new SkillDto
-            {
-                Id = skill.Id,
-                Name = skill.Name,
-                Description = skill.Description,
-                IndividualName = skill.BelongsTo.Name,
-                Field = skill.Field
-            });
-        }
-        return View("GetSkills", skillsDto.ToList());
+        return View(new CrudViewModel<SkillDto>(ret, args));
     }
 
     // GET: SkillController/AddSkill/5
-    public ActionResult AddSkill(long id)
+    public ActionResult Add(long id)
     {
         var skill = new SkillAddForm
         {
@@ -50,7 +48,7 @@ public class SkillsController : Controller
     // POST: skillController/AddSkill
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> AddSkill([FromForm] SkillAddForm skill)
+    public async Task<ActionResult> Add([FromForm] SkillAddForm skill)
     {
         if (!ModelState.IsValid)
             return View(skill);
@@ -62,7 +60,7 @@ public class SkillsController : Controller
     }
 
     //GET:SkillController/UpdateSkill/5
-    public async Task<ActionResult> UpdateSkill(long id)
+    public async Task<ActionResult> Update(long id)
     {
         var skill = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
         var skillform = new SkillEditForm
@@ -73,16 +71,16 @@ public class SkillsController : Controller
             Description = skill.Description,
             Field = skill.Field
         };
-        return View("EditSkill", skillform);
+        return View(skillform);
     }
 
     // POST: SkillController/UpdateSkill/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> UpdateSkill([FromForm] SkillEditForm skill)
+    public async Task<ActionResult> Update([FromForm] SkillEditForm skill)
     {
         if (!ModelState.IsValid)
-            return View("EditSkill", skill);
+            return View(skill);
 
         await _populationSvc
             .UpdateSkillAsync(User.GetAccountId(), skill.Id,
@@ -105,16 +103,16 @@ public class SkillsController : Controller
             Name = skill.Name,
             Description = skill.Field,
             Field = skill.Field,
-            IndividualName = skill.BelongsTo.Name
+            BelongsTo = skill.BelongsTo
         };
 
         return View(skilldto);
     }
 
     // POST: SkillController/DeleteSkill/5
-    [HttpPost, ActionName("DeleteSkill")]
+    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> DeleteSkill(long id)
+    public async Task<ActionResult> Delete(long id)
     {
         var s = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
         await _populationSvc.RemoveSkillAsync(User.GetAccountId(), id);

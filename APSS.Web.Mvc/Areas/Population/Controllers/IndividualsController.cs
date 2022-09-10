@@ -5,6 +5,9 @@ using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Dtos.ValueTypes;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Dtos.Parameters;
+using AutoMapper;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
@@ -12,35 +15,29 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 public class IndividualsController : Controller
 {
     private readonly IPopulationService _populationSvc;
+    private readonly IMapper _mapper;
 
-    public IndividualsController(IPopulationService populationService)
+    public IndividualsController(IPopulationService populationService, IMapper mapper)
     {
         _populationSvc = populationService;
+        _mapper = mapper;
     }
 
     // GET: Individual/GetIndividuals
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
     {
-        var individuals = await _populationSvc.GetIndividuals(User.GetAccountId());
+        var ret = await (await _populationSvc.GetIndividuals(User.GetAccountId()))
+            .Where(u => u.Name.Contains(args.Query))
+            .Page(args.Page, args.PageLength)
+            .AsAsyncEnumerable()
+            .Select(_mapper.Map<IndividualDto>)
+            .ToListAsync();
 
-        List<IndividualDto> individualsDto = new List<IndividualDto>();
-        foreach (var individual in await individuals.AsAsyncEnumerable().ToListAsync())
-        {
-            individualsDto.Add(new IndividualDto
-            {
-                Id = individual.Id,
-                Name = individual.Name,
-                Job = individual.Job!,
-                Address = individual.Address,
-                PhonNumber = individual.PhoneNumber!,
-                Sex = (SexDto)individual.Sex
-            });
-        }
-        return View("GetIndividuals", individualsDto);
+        return View(new CrudViewModel<IndividualDto>(ret, args));
     }
 
     // GET: IndividualController/AddIndividual/5
-    public IActionResult AddIndividual(long id)
+    public IActionResult Add(long id)
     {
         var individual = new IndividualAddForm
         {
@@ -52,7 +49,7 @@ public class IndividualsController : Controller
     // POST: IndividualController/AddIndividual
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddIndividual([FromForm] IndividualAddForm individual)
+    public async Task<IActionResult> Add([FromForm] IndividualAddForm individual)
     {
         if (!ModelState.IsValid)
         {
@@ -65,7 +62,7 @@ public class IndividualsController : Controller
     }
 
     // Get: IndividualController/UpdateIndividual/5
-    public async Task<IActionResult> UpdateIndividual(long id)
+    public async Task<IActionResult> Update(long id)
     {
         var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
         var individualForm = new IndividualEditForm
@@ -86,16 +83,16 @@ public class IndividualsController : Controller
         individualForm.Isparent = family.IsParent;
         individualForm.Isprovider = family.IsProvider;
 
-        return View("EditIndividual", individualForm);
+        return View(individualForm);
     }
 
     // POST: IndividualController/UpdateIndividual/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateIndividual([FromForm] IndividualEditForm individual)
+    public async Task<IActionResult> Update([FromForm] IndividualEditForm individual)
     {
         if (!ModelState.IsValid)
-            return View("EditIndividual", individual);
+            return View(individual);
 
         await _populationSvc.UpdateIndividualAsync(
             User.GetAccountId(), individual.Id,
@@ -124,7 +121,7 @@ public class IndividualsController : Controller
     }
 
     // GET: IndividualController/ConfirmDeleteIndividual/5
-    public async Task<IActionResult> ConfirmDeleteIndividual(long id)
+    public async Task<IActionResult> Delete(long id)
     {
         var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
         var individualDto = new IndividualDto
@@ -134,42 +131,24 @@ public class IndividualsController : Controller
             Job = individual.Job!,
             Address = individual.Address,
             PhonNumber = individual.PhoneNumber!,
-            Sex = (SexDto)individual.Sex
+            Sex = individual.Sex
         };
         return View(individualDto);
     }
 
     // GET: IndividualController/DeleteIndividual/5
-    [HttpPost, ActionName("DeleteIndividual")]
+    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteIndividual(long id)
+    public async Task<IActionResult> Delete(long id, IndividualDto individual)
     {
         await _populationSvc.RemoveIndividualAsync(User.GetAccountId(), id);
         return RedirectToAction(nameof(Index));
     }
 
-    public async Task<IActionResult> IndividualDetails(long id)
+    public async Task<IActionResult> Details(long id)
     {
         var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
-        var individualDto = new IndividualDto
-        {
-            Id = individual.Id,
-            Name = individual.Name,
-            Job = individual.Job!,
-            Address = individual.Address,
-            PhonNumber = individual.PhoneNumber!,
-            Sex = (SexDto)individual.Sex,
-            CreatedAt = individual.CreatedAt,
-            DateOfBirth = individual.DateOfBirth,
-            ModifiedAt = individual.ModifiedAt,
-            NationalId = individual.NationalId,
-            SocialStatus = (SocialStatusDto)individual.SocialStatus,
-            User = individual.AddedBy.Name
-        };
-        var familyindividual = await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id);
-        individualDto.Family = familyindividual!.Family.Name;
-        individualDto.Isparent = familyindividual.IsParent;
-        individualDto.Isprovider = familyindividual.IsProvider;
+        var individualDto = _mapper.Map<IndividualDto>(individual);
 
         return View(individualDto);
     }

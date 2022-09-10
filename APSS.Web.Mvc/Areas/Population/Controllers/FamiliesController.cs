@@ -53,15 +53,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         public async Task<IActionResult> Details(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
-            var familyDto = new FamilyDto
-            {
-                Id = family.Id,
-                Name = family.Name,
-                LivingLocation = family.LivingLocation,
-                UserName = family.AddedBy.Name,
-                CreatedAt = family.CreatedAt,
-                ModifiedAt = family.ModifiedAt,
-            };
+            var familyDto = _mapper.Map<FamilyDto>(family);
             return View(familyDto);
         }
 
@@ -71,18 +63,19 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
             List<FamilyIndividualGetDto> familyindividualsDto = new List<FamilyIndividualGetDto>();
             var familyindividuals = await _populationSvc
                 .GetIndividualsOfFamilyAsync(User.GetAccountId(), id);
-
-            foreach (var familindividual in await familyindividuals.AsAsyncEnumerable().ToListAsync())
+            foreach (var familyindividual in await familyindividuals.AsAsyncEnumerable().ToListAsync())
             {
                 familyindividualsDto.Add(new FamilyIndividualGetDto
                 {
-                    Id = familindividual.Id,
-                    NameFamily = familindividual.Family.Name,
-                    NameIndividual = familindividual.Individual.Name,
-                    IsParent = familindividual.IsParent,
-                    IsProvider = familindividual.IsProvider,
+                    Id = familyindividual.Id,
+                    NameFamily = familyindividual.Family.Name,
+                    NameIndividual = familyindividual.Individual.Name,
+                    CreatedAt = familyindividual.CreatedAt,
+                    IsParent = familyindividual.IsParent,
+                    IsProvider = familyindividual.IsProvider
                 });
             }
+
             return View(familyindividualsDto);
         }
 
@@ -109,32 +102,33 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         public async Task<IActionResult> Update(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
-            var familyDto = new FamilyEditForm
+            FamilyEditForm familyDto = new FamilyEditForm
             {
                 Id = family.Id,
                 Name = family.Name,
                 LivingLocation = family.LivingLocation
             };
 
-            return View( familyDto);
+            return View(familyDto);
         }
 
         // POST: FamilyController/EditFamily/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(long id, [FromForm] FamilyAddForm family)
+        public async Task<IActionResult> Update([FromForm] FamilyEditForm familynew)
         {
             if (!ModelState.IsValid)
             {
-                return View(family);
+                return View(familynew);
             }
-            var familynew = await _populationSvc
-                .UpdateFamilyAsync(User.GetAccountId(), id,
-                f =>
-                {
-                    f.Name = family.Name;
-                    f.LivingLocation = family.LivingLocation;
-                });
+
+            await _populationSvc
+               .UpdateFamilyAsync(User.GetAccountId(), familynew.Id,
+               f =>
+               {
+                   f.Name = familynew.Name;
+                   f.LivingLocation = familynew.LivingLocation;
+               });
 
             return RedirectToAction(nameof(Index));
         }
@@ -147,15 +141,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
             {
                 return View();
             }
-            var familydto = new FamilyDto
-            {
-                Id = family.Id,
-                Name = family.Name,
-                LivingLocation = family.LivingLocation,
-                CreatedAt = family.CreatedAt,
-                ModifiedAt = family.ModifiedAt,
-                UserName = family.AddedBy.Name
-            };
+            var familydto = _mapper.Map<FamilyDto>(family);
             return View(familydto);
         }
 
