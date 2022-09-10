@@ -1,19 +1,18 @@
 ﻿using APSS.Domain.Entities;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 
 namespace APSS.Web.Dtos.Profilies
 {
-    public class AnimalGroupProfile : Profile
+    internal class AnimalProductUnitProfile : Profile
     {
-        public AnimalGroupProfile()
+        public AnimalProductUnitProfile()
         {
-            CreateMap<AnimalGroup, AnimalGroupDto>()
-                .ReverseMap();
+            CreateMap<AnimalProductUnit, AnimalProductUnitDto>().ReverseMap();
         }
     }
 }
