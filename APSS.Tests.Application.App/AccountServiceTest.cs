@@ -102,7 +102,6 @@ public sealed class AccountServiceTest
 
         Assert.True(await _uow.Accounts.Query().ContainsAsync(account));
         Assert.Equal(user, account.User);
-        Assert.Equal(superAccount.User, account.AddedBy);
         Assert.Equal(templateAccount.HolderName, account.HolderName);
         Assert.Equal(templateAccount.Permissions, account.Permissions);
         Assert.True(await _cryptoHashSvc.VerifyAsync(password, account.PasswordHash, account.PasswordSalt));
