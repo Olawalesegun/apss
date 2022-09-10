@@ -113,26 +113,16 @@ public sealed class AccountsService : IAccountsService
         return account;
     }
 
-    public async Task<Account> GetAccountAsync(long SuperId, long accountId)
-    {
-        if (SuperId == accountId)
-        {
-            var myAccount = await _uow.Accounts.Query().FindAsync(accountId);
-            return myAccount;
-        }
-        var (_, account) = await _permissionsSvc
-            .ValidateAccountPatenthoodAsync(SuperId, accountId, PermissionType.Read);
+    /// <inheritdoc/>
+    public IQueryBuilder<Account> GetAccountAsync(long accountId)
+        => _uow.Accounts.Query().Where(a => a.Id == accountId);
 
-        return account;
-    }
-
-    public async Task<IQueryBuilder<Account>> GetUserAccounts(long accountId, long userId)
+    /// <inheritdoc/>
+    public async Task<IQueryBuilder<Account>> GetAccountsAsync(long accountId, long userId)
     {
-        var superaccout = await _uow.Accounts.Query().Include(u => u.User).FindAsync(accountId);
-        if (superaccout.User.Id == userId)
-            return _uow.Accounts.Query().Where(A => A.User.Id == userId);
-        var account = await _permissionsSvc.ValidateAccountPatenthoodAsync(accountId, userId, PermissionType.Read);
-        return _uow.Accounts.Query().Where(A => A.User.Id == userId);
+        await _permissionsSvc.ValidatePermissionsAsync(accountId, userId, PermissionType.Read);
+
+        return _uow.Accounts.Query().Where(a => a.User.Id == userId);
     }
 
     #endregion Public Methods
