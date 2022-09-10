@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Services;
@@ -27,6 +28,7 @@ public class UsersController : Controller
     }
 
     [HttpGet]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Read)]
     public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
     {
         var ret = await (await _userService.GetSubuserAsync(User.GetAccountId()))
@@ -40,11 +42,13 @@ public class UsersController : Controller
     }
 
     [HttpGet]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Create)]
     public IActionResult Add()
         => View(new AddUserForm());
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Create)]
     public async Task<IActionResult> Add(AddUserForm form)
     {
         if (!ModelState.IsValid)
