@@ -12,7 +12,8 @@ namespace APSS.Web.Dtos.Profilies
     {
         public AnimalGroupProfile()
         {
-            CreateMap<AnimalGroup, AnimalGroupDto>().ReverseMap();
+            CreateMap<AnimalGroup, AnimalGroupDto>()
+                .ReverseMap();
         }
     }
 }

@@ -8,14 +8,18 @@ public sealed class LandsRoute : CrudRoute
     {
         Lands = FromCrudController<LandsController>(icon: Icon.Seeding);
         Products = FromCrudController<ProductsController>(icon: Icon.Seeding);
+        Expenses = FromCrudController<ExpensesController>(icon: Icon.Seeding);
         Units = FromCrudController<UnitsController>(icon: Icon.Ruler);
         Seasons = FromCrudController<SeasonsController>(icon: Icon.Calendar);
+        Confirmation = FromCrudController<ConfirmationsController>(icon: Icon.Calendar);
     }
 
     public CrudRoute Lands { get; init; }
     public CrudRoute Products { get; init; }
     public CrudRoute Units { get; init; }
     public CrudRoute Seasons { get; init; }
+    public CrudRoute Expenses { get; init; }
+    public CrudRoute Confirmation { get; init; }
 
     public override IRoute DefaultRoute => Lands;
 }

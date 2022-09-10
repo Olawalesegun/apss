@@ -1,0 +1,109 @@
+﻿@model LandConfirmationDto
+<div class="my-2">
+    <div class="row row-cols-1 row-cols-md-2 g-4 ">
+        @foreach (var land in @Model!.Lands)
+        {
+            <div class="col">
+
+                <div class="card mt-2  shadow">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center" style="line-height:40px !important">
+                            <i class="fa-solid fa-circle-user fs-1 me-2 " style="padding-left:4px"></i>
+                            <h3 class="fw-light">
+                                @land.OwnedBy.Name
+                            </h3>
+                        </div>
+
+                        <table class="table user-view-table m-0  ">
+                            <tbody style="font-size:14px">
+                                <tr class="">
+                                    <th>@Html.DisplayNameFor(n => n.Land.Name)</th>
+                                    <td> @land.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(a => a.Land.Address)</th>
+                                    <td> @land.Address</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(a => a.Land.Area)</th>
+                                    <td> @land.Area</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(e => e.Land.IsUsable)</th>
+                                    <td> @land.IsUsable</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.Land.CreatedAt)</th>
+                                    <td> @land.CreatedAt</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.Land.ModifiedAt)</th>
+                                    <td> @land.ModifiedAt</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <div class="table-responsive  d-flex justify-content-end">
+                            @Html.ActionLink("Confirm","ConfirmLand", "Confirmations", new { id=land.Id,value=true },new{@class="btn btn-success me-2  shadow-0"})
+                            @Html.ActionLink("Decline","ConfirmLand", "Confirmations", new { id=land.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @foreach (var product in @Model!.Products)
+        {
+            <div class="col">
+
+                <div class="card mt-2  shadow">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center" style="line-height:40px !important">
+                            <i class="fa-solid fa-circle-user fs-1 me-2 " style="padding-left:4px"></i>
+                            <h3 class="fw-light">
+                                @product.AddedBy.Name
+                            </h3>
+                        </div>
+
+                        <table class="table user-view-table m-0  ">
+                            <tbody style="font-size:14px">
+                                <tr class="">
+                                    <th>@Html.DisplayNameFor(n => n.Product.CropName)</th>
+                                    <td> @product.CropName</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(a => a.Product.Category)</th>
+                                    <td> @product.Category</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(a => a.Product.Producer)</th>
+                                    <td> @product.Producer.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(a => a.Product.Unit)</th>
+                                    <td> @product.Unit.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(e => e.Product.ProducedIn)</th>
+                                    <td> @product.ProducedIn</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.Product.CreatedAt)</th>
+                                    <td> @product.CreatedAt</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.Product.ModifiedAt)</th>
+                                    <td> @product.ModifiedAt</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <div class="table-responsive  d-flex justify-content-end">
+                            @Html.ActionLink("Confirm","ConfirmProduct", "Confirmations", new { id=product.Id,value=true },new{@class="btn btn-success mx-2  shadow-0"})
+                            @Html.ActionLink("Decline","ConfirmProduct", "Confirmations", new { id=product.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

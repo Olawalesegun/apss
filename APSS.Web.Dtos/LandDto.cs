@@ -5,7 +5,7 @@ namespace APSS.Web.Dtos;
 public class LandDto : OwnableDto
 {
     [Display(Name = "Area")]
-    [Required(ErrorMessage = "Area is required")]
+    [Required]
     public long Area { get; set; }
 
     [Display(Name = "Longitude")]
@@ -17,8 +17,9 @@ public class LandDto : OwnableDto
     [Range(-90, 90, ErrorMessage = "Area must be between [-90, 90]")]
     public double Latitude { get; set; }
 
-    [Required(ErrorMessage = "Address is required")]
     [Display(Name = "Address")]
+    [Required]
+    [MinLength(2, ErrorMessage = "must be more than 1 digit")]
     public string Address { get; set; } = null!;
 
     [Display(Name = "Is Usable")]

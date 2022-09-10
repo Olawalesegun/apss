@@ -7,6 +7,8 @@ using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 using AutoMapper;
+using APSS.Web.Dtos.Parameters;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -22,18 +24,21 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             _landSvc = landService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args, long id)
         {
             var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetUserId()))
+                .Where(u => u.Name.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
+                .Select(_mapper.Map<LandDto>)
                 .ToListAsync();
 
-            return View(result.Select(_mapper.Map<LandDto>));
+            return View(new CrudViewModel<LandDto>(result, args));
         }
 
         // GET: LandController/Add a new land
         [HttpGet]
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public IActionResult Add()
         {
             return View();
@@ -42,7 +47,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: LandController/Add a new land
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<IActionResult> Add([FromForm] AddLandForm newLand)
         {
             if (!ModelState.IsValid)
@@ -72,7 +77,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         // GET: LandController/Update land
         [HttpGet]
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
         public async Task<IActionResult> Update(long Id)
         {
             return View(_mapper.Map<LandDto>(
@@ -83,7 +88,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //[HttpPost("[action]/{landId}")]  [FromRoute] long landId,
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
         public async Task<IActionResult> Update([FromForm] UpdateLandForm form)
         {
             if (!ModelState.IsValid)
@@ -108,7 +113,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: LandController/Delete land
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<IActionResult> Delete(long Id)
         {
             return View(_mapper.Map<LandDto>(await (
@@ -116,7 +121,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // POST: LandController/Delete land
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<IActionResult> DeletePost(long Id)
         {
             await _landSvc.RemoveLandAsync(User.GetAccountId(), Id);
@@ -134,12 +139,14 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         // GET: LandController/Get lands
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
-        public async Task<IActionResult> GetLands(long Id)
+        public async Task<IActionResult> GetAll([FromQuery] FilteringParameters args, long Id)
         {
-            var landList = await (
-            await _landSvc.GetLandsAsync(User.GetAccountId(), Id))
-            .AsAsyncEnumerable()
-            .ToListAsync();
+            var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), Id))
+                .Where(u => u.Name.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
+                .AsAsyncEnumerable()
+                .Select(_mapper.Map<LandDto>)
+                .ToListAsync();
 
             return View(landList.Select(_mapper.Map<LandDto>));
         }
@@ -171,7 +178,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
         public async Task<IActionResult> ConfirmLand(long id, bool value)
         {
-            await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
+            // await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
             TempData["success"] = value ? "Land confirmed successfully" : "Land declined successfully";
 
             //return LocalRedirect(Routes.Dashboard.Users.FullPath);

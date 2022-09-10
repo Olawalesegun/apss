@@ -1,14 +1,14 @@
 ﻿@model APSS.Web.Dtos.ProductExpenseDto
 
-<div class="card mt-2">
+<div class="card mx-0  border-0">
     <div class="d-inline">
     </div>
     <div class="card-body">
         <div class="d-flex ">
 
-            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Product Expanse Info</h3>
+            <h1 class="fw-light">Product Expanse Info</h1>
         </div>
-        <table class="table user-view-table m-0 t ">
+        <table class="table user-view-table m-0 border ">
             <tbody>
                 <tr>
                     <td>@Html.DisplayNameFor(i => i.Id)</td>
@@ -33,10 +33,10 @@
             </tbody>
         </table>
         <br />
-        <div cllass="d-inline pt-2">
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="LandProductExpense" asp-action="Index" asp-route-Id="@Model?.Id"> <i class="fa-solid fa-share mx-2"></i><span> Back </span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-route-Id="@Model?.Id" asp-controller="LandProductExpense" asp-action="Update"> <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Update</span> </a>
-            <a class="btn btn-primary-danger btn-rounded  my-2 bg-white text-dark text-decoration-none mx-1" asp-controller="LandProductExpense" asp-action="Delete" asp-route-id="@Model?.Id"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-outline-secondary  my-2   mx-1" onclick="history.back()"> <i class="fa-solid fa-angle-left me-2"></i><span> Back </span> </a>
+            <a class="btn btn-outline-primary   my-2   mx-1" asp-route-Id="@Model?.Id" asp-controller="Expenses" asp-action="Update"> <i class="fa-solid fa-pen-to-square me-2"> </i><span>Update</span> </a>
+            <a class="btn btn-outline-danger   my-2   mx-1" asp-controller="Expenses" asp-action="Delete" asp-route-id="@Model?.Id"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
         </div>
     </div>
 </div>

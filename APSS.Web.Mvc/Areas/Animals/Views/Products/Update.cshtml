@@ -1,0 +1,83 @@
+﻿@model APSS.Web.Dtos.AnimalProductDto
+
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Animals.Products.Update.FullPath" asp-antiforgery="true" novalidate>
+    <div class="d-flex mt-5">
+    </div>
+    <div class="modal fade" id="AddAnimalUnitModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addAnimalUnit" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAnimalUnit">Add New Animal Product</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- 2 column puts for the National number and Phome Number-->
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProducerId" />
+                    <div class="mb-4"><h2 class="fw-light ">Add Animal Product  </h2></div>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-sm-6 mb-4 has-validation">
+                            <div class="input-group">
+                                <span class="input-group-text">@@</span>
+                                <div class="form-floating col">
+                                    <input type="text" asp-for="Name" placeholder="Name" class="form-control" aria-describedby="nameValidation" required />
+                                    <label class="" asp-for="Name">Name</label>
+                                </div>
+                                <span asp-validation-for="Name" id="nameValidation" class="invalid-feedback d-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-4 has-validation  d-flex">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
+                                <div class="form-floating col">
+                                    <input type="time" asp-for="PeriodTaken" asp-format="[-][d'.']hh':'mm':'ss['.'fffffff]" placeholder="PeriodTaken" class="form-control" aria-describedby="periodTakenValidation" required />
+                                    <label class="form-label" asp-for="PeriodTaken"></label>
+                                </div>
+                                <span asp-validation-for="PeriodTaken" id="periodTakenValidation" class="invalid-feedback d-block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="  mb-4 has-validation">
+                        <div class="input-group">
+                            <span class="input-group-text">Kg</span>
+                            <div class="form-floating col">
+                                <input type="number" class="form-control" asp-for="Quantity" min="1" placeholder="Quantity" aria-describedby="quantityValidation" required />
+                                <label asp-for="Quantity" class=""></label>
+                            </div>
+                            <span asp-validation-for="Quantity" id="quantityValidation" class="invalid-feedback d-block"></span>
+                        </div>
+                    </div>
+
+                    <!-- selectinput for Unit -->
+                    <div class=" mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text">U</span>
+                            <div class="form-floating col">
+                                <select class="form-select" asp-for="UnitId" aria-describedby="unitValidation" asp-items="@(new SelectList(@ViewBag.units,"Id","Name"))" required>
+                                    <option selected>select Unit</option>
+                                </select>
+                                <label asp-for="Unit" class=""></label>
+                            </div>
+                            <span asp-validation-for="Unit" id="unitValidation" class="invalid-feedback d-block"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Animals.Products.FullPath">Cancel</a>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+<script>
+
+    $(window).on('load', function () {
+        $('#AddAnimalUnitModal').modal('show');
+    });
+</script>
+}

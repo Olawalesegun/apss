@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.SeasonDto
+﻿@model SeasonDto
 
 @{
     ViewData["title"] = "Delete Season Page";
@@ -36,8 +36,9 @@
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-area="Lands" asp-controller="Seasons" asp-action="DeletePost">Confirm</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-area="Lands" asp-controller="Seasons" asp-action="Index">Back</a>
+            <a class="btn btn-danger" href="@(Routes.Dashboard.Lands.Seasons.DeletePost)/@Model!.Id">Confirm</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2 text-decoration-none" style="background-color:#DCEEFB">Cancel</a>
+            @*<a class="btn btn-primary btn-rounded mx-3" href="@Routes.Dashboard.Lands.Lands.FullPath">Back</a>*@
         </div>
     </div>
 </div>

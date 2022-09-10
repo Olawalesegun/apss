@@ -1,6 +1,5 @@
 ﻿@model APSS.Web.Dtos.ConfirmationDto
 
-@await Html.PartialAsync("_dataNavBar")
 <div class="my-2">
     <div class="row row-cols-1 row-cols-md-2 g-4 ">
         @foreach (var product in @Model.AnimalProducts)
@@ -94,8 +93,8 @@
                             </tbody>
                         </table>
                         <div class=" mx-2 d-flex justify-content-end my-3">
-                            @Html.ActionLink("Decline", "AnimalConfirm", new { id=animal.Id,value=false },new{@class="btn btn-danger text-white me-2  shadow-0"})
-                            @Html.ActionLink("Confirm", "AnimalConfirm", new { id=animal.Id,value=true },new{@class="btn btn-success text-white my-0 shadow-0"})
+                            @Html.ActionLink("Decline", "ConfirmAnimal", new { id=animal.Id,value=false },new{@class="btn btn-danger text-white me-2  shadow-0"})
+                            @Html.ActionLink("Confirm", "ConfirmAnimal", new { id=animal.Id,value=true },new{@class="btn btn-success text-white my-0 shadow-0"})
                         </div>
                     </div>
                 </div>

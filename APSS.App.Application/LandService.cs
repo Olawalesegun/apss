@@ -313,11 +313,24 @@ public class LandService : ILandService
     {
         var account = await _uow.Accounts.Query()
             .Include(u => u.User)
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Farmer, PermissionType.Read);
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
         return _uow.LandProducts.Query()
             .Include(a => a.AddedBy)
             .Where(u => u.AddedBy.Id == account.User.Id);
+    }
+
+    // <inheritdoc/>
+    public async Task<IQueryBuilder<ProductExpense>> GetAllExpensesAsync(long accountId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(u => u.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        return _uow.ProductExpenses.Query()
+            .Include(s => s.SpentOn)
+            .Include(s => s.SpentOn.AddedBy)
+            .Where(u => u.SpentOn.AddedBy.Id == account.User.Id);
     }
 
     /// <inheritdoc/>
@@ -527,6 +540,7 @@ public class LandService : ILandService
         var account = await _uow.Accounts.Query()
             .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Update);
         var landProduct = await _uow.LandProducts.Query()
+            .Include(a => a.AddedBy)
             .FindAsync(landProductId);
 
         await _permissionsSvc.ValidateUserPatenthoodAsync(
@@ -611,7 +625,7 @@ public class LandService : ILandService
             .Include(s => s.ProducedIn)
             .Include(p => p.Producer)
             .Include(s => s.AddedBy.SupervisedBy!)
-            .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == false);
+            .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == null);
     }
 
     /// <inhertdoc/>

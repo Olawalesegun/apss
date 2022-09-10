@@ -12,7 +12,9 @@ public class CrudRoute : Route, ICrudRoute
         Add = new Route(this, "Add item", "Add", icon: Icon.Plus, isNavigatable: false);
         Update = new Route(this, "Update item", "Update", icon: Icon.Pen, isNavigatable: false);
         Delete = new Route(this, "Delete item", "Delete", icon: Icon.TrashCan, isNavigatable: false);
+        DeletePost = new Route(this, "Delete item", "DeletePost", icon: Icon.TrashCan, isNavigatable: false);
         Details = new Route(this, "Show details", "Details", icon: Icon.List, isNavigatable: false);
+        GetAll = new Route(this, "Show details", "GetAll", icon: Icon.List, isNavigatable: false);
     }
 
     /// <inheritdoc/>
@@ -26,4 +28,8 @@ public class CrudRoute : Route, ICrudRoute
 
     /// <inheritdoc/>
     public IRoute Delete { get; init; }
+
+    public IRoute DeletePost { get; init; }
+
+    public IRoute GetAll { get; init; }
 }

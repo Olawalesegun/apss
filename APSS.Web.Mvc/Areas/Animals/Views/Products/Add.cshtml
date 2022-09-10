@@ -1,114 +1,83 @@
 ﻿@model APSS.Web.Dtos.AnimalProductDto
 
-<div class="container-fluid">
-    <div class="col-sm-12 col-lg-8">
-        <form class="mt-3 needs-validation" id="ProductForm" method="post" asp-antiforgery="true" asp-controller="Products" asp-action="Add" novalidate>
-            <!-- 2 column puts for the National number and Phome Number-->
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProducerId" />
-            <div class="mb-4"><h2 class="fw-light ">Add Animal Product  </h2></div>
-            <div class="row d-flex justify-content-between">
-                <div class="col-sm-6 mb-4 has-validation">
-                    <div class="input-group">
-                        <span class="input-group-text">@@</span>
-                        <div class="form-floating col">
-                            <input type="text" asp-for="Name" placeholder="Name" class="form-control" aria-describedby="nameValidation" required />
-                            <label class="" asp-for="Name">Name</label>
-                        </div>
-                        <span asp-validation-for="Name" id="nameValidation" class="invalid-feedback d-block"></span>
-                    </div>
-                </div>
-                <div class="col-sm-6 mb-4 has-validation  d-flex">
-                    <div class="input-group">
-                        <span class="input-group-text">00:00:00</span>
-                        <div class="form-floating col">
-                            <input type="time" asp-for="PeriodTaken" asp-format="[-][d'.']hh':'mm':'ss['.'fffffff]" placeholder="PeriodTaken" class="form-control" aria-describedby="periodTakenValidation" required />
-                            <label class="form-label" asp-for="PeriodTaken"></label>
-                        </div>
-                        <span asp-validation-for="PeriodTaken" id="periodTakenValidation" class="invalid-feedback d-block"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="  mb-4 has-validation">
-                <div class="input-group">
-                    <span class="input-group-text">Kg</span>
-                    <div class="form-floating col">
-                        <input type="number" class="form-control" asp-for="Quantity" min="1" placeholder="Quantity" aria-describedby="quantityValidation" required />
-                        <label asp-for="Quantity" class=""></label>
-                    </div>
-                    <span asp-validation-for="Quantity" id="quantityValidation" class="invalid-feedback d-block"></span>
-                </div>
-            </div>
-
-            <!-- selectinput for Unit -->
-            <div class=" mb-4">
-                <div class="input-group">
-                    <span class="input-group-text">U</span>
-                    <div class="form-floating col">
-                        <select class="form-select" asp-for="UnitId" aria-describedby="unitValidation" asp-items="@(new SelectList(Model.Unit,"Id","Name"))" required>
-                            <option selected>select Unit</option>
-                        </select>
-                        <label asp-for="Unit" class=""></label>
-                    </div>
-                    <span asp-validation-for="Unit" id="unitValidation" class="invalid-feedback d-block"></span>
-                </div>
-            </div>
-            <!--  animal group Producer -->
-            <input type="hidden" asp-for="ProducerId" />
-            <!-- Submit button -->
-            <div class="d-flex justify-content-end">
-                <a onClick="history.go(-1); return false;" class="btn btn-link text-decoration-none my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
-                <button type="submit" class="btn btn-primary  px-5  mb-4 mt-4">Add</button>
-            </div>
-        </form>
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Animals.Products.Add.FullPath" asp-antiforgery="true" novalidate>
+    <div class="d-flex mt-5">
     </div>
-</div>
+    <div class="modal fade" id="AddAnimalUnitModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addAnimalUnit" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAnimalUnit">Add New Animal Product</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- 2 column puts for the National number and Phome Number-->
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProducerId" />
+                    <div class="mb-4"><h2 class="fw-light ">Add Animal Product  </h2></div>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-sm-6 mb-4 has-validation">
+                            <div class="input-group">
+                                <span class="input-group-text">@@</span>
+                                <div class="form-floating col">
+                                    <input type="text" asp-for="Name" placeholder="Name" class="form-control" aria-describedby="nameValidation" required />
+                                    <label class="" asp-for="Name">Name</label>
+                                </div>
+                                <span asp-validation-for="Name" id="nameValidation" class="invalid-feedback d-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-4 has-validation  d-flex">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
+                                <div class="form-floating col">
+                                    <input type="time" asp-for="PeriodTaken" asp-format="[-][d'.']hh':'mm':'ss['.'fffffff]" placeholder="PeriodTaken" class="form-control" aria-describedby="periodTakenValidation" required />
+                                    <label class="form-label" asp-for="PeriodTaken"></label>
+                                </div>
+                                <span asp-validation-for="PeriodTaken" id="periodTakenValidation" class="invalid-feedback d-block"></span>
+                            </div>
+                        </div>
+                    </div>
 
-@section scripts{
+                    <div class="  mb-4 has-validation">
+                        <div class="input-group">
+                            <span class="input-group-text">Kg</span>
+                            <div class="form-floating col">
+                                <input type="number" class="form-control" asp-for="Quantity" min="1" placeholder="Quantity" aria-describedby="quantityValidation" required />
+                                <label asp-for="Quantity" class=""></label>
+                            </div>
+                            <span asp-validation-for="Quantity" id="quantityValidation" class="invalid-feedback d-block"></span>
+                        </div>
+                    </div>
 
+                    <!-- selectinput for Unit -->
+                    <div class=" mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text">U</span>
+                            <div class="form-floating col">
+                                <select class="form-select" asp-for="UnitId" aria-describedby="unitValidation" asp-items="@(new SelectList(@ViewBag.units,"Id","Name"))" required>
+                                    <option selected>select Unit</option>
+                                </select>
+                                <label asp-for="Unit" class=""></label>
+                            </div>
+                            <span asp-validation-for="Unit" id="unitValidation" class="invalid-feedback d-block"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Animals.Groups.FullPath">Cancel</a>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
 <script>
-             $(document).ready(function(){
-            $(".sidebar ul li.active").removeClass('active');
-             $("#dataManagement").addClass('active');
-            });
 
-                $(document).ready(function(){
-                 $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-                 $("#animalProductMedia").addClass('MediaActive')
-
-             });
-               document.getElementById("nav-system-name").innerHTML="Data Management";
-            document.getElementById("media-system-name").innerHTML="Data Management";
-
-                $("#animalGroups").removeClass('actives');
-               $("#lands").removeClass('actives');
-           $    ("#landProducts").removeClass('actives');
-                $("#confirmation").removeClass('actives');
-            $    ("#units").removeClass('actives');
-             $("#animalProducts").addClass('actives');
-
-    <script     type="text/javascript">
-            func    tion AddAnimalGroup() {
-                    var data = $("#ProductForm").serialize();
-                    console.log(data);
-                $.aj    ax({
-                        type: 'POST',
-                        url: '/DataManagement/CreateAnimalProduct',
-                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
-                        data: data,
-                    suc    cess: function (result) {
-                       a    lert('Successfully received Data ');
-                            console.log(result);
-                        },
-                    err    or: function () {
-                       a    lert('Failed to receive the Data');
-                            console.log('Failed ');
-                        }
-                    })
-                }
-            @{
-                       // await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
+    $(window).on('load', function () {
+        $('#AddAnimalUnitModal').modal('show');
+    });
 </script>
 }

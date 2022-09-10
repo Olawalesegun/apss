@@ -1,215 +1,237 @@
-﻿@model APSS.Web.Dtos.LandProductDto
-@{
-    ViewData["title"] = "Update land product page";
-}
-<div class="container-fluid w-100">
-    <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-8">
-        <div class="  shadow-sm pb-3">
-            <form method="post" action="@Routes.Dashboard.Lands.Products.Update.FullPath" asp-antiforgery="true" class="needs-validation" novalidate>
-                <input type="hidden" asp-for="Id" />
-                <div asp-validation-summary="ModelOnly"></div>
-                <div class="center d-flex justify-content-center mb-3 ">
-                    <h3 class=" ">
-                        Update Land Product
-                    </h3>
+﻿@model LandProductDto
+
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Lands.Products.Update.FullPath" asp-antiforgery="true" novalidate>
+    <div class="d-flex mt-5">
+    </div>
+    <div class="modal fade" id="addUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Update Product</h5>
                 </div>
-                <!-- row 1 -->
-                @*<div class="row mb-lg-4 justify-content-between  ">
+                <div class="modal-body">
+                    <input type="hidden" asp-for="landId" />
+                    <input type="hidden" asp-for="Id" />
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="center d-flex justify-content-center mb-3 ">
+                        <h3 class=" ">
+                            Update Product
+                        </h3>
+                    </div>
+                    <!-- row 1 -->
+                    @* <div class="row mb-lg-4 justify-content-between  ">
 
-                    <div class="col-sm-6 mb-3 flex-column form-group ">
-                    <div class="input-group">
-                    <span class="input-group-text">#</span>
-                    <div class="form-floating col">
-                    <select class="form-select" asp-for="SeasonId" asp-items="@(new SelectList(Model?.Seasons,"Id","Name"))">
-                    <option selected> select season</option>
-                    </select>
-                    <label asp-for="Seasons" class="form-label textOverflow"> Select Season</label>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-6 mb-3 flex-column form-group d-flex">
-                    <div class="input-group">
-                    <span class="input-group-text">#</span>
-                    <div class="form-floating col">
-                    <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model?.Units,"Id","Name"))">
-                    <option selected>Select Product Unit</option>
-                    </select>
-                    <label asp-for="Unit" class="form-label textOverflow"> Select Product Unit</label>
-                    </div>
-                    </div>
-                    </div>
-                    </div>*@
-
-                <!-- row 2 -->
-                <div class="row mb-lg-4 d-flex justify-content-between  ">
-                    <div class="col-sm-6 mb-3 flex-column form-group">
+                        <div class="col-sm-6 mb-3 flex-column form-group ">
                         <div class="input-group">
-                            <span class="input-group-text">@@</span>
-                            <div class="form-floating col">
-                                <input type="text" asp-for="CropName" class="form-control" placeholder=" " />
-                                <label class="form-label textOverflow" asp-for="CropName"></label>
-                                <div class="invalid-feedback">
-                                    <span asp-validation-for="CropName"></span>
+                        <span class="input-group-text">#</span>
+                        <div class="form-floating col">
+                        <select class="form-select" asp-for="SeasonId" asp-items="@(new SelectList(Model?.Seasons,"Id","Name"))" required>
+                        <option selected> select season</option>
+                        </select>
+                        <label asp-for="Seasons" class="form-label textOverflow"> Select Season</label>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-sm-6 mb-3 flex-column form-group d-flex">
+                        <div class="input-group">
+                        <span class="input-group-text">#</span>
+                        <div class="form-floating col">
+                        <select class="form-select" asp-for="UnitId" asp-items="@(new SelectList(Model?.Units,"Id","Name"))" required>
+                        <option selected>Select Product Unit</option>
+                        </select>
+                        <label asp-for="Unit" class="form-label textOverflow"> Select Product Unit</label>
+                        </div>
+                        </div>
+                        </div>
+                        </div>*@
+
+                    <!-- row 2 -->
+                    <div class="row mb-lg-4 d-flex justify-content-between">
+                        <div class="col-sm-6 mb-3 flex-column form-group">
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">@@</span>
+                                <div class="form-floating col">
+                                    <input type="text" asp-for="CropName" class="form-control" placeholder=" " aria-describedby="CropNameValidation" required />
+                                    <label class="form-label textOverflow" asp-for="CropName"></label>
                                 </div>
+                                <span id="CropNameValidation" class="d-block invalid-feedback" asp-validation-for="CropName"></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 mb-3 flex-column form-group">
-                        <div class="input-group">
-                            <span class="input-group-text">@@</span>
-                            <div class="form-floating col">
-                                <input type="text" asp-for="Quantity" class="form-control" />
-                                <label asp-for="Quantity" class="form-label textOverflow"></label>
-                                <div class="invalid-feedback">
-                                    <span asp-validation-for="Quantity"></span>
+                        <div class="col-sm-6 mb-3 flex-column form-group">
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">@@</span>
+                                <div class="form-floating col">
+                                    <input type="text" asp-for="Quantity" class="form-control" placeholder=" " aria-describedby="QuantityValidation" required />
+                                    <label asp-for="Quantity" class="form-label textOverflow"></label>
                                 </div>
+                                <span id="QuantityValidation" class="d-block invalid-feedback" asp-validation-for="Quantity"></span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- row 3-->
-                <div class="row mb-lg-4 justify-content-between  ">
+                    <!-- row 3-->
+                    <div class="row mb-lg-4 justify-content-between  ">
 
-                    <div class="col-sm-6 mb-3 flex-column form-group ">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <input type="date" asp-for="HarvestStart" class="form-control" placeholder=" " />
-                                <label asp-for="HarvestStart" class="form-label textOverflow"></label>
+                        <div class="col-sm-6 mb-3 flex-column form-group ">
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">#</span>
+                                <div class="form-floating col">
+                                    <input type="date" asp-for="HarvestStart" class="form-control" placeholder=" " aria-describedby="harvestSValidation" required />
+                                    <label asp-for="HarvestStart" class="form-label textOverflow"></label>
+                                </div>
+                                <span id="harvestSValidation" class="d-block invalid-feedback" asp-validation-for="HarvestStart"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3 flex-column form-group d-flex">
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">#</span>
+                                <div class="form-floating col">
+                                    <input type="date" asp-for="HarvestEnd" class="form-control" placeholder=" " aria-describedby="harvestEValidation" required />
+                                    <label asp-for="HarvestEnd" class="form-label textOverflow"></label>
+                                </div>
+                                <span id="harvestEValidation" class="d-block invalid-feedback" asp-validation-for="HarvestEnd"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <input type="date" asp-for="HarvestEnd" class="form-control" placeholder=" " />
-                                <label asp-for="HarvestEnd" class="form-label textOverflow"></label>
+                    <!-- row 4 -->
+                    <div class="row justify-content-between ">
+                        <!-- 1 -->
+                        <div class=" col-sm-6 mt-3 flex-column form-group d-flex">
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"><i class="fa-light fa-hose"></i></span>
+                                <div class="form-floating col">
+                                    <input type="text" asp-for="IrrigationMethod" class="form-control" placeholder=" " aria-describedby="irrigationMValidation" required />
+                                    <label asp-for="IrrigationMethod" class="form-label textOverflow"></label>
+                                </div>
+                                <span id="irrigationMValidation" class="d-block invalid-feedback" asp-validation-for="IrrigationMethod"></span>
+                            </div>
+                        </div>
+                        <!-- 2 -->
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                                <div class="form-floating col">
+                                    <input type="text" class="form-control" asp-for="StoringMethod" placeholder=" " aria-describedby="storingValidation" required />
+                                    <label asp-for="StoringMethod" class="form-label"></label>
+                                </div>
+                                <span id="storingValidation" class="d-block invalid-feedback" asp-validation-for="StoringMethod"></span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- row 4 -->
-                <div class="row justify-content-between ">
-                    <!-- 1 -->
-                    <div class=" col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <input type="text" asp-for="IrrigationMethod" class="form-control" placeholder=" " />
-                                <label asp-for="IrrigationMethod" class="form-label textOverflow"></label>
+                    <!-- row 5 -->
+                    <div class="row justify-content-between ">
+                        <!-- 1 -->
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <div class="form-floating col">
+                                    <input type="text" asp-for="Fertilizer" class="form-control" placeholder=" " aria-describedby="FertilizerValidation" required />
+                                    <label asp-for="Fertilizer" class="form-label"></label>
+                                </div>
+                                <span id="FertilizerValidation" class="d-block invalid-feedback" asp-validation-for="Fertilizer"></span>
+                            </div>
+                        </div>
+                        <!-- 2 -->
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <div class="form-floating col">
+                                    <input type="text" asp-for="Category" class="form-control" placeholder=" " aria-describedby="CategoryValidation" required />
+                                    <label asp-for="Category" class="form-label"></label>
+                                </div>
+                                <span id="CategoryValidation" class="d-block invalid-feedback" asp-validation-for="Category"></span>
                             </div>
                         </div>
                     </div>
-                    <!-- 2 -->
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <input type="text" class="form-control" asp-for="StoringMethod" placeholder=" " />
-                                <label asp-for="StoringMethod" class="form-label"></label>
+                    <!-- row 6 -->
+                    <!-- row 7 -->
+                    <div class="row justify-content-between ">
+                        <!-- 1 -->
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <div class="form-floating col">
+                                    <input type="text" asp-for="Insecticide" class="form-control" placeholder=" " aria-describedby="InsecticideValidation" required />
+                                    <label asp-for="Insecticide" class="form-label"></label>
+                                </div>
+                                <span id="InsecticideValidation" class="d-block invalid-feedback" asp-validation-for="Insecticide"></span>
+                            </div>
+                        </div>
+                        <!-- 2 -->
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex ">
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <div class="form-floating col">
+                                    <input type="number" class="form-control" asp-for="IrrigationCount" placeholder=" " aria-aria-describedby="IrrigationCValidation" required />
+                                    <label asp-for="IrrigationCount" class="form-label"></label>
+                                </div>
+                                <span id="IrrigationCValidation" class="d-block invalid-feedback" asp-validation-for="IrrigationCount"></span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- row 5 -->
-                <div class="row justify-content-between ">
-                    <!-- 1 -->
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <input type="text" asp-for="Fertilizer" class="form-control" placeholder=" " />
-                                <label asp-for="Fertilizer" class="form-label"></label>
+                    <!-- row 8 -->
+                    <div class="row justify-content-between ">
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+                            <!--used -->
+                            <div class="form-check   ">
+                                <input class="form-check-input hiden" type="checkbox" asp-for="IsGovernmentFunded" value="true" />
+                                <label class="form-check-label" asp-for="IsGovernmentFunded"></label>
+                            </div>
+                        </div>
+                        <!-- 2 -->
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+                            <!--used -->
+                            <div class="form-check form-check-inline offset-xl-5">
+                                <input class="form-check-input hiden" type="checkbox" asp-for="HasGreenhouse" value="true" />
+                                <label class="form-check-label" asp-for="HasGreenhouse"></label>
                             </div>
                         </div>
                     </div>
-                    <!-- 2 -->
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <input type="text" asp-for="Category" class="form-control" placeholder=" " />
-                                <label asp-for="Category" class="form-label"></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- row 6 -->
-                <!-- row 7 -->
-                <div class="row justify-content-between ">
-                    <!-- 1 -->
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <input type="text" asp-for="Insecticide" class="form-control" placeholder=" " />
-                                <label asp-for="Insecticide" class="form-label"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 2 -->
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex ">
-                        <div class="input-group">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating col">
-                                <input type="number" class="form-control" asp-for="IrrigationCount" placeholder=" " />
-                                <label asp-for="IrrigationCount" class="form-label"></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- row 8 -->
-                <div class="row justify-content-between ">
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <!--used -->
-                        <div class="form-check   ">
-                            <input class="form-check-input hiden" type="checkbox" asp-for="IsGovernmentFunded" value="true" />
-                            <label class="form-check-label" asp-for="IsGovernmentFunded"></label>
-                        </div>
-                    </div>
-                    <!-- 2 -->
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
-                        <!--used -->
-                        <div class="form-check form-check-inline offset-xl-5">
-                            <input class="form-check-input hiden" type="checkbox" asp-for="HasGreenhouse" value="true" />
-                            <label class="form-check-label" asp-for="HasGreenhouse"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-between ">
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+                    <div class="row justify-content-between ">
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex">
 
-                        <div class="form-check-inline ">
-                            <h5 class="label-inline textOverflow"><label asp-for="IrrigationPowerSource"></label></h5>
-                        </div>
-                        @foreach (var item in Enum.GetValues<IrrigationPowerSource>())
-                        {
-                            <div class="form-check ">
-                                <input class="form-check-input" type="radio" value="@item" asp-for="IrrigationPowerSource" />
-                                @Html.Label(item.ToString())
+                            <div class="form-check-inline ">
+                                <h5 class="label-inline textOverflow"><label asp-for="IrrigationPowerSource"></label></h5>
                             </div>
-                        }
-                    </div>
-                    <div class="col-sm-6 mt-3 flex-column form-group d-flex">
+                            @foreach (var item in Enum.GetValues<IrrigationPowerSource>())
+                            {
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="radio" value="@item" asp-for="IrrigationPowerSource" />
+                                    @Html.Label(item.ToString())
+                                </div>
+                            }
+                        </div>
+                        <div class="col-sm-6 mt-3 flex-column form-group d-flex">
 
-                        <div class="form-check-inline ">
-                            <h5 class="label-inline textOverflow"><label asp-for="IrrigationWaterSource"></label></h5>
-                        </div>
-                        @foreach (var item in Enum.GetValues<IrrigationWaterSource>())
-                        {
-                            <div class="form-check ">
-                                <input class="form-check-input" type="radio" value="@item" asp-for="IrrigationWaterSource" />
-                                @Html.Label(item.ToString())
+                            <div class="form-check-inline ">
+                                <h5 class="label-inline textOverflow"><label asp-for="IrrigationWaterSource"></label></h5>
                             </div>
-                        }
+                            @foreach (var item in Enum.GetValues<IrrigationWaterSource>())
+                            {
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="radio" value="@item" asp-for="IrrigationWaterSource" />
+                                    @Html.Label(item.ToString())
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Lands.Products.FullPath">Cancel</a>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </div>
-                <!-- row 9 -->
-                <!-- row 9 -->
-                <div class="row justify-content-between   mt-3"></div>
-                <button class="btn btn-primary  "><i class="fa-solid fa-plus"></i>Update</button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+</form>
+
+@section scripts {
+<script>
+
+    $(window).on('load', function () {
+        $('#addUserModal').modal('show');
+    });
+</script>
+}

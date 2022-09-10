@@ -1,5 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.ProductListDto>
-<partial name="_dataNavBar" />
+﻿@model CrudViewModel<AnimalProductDetailsDto>
 
 <!--table-->
 
@@ -7,25 +6,24 @@
 
     <div class="col-sm-12  ">
 
-        <div class=" mt-3 bg-light table-rsponsive mb-3  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar ">
+        <div class=" mt-3 table-rsponsive mb-3   table-wrapper-scroll-y table-wrapper-scroll-x ">
 
-            <table class="table table-hover table-responsive table-bordered   table-striped mb-0 " id="myTable">
+            <table class="table  mb-0 " id="myTable">
 
                 <thead>
-                    <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Quantity)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.IsConfirmed)</th>
+                    <tr class="header  bg-fixed bg-light " style="border-bottom:2px #5C5C5C solid;">
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().Id)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().Name)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().Quantity)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().PeriodTaken)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().CreatedAt)</th>
                         <th style="width:20px;" class=" text-capitalize align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr class="align-top">
+                        <tr class="@(item.IsConfirmed.Equals(false) ? "bg-danger text-white" : item.IsConfirmed==null ? "bg-warring" : string.Empty )">
 
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
                             <td class="text-break text-capitalize align-middle"> @item.Name</td>
@@ -34,13 +32,12 @@
                             <td class="text-break text-capitalize align-middle">
                                 @item.CreatedAt
                             </td>
-                            <td class="text-break text-capitalize text-center "> <div class=""><label class="  @(item.IsConfirmed==true?"fa-solid fa-circle-check text-success fa-xl":"fa-solid fa-circle-xmark text-danger fa-xl")"></label></div> </td>
                             <td class="align-middle center">
 
                                 <div class=" dropend">
                                     <a class="" role="button" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        @Icon.Bars.Render()
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Products" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
@@ -51,7 +48,7 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a class="dropdown-item " asp-route-id="@item.Id" asp-controller="Products" asp-action="Edit">
+                                            <a class="dropdown-item " asp-route-id="@item.Id" asp-controller="Products" asp-action="Update">
                                                 <div class="d-flex justify-content-between"> <span>Edit </span>  <span><i class="fa-solid fa-pen-to-square"></i></span> </div>
                                             </a>
                                         </li>
@@ -79,28 +76,3 @@
         </div>
     </div>
 </div>
-
-@section scripts{
-<script>
-
-     $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-     $("#dataManagement").addClass('active');
-    });
-
-        $(document).ready(function(){
-         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-         $("#animalProductMedia").addClass('MediaActive')
-
-     });
-       document.getElementById("nav-system-name").innerHTML="Data Management";
-    document.getElementById("media-system-name").innerHTML="Data Management";
-
-       $("#animalGroups").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
-         $("#animalProducts").addClass('actives');
-</script>
-    }
