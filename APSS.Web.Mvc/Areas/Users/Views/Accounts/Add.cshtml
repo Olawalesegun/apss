@@ -1,105 +1,91 @@
-﻿@model APSS.Web.Dtos.AccountDto
-<div class="row col-sm-12 col-lg-8 d-flex mx-sm-2   p-3">
-    <form class=" mt-2 needs-validation" method="post" asp-controller="Accounts" asp-action="AddAccount" novalidate>
-        <div asp-validation-summary="ModelOnly"></div>
-        <input type="hidden" asp-for="UserId" />
-        <!-- 2 column puts for the National number and Phome Number-->
-        <div class=" d-flex border rounded mb-2 " style="background-color:lightgray;line-height:60px;">
-            <h3 class="text-muted">
-                Add New Employee
-            </h3>
-        </div>
+﻿@model AddAccountForm
 
-        <!-- Text input for account name-->
+<!-- Modal -->
 
-        <div class=" mt-4 input-group has-validation">
-            <span class="input-group-text">
-                <i class="fa-solid fa-user"></i>
-            </span>
-            <div class="form-floating flex-grow-1 ">
-                <input type="text" id="account-name" asp-for="HolderName" placeholder="Holder Name" aria-describedby="holderName" class="form-control " required />
-                <label class="form-label" asp-for="HolderName"></label>
-            </div>
-            <span class="d-block invalid-feedback" id="holderName" asp-validation-for="HolderName"></span>
-        </div>
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Users.Accounts.Add.FullPath" asp-antiforgery="true" novalidate>
 
-        <div class=" mt-4  input-group has-validation">
-            <span class="input-group-text">
-                <i class="fa-solid fa-key"></i>
-            </span>
-            <div class="form-floating flex-grow-1">
-                <input type="password" id="id_password" asp-for="PasswordHash" placeholder="Password" aria-describledby="Password" class="form-control " />
-                <label class="form-label" asp-for="PasswordHash"></label>
-            </div>
-            <div class="input-group-text"><i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i></div>
-            <span class="d-block invalid-feedback" id="Password" asp-validation-for="PasswordHash"></span>
-        </div>
-        <div class="mb-1 mt-3">
-            <h5>
-                @Html.DisplayNameFor(m=>m.permissionType)
-            </h5>
-        </div>
-        <div class=" mb-3 ">
-            <div class="input-group d-flex justify-content-start">
-                <div class="form-check ms-2 me-3">
-                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Read" id="" value="true" checked />
-                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Read"></label>
+    <!-- Hidden inputs -->
+    <input type="hidden" asp-for="UserId" />
+
+    <div class="modal fade" id="addAccountModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAccountModalLabel">Add a new account</h5>
                 </div>
-                <div class="form-check me-3">
-                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Create" id="" value="true" />
-                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Create"></label>
+
+                <div class="modal-body">
+                    <!-- Holder name -->
+                    <div class="input-group has-validation mb-3">
+                        <span class="input-group-text">@Icon.Person.Render()</span>
+                        <div class="form-floating flex-grow-1">
+                            <input type="text" class="form-control" placeholder="Holder name" asp-for="HolderName" aria-describedby="holderNameValidation">
+                            <label>Holder name</label>
+                        </div>
+                        <span id="holderNameValidation" class="d-block invalid-feedback" asp-validation-for="HolderName"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="input-group has-validation mb-3">
+                        <span class="input-group-text">@Icon.Lock.Render()</span>
+                        <div class="form-floating flex-grow-1">
+                            <input type="password" class="form-control" placeholder="User name" asp-for="Password" aria-describedby="passwordValidation">
+                            <label>Password</label>
+                        </div>
+                        <span id="passwordValidation" class="d-block invalid-feedback" asp-validation-for="Password"></span>
+                    </div>
+
+                    <!-- Enabled check -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="enabledCheck" asp-for="IsActive">
+                        <label class="form-check-label" for="enabledCheck">Enabled</label>
+                    </div>
+
+                    <!-- Permissions -->
+                    <h6 class="mt-2">Permissions</h6>
+                    <div class="d-flex gap-4">
+                        <!-- Read -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="readCheck" asp-for="Permissions.Read">
+                            <label class="form-check-label" for="readCheck">Read</label>
+                        </div>
+                        <!-- Create -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="createCheck" asp-for="Permissions.Create">
+                            <label class="form-check-label" for="createCheck">Create</label>
+                        </div>
+
+                        <!-- Update -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="updateCheck" asp-for="Permissions.Update">
+                            <label class="form-check-label" for="updateCheck">Update</label>
+                        </div>
+
+                        <!-- Delete -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="enabledCheck" asp-for="Permissions.Delete">
+                            <label class="form-check-label" for="enabledCheck">Delete</label>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="form-check me-3">
-                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Update" id="" value="true" />
-                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Update"></label>
-                </div>
-                <div class="form-check me-3">
-                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Delete" id="" value="true" />
-                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Delete"></label>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Users.Users.FullPath">Cancel</a>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary">Add</button>
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-start col">
-            <h5>Employee status </h5>
-        </div>
-        <div class="form-check form-check-inline mx-3 ">
-            <input class="form-check-input" type="checkbox" value="true" id="delete" asp-for="IsActive" />
-            <label class="form-check-label" asp-for="IsActive"> </label>
-        </div>
-        <div>
-            <div class=" d-flex justify-content-end">
-                <!-- Submit b        utton -->
-                <a onClick="history.go(-1); return false;" class="btn btn-link text-decoration-none mt-4 mx-3" style="background-color:#DCEEFB"> Cancel</a>
-                <button type="submit" class="btn btn-primary w-25  mt-4">Add        </button>
-            </div>
-        </div>
-    </form>
-</div>
-@section scripts{
-<script>
-        $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#accountManagement").addClass('active');
-    });
-     document.getElementById("nav-system-name").innerHTML="ادارة الموظفين";
-      document.getElementById("media-system-name").innerHTML="ادارة الموظفين";
+    </div>
+</form>
 
-    $(".scrollmenu a").on('click',function(){
-        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+@section scripts {
+    <script>
 
-    });
-    $(".manage-ment ul li a").on('click',function(){
-        $(".scrollmenu a.actives").removeClass('actives');
-        $("#animalGroups").addClass('actives');
+        $(window).on('load', function () {
+            $('#addAccountModal').modal('show');
+        });
 
-    });
-    $("#users").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
-        $("#userMedia").removeClass('actives');
-         $("#accounts").addClass('actives');
-         $("#accountMedia").addClass('actives');
-</script>
-    }
+    </script>
+}

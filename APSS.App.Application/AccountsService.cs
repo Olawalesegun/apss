@@ -48,14 +48,15 @@ public sealed class AccountsService : IAccountsService
         long userId,
         string holderName,
         string password,
-        PermissionType permissions)
+        PermissionType permissions,
+        bool isActive)
     {
         var superAccount = await _permissionsSvc
             .ValidatePermissionsAsync(superUserAccountId, userId, PermissionType.Create | permissions);
 
         var user = await _uow.Users.Query().FindAsync(userId);
 
-        return await DoCreateAsync(user, superAccount.User, holderName, password, permissions);
+        return await DoCreateAsync(user, superAccount.User, holderName, password, permissions, isActive);
     }
 
     /// <inheritdoc/>
@@ -64,9 +65,10 @@ public sealed class AccountsService : IAccountsService
         string holderName,
         string password,
         PermissionType permissions,
+        bool isActive,
         IAsyncDatabaseTransaction? tx)
     {
-        return DoCreateAsync(owner, owner, holderName, password, permissions, tx);
+        return DoCreateAsync(owner, owner, holderName, password, permissions, isActive, tx);
     }
 
     /// <inheritdoc/>
@@ -111,26 +113,16 @@ public sealed class AccountsService : IAccountsService
         return account;
     }
 
-    public async Task<Account> GetAccountAsync(long SuperId, long accountId)
-    {
-        if (SuperId == accountId)
-        {
-            var myAccount = await _uow.Accounts.Query().FindAsync(accountId);
-            return myAccount;
-        }
-        var (_, account) = await _permissionsSvc
-            .ValidateAccountPatenthoodAsync(SuperId, accountId, PermissionType.Read);
+    /// <inheritdoc/>
+    public IQueryBuilder<Account> GetAccountAsync(long accountId)
+        => _uow.Accounts.Query().Where(a => a.Id == accountId);
 
-        return account;
-    }
-
-    public async Task<IQueryBuilder<Account>> GetUserAccounts(long accountId, long userId)
+    /// <inheritdoc/>
+    public async Task<IQueryBuilder<Account>> GetAccountsAsync(long accountId, long userId)
     {
-        var superaccout = await _uow.Accounts.Query().Include(u => u.User).FindAsync(accountId);
-        if (superaccout.User.Id == userId)
-            return _uow.Accounts.Query().Where(A => A.User.Id == userId);
-        var account = await _permissionsSvc.ValidateAccountPatenthoodAsync(accountId, userId, PermissionType.Read);
-        return _uow.Accounts.Query().Where(A => A.User.Id == userId);
+        await _permissionsSvc.ValidatePermissionsAsync(accountId, userId, PermissionType.Read);
+
+        return _uow.Accounts.Query().Where(a => a.User.Id == userId);
     }
 
     #endregion Public Methods
@@ -143,6 +135,7 @@ public sealed class AccountsService : IAccountsService
         string holderName,
         string password,
         PermissionType permissions,
+        bool isActive,
         IAsyncDatabaseTransaction? tx = null)
     {
         var passwordSalt = _rndSvc.NextBytes(PASSWORD_SALT_LENGTH).ToArray();
@@ -156,6 +149,7 @@ public sealed class AccountsService : IAccountsService
             PasswordSalt = Convert.ToBase64String(passwordSalt),
             Permissions = permissions,
             AddedBy = addedBy,
+            IsActive = isActive,
         };
 
         _uow.Accounts.Add(account);
