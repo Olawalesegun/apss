@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.ProductExpenseDto
+﻿@model ProductExpenseDto
 @{
     ViewData["title"] = "Delete Expense Page";
 }
@@ -25,15 +25,16 @@
                     <td>@Model?.ModifiedAt</td>
                 </tr>
                 <tr>
-                    <td>@Html.DisplayNameFor(p => p.SpentOn.AddedBy.Name)</td>
-                    <td>@Model?.SpentOn.AddedBy.Name</td>
+                    <td>@Html.DisplayNameFor(p => p.SpentOn)</td>
+                    <td>@Model?.SpentOn.Id</td>
                 </tr>
             </tbody>
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-area="lands" asp-controller="Expenses" asp-action="DeletePost">Confirme</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-area="lands" asp-controller="Expenses" asp-action="Index">Back</a>
+            <a class="btn btn-danger" href="@(Routes.Dashboard.Lands.Expenses.DeletePost)/@Model!.Id">Confirm</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2 text-decoration-none" style="background-color:#DCEEFB">Cancel</a>
+            @*<a class="btn btn-primary btn-rounded mx-3" href="@Routes.Dashboard.Lands.Lands.FullPath">Back</a>*@
         </div>
     </div>
 </div>

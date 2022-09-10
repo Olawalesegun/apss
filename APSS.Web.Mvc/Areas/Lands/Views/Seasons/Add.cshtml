@@ -1,56 +1,71 @@
-﻿@model APSS.Web.Dtos.SeasonDto
+﻿@model SeasonDto
 @{
     ViewData["title"] = "Add Season Page";
 }
-<div class="container-fluid">
-    <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
-        <form method="post" action="@Routes.Dashboard.Lands.Seasons.Add.FullPath" asp-antiforgery="true" class="needs-validation" novalidate>
-            <div asp-validation-summary="ModelOnly"></div>
-            <div class="center d-flex justify-content-center mb-3 ">
-                <h3 class=" ">
-                    Add new Season
-                </h3>
-            </div>
-            <div class=" mb-3">
-                <div class="input-group">
-                    <span class="input-group-text">@@</span>
-                    <div class="form-floating col">
-                        <input type="text" asp-for="Name" class="form-control" placeholder=" " />
-                        <label class="form-label" asp-for="Name"></label>
-                        <div class="invalid-feedback">
-                            <span asp-validation-for="Name"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class=" mb-3">
-                <div class="input-group">
-                    <span class="input-group-text">@@</span>
-                    <div class="form-floating col">
-                        <input type="date" asp-for="StartsAt" class="form-control" placeholder=" " />
-                        <label class="form-label" asp-for="StartsAt"></label>
-                        <div class="invalid-feedback">
-                            <span asp-validation-for="StartsAt"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class=" mb-3">
-                <div class="input-group">
-                    <span class="input-group-text">@@</span>
-                    <div class="form-floating col">
-                        <input type="date" asp-for="EndsAt" class="form-control" placeholder=" " />
-                        <label class="form-label" asp-for="EndsAt"></label>
-                        <div class="invalid-feedback">
-                            <span asp-validation-for="EndsAt"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Submit button -->
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary btn-block">Add</button>
-            </div>
-        </form>
+
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Lands.Seasons.Add.FullPath" asp-antiforgery="true" novalidate>
+    <div class="d-flex mt-5">
     </div>
-</div>
+    <div class="modal fade" id="addUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Add a new Season</h5>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="center d-flex justify-content-center mb-3 ">
+                        <h3 class=" ">
+                            Add new Season
+                        </h3>
+                    </div>
+                    <div class=" mb-3">
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">@@</span>
+                            <div class="form-floating col">
+                                <input type="text" asp-for="Name" class="form-control" placeholder=" " aria-describedby="nameValidation" required />
+                                <label class="form-label" asp-for="Name"></label>
+                            </div>
+                            <span id="nameValidation" class="d-block invalid-feedback" asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                    <div class=" mb-3">
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">@@</span>
+                            <div class="form-floating col">
+                                <input type="date" asp-for="StartsAt" class="form-control" placeholder=" " ariaaria-describedby="startValidation" required />
+                                <label class="form-label" asp-for="StartsAt"></label>
+                            </div>
+                            <span id="startValidation" class="d-block invalid-feedback" asp-validation-for="StartsAt"></span>
+                        </div>
+                    </div>
+                    <div class=" mb-3">
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">@@</span>
+                            <div class="form-floating col">
+                                <input type="date" asp-for="EndsAt" class="form-control" placeholder=" " aria-describedby="endValidation" required />
+                                <label class="form-label" asp-for="EndsAt"></label>
+                            </div>
+                            <span id="endValidation" class="d-block invalid-feedback" asp-validation-for="EndsAt"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Lands.Seasons.FullPath">Cancel</a>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+<script>
+
+    $(window).on('load', function () {
+        $('#addUserModal').modal('show');
+    });
+</script>
+}
