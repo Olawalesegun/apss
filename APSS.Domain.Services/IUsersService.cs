@@ -53,6 +53,7 @@ public interface IUsersService
         long accountId,
         Func<IQueryBuilder<User>, IQueryBuilder<User>>? builder = null);
 
+    /// <summary>
     Task<IQueryBuilder<User>> GetUserAsync(long accountId, long userId);
 
     #endregion Public Methods
