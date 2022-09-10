@@ -13,25 +13,24 @@ namespace APSS.Web.Mvc.Areas.Controllers
     public class ConfirmationsController : Controller
     {
         private readonly IAnimalService _confirm;
-        private readonly IMapper _mappper;
-        private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
         public ConfirmationsController(IAnimalService confirm, IMapper mapper)
         {
             _confirm = confirm;
-            _mappper = mapper;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index(long id)
         {
-            var animal = await (await _confirm.GetAllAnimalGroupsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
-            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(3, 3)).Where(c => c.IsConfirmed == null | c.IsConfirmed == false).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
+            var animal = await (await _confirm.GetAllAnimalGroupsAsync(User.GetAccountId(), 8)).Where(c => c.IsConfirmed == null).Include(f => f.OwnedBy).Include(a => a.OwnedBy.Accounts).AsAsyncEnumerable().ToListAsync();
+            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(User.GetAccountId(), 8)).Where(c => c.IsConfirmed == null).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
             var animalDto = new List<AnimalGroupConfirmDto>();
-            var v = animal.FirstOrDefault();
             foreach (var a in animal)
             {
                 animalDto.Add(new AnimalGroupConfirmDto
                 {
+                    Type = a.Type,
                     Id = a.Id,
                     Name = a.Name,
                     Quantity = a.Quantity,
@@ -69,54 +68,56 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> ConfirmAnimalGroup(long id)
         {
-            try
+            var animal = await (await _confirm.GetAllAnimalGroupsAsync(User.GetAccountId(), id)).Where(u => u.IsConfirmed == null).Include(o => o.OwnedBy).AsAsyncEnumerable().ToListAsync();
+            if (animal == null) return NotFound();
+            var animalDto = new List<AnimalGroupDto>();
+            foreach (var single in animal)
             {
-                var animal = await (await _confirm.GetAnimalGroupAsync(3, id)).AsAsyncEnumerable().ToListAsync();
-                var single = animal.FirstOrDefault();
-                if (animal == null) return NotFound();
-                var animalDto = new AnimalGroupDto
+                animalDto.Add(new AnimalGroupDto
                 {
-                    Id = single!.Id,
+                    Id = single.Id,
                     Name = single.Name,
                     Type = single.Type,
-                    Quantity = single!.Quantity,
-                    Sex = single!.Sex,
-                    CreatedAt = single!.CreatedAt,
-                    ModifiedAt = single!.ModifiedAt,
-                    IsConfirmed = single!.IsConfirmed,
-                };
-                return View(animalDto);
+                    Quantity = single.Quantity,
+                    Sex = single.Sex,
+                    CreatedAt = single.CreatedAt,
+                    ModifiedAt = single.ModifiedAt,
+                    IsConfirmed = single.IsConfirmed,
+                    OwnedBy = _mapper.Map<UserDto>(single.OwnedBy),
+                });
             }
-            catch (Exception) { }
-            return View();
+            return View(animalDto);
         }
 
-        public async Task<IActionResult> ConfirmAnimal(long id, bool value)
+        public async Task<IActionResult> ConfirmAnimalProduct(long id)
         {
-            try
+            var animalProduct = await (await _confirm.GetAllAnimalProductsAsync(User.GetAccountId(), id)).Where(c => c.IsConfirmed == null).Include(f => f.AddedBy).Include(u => u.Unit).Include(p => p.Producer.OwnedBy).AsAsyncEnumerable().ToListAsync();
+            var product = new List<AnimalProductDetailsDto>();
+            foreach (var products in animalProduct)
             {
-                if (value)
+                product.Add(new AnimalProductDetailsDto
                 {
-                    var animal = await _confirm.ConfirmAnimalGroup(User.GetAccountId(), id, value);
-                    if (animal == null) return NotFound();
-                }
+                    Id = products.Id,
+                    Name = products.Name,
+                    Quantity = products.Quantity,
+                    CreatedAt = products.CreatedAt,
+                    ModifiedAt = products.ModifiedAt,
+                    PeriodTaken = products.PeriodTaken,
+                    SingleUnit = products.Unit,
+                    Producer = products.Producer,
+                    Ownerby = products.Producer.OwnedBy.Name,
+                });
             }
-            catch (Exception) { }
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> AnimalConfirm(long id, bool value)
+        public async Task<IActionResult> ConfirmAnimal(long id, bool value)
         {
             var animal = await _confirm.ConfirmAnimalGroup(User.GetAccountId(), id, value);
 
             TempData["Action"] = "Add Erea";
             TempData["success"] = $"{id } null";
             return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> ConfirmAnimalProduct(long id)
-        {
-            return View();
         }
 
         public async Task<IActionResult> ConfirmProduct(long id, bool value)

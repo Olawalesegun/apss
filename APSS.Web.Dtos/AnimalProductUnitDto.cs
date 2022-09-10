@@ -13,10 +13,5 @@ namespace APSS.Web.Dtos
         [Display(Name = "Name ")]
         [Required(ErrorMessage = "Unit Name Is Required")]
         public string Name { get; set; } = null!;
-
-        public static implicit operator uint(AnimalProductUnitDto v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

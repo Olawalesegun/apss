@@ -4,7 +4,6 @@
 
 <form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Users.Users.Add.FullPath" asp-antiforgery="true" novalidate>
     <div class="d-flex mt-5">
-
     </div>
     <div class="modal fade" id="addUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -31,7 +30,7 @@
                 </div>
                 <div class="modal-footer">
                     <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Users.Users.FullPath">Cancel</a>
-                    
+
                     <!-- Submit button -->
                     <button type="submit" class="btn btn-primary">Add</button>
                 </div>
@@ -40,14 +39,12 @@
     </div>
 </form>
 
-
 @section scripts {
     <script>
 
         $(window).on('load', function () {
             $('#addUserModal').modal('show');
         });
-
     </script>
 }
 

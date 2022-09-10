@@ -1,6 +1,8 @@
 ﻿using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Util.Navigation.Routes;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Controllers
@@ -9,14 +11,12 @@ namespace APSS.Web.Mvc.Areas.Controllers
     public class AnimalUnitsController : Controller
     {
         private readonly IAnimalService _aps;
+        private readonly IMapper _mapper;
 
-        public IEnumerable<AnimalProductUnitDto> listUnit = new List<AnimalProductUnitDto>
-        {
-        };
-
-        public AnimalUnitsController(IAnimalService aps)
+        public AnimalUnitsController(IAnimalService aps, IMapper mapper)
         {
             _aps = aps;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -37,7 +37,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(unitDto);
         }
 
-        public async Task<IActionResult> AddUnit()
+        public IActionResult Add()
         {
             var productUnit = new AnimalProductUnitDto();
             return View(productUnit);
@@ -45,42 +45,56 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddUnit(AnimalProductUnitDto animalProductUnitDto)
+        public async Task<IActionResult> Add(AnimalProductUnitDto animalProductUnitDto)
         {
             if (ModelState.IsValid)
             {
                 var add = await _aps.CreateAnimalProductUnitAsync(User.GetAccountId(), animalProductUnitDto.Name);
                 if (add == null) return RedirectToAction(nameof(Index));
-                return RedirectToAction("Index");
+                return LocalRedirect(Routes.Dashboard.Animals.AnimalUnits.FullPath);
             }
 
             return View(animalProductUnitDto);
         }
 
-        public async Task<IActionResult> EditUnit(long id)
-        {
-            var uints = new AnimalProductUnitDto();
-            return View(uints);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditUnit(AnimalProductUnitDto animalProductUnitDto)
-        {
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> DeleteUnit(long id)
+        public async Task<IActionResult> Update(long id)
         {
             var units = new AnimalProductUnitDto();
-            units = listUnit.Where(u => u.Id == id).FirstOrDefault();
-
+            var animalUnits = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
+                .Where(i => i.Id == id)
+                .AsAsyncEnumerable()
+                .FirstAsync();
+            units.Name = animalUnits.Name;
+            units.Id = animalUnits.Id;
             return View(units);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmDeletUhnit(long id)
+        public async Task<IActionResult> Update(AnimalProductUnitDto animalProductUnitDto)
         {
-            return RedirectToAction("Index");
+            if (!ModelState.IsValid) return View(animalProductUnitDto);
+            var update = await _aps.UpdateProductUnit(User.GetAccountId(),
+                animalProductUnitDto.Id,
+                u => u.Name = animalProductUnitDto.Name);
+            return LocalRedirect(Routes.Dashboard.Animals.AnimalUnits.FullPath);
+        }
+
+        public async Task<IActionResult> Delete(long id)
+        {
+            var units = new AnimalProductUnitDto();
+            var animalUnits = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
+                .Where(i => i.Id == id)
+                .AsAsyncEnumerable()
+                .FirstAsync();
+            units.Name = animalUnits.Name;
+            units.Id = animalUnits.Id;
+            return View(units);
+        }
+
+        public async Task<IActionResult> ConfirmDelete(long id)
+        {
+            await _aps.RemoveAnimalProductUnitAsync(User.GetAccountId(), id);
+            return LocalRedirect(Routes.Dashboard.Animals.AnimalUnits.FullPath);
         }
     }
 }

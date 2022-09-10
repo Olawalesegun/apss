@@ -1,9 +1,8 @@
 ﻿@model APSS.Web.Dtos.AnimalGroupListDto
-@await Html.PartialAsync("_dataNavBar")
-<div class="card mt-2">
+<div class="card border-0">
     <div class="card-body">
-        <div class="d-flex "><h5>Confirm Delete Animal  </h5> </div>
-        <table class="table user-view-table m-0  ">
+        <div class="d-flex my-2 fw-light"><h2>Confirm Delete Animal  </h2> </div>
+        <table class="table user-view-table m-0 border ">
             <tbody style="font-size:14px">
                 <tr class="">
                     <th>@Html.DisplayNameFor(m=>m.Type)</th>
@@ -29,9 +28,11 @@
         </table>
         @ViewData["action"]
         <br />
-        <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="DeleteConfirm">Confirm</a>
-            <a onclick="history.back()" class="btn btn-link my-4  mx-3" style="background-color:#DCEEFB">Cancel</a>
+        <div class="d-flex justify-content-end">
+            <div class=" d-inline pt-2">
+                <a onclick="history.back()" class="btn btn-link my-4 text-decoration-none  mx-3" style="background-color:#DCEEFB">Cancel</a>
+                <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="DeleteConfirm"><i class="fa-solid fa-trash-can me-2"></i>Confirm</a>
+            </div>
         </div>
 
         @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@

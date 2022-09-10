@@ -77,7 +77,9 @@ public class UsersController : Controller
 
     public async Task<IActionResult> Delete(long id)
     {
-        var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
+        var user = await (await _userService.GetUserAsync(User.GetAccountId(), id))
+            .AsAsyncEnumerable()
+            .ToListAsync();
         if (user == null) return RedirectToAction(nameof(Index));
         var users = user.FirstOrDefault();
         var userDto = new UserDto
@@ -91,11 +93,11 @@ public class UsersController : Controller
         return View(userDto);
     }
 
-    public async Task<IActionResult> ConfirmDeleteUser(long id)
+    public async Task<IActionResult> ConfirmDelete(long id)
     {
-        var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
+        var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
         if (user == null) return NotFound();
-        var delete = await _userService.SetUserStatusAsync(1, id, UserStatus.Terminated);
+        var delete = await _userService.SetUserStatusAsync(User.GetAccountId(), id, UserStatus.Terminated);
         if (delete == null) return RedirectToAction(nameof(Index));
         TempData["Action"] = "Delete Erea";
         TempData["success"] = "Erea Deleted Successfully";
@@ -104,7 +106,7 @@ public class UsersController : Controller
 
     public async Task<IActionResult> Update(long id)
     {
-        var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
+        var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
         if (user == null) return RedirectToAction(nameof(Index));
         var users = user.FirstOrDefault();
         var userDto = new UserDto
@@ -121,11 +123,11 @@ public class UsersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Update(UserDto userDto)
     {
-        var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
-            {
-                p.Name = userDto.Name;
-                p.UserStatus = userDto.UserStatus;
-            });
+        var edit = await _userService.UpdateAsync(User.GetAccountId(), userDto.Id, p =>
+        {
+            p.Name = userDto.Name;
+            p.UserStatus = userDto.UserStatus;
+        });
         TempData["Action"] = "Update Erea";
         TempData["success"] = "Update Failed!!!";
 

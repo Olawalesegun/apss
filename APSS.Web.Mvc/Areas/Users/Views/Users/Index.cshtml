@@ -29,9 +29,9 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Details)/@item.Id">
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Details)@item.Id">
                                         Details @Icon.Info.Render()
-                                     </a>
+                                    </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Delete)/@item.Id">
@@ -50,8 +50,13 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Accounts.Add)/@item.Id">
-                                        Add Account @Icon.UserPlus.Render()
+                                    <a class="dropdown-item d-flex justified-content-between" href="@(Routes.Dashboard.Users.Accounts.Add)/@item.Id">
+                                        Add Account  @Icon.UserPlus.Render()
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex justified-content-between" asp-action="ListGroup" asp-controller="Groups" asp-route-id="@item.Id">
+                                        Add Account  @Icon.UserPlus.Render()
                                     </a>
                                 </li>
                             </ul>
@@ -59,7 +64,6 @@
                     </td>
                 </tr>
             }
-
         </tbody>
     </table>
 </div>

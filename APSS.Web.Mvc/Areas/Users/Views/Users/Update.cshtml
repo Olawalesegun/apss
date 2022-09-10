@@ -1,9 +1,8 @@
 ﻿@using APSS.Domain.Entities
 @model APSS.Web.Dtos.UserDto
-@await Html.PartialAsync("_accountNavBar")
 <div class="container-fluid ">
     <div class="col-sm-5 mx-0 col-lg-8">
-        <form class=" mt-3 " method="post" asp-controller="Users" asp-action="EditUser">
+        <form class=" mt-3 " method="post" asp-controller="Users" asp-action="Update">
             <div asp-validation-summary="ModelOnly"></div>
             <!-- 2 column puts for the National number and Phome Number-->
             <div class=" d-flex mb-3  " style="line-height:35px;">

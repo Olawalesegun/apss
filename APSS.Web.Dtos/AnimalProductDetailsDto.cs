@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace APSS.Web.Dtos
 {
-    public class AnimalProductDetailsDto : BaseAuditbleDto
+    public class AnimalProductDetailsDto : OwnableDto
     {
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Name is Required")]
@@ -33,6 +33,9 @@ namespace APSS.Web.Dtos
 
         [Display(Name = "Owner Name")]
         public string? Ownerby { get; set; }
+
+        [Display(Name = "Product Expenses")]
+        public List<ProductExpense>? expense { get; set; }
 
         public AnimalGroup Producer { get; set; } = null!;
     }

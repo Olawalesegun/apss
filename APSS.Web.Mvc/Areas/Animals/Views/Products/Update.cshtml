@@ -1,6 +1,6 @@
 ﻿@model APSS.Web.Dtos.AnimalProductDto
 
-<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Animals.Products.Add.FullPath" asp-antiforgery="true" novalidate>
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Animals.Products.Update.FullPath" asp-antiforgery="true" novalidate>
     <div class="d-flex mt-5">
     </div>
     <div class="modal fade" id="AddAnimalUnitModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addAnimalUnit" aria-hidden="true">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Animals.Groups.FullPath">Cancel</a>
+                    <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Animals.Products.FullPath">Cancel</a>
 
                     <!-- Submit button -->
                     <button type="submit" class="btn btn-primary">Add</button>

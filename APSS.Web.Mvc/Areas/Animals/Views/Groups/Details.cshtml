@@ -1,15 +1,9 @@
-﻿@model APSS.Web.Dtos.AnimalGroupListDto
+﻿@model APSS.Web.Dtos.AnimalGroupDto
 
-@{
-    ViewData["Title"] = "Animal Details";
-}
-
-<div class="card mt-2 ">
+<div class="card mt-2 border-0">
     <div class="card-body">
-        <div class="d-flex bg-primary text-white rounded align-items-center" style="line-height:40px !important">
-            <h3 style="line-height:40px !important">Animal Information </h3>
-        </div>
-        <table class="table user-view-table m-0 t ">
+        <h4 class="" style="line-height:40px !important">Animal Information </h4>
+        <table class="table user-view-table m-0 border ">
             <tbody>
                 <tr class="">
                     <th class="label"><label>@Html.DisplayNameFor(m => m.Type)</label></th>
@@ -28,8 +22,8 @@
                     <td> @Model.Sex </td>
                 </tr>
                 <tr>
-                    <th><label>@Html.DisplayNameFor(m => m.Confirm)</label>  </th>
-                    <td> @Model.Confirm </td>
+                    <th><label>@Html.DisplayNameFor(m => m.IsConfirmed)</label>  </th>
+                    <td> @Model.IsConfirmed </td>
                 </tr>
                 <tr>
                     <th><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </th>
@@ -45,7 +39,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="d-flex justify-content-between bg-primary  pt-2">
+        <div class="d-flex justify-content-between pt-3">
             <div class="d-flex">
                 <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1 " asp-controller="Groups" asp-action="Index"><i class="fa-solid fa-arrow-left me-2"></i><span class="">Back </span> </a>
             </div>
@@ -53,27 +47,26 @@
                 <a class="btn btn-outline-primary mx-1 pr-1 my-2" asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Add"> <i class="fa-solid fa-plus me-2 "> </i><span> Add Product</span> </a>
                 <a class="btn btn-outline-primary mx-1 pr-1 my-2" asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Edit"> <i class="fa-solid fa-pen-to-square me-2 "> </i><span>Edit</span> </a>
                 <a class="btn btn-outline-danger mx-1 my-2 " asp-controller="AnimalGroups" asp-action="Groups" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
-                <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="Products" asp-action="AllProducts"><span class="">Products </span> </a>
+                <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1" href="@Url.Action("AllProducts","Products",new{id=@Model.Id,userId=@Model.OwnedBy.Id})"><span class="">Products </span> </a>
             </div>
         </div>
     </div>
-</div>
 
-@section scripts{
-<script>
+    @section scripts{
+    <script>
 
-     $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-     $("#dataManagement").addClass('active');
-    });
-     document.getElementById("nav-system-name").innerHTML="Employees Management";
-    document.getElementById("media-system-name").innerHTML="Employees Management";
+         $(document).ready(function(){
+        $(".sidebar ul li.active").removeClass('active');
+         $("#dataManagement").addClass('active');
+        });
+         document.getElementById("nav-system-name").innerHTML="Employees Management";
+        document.getElementById("media-system-name").innerHTML="Employees Management";
 
-       $("#animalProducts").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
-       $("#animalGroups").addClass('actives');
-</script>
+           $("#animalProducts").removeClass('actives');
+           $("#lands").removeClass('actives');
+           $("#landProducts").removeClass('actives');
+            $("#confirmation").removeClass('actives');
+            $("#units").removeClass('actives');
+           $("#animalGroups").addClass('actives');
+    </script>
     }

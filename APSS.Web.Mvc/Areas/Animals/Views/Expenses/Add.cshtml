@@ -1,7 +1,5 @@
 ﻿@model APSS.Web.Dtos.ProductExpenseDto
-@{
-    ViewData["title"] = "Add Product Expense Page";
-}
+
 <div class="container-fluid d-flex px-2 my-2">
     <div class="col-sm-12 mx-lg-0 mx-sm-2 col-lg-8">
         <form class=" mt-3 align-items-center needs-validation" method="post" asp-controller="Expenses" asp-action="Add" novalidate>
@@ -35,6 +33,7 @@
             </div>
             <!-- Submit button -->
             <div class="mt-4 d-flex justify-content-end">
+            <a onClick="history.go(-1); return false" class="btn btn-link text-decoration-none  mx-3" style="background-color:#DCEEFB">Cancel</a>
                 <button type="submit" class="btn btn-primary btn-block px-5">Add</button>
             </div>
         </form>

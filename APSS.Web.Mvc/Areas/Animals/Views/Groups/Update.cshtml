@@ -1,14 +1,14 @@
 ﻿@using APSS.Domain.Entities
-@model APSS.Web.Dtos.AnimalGroupDto
+@model APSS.Web.Dtos.AnimalGroupListDto
 
-<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Animals.Groups.Add.FullPath" asp-antiforgery="true" novalidate>
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Animals.Groups.Update.FullPath" asp-antiforgery="true" novalidate>
     <div class="d-flex mt-5">
     </div>
     <div class="modal fade" id="addAnimalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addUserModalLabel">Add Animal Group</h5>
+                    <h5 class="modal-title" id="addUserModalLabel">Update Animal Group</h5>
                 </div>
                 <div class="modal-body">
                     <!-- User name -->

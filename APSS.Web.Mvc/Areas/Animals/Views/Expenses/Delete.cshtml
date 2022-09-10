@@ -1,7 +1,4 @@
 ﻿@model APSS.Web.Dtos.ProductExpenseDto
-@{
-    ViewData["title"] = "صفحة حذف التكلفة";
-}
 
 <div class="card mt-2 border-0">
     <div class="card-body">
@@ -25,7 +22,7 @@
         <br />
         <div class="d-flex justify-content-end">
             <div class=" d-inline pt-2">
-                <a class="btn btn-outline-dark mx-3 px-5" onclick="history.back()">Back</a>
+                <a onclick="history.back()" class="btn btn-link my-4 text-decoration-none  mx-3" style="background-color:#DCEEFB">Cancel</a>
                 <a class="btn btn-danger btn-rounded px-5 " asp-route-Id="@Model?.Id" asp-controller="Expenses" asp-action="DeleteConfirm">Confirm</a>
             </div>
         </div>

@@ -1,65 +1,29 @@
-﻿@model IEnumerable<APSS.Web.Dtos.AnimalProductListDto>
-<partial name="_dataNavBar" />
+﻿@model CrudViewModel<AnimalProductDetailsDto>
 
 <!--table-->
 
 <div class="  p-2  col-ms-12  my-0 mt-2  rounded ml-2 " id="">
 
-    <form class="row gx-3 gy-2 align-items-center mb-3 " asp-controller="Products" asp-action="Index" method="post">
-        <div class="col-sm-6">
-
-            <div class=" mb-3 col-sm  d-flex">
-                <div class="input-group">
-                    <button type="submit" class="btn btn-primary search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <input type="search" id="form1" class="form-control" name="searchString" />
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2 col-lg-1 mb-3 ">
-
-            <select class="form-select " id="searchby">
-                <option selected>20</option>
-                <option value="1">40</option>
-                <option value="2">80</option>
-                <option value="3">100</option>
-            </select>
-        </div>
-        <div class="col-sm-2 mb-3">
-
-            <select class="select form-select" data-mdb-filter="true" name="searchBy">
-                <option selected>Search By</option>
-                <option value="1">Name</option>
-                <option value="2">Id</option>
-                <option value="3">Quantity</option>
-            </select>
-        </div>
-    </form>
-
     <div class="col-sm-12  ">
-        @if (ViewBag.SearchResult != null)
-        {
-            <span class="text-danger">@ViewBag.SearchResult</span>
-        }
-        <div class=" mt-3 bg-light table-rsponsive mb-3  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar ">
 
-            <table class="table table-hover table-responsive table-bordered   table-striped mb-0 " id="myTable">
+        <div class=" mt-3 table-rsponsive mb-3   table-wrapper-scroll-y table-wrapper-scroll-x ">
+
+            <table class="table  mb-0 " id="myTable">
 
                 <thead>
-                    <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Id)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Name)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.Quantity)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
-                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                    <tr class="header  bg-fixed bg-light " style="border-bottom:2px #5C5C5C solid;">
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().Id)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().Name)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().Quantity)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().PeriodTaken)</th>
+                        <th class=" text-capitalize align-middle">@Html.DisplayNameFor(m=>m.First().CreatedAt)</th>
                         <th style="width:20px;" class=" text-capitalize align-middle"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr class="align-top">
+                        <tr class="@(item.IsConfirmed.Equals(false) ? "bg-danger text-white" : item.IsConfirmed==null ? "bg-warring" : string.Empty )">
 
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
                             <td class="text-break text-capitalize align-middle"> @item.Name</td>
@@ -73,7 +37,7 @@
                                 <div class=" dropend">
                                     <a class="" role="button" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        @Icon.Bars.Render()
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Products" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
@@ -84,8 +48,8 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a class="dropdown-item " asp-route-id="@item.Id" asp-controller="Products" asp-action="Edit">
-                                                <div class="d-flex justify-content-between"> <span>Edit </span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
+                                            <a class="dropdown-item " asp-route-id="@item.Id" asp-controller="Products" asp-action="Update">
+                                                <div class="d-flex justify-content-between"> <span>Edit </span>  <span><i class="fa-solid fa-pen-to-square"></i></span> </div>
                                             </a>
                                         </li>
                                     </ul>
@@ -112,28 +76,3 @@
         </div>
     </div>
 </div>
-
-@section scripts{
-<script>
-
-     $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-     $("#dataManagement").addClass('active');
-    });
-
-        $(document).ready(function(){
-         $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-         $("#animalProductMedia").addClass('MediaActive')
-
-     });
-       document.getElementById("nav-system-name").innerHTML="Data Management";
-    document.getElementById("media-system-name").innerHTML="Data Management";
-
-       $("#animalGroups").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
-         $("#animalProducts").addClass('actives');
-</script>
-    }
