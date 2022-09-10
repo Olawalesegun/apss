@@ -1,80 +1,84 @@
-﻿@model APSS.Web.Dtos.AnimalGroupListDto
-
-@{
-    ViewData["Title"] = "Animal Details";
-}
-
-<div class="card mt-2 ">
-    <div class="d-inline">
-    </div>
+﻿@model APSS.Web.Dtos.UserDto
+<div class="card mt-2 border-0">
     <div class="card-body">
-        <div class="d-flex bg-primary text-white rounded align-items-center" style="line-height:40px !important">
-
-            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3 style="line-height:40px !important">Animal Information </h3>
-        </div>
-        <table class="table user-view-table m-0 t ">
+        <h4 class="mb-4"> Erea Information </h4>
+        <table class="table user-view-table m-0 border">
             <tbody>
-                <tr class="">
-                    <td class="label"><label>@Html.DisplayNameFor(m => m.Type)</label></td>
-                    <td>@Model.Type </td>
-                </tr>
-                <tr class="">
-                    <td class="label"><label>@Html.DisplayNameFor(m => m.Name)</label></td>
-                    <td>@Model.Name </td>
+                <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.Name) </th>
+                    <td>@Model.Name</td>
                 </tr>
                 <tr>
-                    <td> <label>@Html.DisplayNameFor(m => m.Quantity);</label></td>
-                    <td>@Model.Quantity  </td>
+                    <th class="align-middle"> @Html.DisplayNameFor(m=>m.CreatedAt) </th>
+                    <td>@Model.CreatedAt</td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.Sex)</label>  </td>
-                    <td> @Model.Sex </td>
+                    <th class="align-middle"> @Html.DisplayNameFor(m=>m.ModifiedAt) </th>
+                    <td>@Model.ModifiedAt</td>
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.Confirm)</label>  </td>
-                    <td> @Model.Confirm </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.UserStatus)  </th>
+
+                    @{
+                        if (@Model.UserStatus == APSS.Domain.Entities.UserStatus.Active)
+                        {
+                            <td>
+                                <span class="fa fa-check text-primary mx-1"></span> @Model.UserStatus
+                            </td>
+                        }
+
+                        else
+                        {
+                            <td>
+                                @Model.UserStatus
+                            </td>
+                        }
+                    }
                 </tr>
                 <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.CreatedAt)</label>  </td>
-                    <td>
-                        @Model.CreatedAt
-                    </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.AccessLevel) </th>
+                    <td>@Model.AccessLevel</td>
                 </tr>
-                <tr>
-                    <td><label>@Html.DisplayNameFor(m => m.ModifiedAt)</label>  </td>
-                    <td>
-                        @Model.ModifiedAt
-                    </td>
-                </tr>
-                <tr></tr>
             </tbody>
         </table>
-        <br />
-        <div cllass="d-inline pt-2">
-            <a id="III" class="btn btn-outline-dark   my-2  text-decoration-none mx-1 " asp-controller="Groups" asp-action="Index"><i class="fa-solid fa-arrow-left px-1"></i><span class="">Back </span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Add"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Product</span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Edit"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
-            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="AnimalGroups" asp-action="Groups" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
-            <a id="III" class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="Products" asp-action="AllProducts"><span class="">Products </span> </a>
+    </div>
+    <div class="table-responsive">
+        <div cllass="d-inline  ">
+            <div class="mx-lg-2 mx-sm-1 mx-sm-1 my-1 d-flex justify-content-between">
+                <div class="">
+                    <a class="btn btn-link text-decoration-none mx-1 " asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="UserAccounts"> <i class="fa-solid fa-users me-2"></i><span>Employees </span>  </a>
+                </div>
+                <div class="d-flex">
+                    <a class="btn btn-outline-primary mx-1 " asp-route-id="@Model.Id" asp-controller="Users" asp-action="EditUser"> <i class="fa-solid fa-pen-to-square me-2"> </i><span>Edit</span> </a>
+                    <a class="btn btn-danger mx-1 " asp-route-id="@Model.Id" asp-controller="Users" asp-action="DeleteUser"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 @section scripts{
 <script>
-
-     $(document).ready(function(){
+        $(document).ready(function(){
     $(".sidebar ul li.active").removeClass('active');
-     $("#dataManagement").addClass('active');
+    $("#accountManagement").addClass('active');
     });
-     document.getElementById("nav-system-name").innerHTML="Employees Management";
-    document.getElementById("media-system-name").innerHTML="q Management";
 
-       $("#animalProducts").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
-       $("#animalGroups").addClass('actives');
+     document.getElementById("nav-system-name").innerHTML="Employees Management ";
+    document.getElementById("media-system-name").innerHTML="Employees Management";
+    $(".scrollmenu a").on('click',function(){
+        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+
+    });
+    $(".manage-ment ul li a").on('click',function(){
+        $(".scrollmenu a.actives").removeClass('actives');
+        $("#accounts").addClass('actives');
+
+    });
+    $(".scrollmenu ul li a").on('click',function(){
+        $(".scrollmenu ul li a.actives").removeClass('actives');
+        $("#accounts").addClass('actives');
+    });
+    $("#userMedia").addClass("actives")
 </script>
-    }
+}

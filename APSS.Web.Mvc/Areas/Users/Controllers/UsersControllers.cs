@@ -93,7 +93,7 @@ public class UsersController : Controller
         return View(userDto);
     }
 
-    public async Task<IActionResult> ConfirmDeleteUser(long id)
+    public async Task<IActionResult> ConfirmDelete(long id)
     {
         var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
         if (user == null) return NotFound();

@@ -1,5 +1,4 @@
 ﻿@model APSS.Web.Dtos.UserDto
-@await Html.PartialAsync("_accountNavBar")
 <div class="card mt-2">
     <div class="card-body">
         <div class="d-flex "><h5> Confirm Delete Area </h5> </div>
@@ -24,8 +23,6 @@
             <a class="btn btn-danger   " asp-controller="Users" asp-action="ConfirmDelete">Confirm</a>
             <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
         </div>
-
-        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
     </div>
 </div>
 
