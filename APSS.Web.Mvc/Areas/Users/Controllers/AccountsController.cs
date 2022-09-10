@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
 
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
@@ -57,5 +58,15 @@ public class AccountsController : Controller
             form.Permissions.Permissions);
 
         return LocalRedirect(Routes.Dashboard.Users.Accounts.FullPath + $"?id={form.UserId}");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Create)]
+    public async Task<IActionResult> Delete(long id)
+    {
+        await _accountsService.RemoveAsync(User.GetAccountId(), id);
+
+        return LocalRedirect(Routes.Dashboard.Users.Accounts.FullPath);
     }
 }
