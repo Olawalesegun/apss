@@ -56,6 +56,7 @@ public sealed class SetupService : ISetupService
             holderName,
             password,
             PermissionType.Full,
+            true,
             tx);
     }
 
