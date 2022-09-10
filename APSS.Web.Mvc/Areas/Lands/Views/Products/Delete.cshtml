@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.LandProductDto
+﻿@model LandProductDto
 
 <div class="card mt-2">
     <div class="card-body">
@@ -101,14 +101,21 @@
                     <td>@Html.DisplayNameFor(p => p.AddedBy)</td>
                     <td>@Model?.AddedBy.Name</td>
                 </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(a => a.CreatedAt)</td>
+                    <td>@Model?.CreatedAt</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(a => a.ModifiedAt)</td>
+                    <td>@Model?.ModifiedAt</td>
+                </tr>
             </tbody>
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded  " asp-route-Id="@Model?.Id" asp-area="Lands" asp-controller="Products" asp-action="DeletePost">Confirm</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-area="Lands" asp-controller="Products" asp-action="Index">Back</a>
+            <a class="btn btn-danger" href="@(Routes.Dashboard.Lands.Products.DeletePost)/@Model!.Id">Confirm</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2 text-decoration-none" style="background-color:#DCEEFB">Cancel</a>
+            @*<a class="btn btn-primary btn-rounded mx-3" href="@Routes.Dashboard.Lands.Lands.FullPath">Back</a>*@
         </div>
-
-        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
     </div>
 </div>
