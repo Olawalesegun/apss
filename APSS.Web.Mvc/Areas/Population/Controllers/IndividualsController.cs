@@ -1,119 +1,175 @@
-﻿using APSS.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using APSS.Domain.Entities;
+using APSS.Domain.Services;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.Forms;
 using APSS.Web.Dtos.ValueTypes;
-using Microsoft.AspNetCore.Mvc;
+using APSS.Web.Mvc.Auth;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
 [Area(Areas.Population)]
 public class IndividualsController : Controller
 {
-    private readonly UserDto _userDto;
-    private readonly List<FamilyDto> families;
-    private readonly List<IndividualDto> individuals;
-    private readonly List<FamilyIndividualDto> familyIndividuals;
+    private readonly IPopulationService _populationSvc;
 
-    public IndividualsController()
+    public IndividualsController(IPopulationService populationService)
     {
-        _userDto = new UserDto
-        {
-            Id = 1,
-            Name = "aden",
-            AccessLevel = AccessLevel.Root,
-            userStatus = UserStatus.Active,
-        };
-
-        families = new List<FamilyDto>
-        {
-          new FamilyDto{Id=54,Name="ali",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
-          new FamilyDto{Id=53,Name="salih",LivingLocation="sana'a",CreatedAt=DateTime.Now,ModifiedAt=DateTime.Now,User=_userDto },
-        };
-
-        individuals = new List<IndividualDto>
-        {
-            new IndividualDto{Id=53, Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                Sex=SexDto.Male,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
-                PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
-            new IndividualDto{Id=43,  Name="ali",Address="mareb",Family=families.First(),User=_userDto,
-                Sex=SexDto.Female,SocialStatus=SocialStatusDto.Unspecified,NationalId="57994",
-                PhonNumber="895499",CreatedAt=DateTime.Today,DateOfBirth=DateTime.Today,ModifiedAt=DateTime.Now,Job="programmer"},
-        };
-
-        familyIndividuals = new List<FamilyIndividualDto>
-        {
-            new FamilyIndividualDto{Id=54,Individual=individuals.First(),Family=families.First(),IsParent=true,IsProvider=true},
-            new FamilyIndividualDto{Id=54,Individual=individuals.Last(),Family=families.Last(),IsParent=true,IsProvider=true},
-        };
+        _populationSvc = populationService;
     }
 
     // GET: Individual/GetIndividuals
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View("GetIndividuals",individuals);
+        var individuals = await _populationSvc.GetIndividuals(User.GetAccountId()).AsAsyncEnumerable().ToListAsync();
+        List<IndividualDto> individualsDto = new List<IndividualDto>();
+        foreach (var individual in individuals)
+        {
+            individualsDto.Add(new IndividualDto
+            {
+                Id = individual.Id,
+                Name = individual.Name,
+                Job = individual.Job!,
+                Address = individual.Address,
+                PhonNumber = individual.PhoneNumber!,
+                Sex = (SexDto)individual.Sex
+            });
+        }
+        return View("GetIndividuals", individualsDto);
     }
 
     // GET: IndividualController/AddIndividual/5
-    public IActionResult AddIndividual(int id)
+    public IActionResult AddIndividual(long id)
     {
-        var family = families.Find(f => f.Id == id);
-        var individual = new IndividualAddDto
+        var individual = new IndividualAddForm
         {
-            Family = family!
+            FamilyId = id
         };
-        return View("GetIndividuals", individual);
+        return View(individual);
     }
 
     // POST: IndividualController/AddIndividual
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult AddIndividual(long id, IndividualAddDto individual)
+    public async Task<IActionResult> AddIndividual([FromForm] IndividualAddForm individual)
     {
-        var family = families.Find(f => f.Id == id);
-        individual.Family = family!;
         if (!ModelState.IsValid)
         {
             return View(individual);
         }
-        return View(individual);
+        await _populationSvc.AddIndividualAsync(
+            User.GetAccountId(), individual.FamilyId, individual.Name, individual.Address, (IndividualSex)individual.Sex);
+
+        return RedirectToAction(nameof(Index));
     }
 
     // Get: IndividualController/UpdateIndividual/5
-    public IActionResult UpdateIndividual(int id)
+    public async Task<IActionResult> UpdateIndividual(long id)
     {
-        var individual = individuals.Find(i => i.Id == id);
+        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
+        var individualForm = new IndividualEditForm
+        {
+            Id = individual.Id,
+            Name = individual.Name,
+            Address = individual.Address,
+            Job = individual.Job!,
+            PhonNumber = individual.PhoneNumber!,
+            NationalId = individual.NationalId!,
+            DateOfBirth = individual.DateOfBirth!,
+            Sex = (SexDto)individual.Sex,
+            SocialStatus = (SocialStatusDto)individual.SocialStatus!,
+        };
+        var family = await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id);
+        individualForm.FamilyId = family!.Family.Id;
+        individualForm.FamilyName = family!.Family.Name;
+        individualForm.Isparent = family.IsParent;
+        individualForm.Isprovider = family.IsProvider;
 
-        return View("EditIndividual", individual);
+        return View("EditIndividual", individualForm);
     }
 
     // POST: IndividualController/UpdateIndividual/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult UpdateIndividual(int id, IndividualDto individual)
+    public async Task<IActionResult> UpdateIndividual([FromForm] IndividualEditForm individual)
     {
-        var newindividual = individuals.Find(i => i.Id == id);
-        individual.Family = newindividual!.Family;
+        if (!ModelState.IsValid)
+            return View("EditIndividual", individual);
 
-        return View("EditIndividual", individual);
+        await _populationSvc.UpdateIndividualAsync(
+            User.GetAccountId(), individual.Id,
+            i =>
+            {
+                i.Sex = (IndividualSex)individual.Sex;
+                i.SocialStatus = (SocialStatus)individual.SocialStatus!;
+                i.NationalId = individual.NationalId!;
+                i.DateOfBirth = individual.DateOfBirth!;
+                i.PhoneNumber = individual.PhonNumber;
+                i.Address = individual.Address;
+                i.Job = individual.Job;
+                i.Name = individual.Name;
+            });
+        var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), individual.FamilyId);
+
+        await _populationSvc.UpdateFamilyIndividualAsync(User.GetAccountId(), individual.Id,
+            i =>
+            {
+                i.Family = family;
+                i.IsParent = individual.Isparent;
+                i.IsProvider = individual.Isprovider;
+            });
+
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: IndividualController/ConfirmDeleteIndividual/5
-    public IActionResult ConfirmDeleteIndividual(int id)
+    public async Task<IActionResult> ConfirmDeleteIndividual(long id)
     {
-        var individual = individuals.Find(i => i.Id == id);
-        return View(individual);
+        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
+        var individualDto = new IndividualDto
+        {
+            Id = individual.Id,
+            Name = individual.Name,
+            Job = individual.Job!,
+            Address = individual.Address,
+            PhonNumber = individual.PhoneNumber!,
+            Sex = (SexDto)individual.Sex
+        };
+        return View(individualDto);
     }
 
     // GET: IndividualController/DeleteIndividual/5
-    [HttpPost]
+    [HttpPost, ActionName("DeleteIndividual")]
     [ValidateAntiForgeryToken]
-    public IActionResult DeleteIndividual(int id, IndividualDto individualDto)
+    public async Task<IActionResult> DeleteIndividual(long id)
     {
-        return View(nameof(Index), individuals);
+        await _populationSvc.RemoveIndividualAsync(User.GetAccountId(), id);
+        return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult IndividualDetails(int id)
+    public async Task<IActionResult> IndividualDetails(long id)
     {
-        var individual = individuals.Find(i => i.Id == id);
-        return View(individual);
+        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
+        var individualDto = new IndividualDto
+        {
+            Id = individual.Id,
+            Name = individual.Name,
+            Job = individual.Job!,
+            Address = individual.Address,
+            PhonNumber = individual.PhoneNumber!,
+            Sex = (SexDto)individual.Sex,
+            CreatedAt = individual.CreatedAt,
+            DateOfBirth = individual.DateOfBirth,
+            ModifiedAt = individual.ModifiedAt,
+            NationalId = individual.NationalId,
+            SocialStatus = (SocialStatusDto)individual.SocialStatus,
+            User = individual.AddedBy.Name
+        };
+        var familyindividual = await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id);
+        individualDto.Family = familyindividual!.Family.Name;
+        individualDto.Isparent = familyindividual.IsParent;
+        individualDto.Isprovider = familyindividual.IsProvider;
+
+        return View(individualDto);
     }
 }

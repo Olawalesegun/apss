@@ -1,5 +1,5 @@
-﻿using APSS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using APSS.Domain.Entities;
 
 namespace APSS.Web.Dtos;
 
@@ -19,7 +19,7 @@ public sealed class UserDto : BaseAuditbleDto
     public AccessLevel AccessLevel { get; set; }
 
     [Display(Name = "Area Status")]
-    public UserStatus userStatus { get; set; }
+    public UserStatus UserStatus { get; set; }
 
     /// <summary>
     /// Gets or sets the supervisor

@@ -16,6 +16,9 @@ namespace APSS.Web.Dtos
         public bool IsActive { get; set; }
 
         [Display(Name = "User")]
+        public string UserName { get; set; } = null!;
+
+        [Display(Name = "User")]
         public UserDto CreatedBy { get; set; } = null!;
 
         [Display(Name = "Questions")]

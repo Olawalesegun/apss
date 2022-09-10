@@ -1,0 +1,46 @@
+﻿@model APSS.Web.Dtos.ProductExpenseDto
+@{
+    ViewData["title"] = "Add Product Expense Page";
+}
+<div class="container-fluid">
+    <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
+        <form method="post" asp-area="Lands" asp-controller="Expenses" asp-action="Add" asp-antiforgery="true" class="needs-validation" novalidate>
+            <!--  column puts for the Land Product Expense Type -->
+            <input type="hidden" asp-for="ProductId" />
+            <div class="center d-flex justify-content-center mb-3 ">
+                <h3 class=" ">
+                    Add New Expense
+                </h3>
+            </div>
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="text" asp-for="Type" class="form-control" placeholder=" " />
+                        <label class="form-label" asp-for="Type"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Type"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" asp-for="ProductId" />
+            <div class=" mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <div class="form-floating col">
+                        <input type="number" asp-for="Price" class="form-control" placeholder=" " />
+                        <label class="form-label" asp-for="Price"></label>
+                        <div class="invalid-feedback">
+                            <span asp-validation-for="Price"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary btn-block">Add</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -32,11 +32,12 @@ public class IndividualEditForm
     public string Address { get; set; } = null!;
 
     [Display(Name = "Birth Date")]
-    public DateTime? DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
 
     [Display(Name = "Family")]
-    public FamilyDto Family { get; set; } = null!;
+    public string FamilyName { get; set; } = null!;
 
+    public long FamilyId { get; set; }
     public bool Isprovider { get; set; }
     public bool Isparent { get; set; }
 }

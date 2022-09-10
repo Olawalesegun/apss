@@ -251,10 +251,10 @@ public interface ILandService
     /// <param name="landProductId">The id of the land product</param>
     /// <param name="confirm">The status of the land</param>
     /// <returns>The confimred or declined land</returns>
-    Task<LandProduct> ConfirmLandProductAsync(long accountId, long landProductId, bool confirm);
+    Task<LandProduct> ConfirmProductAsync(long accountId, long landProductId, bool confirm);
 
     /// <summary>
-    /// Asynchronously Gets the user`s land product expense by the expense id
+    /// Asynchronously gets the user`s land product expense by the expense id
     /// </summary>
     /// <param name="accountId">The account id of the user who want to get the product expense</param>
     /// <param name="landProductExpenseId">The id of the product expense to get by</param>
@@ -264,7 +264,7 @@ public interface ILandService
         long landProductExpenseId);
 
     /// <summary>
-    /// Asynchronously Gets all the user`s land product expenses
+    /// Asynchronously gets all the user`s land product expenses
     /// </summary>
     /// <param name="accountId">The account id of the user who want to get the product expenses</param>
     /// <param name="landProductId">The id of the land product that the expense spent on</param>
@@ -274,18 +274,53 @@ public interface ILandService
         long landProductId);
 
     /// <summary>
-    /// Asynchronously Gets all Unconfirmed lands for group access level account
+    /// Asynchronously gets all Unconfirmed lands for group access level account
     /// </summary>
     /// <param name="accountId">The id of the account who wants to show the Unconfirmed lands</param>
     /// <returns>list of the unconfirmed lands under that user</returns>
-    Task<IQueryBuilder<Land>> UnConfirmedLands(long accountId);
+    Task<IQueryBuilder<Land>> DeclinedLandsAsync(long accountId);
 
     /// <summary>
-    /// Asynchronously Gets all Unconfirmed land products for group access level account
+    /// Asynchronously gets all confirmed lands for group access level account
+    /// </summary>
+    /// <param name="accountId">The id of the account who wants to show the confirmed lands</param>
+    /// <returns>list of the confirmed lands under that user</returns>
+    Task<IQueryBuilder<Land>> ConfirmedLandsAsync(long accountId);
+
+    /// <summary>
+    /// Asynchronously gets all Unconfirmed land products for group access level account
     /// </summary>
     /// <param name="accountId">The id of the account who wants to show the Unconfirmed land products</param>
     /// <returns>list of the unconfirmed land products under that user</returns>
-    Task<IQueryBuilder<LandProduct>> UnConfirmedLandProducts(long accountId);
+    Task<IQueryBuilder<LandProduct>> DeclinedProductsAsync(long accountId);
+
+    /// <summary>
+    /// Asynchronously gets all confirmed land products for group access level account
+    /// </summary>
+    /// <param name="accountId">The id of the account who wants to show the confirmed land products</param>
+    /// <returns>list of the confirmed land products under that user</returns>
+    Task<IQueryBuilder<LandProduct>> ConfirmedProductsAsync(long accountId);
+
+    /// <summary>
+    /// Asynchronously gets all user products for all lands
+    /// </summary>
+    /// <param name="accountId">The account id of the user who owns the products</param>
+    /// <returns>The products list that the user has</returns>
+    Task<IQueryBuilder<LandProduct>> GetAllLandProductsAsync(long accountId);
+
+    /// <summary>
+    /// Asynchronously gets all user unconfirmed land products
+    /// </summary>
+    /// <param name="accountId">The account id of the group user who wants to get the products</param>
+    /// <returns>The products list that are not confirmed </returns>
+    Task<IQueryBuilder<LandProduct>> UnConfirmedProductsAsync(long accountId);
+
+    /// <summary>
+    /// Asynchronously gets all user unconfirmed lands
+    /// </summary>
+    /// <param name="accountId">The account id of the group user who wants to get the lands</param>
+    /// <returns>The lands list that are not confirmed </returns>
+    Task<IQueryBuilder<Land>> UnConfirmedLandsAsync(long accountId);
 
     #endregion Public Methods
 }

@@ -1,7 +1,8 @@
 ﻿@model AddLandForm
 <div class="container-fluid">
     <div class="col-sm-12 mx-lg-4 mx-sm-2 col-lg-5">
-        <form method="post" action="@Routes.Dashboard.Lands.Add.FullPath" asp-antiforgery="true" class="needs-validation" novalidate>
+        @*action="@Routes.Dashboard.Lands.Add.FullPath"*@
+        <form method="post" asp-area="Lands" asp-controller="Lands" asp-action="Add" asp-antiforgery="true" class="needs-validation" novalidate>
             <div asp-validation-summary="ModelOnly"></div>
             <div class="center d-flex justify-content-center mb-3 ">
                 <h3 class=" ">
@@ -81,7 +82,7 @@
 
             <!-- Submit button -->
             <div class="mt-4">
-                <button type="submit" class="btn btn-primary btn-block">Add</button>
+                <button type="submit" class="btn btn-primary">Add</button>
             </div>
         </form>
     </div>

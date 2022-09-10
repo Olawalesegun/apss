@@ -7,7 +7,7 @@ public class LandProductUnitProfile : Profile
 {
     public LandProductUnitProfile()
     {
-        CreateMap<LandProductUnit, LandProductUnitDto>()
-            .ReverseMap();
+        CreateMap<LandProductUnit, LandProductUnitDto>();
+        CreateMap<LandProductUnitDto, LandProductUnit>();
     }
 }

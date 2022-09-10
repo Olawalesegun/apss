@@ -4,14 +4,14 @@ namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
 public sealed class PopulationRoute : Route
 {
-    public PopulationRoute(IRoute parent) : base(parent, "Population", "Population", icon: Icon.People)
+    public PopulationRoute(IRoute parent) : base(parent, "Population Scan", "Population", icon: Icon.People)
     {
-        Families = FromController<FamiliesController>(icon: Icon.People);
-        Individuals = FromController<IndividualsController>(icon: Icon.People);
+        Families = FromCrudController<FamiliesController>(icon: Icon.People);
+        Individuals = FromCrudController<IndividualsController>(icon: Icon.People);
     }
 
-    public IRoute Families { get; init; }
-    public IRoute Individuals { get; init; }
+    public CrudRoute Families { get; init; }
+    public CrudRoute Individuals { get; init; }
 
     public override IRoute DefaultRoute => Families;
 }

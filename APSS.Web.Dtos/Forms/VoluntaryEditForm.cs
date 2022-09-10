@@ -4,6 +4,9 @@ namespace APSS.Web.Dtos.Forms;
 
 public class VoluntaryEditForm
 {
+    [Required]
+    public long Id { get; set; }
+
     [Display(Name = "Name")]
     [Required]
     public string Name { get; set; } = null!;

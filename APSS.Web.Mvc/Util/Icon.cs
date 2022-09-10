@@ -18,6 +18,8 @@ public enum Icon
     None,
     Home,
     Users,
+    UserPlus,
+    UsersGear,
     Key,
     Poll,
     Cow,
@@ -42,6 +44,9 @@ public enum Icon
     List,
     Search,
     Filter,
+    Info,
+    Hashtag,
+    Bars,
 }
 
 public static class IconExtensoins
@@ -61,6 +66,8 @@ public static class IconExtensoins
     {
         { Icon.Home, "fa-solid fa-house" },
         { Icon.Users, "fa-solid fa-users" },
+        { Icon.UserPlus, "fa-solid fa-user-plus" },
+        { Icon.UsersGear, "fa-solid fa-users-gear" },
         { Icon.Key, "fa-solid fa-key" },
         { Icon.Poll, "fa-solid fa-square-poll-horizontal" },
         { Icon.Cow, "fa-solid fa-cow" },
@@ -85,6 +92,9 @@ public static class IconExtensoins
         { Icon.List, "fa-solid fa-list-ul" },
         { Icon.Search, "fa-solid fa-magnifying-glass" },
         { Icon.Filter, "fa-solid fa-filter" },
+        { Icon.Info, "fa-solid fa-info" },
+        { Icon.Hashtag, "fa-solid fa-hashtag" },
+        { Icon.Bars, "fa-solid fa-bars" },
     };
 
     public static HtmlString? Render(

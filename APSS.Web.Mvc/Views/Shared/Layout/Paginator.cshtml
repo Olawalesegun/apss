@@ -1,15 +1,26 @@
-﻿<nav aria-label="...">
-    <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+﻿@model int
+
+@{
+    const int PAGES_COUNT = 8;
+    const int PAGES_HALF = PAGES_COUNT / 2;
+
+    var max = Model < PAGES_HALF ? PAGES_COUNT : Model + PAGES_HALF;
+    var min = max - PAGES_COUNT + 1;
+}
+
+<nav aria-label="pagination">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model == min ? "disabled" : string.Empty)">
+            <a class="page-link" href="?Page=@(Model - 1)" tabindex="-1" aria-disabled="true">Previous</a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+        @for (int i = min; i <= max; ++i)
+        {
+            <li class="page-item @(i == Model ? "active" : string.Empty)"><a class="page-link" href="?Page=@i">@i</a></li>
+        }
+
         <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+            <a class="page-link" href="?Page=@(Model + 1)">Next</a>
         </li>
     </ul>
 </nav>
