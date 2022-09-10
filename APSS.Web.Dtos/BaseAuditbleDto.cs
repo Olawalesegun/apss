@@ -4,6 +4,6 @@ namespace APSS.Web.Dtos;
 
 public abstract class BaseAuditbleDto : BaseDto
 {
-    [Display(Name = "Last Modify")]
+    [Display(Name = "Last modification")]
     public DateTime ModifiedAt { get; set; }
 }
