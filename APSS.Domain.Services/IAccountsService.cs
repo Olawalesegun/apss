@@ -85,14 +85,19 @@ public interface IAccountsService
     Task<Account> UpdateAsync(long superUserAccountId, long accountId, Action<Account> updater);
 
     /// <summary>
-    /// Asynchronously Get Account
+    /// Asynchronously gets account details using ID
     /// </summary>
-    /// <param name="SuperId">The id of the account who seeks for the account</param>
-    /// <param name="accountId">the id of the found account </param>
-    /// <returns>The Account</returns>
-    Task<Account> GetAccountAsync(long SuperId, long accountId);
+    /// <param name="accountId">The id of the account to get its data</param>
+    /// <returns></returns>
+    IQueryBuilder<Account> GetAccountAsync(long accountId);
 
-    Task<IQueryBuilder<Account>> GetUserAccounts(long accountId, long userId);
+    /// <summary>
+    /// Asynchronously gets accounts for a user
+    /// </summary>
+    /// <param name="accountId">The id of the account to access data with</param>
+    /// <param name="userId">The id of the user to get accounts for</param>
+    /// <returns></returns>
+    Task<IQueryBuilder<Account>> GetAccountsAsync(long accountId, long userId);
 
     #endregion Public Methods
 }
