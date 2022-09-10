@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using APSS.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos
 {
@@ -14,15 +15,15 @@ namespace APSS.Web.Dtos
         public bool IsRequired { get; set; } = false;
 
         [Display(Name = "Survey")]
-        public SurveyDto Survey { get; set; } = null!;
+        public Survey Survey { get; set; } = null!;
 
         [Display(Name = "Question Type")]
         public QuestionTypeDto QuestionType { get; set; }
 
         [Display(Name = "Choices")]
-        public ICollection<MultipleChoiceAnswerItemDto>? CandidateAnswers { get; set; }
+        public ICollection<string>? CandidateAnswers { get; set; }
 
         [Display(Name = "Select More one?")]
-        public bool CanMultiSelect { get; set; } = false;
+        public bool CanMultiSelect { get; set; }
     }
 }

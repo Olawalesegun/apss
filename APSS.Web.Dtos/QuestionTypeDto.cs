@@ -9,13 +9,13 @@ namespace APSS.Web.Dtos
 {
     public enum QuestionTypeDto
     {
-        [Display(Name = "multiple Choices")]
-        MultipleChoiceQuestion,
+        [Display(Name = "Text Question")]
+        TextQuestion,
 
         [Display(Name = "Logical Question")]
         LogicalQuestion,
 
-        [Display(Name = "TExt Question")]
-        TextQuestion
+        [Display(Name = "multiple Choices")]
+        MultipleChoiceQuestion,
     }
 }
