@@ -24,7 +24,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             _landSvc = landService;
         }
 
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
+        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
         public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
             var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetUserId()))
@@ -66,7 +66,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 newLand.IsUsed);
 
             TempData["success"] = "Land added successfully";
-            return LocalRedirect(Routes.Dashboard.Lands.FullPath);
+            return LocalRedirect(Routes.Dashboard.Lands.Lands.FullPath);
         }
 
         [HttpGet]
@@ -111,26 +111,30 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 });
 
             TempData["success"] = "Land updated successfully";
-            return LocalRedirect(Routes.Dashboard.Lands.FullPath);
+            return LocalRedirect(Routes.Dashboard.Lands.Lands.FullPath);
         }
 
         // GET: LandController/Delete land
+        [HttpPost]
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-        public async Task<IActionResult> Delete(long Id)
+        public async Task<IActionResult> Delete(long id)
         {
-            return View(_mapper.Map<LandDto>(await (
-                await _landSvc.GetLandAsync(User.GetAccountId(), Id)).FirstAsync()));
-        }
-
-        // POST: LandController/Delete land
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-        public async Task<IActionResult> DeletePost(long Id)
-        {
-            await _landSvc.RemoveLandAsync(User.GetAccountId(), Id);
+            await _landSvc.RemoveLandAsync(User.GetAccountId(), id);
             TempData["success"] = "Land deleted successfully";
 
-            return LocalRedirect(Routes.Dashboard.Lands.FullPath);
+            return LocalRedirect(Routes.Dashboard.Lands.Lands.FullPath);
         }
+
+        /* // POST: LandController/Delete land
+         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+         public async Task<IActionResult> DeletePost(long Id)
+         {
+             await _landSvc.RemoveLandAsync(User.GetAccountId(), Id);
+             TempData["success"] = "Land deleted successfully";
+
+             return LocalRedirect(Routes.Dashboard.Lands.FullPath);
+         }
+ */
 
         // GET: LandController/Get land
         [ApssAuthorized(AccessLevel.All, PermissionType.Read)]

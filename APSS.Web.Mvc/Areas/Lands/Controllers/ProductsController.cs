@@ -138,22 +138,25 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: LandController/Delete landProduct
+        [HttpPost]
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<ActionResult> Delete(long Id)
-        {
-            return View(_mapper.Map<LandProductDto>(
-            await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
-        }
-
-        // POST: LandController/Delete landProduct
-        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-        public async Task<ActionResult> DeletePost(long Id)
         {
             await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
 
             TempData["success"] = "Product removed";
             return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
+
+        // POST: LandController/Delete landProduct
+        /*[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        public async Task<ActionResult> DeletePost(long Id)
+        {
+            await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
+
+            TempData["success"] = "Product removed";
+            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
+        }*/
 
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
         public async Task<ActionResult> byLand([FromQuery] FilteringParameters args, long Id)
