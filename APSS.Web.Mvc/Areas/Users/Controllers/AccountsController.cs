@@ -25,6 +25,7 @@ public class AccountsController : Controller
     }
 
     [HttpGet]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Read)]
     public async Task<IActionResult> Index(long? id, [FromQuery] FilteringParameters args)
     {
         var ret = await (await _accountsService
@@ -39,12 +40,14 @@ public class AccountsController : Controller
     }
 
     [HttpGet]
+    [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Create)]
     public IActionResult Add(long id)
         => View(new AddAccountForm { UserId = id });
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Add(AddAccountForm form)
+    [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Create)]
+    public async Task<IActionResult> Add([FromForm] AddAccountForm form)
     {
         var _ = await _accountsService.CreateAsync(
             User.GetAccountId(),
