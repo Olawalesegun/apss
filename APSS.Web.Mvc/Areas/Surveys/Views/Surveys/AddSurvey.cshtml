@@ -17,12 +17,12 @@
                 <span  class="d-block invalid-feedback" asp-validation-for="Name"></span>
             </div>
             <!-- post and end survey date -->
-                   <div class="datepicker input-group.date input-group has-validation mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
-                <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Expiration Date "  asp-for="ExpirationDate" >
-                    <label asp-for="ExpirationDate"></label>
-                </div>
+                   <div class="input-group has-validation mb-3">
+            <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+            <div class=" datepicker input-group.date-p form-floating flex-grow-1">
+                <label class="form-label" asp-for="ExpirationDate"></label>
+                <input type="date" id="sandbox-container-p"  asp-for="ExpirationDate"  class="form-control" />
+            </div>
                 <span  class="d-block invalid-feedback" asp-validation-for="ExpirationDate"></span>
             </div>
 
