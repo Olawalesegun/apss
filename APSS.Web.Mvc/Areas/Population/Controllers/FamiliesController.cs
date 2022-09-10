@@ -36,9 +36,9 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var families = await _populationSvc.GetFamilies(User.GetAccountId()).AsAsyncEnumerable().ToListAsync();
+            var families = await _populationSvc.GetFamilies(User.GetAccountId());
             List<FamilyDto> familiesdto = new List<FamilyDto>();
-            foreach (var family in families)
+            foreach (var family in await families.AsAsyncEnumerable().ToListAsync())
             {
                 familiesdto.Add(new FamilyDto
                 {
