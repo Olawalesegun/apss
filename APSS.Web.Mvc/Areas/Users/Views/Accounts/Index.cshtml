@@ -38,7 +38,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Accounts.Delete)?id=@item.Id">
+                                    <a class="dropdown-item justified-content-between" onclick="showDeletionModal('Are you sure you want to delete account `@item.HolderName`?', @item.Id)">
                                         Delete @Icon.TrashCan.Render()
                                     </a>
                                 </li>
@@ -57,3 +57,5 @@
 </div>
 
 <partial name="Layout/Paginator" model="@Model.Params.Page" />
+
+@await Html.DeleteDialogAsync()
