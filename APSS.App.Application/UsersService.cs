@@ -123,9 +123,10 @@ public sealed class UsersService : IUsersService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<IQueryBuilder<User>> GetUserAsync(long accountId, long userId)
     {
-        var myAccount = await _uow.Accounts.Query().Include(u => u.User).FindAsync(accountId);
+        await _permissionsSvc.ValidatePermissionsAsync(accountId, userId, PermissionType.Read);
 
         if (myAccount.User.Id == userId)
             return _uow.Users.Query().Where(u => u.Id == userId);
