@@ -9,6 +9,8 @@ using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
 
 using AutoMapper;
+using APSS.Web.Dtos.Parameters;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
 {
@@ -34,27 +36,21 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
 
         // GET: FamilyController/GetFamilies
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
-            var families = await _populationSvc.GetFamilies(User.GetAccountId());
-            List<FamilyDto> familiesdto = new List<FamilyDto>();
-            foreach (var family in await families.AsAsyncEnumerable().ToListAsync())
-            {
-                familiesdto.Add(new FamilyDto
-                {
-                    Id = family.Id,
-                    Name = family.Name,
-                    LivingLocation = family.LivingLocation,
-                    UserName = family.AddedBy.Name,
-                    CreatedAt = family.CreatedAt,
-                    ModifiedAt = family.ModifiedAt
-                });
-            }
-            return View("GetFamilies", familiesdto);
+            var ret = await (await _populationSvc.GetFamilies(User.GetAccountId()))
+                .Where(u => u.Name.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
+                .AsAsyncEnumerable()
+                .Select(_mapper.Map<FamilyDto>)
+                .ToListAsync();
+
+            return View(new CrudViewModel<FamilyDto>(ret, args));
         }
 
         // GET: FamilyController/FamilyDetails/5
-        public async Task<IActionResult> FamilyDetails(long id)
+        public async Task<IActionResult> Details(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
             var familyDto = new FamilyDto
@@ -91,7 +87,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         }
 
         // GET: FamilyController/AddFamily
-        public IActionResult AddFamily()
+        public IActionResult Add()
         {
             return View();
         }
@@ -99,7 +95,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         // POST: FamilyController/AddFamily
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddFamily([FromForm] FamilyAddForm family)
+        public async Task<IActionResult> Add([FromForm] FamilyAddForm family)
         {
             if (!ModelState.IsValid)
             {
@@ -110,7 +106,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         }
 
         // GET: FamilyController/EditFamily/5
-        public async Task<IActionResult> UpdateFamily(long id)
+        public async Task<IActionResult> Update(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
             var familyDto = new FamilyEditForm
@@ -120,13 +116,13 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
                 LivingLocation = family.LivingLocation
             };
 
-            return View("Editfamily", familyDto);
+            return View( familyDto);
         }
 
         // POST: FamilyController/EditFamily/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateFamily(long id, [FromForm] FamilyAddForm family)
+        public async Task<IActionResult> Update(long id, [FromForm] FamilyAddForm family)
         {
             if (!ModelState.IsValid)
             {
@@ -144,7 +140,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         }
 
         // GET: FamilyController/DeleteFamily/5
-        public async Task<IActionResult> ConfirmDeleteFamily(long id)
+        public async Task<IActionResult> Delete(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
             if (family == null)
@@ -164,9 +160,9 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         }
 
         // POST: FamilyController/DeleteFamily/5
-        [HttpPost, ActionName("DeleteFamily")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteFamily(long id, FamilyDto family)
+        public async Task<IActionResult> Delete(long id, FamilyDto family)
         {
             if (id == family.Id)
                 await _populationSvc.RemoveFamilyAsync(User.GetAccountId(), id);
