@@ -18,13 +18,15 @@ public interface IAccountsService
     /// <param name="holderName">The name of the holder of the account</param>
     /// <param name="password">The password of the account</param>
     /// <param name="permissions">The permissions of the account</param>
+    /// <param name="isActive">Whether the account should be active on creation</param>
     /// <returns>The created account object</returns>
     Task<Account> CreateAsync(
         long superUserAccountId,
         long userId,
         string holderName,
         string password,
-        PermissionType permissions);
+        PermissionType permissions,
+        bool isActive = true);
 
     /// <summary>
     /// Asynchrnously creates an account for a user, without checking for permissions
@@ -36,6 +38,7 @@ public interface IAccountsService
     /// <param name="holderName">The name of the holder of the account</param>
     /// <param name="password">The password of the account</param>
     /// <param name="permissions">The permissions of the account</param>
+    /// <param name="isActive">Whether the account should be active on creation</param>
     /// <param name="tx">An optional transaction object</param>
     /// <returns>The created account object</returns>
     Task<Account> CreateUncheckedAsync(
@@ -43,6 +46,7 @@ public interface IAccountsService
         string holderName,
         string password,
         PermissionType permissions,
+        bool isActive = true,
         IAsyncDatabaseTransaction? tx = null);
 
     /// <summary>
