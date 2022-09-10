@@ -104,7 +104,7 @@ foreach (var area in Areas.Dashboard)
     app.MapAreaControllerRoute(
         name: area,
         areaName: area,
-        pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}");
+        pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}").RequireAuthorization();
 }
 
 // Redirects
