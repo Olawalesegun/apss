@@ -15,12 +15,12 @@ namespace APSS.Web.Mvc.Areas.Confirmations.Controllers
     public class ConfirmationsController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly ILandService _landSvc;
+        private readonly IConfirmSrevice _confirm;
 
-        public ConfirmationsController(ILandService landService, IMapper mapper)
+        public ConfirmationsController(IConfirmSrevice confirm, IMapper mapper)
         {
             _mapper = mapper;
-            _landSvc = landService;
+            _confirm = confirm;
         }
 
         public async Task<IActionResult> Index()
@@ -28,13 +28,13 @@ namespace APSS.Web.Mvc.Areas.Confirmations.Controllers
             LandConfirmationDto landConfirmation = new LandConfirmationDto();
 
             landConfirmation.Products = await (
-                await _landSvc.UnConfirmedProductsAsync(User.GetAccountId()))
+                await _confirm.UnConfirmedLandProductsAsync(User.GetAccountId()))
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<LandProductDto>)
                 .ToListAsync();
 
             landConfirmation.Lands = await (
-                await _landSvc.UnConfirmedLandsAsync(User.GetAccountId()))
+                await _confirm.UnConfirmedLandsAsync(User.GetAccountId()))
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<LandDto>)
                 .ToListAsync();
@@ -46,7 +46,7 @@ namespace APSS.Web.Mvc.Areas.Confirmations.Controllers
         public async Task<IActionResult> UnConfirmedLands()
         {
             var landList = await (
-                await _landSvc.UnConfirmedLandsAsync(User.GetAccountId()))
+                await _confirm.UnConfirmedLandsAsync(User.GetAccountId()))
                 .AsAsyncEnumerable()
                 .ToListAsync();
 
@@ -58,7 +58,7 @@ namespace APSS.Web.Mvc.Areas.Confirmations.Controllers
         public async Task<IActionResult> ConfirmedLands(long Id)
         {
             var landList = await (
-                await _landSvc.ConfirmedLandsAsync(User.GetAccountId()))
+                await _confirm.ConfirmedLandsAsync(User.GetAccountId()))
                 .AsAsyncEnumerable()
                 .ToListAsync();
 
@@ -68,10 +68,10 @@ namespace APSS.Web.Mvc.Areas.Confirmations.Controllers
         // GET: ProducsController/Get UnConfirmedLandProducts
         [HttpGet]
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
-        public async Task<IActionResult> UnConfirmedProducts()
+        public async Task<IActionResult> UnConfirmedLandProducts()
         {
             var landProductList = await (
-                await _landSvc.UnConfirmedProductsAsync(User.GetAccountId()))
+                await _confirm.UnConfirmedLandProductsAsync(User.GetAccountId()))
                 .AsAsyncEnumerable()
                 .ToListAsync();
 
@@ -80,10 +80,10 @@ namespace APSS.Web.Mvc.Areas.Confirmations.Controllers
 
         [HttpGet]
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
-        public async Task<IActionResult> ConfirmedProducts(long Id)
+        public async Task<IActionResult> ConfirmedLandProducts(long Id)
         {
             var landProductList = await (
-                await _landSvc.ConfirmedProductsAsync(User.GetAccountId()))
+                await _confirm.ConfirmedLandProductsAsync(User.GetAccountId()))
                 .AsAsyncEnumerable()
                 .ToListAsync();
 
@@ -94,22 +94,24 @@ namespace APSS.Web.Mvc.Areas.Confirmations.Controllers
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
         public async Task<IActionResult> ConfirmLand(long id, bool value)
         {
-            await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
+            await _confirm.ConfirmLandAsync(User.GetAccountId(), id, value);
             TempData["success"] = value ? "Land confirmed successfully" : "Land declined successfully";
 
-            return LocalRedirect(Routes.Dashboard.Lands.Confirmation.FullPath);
+            return View();
+            /*return LocalRedirect(Routes.Dashboard.Confirmation.FullPath);*/
         }
 
         [HttpGet]
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
-        public async Task<IActionResult> ConfirmProduct(long id, bool value)
+        public async Task<IActionResult> ConfirmLandProduct(long id, bool value)
         {
-            await _landSvc.ConfirmProductAsync(User.GetAccountId(), id, value);
+            await _confirm.ConfirmLandProductAsync(User.GetAccountId(), id, value);
 
             //return LocalRedirect(Routes.Dashboard.Lands.FullPath);
             TempData["success"] = value ? "Product confirmed successfully" : "Product declined successfully";
 
-            return LocalRedirect(Routes.Dashboard.Lands.Confirmation.FullPath);
+            return View();
+            /*return LocalRedirect(Routes.Dashboard.Confirmation.FullPath);*/
         }
     }
 }
