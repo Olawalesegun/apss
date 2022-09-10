@@ -27,8 +27,9 @@
         </table>
         <br />
         <div class=" d-inline pt-2">
-            <a class="btn btn-danger btn-rounded " asp-area="Lands" asp-route-Id="@Model?.Id" asp-controller="Units" asp-action="DeletePost">Confirm</a>
-            <a class="btn btn-primary btn-rounded mx-3" asp-area="Lands" asp-controller="Units" asp-action="Index">Back</a>
+            <a class="btn btn-danger" href="@(Routes.Dashboard.Lands.Units.DeletePost)/@Model!.Id">Confirm</a>
+            <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2 text-decoration-none" style="background-color:#DCEEFB">Cancel</a>
+            @*<a class="btn btn-primary btn-rounded mx-3" href="@Routes.Dashboard.Lands.Lands.FullPath">Back</a>*@
         </div>
     </div>
 </div>
