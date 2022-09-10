@@ -1,14 +1,43 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APSS.Domain.Services;
+using APSS.Web.Dtos;
+using APSS.Web.Mvc.Auth;
+using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 
 [Area(Areas.Surveys)]
 public class SurveyEntriesController : Controller
 {
-    //Get:SurveyEntry/GetSurveyEntries
-    public IActionResult GetSurveyEntries()
+    private readonly ISurveysService _surveysService;
+
+    public SurveyEntriesController(ISurveysService surveysService)
     {
-        return View();
+        _surveysService = surveysService;
+    }
+
+    //Get:SurveyEntry/GetSurveyEntries
+    public async Task<IActionResult> Index()
+    {
+        var entries = await _surveysService.GetSurveyEntriesAsync(User.GetAccountId());
+        List<SurveyEntryDto> entriesdto = new List<SurveyEntryDto>();
+        foreach (var entry in await entries
+            .Include(e => e.Survey)
+            .Include(e => e.MadeBy)
+            .Include(e => e.Answers)
+            .Include(e => e.Survey.Questions)
+            .Include(e => e.Answers)
+            .AsAsyncEnumerable()
+            .ToListAsync())
+        {
+            entriesdto.Add(new SurveyEntryDto
+            {
+                Id = entry.Id,
+                Survey = entry.Survey,
+                MadeBy = entry.MadeBy,
+                CreatedAt = entry.CreatedAt
+            });
+        }
+        return View("GetSurveyEntries", entriesdto);
     }
 
     //Get:SurveyEntry/SurveyEntryDetails/5
