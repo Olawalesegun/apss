@@ -1,11 +1,6 @@
-﻿using APSS.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
 using APSS.Web.Dtos.ValueTypes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APSS.Web.Dtos
 {
@@ -14,43 +9,31 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the name of the peron who holds this account
         /// </summary>
-        [Required(ErrorMessage = "Employee Name Field is Required")]
+        [Required]
         [Display(Name = "Name")]
         public string HolderName { get; set; } = null!;
 
         /// <summary>
-        /// Gets or sets the password hash of the user
-        /// </summary>
-        [Required(ErrorMessage = "Password  Field is Required")]
-        [MinLength(8, ErrorMessage = "The Min length Password Is 8 Digit")]
-        [Display(Name = "Password")]
-        public string PasswordHash { get; set; } = null!;
-
-        /// <summary>
         /// Gets or sets the national id of the user
         /// </summary>
-
         [Display(Name = "Namtional Id")]
         public string? NationalId { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number of the user
         /// </summary>
-
         [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the social status of the user
         /// </summary>
-
         [Display(Name = "Social Status")]
         public SocialStatusDto SocialStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the job of the user
         /// </summary>
-        [Display(Name = "Job")]
         public string? Job { get; set; }
 
         /// <summary>
@@ -66,17 +49,12 @@ namespace APSS.Web.Dtos
         /// <summary>
         /// Gets or sets the permissions of the account
         /// </summary>
-        [Display(Name = "Permissions")]
-        public PermissionTypeDto PermissionTypeDto { get; set; } = new PermissionTypeDto();
-
-        public PermissionType permissionType { get; set; }
-        public long UserId { get; set; }
+        public PermissionTypeDto Permissions { get; set; } = new PermissionTypeDto();
 
         /// <summary>
         /// Gets or set the current active status of the account
         /// </summary>
-
-        [Display(Name = "Active")]
+        [Display(Name = "Enabled")]
         public bool IsActive { get; set; } = false;
     }
 }

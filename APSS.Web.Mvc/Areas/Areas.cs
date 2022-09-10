@@ -2,6 +2,7 @@
 
 public static class Areas
 {
+    public const string Error = nameof(Error);
     public const string Auth = nameof(Auth);
     public const string Setup = nameof(Setup);
     public const string Home = nameof(Home);
@@ -10,6 +11,7 @@ public static class Areas
     public const string Population = nameof(Population);
     public const string Surveys = nameof(Surveys);
     public const string Users = nameof(Users);
+    public const string Confirmations = nameof(Confirmations);
 
     public static IEnumerable<string> Dashboard
     {
@@ -21,6 +23,7 @@ public static class Areas
             yield return Population;
             yield return Surveys;
             yield return Users;
+            yield return Confirmations;
         }
     }
 }

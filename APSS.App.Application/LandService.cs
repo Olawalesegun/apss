@@ -321,16 +321,17 @@ public class LandService : ILandService
     }
 
     // <inheritdoc/>
-    public async Task<IQueryBuilder<ProductExpense>> GetAllExpensesAsync(long accountId)
+    public async Task<IQueryBuilder<ProductExpense>> GetExpensesByUserAsync(long accountId, long userId)
     {
-        var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+        await _permissionsSvc.ValidatePermissionsAsync(
+            accountId,
+            userId,
+            PermissionType.Read);
 
         return _uow.ProductExpenses.Query()
             .Include(s => s.SpentOn)
             .Include(s => s.SpentOn.AddedBy)
-            .Where(u => u.SpentOn.AddedBy.Id == account.User.Id);
+            .Where(u => u.SpentOn.AddedBy.Id == userId);
     }
 
     /// <inheritdoc/>
@@ -367,7 +368,7 @@ public class LandService : ILandService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<ProductExpense>> GetLandProductExpensesAsync(
+    public async Task<IQueryBuilder<ProductExpense>> GetExpensesByProductAsync(
         long accountId,
         long landProductId)
     {
@@ -510,135 +511,15 @@ public class LandService : ILandService
         return _uow.LandProductUnits.Query();
     }
 
-    /// <inhertdoc/>
-    public async Task<Land> ConfirmLandAsync(long accountId, long landId, bool confirm)
+    public async Task<IQueryBuilder<LandProduct>> GetProductsByUserIdAsync(long accountId, long userId)
     {
-        var account = await _uow.Accounts.Query()
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Update);
-        var land = await _uow.Lands.Query()
-            .Include(u => u.OwnedBy)
-            .FindAsync(landId);
-
-        await _permissionsSvc.ValidateUserPatenthoodAsync(
+        await _permissionsSvc.ValidatePermissionsAsync(
             accountId,
-            land.OwnedBy.Id,
-            PermissionType.Update);
-
-        if (confirm)
-            _uow.Lands.Confirm(land);
-        else
-            _uow.Lands.Decline(land);
-
-        await _uow.CommitAsync();
-
-        return land;
-    }
-
-    /// <inhertdoc/>
-    public async Task<LandProduct> ConfirmProductAsync(long accountId, long landProductId, bool confirm)
-    {
-        var account = await _uow.Accounts.Query()
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Update);
-        var landProduct = await _uow.LandProducts.Query()
-            .Include(a => a.AddedBy)
-            .FindAsync(landProductId);
-
-        await _permissionsSvc.ValidateUserPatenthoodAsync(
-            accountId,
-            landProduct.AddedBy.Id,
-            PermissionType.Update);
-
-        if (confirm)
-            _uow.LandProducts.Confirm(landProduct);
-        else
-            _uow.LandProducts.Decline(landProduct);
-        await _uow.CommitAsync();
-
-        return landProduct;
-    }
-
-    /// <inhertdoc/>
-    public async Task<IQueryBuilder<Land>> DeclinedLandsAsync(long accountId)
-    {
-        var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
-
-        return _uow.Lands.Query()
-            .Include(u => u.OwnedBy)
-            .Include(u => u.OwnedBy.SupervisedBy!)
-            .Where(l => l.OwnedBy.SupervisedBy!.Id == account.User.Id && l.IsConfirmed == false);
-    }
-
-    /// <inhertdoc/>
-    public async Task<IQueryBuilder<Land>> UnConfirmedLandsAsync(long accountId)
-    {
-        var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
-
-        return _uow.Lands.Query()
-            .Include(u => u.OwnedBy)
-            .Include(u => u.OwnedBy.SupervisedBy!)
-            .Where(l => l.OwnedBy.SupervisedBy!.Id == account.User.Id && l.IsConfirmed == null);
-    }
-
-    /// <inhertdoc/>
-    public async Task<IQueryBuilder<Land>> ConfirmedLandsAsync(long accountId)
-    {
-        var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
-
-        return _uow.Lands.Query()
-            .Include(u => u.OwnedBy)
-            .Include(u => u.OwnedBy.SupervisedBy!)
-            .Where(l => l.OwnedBy.SupervisedBy!.Id == account.User.Id && l.IsConfirmed == true);
-    }
-
-    /// <inhertdoc/>
-    public async Task<IQueryBuilder<LandProduct>> DeclinedProductsAsync(long accountId)
-    {
-        var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
+            userId,
+            PermissionType.Read);
 
         return _uow.LandProducts.Query()
-            .Include(u => u.AddedBy)
-            .Include(u => u.Unit)
-            .Include(s => s.ProducedIn)
-            .Include(p => p.Producer)
-            .Include(s => s.AddedBy.SupervisedBy!)
-            .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == false);
-    }
-
-    /// <inhertdoc/>
-    public async Task<IQueryBuilder<LandProduct>> UnConfirmedProductsAsync(long accountId)
-    {
-        var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
-
-        return _uow.LandProducts.Query()
-            .Include(u => u.AddedBy)
-            .Include(u => u.Unit)
-            .Include(s => s.ProducedIn)
-            .Include(p => p.Producer)
-            .Include(s => s.AddedBy.SupervisedBy!)
-            .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == null);
-    }
-
-    /// <inhertdoc/>
-    public async Task<IQueryBuilder<LandProduct>> ConfirmedProductsAsync(long accountId)
-    {
-        var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
-
-        return _uow.LandProducts.Query()
-            .Include(u => u.AddedBy)
-            .Include(s => s.AddedBy.SupervisedBy!)
-            .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == true);
+            .Where(u => u.AddedBy.Id == userId);
     }
 
     #endregion Public Methods

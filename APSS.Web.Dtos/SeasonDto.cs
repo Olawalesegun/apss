@@ -18,7 +18,6 @@ public class SeasonDto : BaseAuditbleDto
     [Display(Name = "Starts At")]
     [Required]
     [DataType(DataType.Date)]
-    [CustomValidation.StartDate(ErrorMessage = "back date is not allowd")]
     public DateTime StartsAt { get; set; }
 
     /// <summary>
@@ -27,6 +26,5 @@ public class SeasonDto : BaseAuditbleDto
     [Display(Name = "Ends At")]
     [Required]
     [DataType(DataType.Date)]
-    [CustomValidation.StartDate(ErrorMessage = "back date is not allowd")]
     public DateTime EndsAt { get; set; }
 }

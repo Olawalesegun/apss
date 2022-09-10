@@ -30,9 +30,6 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long>("AddedById")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -73,8 +70,6 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddedById");
 
                     b.HasIndex("UserId");
 
@@ -964,19 +959,11 @@ namespace APSS.Infrastructure.Repositories.EntityFramework.Migrations
 
             modelBuilder.Entity("APSS.Domain.Entities.Account", b =>
                 {
-                    b.HasOne("APSS.Domain.Entities.User", "AddedBy")
-                        .WithMany()
-                        .HasForeignKey("AddedById")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("APSS.Domain.Entities.User", "User")
                         .WithMany("Accounts")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AddedBy");
 
                     b.Navigation("User");
                 });

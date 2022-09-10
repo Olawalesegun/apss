@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using APSS.Domain.Entities;
 using APSS.Domain.Repositories;
 using APSS.Domain.Services;
@@ -27,6 +28,7 @@ public class UsersController : Controller
     }
 
     [HttpGet]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Read)]
     public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
     {
         var ret = await (await _userService.GetSubuserAsync(User.GetAccountId()))
@@ -40,11 +42,13 @@ public class UsersController : Controller
     }
 
     [HttpGet]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Create)]
     public IActionResult Add()
         => View(new AddUserForm());
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Create)]
     public async Task<IActionResult> Add(AddUserForm form)
     {
         if (!ModelState.IsValid)
@@ -54,6 +58,16 @@ public class UsersController : Controller
             User.GetAccountId(),
             form.Name,
             form.IsActive ? UserStatus.Active : UserStatus.Inactive);
+
+        return LocalRedirect(Routes.Dashboard.Users.Users.FullPath);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Delete)]
+    public async Task<IActionResult> Delete(long id)
+    {
+        await _userService.RemoveAsync(User.GetAccountId(), id);
 
         return LocalRedirect(Routes.Dashboard.Users.Users.FullPath);
     }
@@ -73,35 +87,6 @@ public class UsersController : Controller
             ModifiedAt = user.ModifiedAt
         };
         return View(userDto);
-    }
-
-    public async Task<IActionResult> Delete(long id)
-    {
-        var user = await (await _userService.GetUserAsync(User.GetAccountId(), id))
-            .AsAsyncEnumerable()
-            .ToListAsync();
-        if (user == null) return RedirectToAction(nameof(Index));
-        var users = user.FirstOrDefault();
-        var userDto = new UserDto
-        {
-            Name = users!.Name,
-            Id = users.Id,
-            AccessLevel = users.AccessLevel,
-            UserStatus = users.UserStatus,
-            CreatedAt = users.CreatedAt,
-        };
-        return View(userDto);
-    }
-
-    public async Task<IActionResult> ConfirmDelete(long id)
-    {
-        var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
-        if (user == null) return NotFound();
-        var delete = await _userService.SetUserStatusAsync(User.GetAccountId(), id, UserStatus.Terminated);
-        if (delete == null) return RedirectToAction(nameof(Index));
-        TempData["Action"] = "Delete Erea";
-        TempData["success"] = "Erea Deleted Successfully";
-        return LocalRedirect(Routes.Dashboard.Users.FullPath);
     }
 
     public async Task<IActionResult> Update(long id)
