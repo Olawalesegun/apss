@@ -5,15 +5,16 @@ using APSS.Web.Mvc.Util.Navigation.Routes;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
-namespace APSS.Web.Mvc.Areas.Controllers
+namespace APSS.Web.Mvc.Areas.Animals.Controllers
 {
     [Area(Areas.Animals)]
-    public class AnimalUnitsController : Controller
+    public class
+        UnitsController : Controller
     {
         private readonly IAnimalService _aps;
         private readonly IMapper _mapper;
 
-        public AnimalUnitsController(IAnimalService aps, IMapper mapper)
+        public UnitsController(IAnimalService aps, IMapper mapper)
         {
             _aps = aps;
             _mapper = mapper;
@@ -51,7 +52,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 var add = await _aps.CreateAnimalProductUnitAsync(User.GetAccountId(), animalProductUnitDto.Name);
                 if (add == null) return RedirectToAction(nameof(Index));
-                return LocalRedirect(Routes.Dashboard.Animals.AnimalUnits.FullPath);
+                return LocalRedirect(Routes.Dashboard.Animals.Units.FullPath);
             }
 
             return View(animalProductUnitDto);
@@ -76,7 +77,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             var update = await _aps.UpdateProductUnit(User.GetAccountId(),
                 animalProductUnitDto.Id,
                 u => u.Name = animalProductUnitDto.Name);
-            return LocalRedirect(Routes.Dashboard.Animals.AnimalUnits.FullPath);
+            return LocalRedirect(Routes.Dashboard.Animals.Units.FullPath);
         }
 
         public async Task<IActionResult> Delete(long id)
@@ -94,7 +95,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         public async Task<IActionResult> ConfirmDelete(long id)
         {
             await _aps.RemoveAnimalProductUnitAsync(User.GetAccountId(), id);
-            return LocalRedirect(Routes.Dashboard.Animals.AnimalUnits.FullPath);
+            return LocalRedirect(Routes.Dashboard.Animals.Units.FullPath);
         }
     }
 }

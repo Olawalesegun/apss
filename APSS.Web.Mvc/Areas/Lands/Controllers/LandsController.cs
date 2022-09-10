@@ -148,7 +148,44 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 .Select(_mapper.Map<LandDto>)
                 .ToListAsync();
 
-            return View(new CrudViewModel<LandDto>(result, args));
+            return View(landList.Select(_mapper.Map<LandDto>));
+        }
+
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
+        public async Task<IActionResult> UnConfirmedLands()
+        {
+            var landList = await (
+                await _landSvc.UnConfirmedLandsAsync(User.GetAccountId()))
+                .AsAsyncEnumerable()
+                .ToListAsync();
+
+            return View("UnConfirmedLands", landList.Select(_mapper.Map<LandDto>));
+        }
+
+        [HttpGet]
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
+        public async Task<IActionResult> ConfirmedLands(long Id)
+        {
+            var landList = await (
+                await _landSvc.ConfirmedLandsAsync(User.GetAccountId()))
+                .AsAsyncEnumerable()
+                .ToListAsync();
+
+            return View(landList.Select(_mapper.Map<LandDto>));
+        }
+
+        [HttpGet]
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
+        public async Task<IActionResult> ConfirmLand(long id, bool value)
+        {
+            // await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
+            TempData["success"] = value ? "Land confirmed successfully" : "Land declined successfully";
+
+            //return LocalRedirect(Routes.Dashboard.Users.FullPath);
+            if (value)
+                return RedirectToAction("DeclinedLands");
+            else
+                return RedirectToAction("ConfirmedLands");
         }
     }
 }

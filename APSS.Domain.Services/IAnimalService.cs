@@ -114,10 +114,6 @@ public interface IAnimalService
 
     Task RemoveAnimalProductUnitAsync(long accountId, long productUnitId);
 
-    Task<AnimalProduct> ConfirmAnimalProduct(long accountId, long animalProductId, bool isConfirm);
-
-    Task<AnimalGroup> ConfirmAnimalGroup(long accountId, long animalGroupId, bool isConfirm);
-
     Task<ProductExpense> CreateProductExpenseAsync(long accountId, long productId, string type, decimal price);
 
     Task<ProductExpense> UpdateProductExpensesAsync(long accountId, long productExpenseId, Action<ProductExpense> updater);
