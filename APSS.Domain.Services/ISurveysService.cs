@@ -40,7 +40,7 @@ public interface ISurveysService
         string text,
         bool isRequired,
         bool canMultiSelect,
-        params string[] candidateAnswers);
+        List<string> candidateAnswers);
 
     /// <summary>
     /// Asynchrnously adds a text question to a survey
@@ -97,6 +97,14 @@ public interface ISurveysService
         long entryId,
         long questionId,
         string? answer);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="accountId"></param>
+    /// <param name="surveyId"></param>
+    /// <returns></returns>
+    Task<IQueryBuilder<Question>> GetQuestionsSurveysAsync(long accountId, long surveyId);
 
     /// <summary>
     /// Asynchronously creates a new survey
@@ -170,6 +178,14 @@ public interface ISurveysService
     /// <param name="updater"></param>
     /// <returns></returns>
     Task<Survey> UpdateSurveyAsync(long accountId, long surveyId, Action<Survey> updater);
+
+    /// <summary>
+    /// Asynchrnously removes a survey
+    /// </summary>
+    /// <param name="accountId">The id of the account removing the survey</param>
+    /// <param name="questionId">The id of the question to remove</param>
+    /// <returns></returns>
+    Task Removequestion(long accountId, long questionId);
 
     #endregion Public Methods
 }
