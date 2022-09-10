@@ -6,14 +6,14 @@ public static class Navigator
 {
     public static IRoute? GetCurrentRoute(this HttpContext context)
     {
-        var path = context.Request.Path;
+        var path = context.Request.Path.Value!.TrimEnd('/');
 
         return Routes.All.ContainsKey(path) ? Routes.All[path] : null;
     }
 
     public static IRoute? GetCurrentDashboardRoute(this HttpContext context)
     {
-        var path = context.Request.Path.Value ?? "/";
+        var path = context.Request.Path.Value?.TrimEnd('/') ?? "/";
 
         return Routes.Dashboard.Children.FirstOrDefault(r => path.StartsWith(r.FullPath));
     }
