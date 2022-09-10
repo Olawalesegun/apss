@@ -20,7 +20,7 @@ public class SurveysController : Controller
     public async Task<ActionResult> Index()
     {
         var surveys = await _surveySvc.GetAvailableSurveysAsync(User.GetAccountId());
-        List<SurveyDto> surveysDto = new List<SurveyDto>();
+        List<SurveyDto> surveysDto = new();
         foreach (var survey in await surveys.AsAsyncEnumerable().ToListAsync())
         {
             surveysDto.Add(

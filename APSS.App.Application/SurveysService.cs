@@ -55,7 +55,7 @@ public sealed class SurveysService : ISurveysService
         string text,
         bool isRequired,
         bool canMultiSelect,
-        params string[] candidateAnswers)
+        List<string> candidateAnswers)
     {
         await using var tx = await _uow.BeginTransactionAsync();
 
@@ -321,7 +321,22 @@ public sealed class SurveysService : ISurveysService
             .Include(a => a.User)
             .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
-        return _uow.SurveyEntries.Query().Where(e => e.MadeBy.Id == account.User.Id);
+        return _uow.SurveyEntries.Query()
+            .Include(e => e.Survey)
+            .Include(e => e.MadeBy)
+            .Where(e => e.MadeBy.Id == account.User.Id);
+    }
+
+    public async Task<IQueryBuilder<Question>> GetQuestionsSurveysAsync(long accountId, long surveyId)
+    {
+        var account = await _uow.Accounts.Query()
+           .Include(a => a.User)
+           .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        return _uow.Questions.Query()
+            .Include(q => q.Survey)
+            .Include(q => q.Survey.CreatedBy)
+            .Where(q => (q.Survey.Id == surveyId && q.Survey.CreatedBy.Id == account.User.Id));
     }
 
     /// <inheritdoc/>
@@ -339,10 +354,20 @@ public sealed class SurveysService : ISurveysService
         await _uow.CommitAsync();
     }
 
+    public async Task Removequestion(long accountId, long questionId)
+    {
+        var question = await _uow.Questions.Query()
+            .Include(q => q.Survey).FindAsync(questionId);
+
+        var (survey, _) = await GetSurveyWithAuthorizationAsync(accountId, question.Survey.Id, PermissionType.Delete);
+        _uow.Questions.Remove(question);
+        await _uow.CommitAsync();
+    }
+
     /// <inheritdoc/>
     public async Task<Survey> SetSurveyActiveStatusAsync(long accountId, long surveyId, bool activeStatus)
     {
-            return await UpdateSurveyAsync(accountId, surveyId, s=> s.IsActive = activeStatus);
+        return await UpdateSurveyAsync(accountId, surveyId, s => s.IsActive = activeStatus);
     }
 
     /// <inheritdoc/>

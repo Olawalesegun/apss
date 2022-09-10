@@ -31,7 +31,8 @@ public class VoluntariesController : Controller
             {
                 Id = Voluntary.Id,
                 Name = Voluntary.Name,
-                Field = Voluntary.Field
+                Field = Voluntary.Field,
+                IndividualName = Voluntary.OfferedBy.Name
             });
         }
         return View("GetVoluntaries", VoluntariesDto.ToList());
