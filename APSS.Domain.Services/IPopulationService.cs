@@ -12,14 +12,14 @@ public interface IPopulationService
     /// </summary>
     /// <param name="accountId">The id of the account which to get the added fammily  by its</param>
     /// <returns></returns>
-    IQueryBuilder<Family> GetFamilies(long accountId);
+    Task<IQueryBuilder<Family>> GetFamilies(long accountId);
 
     /// <summary>
     ///  Gets a query for the get indviduals
     /// </summary>
     /// <param name="accountId">The id of the account which to get the added individual  by its</param>
     /// <returns></returns>
-    IQueryBuilder<Individual> GetIndividuals(long accountId);
+    Task<IQueryBuilder<Individual>> GetIndividuals(long accountId);
 
     /// <summary>
     /// Get any family

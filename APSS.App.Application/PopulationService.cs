@@ -200,23 +200,25 @@ public sealed class PopulationService : IPopulationService
     }
 
     ///<inheritdoc/>
-    public IQueryBuilder<Family> GetFamilies(long accountId)
+    public async Task<IQueryBuilder<Family>> GetFamilies(long accountId)
     {
+        var account = await _uow.Accounts.Query().Include(a => a.User).FindAsync(accountId);
         var family = _uow.Families
             .Query()
             .Include(f => f.AddedBy)
-            .Where(f => f.AddedBy.Id == accountId);
+            .Where(f => f.AddedBy.Id == account.User.Id);
 
         return family;
     }
 
     ///<inheritdoc/>
-    public IQueryBuilder<Individual> GetIndividuals(long accountId)
+    public async Task<IQueryBuilder<Individual>> GetIndividuals(long accountId)
     {
+        var account = await _uow.Accounts.Query().Include(a => a.User).FindAsync(accountId);
         var individuals = _uow.Individuals
             .Query()
             .Include(i => i.AddedBy)
-            .Where(f => f.AddedBy.Id == accountId);
+            .Where(i => i.AddedBy.Id == account.User.Id);
 
         return individuals;
     }
@@ -259,7 +261,7 @@ public sealed class PopulationService : IPopulationService
             throw new InsufficientPermissionsException(
                 accountId, $"farmer #{account.User.Id} with account #{accountId} cannot read indviduals of Family{family.Name} ");
 
-        return _uow.FamilyIndividuals.Query().Include(f=>f.Family).Include(f=>f.Individual).Where(f => f.Family.Id == familyId);
+        return _uow.FamilyIndividuals.Query().Include(f => f.Family).Include(f => f.Individual).Where(f => f.Family.Id == familyId);
     }
 
     public async Task<FamilyIndividual?> GetFamilyIndividual(long accountId, long individualId)

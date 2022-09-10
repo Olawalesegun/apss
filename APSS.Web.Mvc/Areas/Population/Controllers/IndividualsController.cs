@@ -21,9 +21,10 @@ public class IndividualsController : Controller
     // GET: Individual/GetIndividuals
     public async Task<IActionResult> Index()
     {
-        var individuals = await _populationSvc.GetIndividuals(User.GetAccountId()).AsAsyncEnumerable().ToListAsync();
+        var individuals = await _populationSvc.GetIndividuals(User.GetAccountId());
+
         List<IndividualDto> individualsDto = new List<IndividualDto>();
-        foreach (var individual in individuals)
+        foreach (var individual in await individuals.AsAsyncEnumerable().ToListAsync())
         {
             individualsDto.Add(new IndividualDto
             {

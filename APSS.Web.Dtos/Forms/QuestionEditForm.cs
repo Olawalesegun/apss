@@ -1,13 +1,12 @@
-﻿using APSS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace APSS.Web.Dtos
+namespace APSS.Web.Dtos.Forms;
+
+public class QuestionEditForm
 {
-    public class QuestionDto : BaseAuditbleDto
+    public class QuestionAddForm
     {
-        [Display(Name = "Squence Number")]
-        public uint Index { get; set; }
-
+        [Required]
         [Display(Name = "Question")]
         public string Text { get; set; } = null!;
 
@@ -15,7 +14,7 @@ namespace APSS.Web.Dtos
         public bool IsRequired { get; set; } = false;
 
         [Display(Name = "Survey")]
-        public Survey Survey { get; set; } = null!;
+        public long SurveyId { get; set; }
 
         [Display(Name = "Question Type")]
         public QuestionTypeDto QuestionType { get; set; }
