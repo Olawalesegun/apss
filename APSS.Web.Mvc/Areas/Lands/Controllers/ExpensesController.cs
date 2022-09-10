@@ -7,6 +7,8 @@ using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 using AutoMapper;
+using APSS.Web.Dtos.Parameters;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -22,14 +24,17 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             _landSvc = landService;
         }
 
-        public async Task<IActionResult> Index(long Id)
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
             var expenses = await (
-                await _landSvc.GetLandProductExpensesAsync(User.GetAccountId(), Id))
+                await _landSvc.GetAllExpensesAsync(User.GetAccountId()))
+                .Where(u => u.Type.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
+                .Select(_mapper.Map<ProductExpenseDto>)
                 .ToListAsync();
 
-            return View(expenses.Select(_mapper.Map<ProductExpenseDto>));
+            return View(new CrudViewModel<ProductExpenseDto>(expenses, args));
         }
 
         [HttpGet]
@@ -60,7 +65,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
             TempData["success"] = "Expense Added successfully";
 
-            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
+            return LocalRedirect(Routes.Dashboard.Lands.Expenses.FullPath);
         }
 
         // GET: landProductExpense/Update landProductExpense
@@ -68,7 +73,8 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<IActionResult> Update(long Id)
         {
             return View(_mapper.Map<ProductExpenseDto>(
-                await (await _landSvc.GetLandProductExpenseAsync(User.GetAccountId(), Id)).FirstAsync()));
+                await (await _landSvc.GetLandProductExpenseAsync(User.GetAccountId(), Id))
+                             .FirstAsync()));
         }
 
         // POST: landProductExpense/Update landProductExpense
@@ -91,7 +97,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
             TempData["success"] = "Expense Updated successfully";
 
-            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
+            return LocalRedirect(Routes.Dashboard.Lands.Expenses.FullPath);
         }
 
         // GET: landProductExpense/Delete landProductExpense
@@ -99,7 +105,8 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<IActionResult> Delete(long Id)
         {
             return View(_mapper.Map<ProductExpenseDto>(
-                await (await _landSvc.GetLandProductExpenseAsync(User.GetAccountId(), Id)).FirstAsync()));
+                await (await _landSvc.GetLandProductExpenseAsync(User.GetAccountId(), Id))
+                             .FirstAsync()));
         }
 
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
@@ -109,7 +116,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
             TempData["success"] = "Expense Removed Successfully";
 
-            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
+            return LocalRedirect(Routes.Dashboard.Lands.Expenses.FullPath);
         }
 
         // GET: landProductExpense/Get landProductExpense
@@ -117,6 +124,19 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             return View(_mapper.Map<ProductExpenseDto>(
                 await (await _landSvc.GetLandProductExpenseAsync(User.GetAccountId(), Id)).FirstAsync()));
+        }
+
+        public async Task<IActionResult> GetAll([FromQuery] FilteringParameters args, long Id)
+        {
+            var expenses = await (
+                await _landSvc.GetLandProductExpensesAsync(User.GetAccountId(), Id))
+                .Where(u => u.Type.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
+                .AsAsyncEnumerable()
+                .Select(_mapper.Map<ProductExpenseDto>)
+                .ToListAsync();
+
+            return View(new CrudViewModel<ProductExpenseDto>(expenses, args));
         }
     }
 }

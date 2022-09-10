@@ -5,6 +5,8 @@ using APSS.Web.Mvc.Auth;
 using AutoMapper;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Util.Navigation.Routes;
+using APSS.Web.Dtos.Parameters;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -30,38 +32,26 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //    AccessLevel.Group |
         //    AccessLevel.Root,
         //    PermissionType.Read)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
-            try
-            {
-                var result = await (await _landSvc.GetAllLandProductsAsync(
-                User.GetAccountId()))
-                .AsAsyncEnumerable()
-                .ToListAsync();
+            var result = await (await _landSvc.GetAllLandProductsAsync(
+            User.GetAccountId()))
+            .Where(u => u.CropName.Contains(args.Query))
+            .Page(args.Page, args.PageLength)
+            .AsAsyncEnumerable()
+            .Select(_mapper.Map<LandProductDto>)
+            .ToListAsync();
 
-                return View(result.Select(_mapper.Map<LandProductDto>));
-            }
-            catch (Exception ex)
-            {
-                return View(new List<LandProductDto>());
-            }
+            return View(new CrudViewModel<LandProductDto>(result, args));
         }
 
         // GET: LandProduc tController/Add a new landProduct
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<ActionResult> Add(long Id)
         {
-            var seasonsList = new List<Season>();
-            var unitsList = new List<LandProductUnit>();
-            try
-            {
-                seasonsList = await _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
-                unitsList = await _landSvc.GetLandProductUnitsAsync().AsAsyncEnumerable().ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                return View("ErrorPage", ex.ToString());
-            }
+            var seasonsList = await _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
+            var unitsList = await _landSvc.GetLandProductUnitsAsync().AsAsyncEnumerable().ToListAsync();
+
             var product = new LandProductDto
             {
                 Units = unitsList.Select(_mapper.Map<LandProductUnitDto>),
@@ -101,6 +91,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 landProduct.Insecticide,
                 landProduct.IrrigationMethod);
 
+            TempData["success"] = "Product added";
             return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
 
@@ -116,15 +107,8 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //    PermissionType.Read)]
         public async Task<ActionResult> Details(long Id)
         {
-            try
-            {
-                return View(_mapper.Map<LandProductDto>(
-                await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
-            }
-            catch (Exception ex)
-            {
-                return View("ErrorPage", ex.ToString());
-            }
+            return View(_mapper.Map<LandProductDto>(
+            await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
 
         // GET: LandController/Update landProduct
@@ -174,30 +158,16 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<ActionResult> Delete(long Id)
         {
-            try
-            {
-                return View(_mapper.Map<LandProductDto>(
-                await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
-            }
-            catch (Exception ex)
-            {
-                return View("ErrorPage", ex.ToString());
-            }
+            return View(_mapper.Map<LandProductDto>(
+            await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
 
         // POST: LandController/Delete landProduct
         //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<ActionResult> DeletePost(long Id)
         {
-            try
-            {
-                await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
-                return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
-            }
-            catch (Exception ex)
-            {
-                return View("ErrorPage", ex.ToString());
-            }
+            await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
+            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
 
         // GET: LandController/Get landProduct
@@ -213,15 +183,8 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //    PermissionType.Read)]
         public async Task<ActionResult> GetLandProduct(long Id)
         {
-            try
-            {
-                return View(_mapper.Map<LandProductDto>(
-                await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
-            }
-            catch (Exception ex)
-            {
-                return View("ErrorPage", ex.ToString());
-            }
+            return View(_mapper.Map<LandProductDto>(
+            await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
         }
 
         // GET: LandController/Get landProducts
@@ -235,61 +198,17 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         //    AccessLevel.Group |
         //    AccessLevel.Root,
         //    PermissionType.Read)]
-        public async Task<ActionResult> GetLandProducts(long Id)
+        public async Task<ActionResult> GetAll([FromQuery] FilteringParameters args, long Id)
         {
-            try
-            {
-                var result = await (await _landSvc.GetLandProductsAsync(
+            var result = await (await _landSvc.GetLandProductsAsync(
                 User.GetAccountId(), Id))
+                .Where(n => n.CropName.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
+                .Select(_mapper.Map<LandProductDto>)
                 .ToListAsync();
 
-                return View(result.Select(_mapper.Map<LandProductDto>));
-            }
-            catch (Exception ex)
-            {
-                return View("ErrorPage", ex.ToString());
-            }
-        }
-
-        // GET: ProducsController/Get UnConfirmedLandProducts
-        [HttpGet]
-        //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
-        public async Task<IActionResult> UnConfirmedProducts()
-        {
-            var landProductList = await (
-                await _landSvc.UnConfirmedProductsAsync(User.GetAccountId()))
-                .AsAsyncEnumerable()
-                .ToListAsync();
-
-            return View(landProductList.Select(_mapper.Map<LandProductDto>));
-        }
-
-        [HttpGet]
-        //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
-        public async Task<IActionResult> ConfirmedProducts(long Id)
-        {
-            var landProductList = await (
-                await _landSvc.ConfirmedProductsAsync(User.GetAccountId()))
-                .AsAsyncEnumerable()
-                .ToListAsync();
-
-            return View(landProductList.Select(_mapper.Map<LandProductDto>));
-        }
-
-        [HttpGet]
-        //[ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
-        public async Task<IActionResult> ConfirmProduct(long id, bool value)
-        {
-            await _landSvc.ConfirmProductAsync(User.GetAccountId(), id, value);
-
-            //return LocalRedirect(Routes.Dashboard.Lands.FullPath);
-            TempData["success"] = value ? "Product confirmed successfully" : "Product declined successfully";
-
-            if (value)
-                return RedirectToAction("DeclinedProducts");
-            else
-                return RedirectToAction("ConfirmedProducts");
+            return View(new CrudViewModel<LandProductDto>(result, args));
         }
     }
 }

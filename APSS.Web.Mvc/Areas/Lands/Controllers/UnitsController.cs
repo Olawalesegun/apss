@@ -5,6 +5,8 @@ using APSS.Web.Mvc.Auth;
 using AutoMapper;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Util.Navigation.Routes;
+using APSS.Web.Dtos.Parameters;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -21,14 +23,16 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
-            var unitList = await _landSvc.
-                GetLandProductUnitsAsync()
+            var unitList = await _landSvc.GetLandProductUnitsAsync()
+                .Where(u => u.Name.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
+                .Select(_mapper.Map<LandProductUnitDto>)
                 .ToListAsync();
 
-            return View(unitList.Select(_mapper.Map<LandProductUnitDto>));
+            return View(new CrudViewModel<LandProductUnitDto>(unitList, args));
         }
 
         // GET: LandProductUnitController/Add a new LandProductUnit

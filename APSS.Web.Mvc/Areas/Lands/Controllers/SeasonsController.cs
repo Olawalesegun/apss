@@ -5,6 +5,8 @@ using APSS.Web.Mvc.Auth;
 using AutoMapper;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Util.Navigation.Routes;
+using APSS.Web.Dtos.Parameters;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Lands.Controllers
 {
@@ -21,13 +23,16 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         //[ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
             var seasons = await _landSvc.GetSeasonsAsync()
+                .Where(u => u.Name.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
+                .Select(_mapper.Map<SeasonDto>)
                 .ToListAsync();
 
-            return View(seasons.Select(_mapper.Map<SeasonDto>));
+            return View(new CrudViewModel<SeasonDto>(seasons, args));
         }
 
         // GET: SeasonController/Add a new Season
@@ -51,6 +56,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 season.StartsAt,
                 season.EndsAt);
 
+            TempData["success"] = "Season added";
             return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
         }
 
@@ -79,6 +85,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                     f.EndsAt = season.EndsAt;
                 });
 
+            TempData["success"] = "Season Updated";
             return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
         }
 
@@ -96,6 +103,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             await _landSvc.RemoveSeasonAsync(User.GetAccountId(), Id);
 
+            TempData["success"] = "Season deleted";
             return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
         }
 
