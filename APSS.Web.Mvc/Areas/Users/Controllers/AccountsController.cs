@@ -12,16 +12,12 @@ namespace APSS.Web.Mvc.Areas.Controllers
     [Area(Areas.Users)]
     public class AccountsController : Controller
     {
-        public IEnumerable<AccountDto> accounts;
         private readonly IAccountsService _accountsService;
 
     public AccountsController(IAccountsService accountsService, IMapper mapper)
         {
             _accountsService = accountsService;
         _mapper = mapper;
-            accounts = new List<AccountDto>
-            {
-            };
         }
 
         /* [ApssAuthorized(AccessLevel.Group
