@@ -36,24 +36,24 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Details)/@item.Id">
+                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Details)?id=@item.Id">
                                                 Details @Icon.Info.Render()
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Update)/@item.Id">
+                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Update)?id=@item.Id">
                                                 Update @Icon.Pen.Render()
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Delete)/@item.Id">
+                                            <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Land `@item.Name`?', @item.Id)">
                                                 Delete @Icon.TrashCan.Render()
                                             </a>
                                         </li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Products.Add.FullPath)/@item.Id">
+                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Products.Add.FullPath)?id=@item.Id">
                                                 Add Product @Icon.Plus.Render()
                                             </a>
                                         </li>
@@ -84,3 +84,4 @@
         </ul>
     </nav>
 </div>
+@await Html.DeleteDialogAsync()

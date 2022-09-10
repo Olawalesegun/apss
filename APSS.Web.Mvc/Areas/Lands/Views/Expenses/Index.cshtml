@@ -33,12 +33,12 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Expenses.Update)/@item.Id">
+                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Expenses.Update)?id=@item.Id">
                                                 Update @Icon.Pen.Render()
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Expenses.Delete)/@item.Id">
+                                            <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Expense `@item.Type`?', @item.Id)">
                                                 Delete @Icon.TrashCan.Render()
                                             </a>
                                         </li>
@@ -69,3 +69,4 @@
         </ul>
     </nav>
 </div>
+@await Html.DeleteDialogAsync()
