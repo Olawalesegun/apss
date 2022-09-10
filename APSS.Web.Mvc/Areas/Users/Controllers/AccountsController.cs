@@ -86,42 +86,6 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(account);
         }
 
-        /*   [ApssAuthorized(AccessLevel.Group
-               | AccessLevel.District
-               | AccessLevel.Village
-               | AccessLevel.Presedint
-               | AccessLevel.Farmer
-               | AccessLevel.Governorate
-               | AccessLevel.Directorate
-               | AccessLevel.Root, PermissionType.Create)]*/
-
-        public async Task<IActionResult> Add(long id)
-        {
-            AccountDto result = new AccountDto();
-            result.UserId = id;
-            return View(result);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        /*  [ApssAuthorized(AccessLevel.Group
-          | AccessLevel.District
-          | AccessLevel.Village
-          | AccessLevel.Presedint
-          | AccessLevel.Farmer
-          | AccessLevel.Governorate
-          | AccessLevel.Directorate
-          | AccessLevel.Root, PermissionType.Create)]*/
-        public async Task<IActionResult> Add(AccountDto accountDto)
-        {
-            var add = await _accountsService.CreateAsync(User.GetAccountId(), accountDto.UserId, accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
-
-            TempData["Action"] = "Employee Management";
-            TempData["success"] = "Add Employee is Successfully";
-
-            return LocalRedirect(Routes.Dashboard.Users.Accounts.FullPath);
-        }
-
         /*     [ApssAuthorized(AccessLevel.Group
               | AccessLevel.District
               | AccessLevel.Village
@@ -132,92 +96,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
               | AccessLevel.Root, PermissionType.Read)]*/
 
         [HttpGet]
-        public async Task<IActionResult> Details(long id)
-        {
-            var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
-            AccountDto accountDto = new AccountDto
-            {
-                Id = account.Id,
-                HolderName = account.HolderName,
-                SocialStatus = (SocialStatusDto)account.SocialStatus,
-                IsActive = account.IsActive,
-                Job = account.Job,
-                NationalId = account.NationalId,
-                PhoneNumber = account.PhoneNumber,
-                permissionType = account.Permissions,
-            };
-            accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
-            accountDto.PermissionTypeDto.Update = accountDto.permissionType.HasFlag(PermissionType.Update);
-            accountDto.PermissionTypeDto.Create = accountDto.permissionType.HasFlag(PermissionType.Create);
-            accountDto.PermissionTypeDto.Delete = accountDto.permissionType.HasFlag(PermissionType.Delete);
-            return View(accountDto);
-        }
-
-        [ApssAuthorized(AccessLevel.Group
-           | AccessLevel.District
-           | AccessLevel.Village
-           | AccessLevel.Presedint
-           | AccessLevel.Farmer
-           | AccessLevel.Governorate
-           | AccessLevel.Directorate
-           | AccessLevel.Root, PermissionType.Delete)]
-        public async Task<IActionResult> Delete(long id)
-        {
-            var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
-            var accountDto = new AccountDto();
-            accountDto.HolderName = account!.HolderName;
-            accountDto.Id = account.Id;
-            accountDto.IsActive = account.IsActive;
-            accountDto.PhoneNumber = account.PhoneNumber;
-            accountDto.SocialStatus = (SocialStatusDto)account.SocialStatus;
-            accountDto.UserId = 1;
-            accountDto.permissionType = account.Permissions;
-            accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
-            accountDto.PermissionTypeDto.Update = accountDto.permissionType.HasFlag(PermissionType.Update);
-            accountDto.PermissionTypeDto.Create = accountDto.permissionType.HasFlag(PermissionType.Create);
-            accountDto.PermissionTypeDto.Delete = accountDto.permissionType.HasFlag(PermissionType.Delete);
-            accountDto.NationalId = account.NationalId;
-            accountDto.PasswordHash = account.PasswordHash;
-            accountDto.Job = account.Job;
-            return View(accountDto);
-        }
-
-        /* [ApssAuthorized(AccessLevel.Group
-             | AccessLevel.District
-             | AccessLevel.Village
-             | AccessLevel.Presedint
-             | AccessLevel.Farmer
-             | AccessLevel.Governorate
-             | AccessLevel.Directorate
-             | AccessLevel.Root, PermissionType.Delete)]*/
-
-        [ApssAuthorized(AccessLevel.Group
-           | AccessLevel.District
-           | AccessLevel.Village
-           | AccessLevel.Presedint
-           | AccessLevel.Farmer
-           | AccessLevel.Governorate
-           | AccessLevel.Directorate
-           | AccessLevel.Root, PermissionType.Update)]
-        public async Task<IActionResult> Update(long id)
-        {
-            var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
-            var accountDto = new AccountDto();
-            accountDto.HolderName = account!.HolderName;
-            accountDto.Id = account.Id;
-            accountDto.IsActive = account.IsActive;
-            accountDto.PhoneNumber = account.PhoneNumber;
-            accountDto.SocialStatus = (SocialStatusDto)account.SocialStatus;
-            accountDto.Job = account.Job;
-            accountDto.permissionType = account.Permissions;
-            accountDto.PermissionTypeDto.Read = accountDto.permissionType.HasFlag(PermissionType.Read);
-            accountDto.PermissionTypeDto.Update = accountDto.permissionType.HasFlag(PermissionType.Update);
-            accountDto.PermissionTypeDto.Create = accountDto.permissionType.HasFlag(PermissionType.Create);
-            accountDto.PermissionTypeDto.Delete = accountDto.permissionType.HasFlag(PermissionType.Delete);
-            accountDto.NationalId = account.NationalId;
-            accountDto.PasswordHash = account.PasswordHash;
-            return View(accountDto);
-        }
+    public IActionResult Add(long id)
+        => View(new AddAccountForm { UserId = id });
 
         [HttpPost]
         [ApssAuthorized(AccessLevel.Group
@@ -293,26 +173,15 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        /* [ApssAuthorized(AccessLevel.Group
-             | AccessLevel.District
-             | AccessLevel.Village
-             | AccessLevel.Presedint
-             | AccessLevel.Farmer
-             | AccessLevel.Governorate
-             | AccessLevel.Directorate
-             | AccessLevel.Root, PermissionType.Update)]*/
-        public async Task<IActionResult> UpdatePassword(AccountDto accountDto)
+    public async Task<IActionResult> Add(AddAccountForm form)
         {
-            var edit = await _accountsService.UpdateAsync(User.GetAccountId(), accountDto.Id, p => p.PasswordHash = accountDto.PasswordHash);
-            TempData["Action"] = "Employees";
-            TempData["success"] = "Edit Password is  successed";
-            return View(accountDto);
-        }
+        var _ = await _accountsService.CreateAsync(
+            User.GetAccountId(),
+            form.UserId,
+            form.HolderName,
+            form.Password,
+            form.Permissions.Permissions);
 
-        public async Task<IActionResult> test()
-        {
-            var accounts = await _uow.Accounts.Query().Include(u => u.User).AsAsyncEnumerable().ToListAsync();
-            return View(accounts);
-        }
+        return LocalRedirect(Routes.Dashboard.Users.Accounts.FullPath + $"?id={form.UserId}");
     }
 }
