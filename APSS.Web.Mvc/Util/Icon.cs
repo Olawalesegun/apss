@@ -47,6 +47,7 @@ public enum Icon
     Info,
     Hashtag,
     Bars,
+    Lock,
 }
 
 public static class IconExtensoins
@@ -95,6 +96,7 @@ public static class IconExtensoins
         { Icon.Info, "fa-solid fa-info" },
         { Icon.Hashtag, "fa-solid fa-hashtag" },
         { Icon.Bars, "fa-solid fa-bars" },
+        { Icon.Lock, "fa-solid fa-lock" },
     };
 
     public static HtmlString? Render(
