@@ -1,11 +1,11 @@
 ﻿@model APSS.Web.Dtos.AccountDto
  @await Html.PartialAsync("_requiredStyle.cshtml")
-<div class="row col-sm-12 col-lg-5 d-flex mx-sm-2 m-lg-4 border rounded p-3">
-    <form class=" mt-2 needs-validation" method="post" asp-area="Users" asp-controller="Accounts" asp-action="AddAccount" novalidate>
+<div class="row col-sm-12 col-lg-8 d-flex mx-sm-2   p-3">
+    <form class=" mt-2 needs-validation" method="post" asp-controller="Accounts" asp-action="AddAccount" novalidate>
         <div asp-validation-summary="ModelOnly"></div>
         <input type="hidden" asp-for="UserId" />
         <!-- 2 column puts for the National number and Phome Number-->
-        <div class="center d-flex  mb-2 ">
+        <div class=" d-flex border rounded mb-2 " style="background-color:lightgray;line-height:60px;">
             <h3 class="text-muted">
                 Add New Employee
             </h3>
@@ -41,20 +41,20 @@
             </h5>
         </div>
         <div class=" mb-3 ">
-            <div class="input-group d-flex justify-content-between">
-                <div class="form-check  ">
+            <div class="input-group d-flex justify-content-start">
+                <div class="form-check ms-2 me-3">
                     <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Read" id="" value="true" checked />
                     <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Read"></label>
                 </div>
-                <div class="form-check  ">
+                <div class="form-check me-3">
                     <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Create" id="" value="true" />
                     <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Create"></label>
                 </div>
-                <div class="form-check  ">
+                <div class="form-check me-3">
                     <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Update" id="" value="true" />
                     <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Update"></label>
                 </div>
-                <div class="form-check  ">
+                <div class="form-check me-3">
                     <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Delete" id="" value="true" />
                     <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Delete"></label>
                 </div>
@@ -68,9 +68,9 @@
             <label class="form-check-label" asp-for="IsActive"> </label>
         </div>
         <div>
-            <div class="row d-flex justify-content-end">
+            <div class=" d-flex justify-content-end">
                 <!-- Submit b        utton -->
-                <a onClick="history.go(-1); return false;" class="btn btn-link w-25 mt-4 mx-3" style="background-color:#DCEEFB"> Cancel</a>
+                <a onClick="history.go(-1); return false;" class="btn btn-link text-decoration-none mt-4 mx-3" style="background-color:#DCEEFB"> Cancel</a>
                 <button type="submit" class="btn btn-primary w-25  mt-4">Add        </button>
             </div>
         </div>
