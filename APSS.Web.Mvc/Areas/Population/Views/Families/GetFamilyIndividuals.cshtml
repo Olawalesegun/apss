@@ -14,7 +14,6 @@
                     <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.NameIndividual) </th>
                     <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.IsParent) </th>
                     <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.IsProvider) </th>
-                    <th style="width:20px;" class="fw-bold align-middle"></th>
                 </tr>
             </thead>
             <tbody>
@@ -27,22 +26,7 @@
                         <td>@item.NameIndividual</td>
                         <td>@item.IsParent</td>
                         <td>@item.IsProvider</td>
-                        <td class="align-middle center">
-
-                            <div class=" dropend">
-                                <a class="" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" asp-area="Population" asp-controller="Families" asp-action="ConfirmDeleteFamilyIndividual" asp-route-Id="@item.Id"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                    <li class="">
-                                        <a class="dropdown-item" asp-area="Population" asp-controller="Familes" asp-action="UpdateFamilyIndividual" asp-route-Id="@item.Id">
-                                            <div class="d-flex justify-content-between"> <span>Edit</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
+                       
                     </tr>
                 }
             </tbody>
