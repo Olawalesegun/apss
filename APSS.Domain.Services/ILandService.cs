@@ -302,11 +302,18 @@ public interface ILandService
     Task<IQueryBuilder<LandProduct>> ConfirmedProductsAsync(long accountId);
 
     /// <summary>
-    /// Asynchronously gets all user products for all lands
+    /// Asynchronously gets all user products for all user lands
     /// </summary>
     /// <param name="accountId">The account id of the user who owns the products</param>
     /// <returns>The products list that the user has</returns>
     Task<IQueryBuilder<LandProduct>> GetAllLandProductsAsync(long accountId);
+
+    /// <summary>
+    /// Asynchronously gets all user Expenses for all user products
+    /// </summary>
+    /// <param name="accountId">The account id of the user who owns the Expenses</param>
+    /// <returns>The Expenses list that the user has</returns>
+    Task<IQueryBuilder<ProductExpense>> GetAllExpensesAsync(long accountId);
 
     /// <summary>
     /// Asynchronously gets all user unconfirmed land products
