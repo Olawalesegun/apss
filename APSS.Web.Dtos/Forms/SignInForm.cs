@@ -11,7 +11,7 @@ public sealed class SignInForm
     public string AccountId { get; set; } = null!;
 
     [Required]
-    [MinLength(6, ErrorMessage = "Password too short")]
+    [MinLength(1, ErrorMessage = "Password too short")]
     public string Password { get; set; } = null!;
 
     [DisplayName("Remember Me")]

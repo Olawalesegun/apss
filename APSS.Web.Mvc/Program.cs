@@ -82,8 +82,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 #region Routes
 
@@ -104,7 +104,7 @@ foreach (var area in Areas.Dashboard)
     app.MapAreaControllerRoute(
         name: area,
         areaName: area,
-        pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}");
+        pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}").RequireAuthorization();
 }
 
 // Redirects

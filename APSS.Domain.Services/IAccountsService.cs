@@ -18,13 +18,15 @@ public interface IAccountsService
     /// <param name="holderName">The name of the holder of the account</param>
     /// <param name="password">The password of the account</param>
     /// <param name="permissions">The permissions of the account</param>
+    /// <param name="isActive">Whether the account should be active on creation</param>
     /// <returns>The created account object</returns>
     Task<Account> CreateAsync(
         long superUserAccountId,
         long userId,
         string holderName,
         string password,
-        PermissionType permissions);
+        PermissionType permissions,
+        bool isActive = true);
 
     /// <summary>
     /// Asynchrnously creates an account for a user, without checking for permissions
@@ -36,6 +38,7 @@ public interface IAccountsService
     /// <param name="holderName">The name of the holder of the account</param>
     /// <param name="password">The password of the account</param>
     /// <param name="permissions">The permissions of the account</param>
+    /// <param name="isActive">Whether the account should be active on creation</param>
     /// <param name="tx">An optional transaction object</param>
     /// <returns>The created account object</returns>
     Task<Account> CreateUncheckedAsync(
@@ -43,6 +46,7 @@ public interface IAccountsService
         string holderName,
         string password,
         PermissionType permissions,
+        bool isActive = true,
         IAsyncDatabaseTransaction? tx = null);
 
     /// <summary>
@@ -81,14 +85,19 @@ public interface IAccountsService
     Task<Account> UpdateAsync(long superUserAccountId, long accountId, Action<Account> updater);
 
     /// <summary>
-    /// Asynchronously Get Account
+    /// Asynchronously gets account details using ID
     /// </summary>
-    /// <param name="SuperId">The id of the account who seeks for the account</param>
-    /// <param name="accountId">the id of the found account </param>
-    /// <returns>The Account</returns>
-    Task<Account> GetAccountAsync(long SuperId, long accountId);
+    /// <param name="accountId">The id of the account to get its data</param>
+    /// <returns></returns>
+    IQueryBuilder<Account> GetAccountAsync(long accountId);
 
-    Task<IQueryBuilder<Account>> GetUserAccounts(long accountId, long userId);
+    /// <summary>
+    /// Asynchronously gets accounts for a user
+    /// </summary>
+    /// <param name="accountId">The id of the account to access data with</param>
+    /// <param name="userId">The id of the user to get accounts for</param>
+    /// <returns></returns>
+    Task<IQueryBuilder<Account>> GetAccountsAsync(long accountId, long userId);
 
     #endregion Public Methods
 }
