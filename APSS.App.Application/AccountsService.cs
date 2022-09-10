@@ -51,12 +51,14 @@ public sealed class AccountsService : IAccountsService
         PermissionType permissions,
         bool isActive)
     {
-        var superAccount = await _permissionsSvc
-            .ValidatePermissionsAsync(superUserAccountId, userId, PermissionType.Create | permissions);
+        await _permissionsSvc.ValidatePermissionsAsync(
+            superUserAccountId,
+            userId,
+            PermissionType.Create | permissions);
 
         var user = await _uow.Users.Query().FindAsync(userId);
 
-        return await DoCreateAsync(user, superAccount.User, holderName, password, permissions, isActive);
+        return await DoCreateAsync(user, holderName, password, permissions, isActive);
     }
 
     /// <inheritdoc/>
@@ -68,7 +70,7 @@ public sealed class AccountsService : IAccountsService
         bool isActive,
         IAsyncDatabaseTransaction? tx)
     {
-        return DoCreateAsync(owner, owner, holderName, password, permissions, isActive, tx);
+        return DoCreateAsync(owner, holderName, password, permissions, isActive, tx);
     }
 
     /// <inheritdoc/>
@@ -131,7 +133,6 @@ public sealed class AccountsService : IAccountsService
 
     private async Task<Account> DoCreateAsync(
         User owner,
-        User addedBy,
         string holderName,
         string password,
         PermissionType permissions,
@@ -148,7 +149,6 @@ public sealed class AccountsService : IAccountsService
             PasswordHash = Convert.ToBase64String(passwordHash),
             PasswordSalt = Convert.ToBase64String(passwordSalt),
             Permissions = permissions,
-            AddedBy = addedBy,
             IsActive = isActive,
         };
 
