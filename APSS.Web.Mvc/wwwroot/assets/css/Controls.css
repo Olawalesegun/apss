@@ -34,19 +34,3 @@ input[type=number] {
     text-transform: lowercase !important;
     line-height: 24px;
 }
-
-.activeLabel {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-}
-
-.borderside {
-    border-left: 3px red solid;
-    border-radius: 0;
-}
-
-.borderside {
-    background-color: #f6f6f6 !important;
-    margin-block-end: 3px;
-}
