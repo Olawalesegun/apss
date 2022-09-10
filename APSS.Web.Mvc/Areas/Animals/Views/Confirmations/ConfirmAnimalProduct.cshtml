@@ -1,44 +1,55 @@
-﻿@model APSS.Web.Dtos.AnimalProductDto
-@await Html.PartialAsync("_dataNavBar")
-<div class="card mt-2 mx-lg-4 mx-sm-2 confirm-data">
-    <div class="card-body">
-        <div class="d-flex "> <i class=" " style="padding-left:2px"></i> <h4> Confirm Information </h4></div>
-        <table class="table user-view-table m-0  table-borderless">
-            <tbody>
-                <tr class="">
-                    <td>@Html.DisplayNameFor(m=>m.Id) </td>
-                    <td> @Model.Id  </td>
-                </tr>
-                <tr>
-                    <td class="text-break">@Html.DisplayNameFor(m=>m.Name) </td>
-                    <td class="text-break"> @Model.Name </td>
-                </tr>
-                <tr>
-                    <td class="text-break">@Html.DisplayNameFor(m=>m.Quantity) </td>
-                    <td class="text-break"> @Model.Quantity </td>
-                </tr>
-                <tr>
-                    <td class="text-break">@Html.DisplayNameFor(m=>m.Unit) </td>
-                    <td class="text-break"> @Model.Unit </td>
-                </tr>
-                <tr>
-                    <td class="text-break">@Html.DisplayNameFor(m=>m.PeriodTaken) </td>
-                    <td class="text-break"> @Model.PeriodTaken </td>
-                </tr>
-                <tr>
-                    <td class="text-break">@Html.DisplayNameFor(m=>m.CreatedAt) </td>
-                    <td class="text-break"> @Model.CreatedAt </td>
-                </tr>
-                <tr>
-                    <td class="text-break">@Html.DisplayNameFor(m=>m.ModifiedAt) </td>
-                    <td class="text-break"> @Model.ModifiedAt </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+﻿@model IEnumerable<APSS.Web.Dtos.AnimalProductDetailsDto>
 
-    <div class="table-responsive m-4">
-        <a role="button" class="btn btn-primary text-white  shadow-0" asp-route-id="@Model.Id" asp-controller="Confirmation" asp-action="ConfirmProduct"> صحيحة <span><i class="fa-solid fa-check "></i></span></a>
-        @Html.ActionLink("غير صحيحة", "ConfirmProduct", new { id=Model.Id,value=false },new{@class="btn btn-danger text-white  shadow-0"})
+<div class="my-2">
+    <div class="row row-cols-1 row-cols-md-2 g-4 ">
+        @foreach (var product in @Model)
+        {
+            <div class="col">
+
+                <div class="card mt-2  shadow">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center" style="line-height:40px !important">
+                            <i class="fa-solid fa-circle-user fs-1 me-2 " style="padding-left:4px"></i>
+                            <h3 class="fw-light">
+                                @product.Producer.OwnedBy.Name
+                            </h3>
+                        </div>
+
+                        <table class="table user-view-table m-0  ">
+                            <tbody>
+                                <tr class="">
+                                    <th>@Html.DisplayNameFor(m=>m.Name)</th>
+                                    <td> @product.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.Quantity)</th>
+                                    <td> @product.Quantity</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.Unit)</th>
+                                    <td> @product.Unit.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.PeriodTaken)</th>
+                                    <td> @product.PeriodTaken</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+                                    <td> @product.CreatedAt</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m=>m.ModifiedAt)</th>
+                                    <td> @product.ModifiedAt</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="my-3 d-flex justify-content-end">
+                            @Html.ActionLink("Decline", "ConfirmProduct", new { id=product.Id,value=false },new{@class="btn btn-danger text-white me-2  shadow-0"})
+                            @Html.ActionLink("Confirm", "ConfirmProduct", new { id=product.Id,value=true },new{@class="btn btn-success text-white  shadow-0"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>

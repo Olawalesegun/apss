@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.AnimalGroupDto>
+﻿@model CrudViewModel<AnimalGroupDto>
 <!--table-->
 
 <div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 needs-validation " id="">
@@ -20,13 +20,12 @@
                 <thead class="table-light">
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
                         <th class=" fw-bold align-middle"> #</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Type)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Name)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Quantity)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Sex)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.CreatedAt)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.ModifiedAt)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.IsConfirmed)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.First().Type)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.First().Name)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.First().Quantity)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.First().Sex)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.First().CreatedAt)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.First().ModifiedAt)</th>
                         <th style="width:20px" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -35,7 +34,7 @@
                     @foreach (var item in Model)
                     {
 
-                        <tr>
+                        <tr class="@(item.IsConfirmed.Equals(false) ? "bg-danger" : item.IsConfirmed==null ? "bg-warring" : string.Empty )">
 
                             <td>@item.Id</td>
                             <td>@item.Type</td>
@@ -44,26 +43,26 @@
                             <td>@item.Sex</td>
                             <td>@item.CreatedAt</td>
                             <td>@item.ModifiedAt</td>
-
-                            <td class="text-break text-capitalize text-center "> <div class=""><label class="  @(item.IsConfirmed==true?"fa-solid fa-circle-check text-success fa-xl":"fa-solid fa-circle-xmark text-danger fa-xl")"></label></div> </td>
-
                             <td class="align-middle center">
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        @Icon.Bars.Render()
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Groups" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
                                         <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Groups" asp-action="Delete"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Groups" asp-action="Edit"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
+                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Groups" asp-action="Update"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square mx-1"></i> </span> </div></a></li>
                                         <li class="">
                                             <a class="dropdown-item text-decoration-none" role="button" asp-route-Id="@item.Id" asp-controller="Products" asp-action="Add">
 
                                                 <div class="d-flex justify-content-between"> <span>Add Product</span>  <span><i class="fa-solid fa-plus"></i> </span> </div>
                                             </a>
                                         </li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Confirmations" asp-action="ConfirmAnimalGroup"><div class="d-flex justify-content-between"> <span>Confirm</span>  <span><i class="fa-solid fa-flag-checkered mx-1"></i> </span> </div></a></li>
+                                        @if (User.GetAccessLevel() == AccessLevel.Group)
+                                        {
+                                            <li><a class="dropdown-item btn-link" asp-route-id="@item.OwnedBy.Id" asp-controller="Confirmations" asp-action="ConfirmAnimalGroup"><div class="d-flex justify-content-between"> <span>Confirm</span>  <span><i class="fa-solid fa-flag-checkered mx-1"></i> </span> </div></a></li>
+                                        }
                                     </ul>
                                 </div>
                             </td>

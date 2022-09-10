@@ -12,6 +12,7 @@ using APSS.Web.Mvc.Auth;
 using APSS.Web.Dtos.ValueTypes;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 using AutoMapper;
+using APSS.Web.Dtos.Parameters;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
@@ -29,16 +30,18 @@ namespace APSS.Web.Mvc.Areas.Controllers
             _accounSev = accountsService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
-            var animalDto = new List<AnimalGroupListDto>();
             var accountId = User.GetAccountId();
             var animals = await (await _service.GetAllAnimalGroupsAsync(
                 User.GetAccountId(),
                 User.GetUserId()))
-                .AsAsyncEnumerable()
-                .ToListAsync();
-            return View(animals.Select(_mapper.Map<AnimalGroupDto>));
+                .Where(u => u.Name.Contains(args.Query))
+            .Page(args.Page, args.PageLength)
+            .AsAsyncEnumerable()
+            .Select(_mapper.Map<AnimalGroupDto>)
+            .ToListAsync();
+            return View(new CrudViewModel<AnimalGroupDto>(animals, args));
         }
 
         /* [HttpPost]
@@ -142,11 +145,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
-                .AsAsyncEnumerable()
-                .FirstAsync();
-
             return View(_mapper.Map<AnimalGroupDto>(await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
+                .Include(o => o.OwnedBy)
                 .AsAsyncEnumerable()
                 .FirstAsync()));
         }
@@ -176,7 +176,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return LocalRedirect(Routes.Dashboard.Animals.Groups.FullPath);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Update(int id)
         {
             var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
                 .AsAsyncEnumerable()
@@ -196,7 +196,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(AnimalGroupListDto animalGroupDto)
+        public async Task<IActionResult> Update(AnimalGroupListDto animalGroupDto)
         {
             var resultEdit = await _service.UpdateAnimalGroupAsync(User.GetAccountId(), animalGroupDto.Id, A =>
          {
@@ -208,6 +208,18 @@ namespace APSS.Web.Mvc.Areas.Controllers
          });
             if (resultEdit == null) return View(animalGroupDto);
             return LocalRedirect(Routes.Dashboard.Animals.Groups.FullPath);
+        }
+
+        public async Task<IActionResult> ListGroup(long id)
+        {
+            var accountId = User.GetAccountId();
+            var animals = await (await _service.GetAllAnimalGroupsAsync(
+                User.GetAccountId(),
+                User.GetUserId()))
+                .Include(o => o.OwnedBy)
+                .AsAsyncEnumerable()
+                .ToListAsync();
+            return View(animals.Select(_mapper.Map<AnimalGroupDto>));
         }
     }
 }

@@ -1,27 +1,6 @@
 ﻿@model IEnumerable<APSS.Web.Dtos.AccountDto>
 
 <div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
-    <form class="row d-flex justify-content-start d-inline mb-3 " method="post" asp-controller="Accounts" asp-action="Index">
-        <div class=" mb-2 col-sm col-lg-6   d-flex">
-            <div class="input-group">
-                <button type="submit" class="btn btn-primary " asp-action="Index">
-                    <i class="fas fa-search"></i>
-                </button>
-                <input type="search" class="form-control" id="search" name="searchString" onkeyup="searchTable()" placeholder="Search..." />
-            </div>
-        </div>
-        <div class="col-sm col-lg-2 mb-2 ">
-
-            <select class="form-select " id="searchby" name="searchBy">
-                <option selected> Searhc By</option>
-                <option value="1">Name</option>
-                <option value="2">Id</option>
-                <option value="3">Phone Number </option>
-                <option value="4">National Id </option>
-            </select>
-        </div>
-    </form>
-
     <div class="col-sm-12  ">
 
         <div class=" my-3 bg-light table-rsponsive  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
@@ -66,7 +45,7 @@
                                 <div class=" dropend">
                                     <a class="" href="#" id="dropdownMenuLink"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        @Icon.Bars.Render()
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>

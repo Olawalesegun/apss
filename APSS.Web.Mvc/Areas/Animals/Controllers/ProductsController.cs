@@ -4,13 +4,14 @@ using APSS.Domain.Services;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 using AutoMapper;
+using APSS.Web.Dtos.Parameters;
+using APSS.Web.Mvc.Models;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
     [Area(Areas.Animals)]
     public class ProductsController : Controller
     {
-        private IEnumerable<AnimalProductDto> product;
         private readonly IAnimalService _aps;
         private readonly IMapper _mapper;
 
@@ -20,29 +21,17 @@ namespace APSS.Web.Mvc.Areas.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
             var products = await (await _aps.GetAllAnimalProductsAsync(User.GetAccountId(), User.GetUserId()))
                 .Include(u => u.Unit)
+                .Where(u => u.Name.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
+                .Select(_mapper.Map<AnimalProductDetailsDto>)
                 .ToListAsync();
-            var productDto = new List<ProductListDto>();
-            foreach (var product in products)
-            {
-                productDto.Add(new ProductListDto
-                {
-                    Name = product.Name,
-                    Quantity = product.Quantity,
-                    Id = product.Id,
-                    PeriodTaken = product.PeriodTaken,
-                    CreatedAt = product.CreatedAt,
-                    ModifiedAt = product.ModifiedAt,
-                    Unit = product.Unit,
-                    IsConfirmed = product.IsConfirmed
-                });
-            }
 
-            return View(productDto);
+            return View(new CrudViewModel<AnimalProductDetailsDto>(products, args));
         }
 
         public async Task<IActionResult> Add(int id)
@@ -58,8 +47,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
                     Id = unit.Id,
                 });
             }
+            ViewBag.units = unitList;
             product.ProducerId = id;
-            product.Unit = unitList;
 
             return View(product);
         }
@@ -77,43 +66,12 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return LocalRedirect(Routes.Dashboard.Animals.Products.FullPath);
         }
 
-        /*public async Task<IActionResult> Index(string searchString, string searchBy)
-        {
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                searchString = searchString.Trim();
-                if (searchBy == "2")
-                {
-                    List<AnimalProductDto> response = new List<AnimalProductDto>();
-                    response = product.Where(p => p.Id == Convert.ToInt32(searchString)).ToList();
-                    return View(response);
-                }
-                else if (searchBy == "2")
-                {
-                    List<AnimalProductDto> response = new List<AnimalProductDto>();
-                    response = product.Where(p => p.Quantity == Convert.ToInt32(searchString)).ToList();
-                    return View(response);
-                }
-                else
-                {
-                    List<AnimalProductDto> response = new List<AnimalProductDto>();
-                    response = product.Where(p => p.Name.Contains(searchString)).ToList();
-                    return View(response);
-                }
-            }
-
-            ViewBag.SearchResult = "ليس هناك نتائج عن " + searchString;
-
-            var result = new List<AnimalProductDto>();
-            return View(result);
-        }
-*/
-
         public async Task<IActionResult> Details(int id)
         {
             var product = await (await _aps.GetAnimalProductAsync(User.GetAccountId(), id))
                 .Include(u => u.Unit)
                 .Include(A => A.Producer)
+                .Include(E => E.Expenses)
                 .AsAsyncEnumerable().ToListAsync();
             var single = product.FirstOrDefault();
             var productDto = new AnimalProductDetailsDto
@@ -126,11 +84,12 @@ namespace APSS.Web.Mvc.Areas.Controllers
                 ModifiedAt = single.ModifiedAt,
                 Unit = single.Unit,
                 Producer = single.Producer,
+                expense = single.Expenses.ToList(),
             };
             return View(productDto);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Update(int id)
         {
             var units = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
                 .AsAsyncEnumerable()
@@ -161,7 +120,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(AnimalProductDto productObj)
+        public async Task<IActionResult> Update(AnimalProductDto productObj)
         {
             var unit = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
                 .Where(i => i.Id == productObj.UnitId)
@@ -181,15 +140,15 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var delete = await (await _aps.GetAnimalProductAsync(3, id)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
+            var delete = await (await _aps.GetAnimalProductAsync(User.GetAccountId(), id)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
             var single = delete.FirstOrDefault();
             var productDto = new AnimalProductDetailsDto
             {
                 Id = single!.Id,
                 Name = single.Name,
                 Quantity = single.Quantity,
-                PeriodTaken = single.PeriodTaken,
                 UnitName = single.Unit.Name,
+                PeriodTaken = single.PeriodTaken,
                 CreatedAt = single.CreatedAt,
                 ModifiedAt = single.ModifiedAt,
             };
@@ -210,13 +169,23 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> AllProducts()
+        public async Task<IActionResult> AllProducts(long id, long userId)
         {
-            AnimalGroupAndProductDto animalGroupProductDto = new AnimalGroupAndProductDto();
-            AnimalProductDto animalproducts = new AnimalProductDto();
-            animalGroupProductDto.AnimalProducts = animalproducts;
-
-            return View(animalGroupProductDto);
+            var Product = await (await _aps.GetAllAnimalProductsAsync(id, userId)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
+            var animalProducts = new List<AnimalProductListDto>();
+            foreach (var product in Product)
+            {
+                animalProducts.Add(new AnimalProductListDto
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Quantity = product.Quantity,
+                    CreatedAt = product.CreatedAt,
+                    Unit = product.Unit,
+                    Producer = product.Producer,
+                });
+            }
+            return View(animalProducts);
         }
 
         public async Task<IActionResult> ListProductExpense(long id)

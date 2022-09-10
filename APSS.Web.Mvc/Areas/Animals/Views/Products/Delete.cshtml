@@ -1,9 +1,9 @@
 ﻿@model APSS.Web.Dtos.AnimalProductDetailsDto
 
-<div class="card mt-2">
+<div class="card mt-2 border-0">
     <div class="card-body">
-        <div class="d-flex "><h5>Confirm Delete Product  </h5> </div>
-        <table class="table user-view-table m-0  ">
+        <div class="d-flex "><h1 class="fw-light">Confirm Delete Product  </h1> </div>
+        <table class="table user-view-table m-0  border ">
             <tbody style="font-size:14px">
 
                 <tr class="">
@@ -33,9 +33,9 @@
             </tbody>
         </table>
         <br />
-        <div class=" d-inline pt-2 my-4">
-            <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Products" asp-action="DeleteConfirm">Confirm</a>
-            <a onClick="history.go(-1); return false;" class="btn btn-link  mx-3" style="background-color:#DCEEFB">Cancel</a>
+        <div class="d-flex justify-content-end">
+            <a onClick="history.go(-1); return false" class="btn btn-link text-decoration-none  mx-3" style="background-color:#DCEEFB">Cancel</a>
+            <a class="btn btn-danger  btn-rounded  " asp-route-id="@Model.Id" asp-controller="Products" asp-action="DeleteConfirm">Confirm</a>
         </div>
     </div>
 </div>
