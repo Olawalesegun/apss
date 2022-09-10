@@ -128,11 +128,18 @@ public sealed class UsersService : IUsersService
     {
         await _permissionsSvc.ValidatePermissionsAsync(accountId, userId, PermissionType.Read);
 
-        if (myAccount.User.Id == userId)
-            return _uow.Users.Query().Where(u => u.Id == userId);
-
-        await _permissionsSvc.ValidateUserPatenthoodAsync(accountId, userId, PermissionType.Read);
         return _uow.Users.Query().Where(u => u.Id == userId);
+    }
+
+    /// <inheritdoc/>
+    public async Task RemoveAsync(long accountId, long userId)
+    {
+        await _permissionsSvc.ValidateUserPatenthoodAsync(accountId, userId, PermissionType.Delete);
+
+        var user = await _uow.Users.Query().FindAsync(userId);
+
+        _uow.Users.Remove(user);
+        await _uow.CommitAsync();
     }
 
     #endregion Public Methods

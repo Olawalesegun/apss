@@ -54,7 +54,20 @@ public interface IUsersService
         Func<IQueryBuilder<User>, IQueryBuilder<User>>? builder = null);
 
     /// <summary>
+    /// Asynchrnously gets a user
+    /// </summary>
+    /// <param name="accountId">The id of the account to get the user with</param>
+    /// <param name="userId">The id of the user to get</param>
+    /// <returns></returns>
     Task<IQueryBuilder<User>> GetUserAsync(long accountId, long userId);
+
+    /// <summary>
+    /// Asynchronously deletes a user
+    /// </summary>
+    /// <param name="accountId">The id of the account to delete the user with</param>
+    /// <param name="userId">The id of the user to be deleted</param>
+    /// <returns></returns>
+    Task RemoveAsync(long accountId, long userId);
 
     #endregion Public Methods
 }
