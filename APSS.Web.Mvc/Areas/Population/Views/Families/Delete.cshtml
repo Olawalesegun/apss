@@ -30,7 +30,7 @@
         <br />
         <div class=" d-inline pt-2">
             <form method="post">
-            <button type="submit"  class="btn btn-danger" asp-route-Id="@Model.Id" asp-area="Population" asp-controller="Families" asp-action="DeleteFamily">Confirm</button>
+            <button type="submit"  class="btn btn-danger" action="@Routes.Dashboard.Population.Families.Delete.FullPath">Confirm</button>
             <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
             </form>
         </div>

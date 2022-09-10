@@ -6,7 +6,7 @@
             <h4 > Update Family </h4>
         </div>
 
-        <form class=" mt-3" asp-area="Population"  asp-controller="Families" asp-action="UpdateFamily" method="post">
+        <form class=" mt-3" action="@Routes.Dashboard.Population.Families.Update.FullPath" method="post">
             <input asp-for="Id" type="number" hidden/>
             <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-people-roof"></i></span>
