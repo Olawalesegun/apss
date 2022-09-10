@@ -66,20 +66,6 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             return View(landList.Select(_mapper.Map<LandDto>));
         }
 
-        [HttpGet]
-        [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
-        public async Task<IActionResult> ConfirmLand(long id, bool value)
-        {
-            await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
-            TempData["success"] = value ? "Land confirmed successfully" : "Land declined successfully";
-
-            //return LocalRedirect(Routes.Dashboard.Users.FullPath);
-            if (value)
-                return RedirectToAction("DeclinedLands");
-            else
-                return RedirectToAction("ConfirmedLands");
-        }
-
         // GET: ProducsController/Get UnConfirmedLandProducts
         [HttpGet]
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
@@ -107,6 +93,16 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         [HttpGet]
         //[ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
+        public async Task<IActionResult> ConfirmLand(long id, bool value)
+        {
+            await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
+            TempData["success"] = value ? "Land confirmed successfully" : "Land declined successfully";
+
+            return LocalRedirect(Routes.Dashboard.Lands.Confirmation.FullPath);
+        }
+
+        [HttpGet]
+        //[ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
         public async Task<IActionResult> ConfirmProduct(long id, bool value)
         {
             await _landSvc.ConfirmProductAsync(User.GetAccountId(), id, value);
@@ -114,10 +110,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             //return LocalRedirect(Routes.Dashboard.Lands.FullPath);
             TempData["success"] = value ? "Product confirmed successfully" : "Product declined successfully";
 
-            if (value)
-                return RedirectToAction("DeclinedProducts");
-            else
-                return RedirectToAction("ConfirmedProducts");
+            return LocalRedirect(Routes.Dashboard.Lands.Confirmation.FullPath);
         }
     }
 }
