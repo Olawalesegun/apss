@@ -3,6 +3,7 @@ using APSS.Web.Dtos;
 using APSS.Domain.Services;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Mvc.Util.Navigation.Routes;
+using AutoMapper;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
@@ -11,13 +12,12 @@ namespace APSS.Web.Mvc.Areas.Controllers
     {
         private IEnumerable<AnimalProductDto> product;
         private readonly IAnimalService _aps;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IAnimalService aps)
+        public ProductsController(IAnimalService aps, IMapper mapper)
         {
             _aps = aps;
-            product = new List<AnimalProductDto>
-            {
-            };
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -150,7 +150,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             var single = edit.FirstOrDefault();
             var productDto = new AnimalProductDto
             {
-                Id = single.Id,
+                Id = single!.Id,
                 Name = single.Name,
                 Quantity = single.Quantity,
                 PeriodTaken = single.PeriodTaken,
@@ -181,29 +181,19 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            try
+            var delete = await (await _aps.GetAnimalProductAsync(3, id)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
+            var single = delete.FirstOrDefault();
+            var productDto = new AnimalProductDetailsDto
             {
-                if (id > 0)
-                {
-                    var delete = await (await _aps.GetAnimalProductAsync(3, id)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
-                    var single = delete.FirstOrDefault();
-                    if (single == null) return RedirectToAction(nameof(Index));
-                    var productDto = new AnimalProductDetailsDto
-                    {
-                        Id = single.Id,
-                        Name = single.Name,
-                        Quantity = single.Quantity,
-                        PeriodTaken = single.PeriodTaken,
-                        UnitName = single.Unit.Name,
-                        CreatedAt = single.CreatedAt,
-                        ModifiedAt = single.ModifiedAt,
-                    };
-                    return View(productDto);
-                }
-            }
-            catch (Exception) { return BadRequest(); }
-            var animalProductDto = new AnimalProductDetailsDto();
-            return View(animalProductDto);
+                Id = single!.Id,
+                Name = single.Name,
+                Quantity = single.Quantity,
+                PeriodTaken = single.PeriodTaken,
+                UnitName = single.Unit.Name,
+                CreatedAt = single.CreatedAt,
+                ModifiedAt = single.ModifiedAt,
+            };
+            return View(productDto);
         }
 
         public async Task<IActionResult> DeleteConfirm(int id)
@@ -212,28 +202,12 @@ namespace APSS.Web.Mvc.Areas.Controllers
             {
                 if (id > 0)
                 {
-                    await _aps.RemoveAnimalProductAsync(3, id);
+                    await _aps.RemoveAnimalProductAsync(User.GetAccountId(), id);
                     return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception) { return BadRequest(); }
             return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> AddProductExpense(int id)
-        {
-            ProductExpenseDto productExpenseDto = new ProductExpenseDto();
-            return View(productExpenseDto);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddProductExpense(ProductExpenseDto expense)
-        {
-            if (ModelState.IsValid)
-            {
-                return View(expense);
-            }
-            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> AllProducts()
@@ -252,27 +226,26 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(expense);
         }
 
-        public async Task<IActionResult> EditProductExpense(long id)
+        public async Task<IActionResult> ProductList(long id)
         {
-            var expense = new ProductExpenseDto();
-            return View(expense);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditProductExpense(ProductExpenseDto expense)
-        {
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> DeleteProductExpense(int id)
-        {
-            var expense = new ProductExpenseDto();
-            return View(expense);
-        }
-
-        public async Task<IActionResult> ConfirmDeleteProductExpense(ProductExpenseDto expense)
-        {
-            return RedirectToAction("Index");
+            var product = await (await _aps.GetAllAnimalProductsAsync(User.GetAccountId(), id)).Include(o => o.Producer.OwnedBy).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
+            var productDto = new List<AnimalProductDetailsDto>();
+            foreach (var item in product)
+            {
+                productDto.Add(new AnimalProductDetailsDto
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    CreatedAt = item.CreatedAt,
+                    ModifiedAt = item.ModifiedAt,
+                    Quantity = item.Quantity,
+                    Producer = item.Producer,
+                    Unit = item.Unit,
+                    UnitName = item.Unit.Name,
+                    PeriodTaken = item.PeriodTaken,
+                });
+            }
+            return View(productDto);
         }
     }
 }

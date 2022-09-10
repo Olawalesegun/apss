@@ -8,8 +8,8 @@ public sealed class UserDto : BaseAuditbleDto
     /// <summary>
     /// Gets or stes the name of the user
     /// </summary>
-    [Required(ErrorMessage = "Erea Name is Required")]
-    [Display(Name = "Erea Name")]
+    [Required(ErrorMessage = "Area Name is Required")]
+    [Display(Name = "Area Name")]
     public string Name { get; set; } = null!;
 
     /// <summary>

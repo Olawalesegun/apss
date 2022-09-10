@@ -11,126 +11,107 @@ using APSS.Web.Mvc.Models;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Dtos.ValueTypes;
 using APSS.Web.Mvc.Util.Navigation.Routes;
+using AutoMapper;
 
 namespace APSS.Web.Mvc.Areas.Controllers
 {
     [Area(Areas.Animals)]
     public class GroupsController : Controller
     {
-        private IEnumerable<AnimalGroupDto> animal;
         private readonly IAnimalService _service;
-        private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
+        private readonly IAccountsService _accounSev;
 
-        public GroupsController(IAnimalService service, IUnitOfWork uow)
+        public GroupsController(IAnimalService service, IMapper mapper, IAccountsService accountsService)
         {
             _service = service;
-            _uow = uow;
-            animal = new List<AnimalGroupDto>
-            {
-            };
+            _mapper = mapper;
+            _accounSev = accountsService;
         }
 
         public async Task<IActionResult> Index()
         {
             var animalDto = new List<AnimalGroupListDto>();
-            var accountId = (long)User.GetAccountId();
-            var account = await _uow.Accounts.Query().
-                Include(u => u.User).
-                Where(i => (int)i.Id == User.GetAccountId())
-                .FirstAsync();
-            // var Animals = await _uow.AnimalGroups.Query().Include(a => a.Products).AsAsyncEnumerable().ToListAsync();
-            var Animals = await (await _service.GetAllAnimalGroupsAsync(
+            var accountId = User.GetAccountId();
+            var animals = await (await _service.GetAllAnimalGroupsAsync(
                 User.GetAccountId(),
-                account!.User.Id))
+                User.GetUserId()))
                 .AsAsyncEnumerable()
                 .ToListAsync();
-            foreach (var item in Animals)
-            {
-                animalDto.Add(new AnimalGroupListDto
-                {
-                    Id = item.Id,
-                    Type = item.Type,
-                    Quantity = item.Quantity,
-                    CreatedAt = item.CreatedAt,
-                    Sex = item.Sex,
-                    Name = item.Name,
-                    IsConfirmed = item.IsConfirmed,
-                });
-            }
-
-            return View(animalDto);
+            return View(animals.Select(_mapper.Map<AnimalGroupDto>));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Index(string searchString = "", string searchBy = "")
-        {
-            try
-            {
-                var accountId = (long)User.GetAccountId();
-                var account = await _uow.Accounts.Query().Include(u => u.User)
-                    .Where(i => i.Id == accountId)
-                    .FirstOrNullAsync();
-                var searchResult = _service.GetAllAnimalGroupsAsync(account!.Id, account.User.Id);
-                if (!string.IsNullOrEmpty(searchString))
-                {
-                    var result = new AnimalGroupAndProductDto();
+        /* [HttpPost]
+         public async Task<IActionResult> Index(string searchString = "", string searchBy = "")
+         {
+             try
+             {
+                 var accountId = (long)User.GetAccountId();
+                 var account = await _uow.Accounts.Query().Include(u => u.User)
+                     .Where(i => i.Id == accountId)
+                     .FirstOrNullAsync();
+                 var searchResult = _service.GetAllAnimalGroupsAsync(account!.Id, account.User.Id);
+                 if (!string.IsNullOrEmpty(searchString))
+                 {
+                     var result = new AnimalGroupAndProductDto();
 
-                    searchString = searchString.Trim();
+                     searchString = searchString.Trim();
 
-                    if (searchBy == "2")
-                    {
-                        long id = Convert.ToInt64(searchString);
-                        result.AnimalGroupDtos = animal.Where(name => name.Id == id).ToList();
-                        return View(result);
-                    }
-                    else if (searchBy == "3")
-                    {
-                        long q = Convert.ToInt64(searchString);
-                        result.AnimalGroupDtos = animal.Where(name => name.Quantity == q).ToList();
-                        return View(result);
-                    }
-                    else if (searchBy == "4")
-                    {
-                        searchString = searchString.Trim().ToLower();
-                        if (searchString.Equals("male"))
-                        {
-                            searchString = "Male";
-                        }
-                        else if (searchString.Equals("female"))
-                        {
-                            searchString = "Female";
-                        }
-                        else
-                        {
-                            var animalResult = new AnimalGroupAndProductDto();
-                            ViewBag.SearchResult = "ليس هناك نتائج عن " + searchString;
-                            return View(animalResult);
-                        }
-                        AnimalSex sex = (AnimalSex)Enum.Parse(typeof(AnimalSex), searchString);
-                        // result.AnimalGroupDtos = animal.Where(name => name.Sex == sex).ToList();
-                        return View(result);
-                    }
-                    else
-                    {
-                        result.AnimalGroupDtos = animal.Where(name => name.Type.Contains(searchString)).ToList();
-                        return View(result);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(message: "their are some thing error", ex);
-            }
-            ViewBag.SearchResult = searchString;
-            var total = new AnimalGroupAndProductDto
-            {
-                AnimalGroupDtos = animal.ToList(),
-                AnimalProducts = new AnimalProductDto(),
-            };
+                     if (searchBy == "2")
+                     {
+                         long id = Convert.ToInt64(searchString);
+                         result.AnimalGroupDtos = animal.Where(name => name.Id == id).ToList();
+                         return View(result);
+                     }
+                     else if (searchBy == "3")
+                     {
+                         long q = Convert.ToInt64(searchString);
+                         result.AnimalGroupDtos = animal.Where(name => name.Quantity == q).ToList();
+                         return View(result);
+                     }
+                     else if (searchBy == "4")
+                     {
+                         searchString = searchString.Trim().ToLower();
+                         if (searchString.Equals("male"))
+                         {
+                             searchString = "Male";
+                         }
+                         else if (searchString.Equals("female"))
+                         {
+                             searchString = "Female";
+                         }
+                         else
+                         {
+                             var animalResult = new AnimalGroupAndProductDto();
+                             ViewBag.SearchResult = "ليس هناك نتائج عن " + searchString;
+                             return View(animalResult);
+                         }
+                         AnimalSex sex = (AnimalSex)Enum.Parse(typeof(AnimalSex), searchString);
+                         // result.AnimalGroupDtos = animal.Where(name => name.Sex == sex).ToList();
+                         return View(result);
+                     }
+                     else
+                     {
+                         result.AnimalGroupDtos = animal.Where(name => name.Type.Contains(searchString)).ToList();
+                         return View(result);
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 throw new Exception(message: "their are some thing error", ex);
+             }
+             ViewBag.SearchResult = searchString;
+             var total = new AnimalGroupAndProductDto
+             {
+                 AnimalGroupDtos = animal.ToList(),
+                 AnimalProducts = new AnimalProductDto(),
+             };
 
-            return View(total);
-        }
+             return View(total);
+         }*/
 
+        [HttpGet]
         public IActionResult Add()
         {
             var animalGroup = new AnimalGroupDto();
@@ -163,20 +144,11 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             var animal = await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
                 .AsAsyncEnumerable()
-                .ToListAsync();
-            var item = animal.FirstOrDefault();
-            var animalGroupDto = new AnimalGroupListDto
-            {
-                Id = item.Id,
-                Name = item!.Name,
-                Type = item.Type,
-                Quantity = item!.Quantity,
-                Sex = item!.Sex,
-                Confirm = (bool)item.IsConfirmed!,
-                CreatedAt = item!.CreatedAt,
-                ModifiedAt = item!.ModifiedAt,
-            };
-            return View(animalGroupDto);
+                .FirstAsync();
+
+            return View(_mapper.Map<AnimalGroupDto>(await (await _service.GetAnimalGroupAsync(User.GetAccountId(), id))
+                .AsAsyncEnumerable()
+                .FirstAsync()));
         }
 
         public async Task<IActionResult> Delete(int id)

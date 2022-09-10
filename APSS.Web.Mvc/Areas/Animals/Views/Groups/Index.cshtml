@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.AnimalGroupListDto>
+﻿@model IEnumerable<APSS.Web.Dtos.AnimalGroupDto>
 <!--table-->
 @{
     ViewData["controllar"] = "AnimalGroups";
@@ -31,7 +31,7 @@
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Sex)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.CreatedAt)</th>
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.ModifiedAt)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.Confirm)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(A=>A.IsConfirmed)</th>
                         <th style="width:20px" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>

@@ -46,7 +46,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(userDto);
         }
 
-        public async Task<IActionResult> AddUser()
+        public async Task<IActionResult> Add()
         {
             var userDto = new UserDto();
             ViewBag.status = userDto.userStatus;
@@ -55,7 +55,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddUser(UserDto user)
+        public async Task<IActionResult> Add(UserDto user)
         {
             try
             {
@@ -80,24 +80,26 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(accountDto);
         }
 
-        public async Task<IActionResult> UserDetials(int id)
+        public async Task<IActionResult> Detials(int id)
         {
-            var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
+            var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).Include(A => A.Accounts).Include(s => s.SubUsers).AsAsyncEnumerable().ToListAsync();
             if (user == null) return NotFound();
             var users = user.FirstOrDefault();
-            var userDto = new UserDto
+            var userDto = new UsertDetailsDto
             {
                 Name = users!.Name,
                 Id = users.Id,
                 AccessLevel = users.AccessLevel,
-                userStatus = users.UserStatus,
+                UserStatus = users.UserStatus,
                 CreatedAt = users.CreatedAt,
-                ModifiedAt = users.ModifiedAt
+                ModifiedAt = users.ModifiedAt,
+                Accounts = users.Accounts,
+                SubUsers = users.SubUsers
             };
             return View(userDto);
         }
 
-        public async Task<IActionResult> DeleteUser(long id)
+        public async Task<IActionResult> Delete(long id)
         {
             var user = await (await _userService.GetUserAsync(User.GetAccountId(), id)).AsAsyncEnumerable().ToListAsync();
             if (user == null) return RedirectToAction(nameof(Index));
@@ -113,7 +115,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(userDto);
         }
 
-        public async Task<IActionResult> ConfirmDeleteUser(long id)
+        public async Task<IActionResult> ConfirmDelete(long id)
         {
             var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
             if (user == null) return NotFound();
@@ -124,7 +126,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return LocalRedirect(Routes.Dashboard.Users.FullPath);
         }
 
-        public async Task<IActionResult> EditUser(long id)
+        public async Task<IActionResult> Update(long id)
         {
             var user = await (await _userService.GetUserAsync(1, id)).AsAsyncEnumerable().ToListAsync();
             if (user == null) return RedirectToAction(nameof(Index));
@@ -141,7 +143,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser(UserDto userDto)
+        public async Task<IActionResult> Updaete(UserDto userDto)
         {
             var edit = await _userService.UpdateAsync(1, userDto.Id, p =>
                  {

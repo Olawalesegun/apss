@@ -95,7 +95,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                | AccessLevel.Directorate
                | AccessLevel.Root, PermissionType.Create)]*/
 
-        public async Task<IActionResult> AddAccount(long id)
+        public async Task<IActionResult> Add(long id)
         {
             AccountDto result = new AccountDto();
             result.UserId = id;
@@ -112,7 +112,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
           | AccessLevel.Governorate
           | AccessLevel.Directorate
           | AccessLevel.Root, PermissionType.Create)]*/
-        public async Task<IActionResult> AddAccount(AccountDto accountDto)
+        public async Task<IActionResult> Add(AccountDto accountDto)
         {
             var add = await _accountsService.CreateAsync(User.GetAccountId(), accountDto.UserId, accountDto.HolderName, accountDto.PasswordHash, accountDto.PermissionTypeDto.Permissions);
 
@@ -131,7 +131,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
               | AccessLevel.Directorate
               | AccessLevel.Root, PermissionType.Read)]*/
 
-        public async Task<IActionResult> AccountDetails(long id)
+        [HttpGet]
+        public async Task<IActionResult> Details(long id)
         {
             var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
             AccountDto accountDto = new AccountDto
@@ -160,7 +161,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
            | AccessLevel.Governorate
            | AccessLevel.Directorate
            | AccessLevel.Root, PermissionType.Delete)]
-        public async Task<IActionResult> DeleteAccount(long id)
+        public async Task<IActionResult> Delete(long id)
         {
             var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
             var accountDto = new AccountDto();
@@ -198,7 +199,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
            | AccessLevel.Governorate
            | AccessLevel.Directorate
            | AccessLevel.Root, PermissionType.Update)]
-        public async Task<IActionResult> EditAccount(long id)
+        public async Task<IActionResult> Update(long id)
         {
             var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
             var accountDto = new AccountDto();
@@ -227,7 +228,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
                   | AccessLevel.Governorate
                   | AccessLevel.Directorate
                   | AccessLevel.Root, PermissionType.Update)]
-        public async Task<IActionResult> EditAccount(AccountDto account)
+        public async Task<IActionResult> Update(AccountDto account)
         {
             var resultEdit = await _accountsService.UpdateAsync(User.GetAccountId(), account.Id, p =>
                 {
@@ -282,7 +283,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             | AccessLevel.Directorate
             | AccessLevel.Root, PermissionType.Update)]*/
 
-        public IActionResult EditPassword(long id)
+        public IActionResult UpdatePassword(long id)
         {
             var accountDto = new AccountDto();
 
@@ -300,7 +301,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
              | AccessLevel.Governorate
              | AccessLevel.Directorate
              | AccessLevel.Root, PermissionType.Update)]*/
-        public async Task<IActionResult> EditPassword(AccountDto accountDto)
+        public async Task<IActionResult> UpdatePassword(AccountDto accountDto)
         {
             var edit = await _accountsService.UpdateAsync(User.GetAccountId(), accountDto.Id, p => p.PasswordHash = accountDto.PasswordHash);
             TempData["Action"] = "Employees";

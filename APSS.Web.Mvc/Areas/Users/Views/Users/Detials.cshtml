@@ -1,7 +1,7 @@
-﻿@model APSS.Web.Dtos.UserDto
+﻿@model APSS.Web.Dtos.UsertDetailsDto
 <div class="card mt-2 border-0">
     <div class="card-body">
-        <h4 class="mb-4"> Erea Information </h4>
+        <h1 class="mb-4 fw-light"> Erea Information </h1>
         <table class="table user-view-table m-0 border">
             <tbody>
                 <tr>
@@ -17,20 +17,20 @@
                     <td>@Model.ModifiedAt</td>
                 </tr>
                 <tr>
-                    <th class="align-middle">@Html.DisplayNameFor(m=>m.userStatus)  </th>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.UserStatus)  </th>
 
                     @{
-                        if (@Model.userStatus == APSS.Domain.Entities.UserStatus.Active)
+                        if (@Model.UserStatus == APSS.Domain.Entities.UserStatus.Active)
                         {
                             <td>
-                                <span class="fa fa-check text-primary mx-1"></span> @Model.userStatus
+                                <span class="fa fa-check text-primary mx-1"></span> @Model.UserStatus
                             </td>
                         }
 
                         else
                         {
                             <td>
-                                @Model.userStatus
+                                @Model.UserStatus
                             </td>
                         }
                     }
@@ -39,6 +39,38 @@
                     <th class="align-middle">@Html.DisplayNameFor(m=>m.AccessLevel) </th>
                     <td>@Model.AccessLevel</td>
                 </tr>
+                <tr style="background-color:lightgray">
+                    <th class="align-middle">
+                        @Html.DisplayNameFor(m=>m.Accounts)
+                    </th>
+                    <td>Permissions</td>
+                </tr>
+                @foreach (var item in Model.Accounts)
+                {
+                    <tr>
+                        <th class="align-middle">
+
+                            @Html.ActionLink(@item.HolderName,"Details","Accounts",new{id=item.Id})
+                        </th>
+                        <td>@item.Permissions</td>
+                    </tr>
+                }
+                <tr style="background-color:lightgray">
+                    <th class="align-middle">
+                        @Html.DisplayNameFor(m=>m.SubUsers)
+                    </th>
+                    <td> @Html.DisplayNameFor(m=>m.UserStatus)</td>
+                </tr>
+                @foreach (var item in Model.SubUsers)
+                {
+                    <tr>
+                        <th class="align-middle">
+
+                            @Html.ActionLink(@item.Name,"Details","Users",new{id=item.Id})
+                        </th>
+                        <td>@item.UserStatus</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -49,8 +81,9 @@
                     <a class="btn btn-link text-decoration-none mx-1 " asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="UserAccounts"> <i class="fa-solid fa-users me-2"></i><span>Employees </span>  </a>
                 </div>
                 <div class="d-flex">
-                    <a class="btn btn-outline-primary mx-1 " asp-route-id="@Model.Id" asp-controller="Users" asp-action="EditUser"> <i class="fa-solid fa-pen-to-square me-2"> </i><span>Edit</span> </a>
-                    <a class="btn btn-danger mx-1 " asp-route-id="@Model.Id" asp-controller="Users" asp-action="DeleteUser"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
+                    <a class="btn btn-outline-primary mx-1 " asp-route-id="@Model.Id" asp-controller="Users" asp-action="Update"> <i class="fa-solid fa-pen-to-square me-2"> </i><span>Update</span> </a>
+                    <a class="btn btn-outline-primary mx-1 " asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="Add"> <i class="fa-solid fa-plus me-2"> </i><span>Add Account</span> </a>
+                    <a class="btn btn-danger mx-1 " asp-route-id="@Model.Id" asp-controller="Users" asp-action="Delete"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
                 </div>
             </div>
         </div>

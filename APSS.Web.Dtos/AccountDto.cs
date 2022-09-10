@@ -22,7 +22,7 @@ namespace APSS.Web.Dtos
         /// Gets or sets the password hash of the user
         /// </summary>
         [Required(ErrorMessage = "Password  Field is Required")]
-        [MinLength(6, ErrorMessage = "The Min length Password Is 8 Digit")]
+        [MinLength(8, ErrorMessage = "The Min length Password Is 8 Digit")]
         [Display(Name = "Password")]
         public string PasswordHash { get; set; } = null!;
 
@@ -37,7 +37,7 @@ namespace APSS.Web.Dtos
         /// Gets or sets the phone number of the user
         /// </summary>
 
-        [Display(Name = "Phone Number ")]
+        [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
