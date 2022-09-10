@@ -52,6 +52,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             {
             }
             await _landSvc.AddLandProductUnitAsync(User.GetAccountId(), landProductUnit!.Name);
+            TempData["success"] = "Unit added";
 
             return LocalRedirect(Routes.Dashboard.Lands.Units.FullPath);
         }
@@ -80,6 +81,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 {
                     f.Name = landProductUnit.Name;
                 });
+            TempData["success"] = "Unit updated";
 
             return LocalRedirect(Routes.Dashboard.Lands.Units.FullPath);
         }
@@ -97,6 +99,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> DeletePost(long Id)
         {
             await _landSvc.RemoveLandProductUnitAsync(User.GetAccountId(), Id);
+            TempData["success"] = "Unit removed";
 
             return LocalRedirect(Routes.Dashboard.Lands.Units.FullPath);
         }

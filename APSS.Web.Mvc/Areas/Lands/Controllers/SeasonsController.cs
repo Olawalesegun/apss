@@ -103,7 +103,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             await _landSvc.RemoveSeasonAsync(User.GetAccountId(), Id);
 
-            TempData["success"] = "Season deleted";
+            TempData["success"] = "Season removed";
             return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
         }
 

@@ -108,7 +108,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                     l.IsUsable = form.IsUsable;
                 });
 
-            TempData["success"] = "Land updateded successfully";
+            TempData["success"] = "Land updated successfully";
             return LocalRedirect(Routes.Dashboard.Lands.FullPath);
         }
 

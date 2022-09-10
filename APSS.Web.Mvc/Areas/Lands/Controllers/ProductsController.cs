@@ -150,6 +150,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
                 f.IsGovernmentFunded = landProduct.IsGovernmentFunded;
                 f.Quantity = landProduct.Quantity;
             });
+            TempData["success"] = "Product updated";
 
             return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
@@ -167,6 +168,8 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<ActionResult> DeletePost(long Id)
         {
             await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
+
+            TempData["success"] = "Product removed";
             return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
 
