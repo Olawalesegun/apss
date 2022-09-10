@@ -540,6 +540,7 @@ public class LandService : ILandService
         var account = await _uow.Accounts.Query()
             .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Update);
         var landProduct = await _uow.LandProducts.Query()
+            .Include(a => a.AddedBy)
             .FindAsync(landProductId);
 
         await _permissionsSvc.ValidateUserPatenthoodAsync(
