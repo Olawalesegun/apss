@@ -18,12 +18,12 @@
                     <span class="text-danger">*</span>
                      }
                     <label class="form-label" asp-for="@question.Text"></label>
-                @if (question.QuestionType == QuestionTypeDto.TextQuestion)
+                @if (question is TextQuestion)
                     {                
                         <input type="text"  asp-for="@Model.Answers.TextQuestionAnswer!.Answer"  class="form-control" />
                   
                 }
-               @if (question.QuestionType == QuestionTypeDto.LogicalQuestion)
+               @if (question is LogicalQuestion)
                 {
 
                     <input type="radio"  asp-for="@Model.Answers.LogicalQuestionAnswer!.Answer" value="true"  class="form-control" />
@@ -33,10 +33,10 @@
                   
                 }
                  
-                @if (question.QuestionType == QuestionTypeDto.MultipleChoiceQuestion)
+                @if (question is MultipleChoiceQuestion)
                     {
 
-                        @foreach (var value in question.CandidateAnswers!)
+                      @*  @foreach (var value in question!)
                         {
                          <label >@value.ToString()</label>
                         @if (question.CanMultiSelect)
@@ -46,7 +46,7 @@
                         else{
                            <input asp-for="@Model.Answers.MultipleChoiceQuestionAnswer!.Answers" type="radio" > 
                             }
-                        }
+                        }*@
                     }
                 </div>
              @if (question.IsRequired==true)
