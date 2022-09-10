@@ -36,17 +36,16 @@
                 @if (question is MultipleChoiceQuestion)
                     {
 
-                      @*  @foreach (var value in question!)
+                        @foreach (var value in @Model.anwserItems.Where())
                         {
-                         <label >@value.ToString()</label>
-                        @if (question.CanMultiSelect)
-                        {
+                         <label ></label>
+                        
                            <input asp-for="@Model.Answers.MultipleChoiceQuestionAnswer!.Answers" type="checkbox" > 
                         }
                         else{
                            <input asp-for="@Model.Answers.MultipleChoiceQuestionAnswer!.Answers" type="radio" > 
                             }
-                        }*@
+                        }
                     }
                 </div>
              @if (question.IsRequired==true)
