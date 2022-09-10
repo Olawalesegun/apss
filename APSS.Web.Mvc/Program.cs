@@ -87,6 +87,12 @@ app.UseAuthorization();
 
 #region Routes
 
+// Error area
+app.MapAreaControllerRoute(
+    name: Areas.Error,
+    areaName: Areas.Error,
+    pattern: "{controller}/{action=Index}");
+
 // Auth area
 app.MapAreaControllerRoute(
     name: Areas.Auth,

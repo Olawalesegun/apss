@@ -2,6 +2,7 @@
 
 public static class Areas
 {
+    public const string Error = nameof(Error);
     public const string Auth = nameof(Auth);
     public const string Setup = nameof(Setup);
     public const string Home = nameof(Home);

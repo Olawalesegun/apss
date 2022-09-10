@@ -1,0 +1,22 @@
+﻿@using APSS.Web.Mvc.Areas.Error.Models
+
+@model ErrorViewModel
+
+@{
+    Layout = "Layout/Generic";
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="row align-content-center text-center min-vh-100 m-0">
+    <h1 class="display-4">@Model.Status</h1>
+    @Icon.Circle.Render(IconSize.Small, additionalClasses: "my-4")
+    <h2 class="mb-5">@Model.Title</h2>
+
+    <p class="text-center mb-5">@Model.Description</p>
+
+    <div>
+        <button class="btn btn-outline-danger btn-block" onclick="history.back()">
+            @Icon.ChevronLeft.Render() GO BACK
+        </button>
+    </div>
+</div>
