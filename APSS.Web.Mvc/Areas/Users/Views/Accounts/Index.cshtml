@@ -21,6 +21,7 @@
                 <tr class="@(item.IsActive ? string.Empty : "bg-warning")">
                     <td>@item.Id</td>
                     <td>@item.HolderName</td>
+                    <td>@item.PhoneNumber</td>
                     <td>@item.NationalId</td>
                     <td>@item.Job</td>
                     <td>@item.CreatedAt</td>
@@ -37,7 +38,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Accounts.Delete)?id=@item.Id">
+                                    <a class="dropdown-item justified-content-between" onclick="showDeletionModal('Are you sure you want to delete account `@item.HolderName`?', @item.Id)">
                                         Delete @Icon.TrashCan.Render()
                                     </a>
                                 </li>
@@ -56,3 +57,5 @@
 </div>
 
 <partial name="Layout/Paginator" model="@Model.Params.Page" />
+
+@await Html.DeleteDialogAsync()
