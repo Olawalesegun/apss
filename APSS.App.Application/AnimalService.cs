@@ -203,6 +203,7 @@ public class AnimalService : IAnimalService
         var unit = await _uow.AnimalProductUnits.Query().FindAsync(productUnitId);
         updater(unit);
         _uow.AnimalProductUnits.Update(unit);
+        await _uow.CommitAsync();
         return unit;
     }
 
