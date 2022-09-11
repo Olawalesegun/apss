@@ -44,6 +44,7 @@ svc.AddScoped<IAnimalService, AnimalService>();
 svc.AddScoped<ILandService, LandService>();
 svc.AddScoped<IPopulationService, PopulationService>();
 svc.AddScoped<ISurveysService, SurveysService>();
+svc.AddScoped<IConfirmService, ConfirmService>();
 svc.AddTransient<ISetupService, SetupService>();
 
 // Auth service
