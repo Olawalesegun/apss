@@ -4,7 +4,7 @@
 <div class="col-lg-8 col-sm-12  col-md-12   mx-lg-4  my-3 d-flex px-0">
     <form class="row  mt-2 d-flex justify-content-center  needs-validation " method="post" asp-controller="Accounts" asp-action="Update" novalidate>
         <div asp-validation-summary="ModelOnly"></div>
-        <input type="hidden" asp-for="UserId" />
+        @* <input type="hidden" asp-for="UserId" />*@
         <input type="hidden" asp-for="Id" />
         <!-- 2 column puts for the National number and Phome Number-->
         <div class="center d-flex  ">
@@ -89,29 +89,29 @@
                 }
             </div>
         </div>
-        <div class="row  ">
+        @* <div class="row  ">
             <h5>@Html.DisplayNameFor(p=>p.PermissionTypeDto)</h5>
-        </div>
-        <div class=" row mb-3 mx-1 ">
+            </div>*@
+        @*      <div class=" row mb-3 mx-1 ">
             <div class="input-group d-flex justify-content-start ">
-                <div class="form-check  mx-2">
-                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Read" id="" value="true" checked />
-                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Read"></label>
-                </div>
-                <div class="form-check  mx-2">
-                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Create" id="" value="true" />
-                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Create"></label>
-                </div>
-                <div class="form-check  mx-2">
-                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Update" id="" value="true" />
-                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Update"></label>
-                </div>
-                <div class="form-check  mx-2">
-                    <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Delete" id="" value="true" />
-                    <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Delete"></label>
-                </div>
+            <div class="form-check  mx-2">
+            <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Read" id="" value="true" checked />
+            <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Read"></label>
             </div>
-        </div>
+            <div class="form-check  mx-2">
+            <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Create" id="" value="true" />
+            <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Create"></label>
+            </div>
+            <div class="form-check  mx-2">
+            <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Update" id="" value="true" />
+            <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Update"></label>
+            </div>
+            <div class="form-check  mx-2">
+            <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Delete" id="" value="true" />
+            <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Delete"></label>
+            </div>
+            </div>
+            </div>*@
         <div class="row ">
             <h5> @Html.DisplayNameFor(m=>m.IsActive) </h5>
         </div>

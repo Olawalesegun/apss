@@ -1,6 +1,8 @@
 ﻿using APSS.Domain.Services;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.Parameters;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Models;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -20,11 +22,17 @@ namespace APSS.Web.Mvc.Areas.Animals.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
-            var unitDto = new List<AnimalProductUnitDto>();
-            var units = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId())).Where(i => i.Id > 0).AsAsyncEnumerable().ToListAsync();
-            foreach (var unit in units)
+            //var unitDto = new List<AnimalProductUnitDto>();
+            var units = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
+                 .Where(u => u.Name.Contains(args.Query))
+            .Page(args.Page, args.PageLength)
+            .AsAsyncEnumerable()
+            .Select(_mapper.Map<AnimalProductUnitDto>)
+            .AsAsyncEnumerable()
+            .ToListAsync();
+            /*foreach (var unit in units)
             {
                 unitDto.Add(new AnimalProductUnitDto
                 {
@@ -33,9 +41,9 @@ namespace APSS.Web.Mvc.Areas.Animals.Controllers
                     CreatedAt = unit.CreatedAt,
                     ModifiedAt = unit.ModifiedAt
                 });
-            }
+            }*/
 
-            return View(unitDto);
+            return View(new CrudViewModel<AnimalProductUnitDto>(units, args));
         }
 
         public IActionResult Add()
