@@ -17,13 +17,11 @@ namespace APSS.Web.Mvc.Areas.Users.Controllers;
 public class UsersController : Controller
 {
     private readonly IUsersService _userService;
-    private readonly IUnitOfWork _uow;
     private readonly IMapper _mapper;
 
-    public UsersController(IUsersService userService, IUnitOfWork uow, IMapper mapper)
+    public UsersController(IUsersService userService, IMapper mapper)
     {
         _userService = userService;
-        _uow = uow;
         _mapper = mapper;
     }
 
@@ -32,7 +30,7 @@ public class UsersController : Controller
     public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
     {
         var ret = await (await _userService.GetSubuserAsync(User.GetAccountId()))
-            .Where(u => u.Name.Contains(args.Query))
+            .Where(u => u.Name.Contains(args.Query ?? string.Empty))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
             .Select(_mapper.Map<UserDto>)

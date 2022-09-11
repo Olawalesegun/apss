@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text;
 
 using APSS.Domain.Repositories.Exceptions;
 using APSS.Domain.Repositories.Extensions.Exceptions;
@@ -26,7 +27,7 @@ public class GlobalExceptionHandlingMiddleware
         {
             // TODO: log error
 
-            context.Response.StatusCode = (int)MapStatusCodeFromException(ex);
+            context.Response.Redirect($"/Error/_{(int)MapStatusCodeFromException(ex)}");
         }
     }
 

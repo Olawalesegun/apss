@@ -1,167 +1,129 @@
-﻿@using APSS.Domain.Entities
-@model APSS.Web.Dtos.AccountDto
- @await Html.PartialAsync("_requiredStyle.cshtml")
-<div class="col-lg-8 col-sm-12  col-md-12   mx-lg-4  my-3 d-flex px-0">
-    <form class="row  mt-2 d-flex justify-content-center  needs-validation " method="post" asp-controller="Accounts" asp-action="Update" novalidate>
-        <div asp-validation-summary="ModelOnly"></div>
-        @* <input type="hidden" asp-for="UserId" />*@
-        <input type="hidden" asp-for="Id" />
-        <!-- 2 column puts for the National number and Phome Number-->
-        <div class="center d-flex  ">
-            <h3 class="fw-light">
-                Edit Employee Information
-            </h3>
-        </div>
-        <!-- Text input for account name-->
-        <div class=" row d-flex  justify-content-between ">
-            <div class="col-sm-6 mt-4 flex-column form-group   position-relative">
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="fa-solid fa-user"></i>
-                    </span>
-                    <div class="form-floating flex-grow-1">
-                        <input type="text" id="account-name" asp-for="HolderName" placeholder="Holder Name" class="form-control w-100 " required />
-                        <label class="form-label" asp-for="HolderName"></label>
-                    </div>
-                    <span class="d-block invalid-feedback ">
-                        <span asp-validation-for="HolderName"></span>
-                    </span>
-                </div>
-            </div>
-            <div class="col-sm-6 mt-4 flex-column form-group has-validation d-flex  ">
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="fa-solid fa-id-card"></i>
-                    </span>
-                    <div class="form-floating flex-grow-1">
-                        <input type="text" id="account-nationalID" asp-for="NationalId" placeholder="National ID" class="form-control d-inline " />
-                        <label class="form-label" id="valid" asp-for="NationalId"></label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Text input for AccessLevel -->
-        <div class="row d-flex  justify-content-between  ">
-            <div class="col-sm-6 mt-4 flex-column form-group d-flex  ">
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fa-solid fa-phone-flip"></i></span>
-                    <div class="form-floating flex-grow-1">
-                        <input type="text" id="account-phonenumber" asp-for="PhoneNumber" placeholder="phoneNumber" class="form-control d-inline" />
-                        <label class="form-label" asp-for="PhoneNumber"></label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 mt-4 flex-column form-group d-flex ">
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
-                    <div class="form-floating flex-grow-1">
-                        <input type="text" id="account-job" asp-for="Job" placeholder="job" class="form-control d-inline" />
-                        <label class="form-label" asp-for="Job"></label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4 ">
-            <h5>@Html.DisplayNameFor(p=>p.SocialStatus)</h5>
-        </div>
-        <div class="row mb-3 mx-1">
-            <div class="input-group d-flex justify-content-start">
-                @* <div class="form-check  mx-2">
-                    <input class="form-check-input " type="radio" asp-for="SocialStatus" id="socialstatus" value="@Model.SocialStatus" checked />
-                    <label class="form-check-label" asp-for="SocialStatus"></label>
-                    </div>*@
-                @foreach (var item in Enum.GetValues<SocialStatus>())
-                {
-                    if (@Model.SocialStatus == (SocialStatusDto)@item)
-                    {
-                        <div class="form-check  mx-2">
-                            <input class="form-check-input " type="radio" asp-for="SocialStatus" id="socialstatus" value="@Convert.ToInt64(@item)" checked />
-                            <label class="form-check-label"> @Html.Label(item.ToString())</label>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="form-check  mx-2">
-                            <input class="form-check-input " type="radio" asp-for="SocialStatus" id="socialstatus" value="@Convert.ToInt64(@item)" />
-                            <label class="form-check-label"> @Html.Label(item.ToString())</label>
-                        </div>
-                    }
-                }
-            </div>
-        </div>
-        @* <div class="row  ">
-            <h5>@Html.DisplayNameFor(p=>p.PermissionTypeDto)</h5>
-            </div>*@
-        @*      <div class=" row mb-3 mx-1 ">
-            <div class="input-group d-flex justify-content-start ">
-            <div class="form-check  mx-2">
-            <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Read" id="" value="true" checked />
-            <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Read"></label>
-            </div>
-            <div class="form-check  mx-2">
-            <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Create" id="" value="true" />
-            <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Create"></label>
-            </div>
-            <div class="form-check  mx-2">
-            <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Update" id="" value="true" />
-            <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Update"></label>
-            </div>
-            <div class="form-check  mx-2">
-            <input class="form-check-input " type="checkbox" asp-for="PermissionTypeDto.Delete" id="" value="true" />
-            <label class="form-check-label" asp-for="@Model.PermissionTypeDto.Delete"></label>
-            </div>
-            </div>
-            </div>*@
-        <div class="row ">
-            <h5> @Html.DisplayNameFor(m=>m.IsActive) </h5>
-        </div>
-        <div class="row  mb-3 mx-2 ">
-            <div class="input-group d-flex justify-content-start">
-                <div class="form-check mx-2">
-                    <input class="form-check-input" type="checkbox" value="true" asp-for="IsActive" />
-                    <label class="form-check-label" asp-for="IsActive">  </label>
-                </div>
-            </div>
-        </div>
-        <br />
-        <!-- Submit button -->
-        <div class="row d-flex  justify-content-between ">
-            <div class="col-sm-6 mt-4  d-flex flex-row bd-highlight">
-                <a asp-route-id="@Model.Id" asp-action="UpdatePassword" class="btn btn-link text-primary " style=""><i class="fa-solid fa-lock"></i>Change Password</a>
-            </div>
-            <div class="col-sm-6 mt-4 d-flex flex-row-reverse bd-highlight ">
-                <button type="submit" class="btn btn-primary  w-50  ">Update</button>
-                <a onClick="history.go(-1); return false;" class="btn btn-link  w-25  mx-3" style="background-color:#DCEEFB">Cancel</a>
-            </div>
-        </div>
-    </form>
-</div>
+﻿@model UpdateAccountForm
 
-@section scripts{
-<script>
-        $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#accountManagement").addClass('active');
-    });
-     document.getElementById("nav-system-name").innerHTML="Employees Management";
-      document.getElementById("media-system-name").innerHTML="Employees Management";
+<form class="container-fluid pt-3 needs-validation" method="post" action="@Routes.Dashboard.Users.Accounts.Update" asp-antiforgery="true" novalidate>
+    <input type="hidden" asp-for="Id" />
 
-    $(".scrollmenu a").on('click',function(){
-        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
+    <!-- title -->
+    <h2 class="mb-4">Edit account</h2>
 
-    });
-    $(".manage-ment ul li a").on('click',function(){
-        $(".scrollmenu a.actives").removeClass('actives');
-        $("#animalGroups").addClass('actives');
+    <!-- Identification info -->
+    <h6>Identification info</h6>
+    <div class="row mb-3">
+        <!-- Holder name -->
+        <div class="col-xs-12 col-lg-6 col-xl-4">
+            <div class="input-group has-validation">
+                <span class="input-group-text">@Icon.Face.Render()</span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Holder name" aria-describedby="holderNameValidation" asp-for="HolderName">
+                    <label>Holder name</label>
+                </div>
+                <span id="holderNameValidation" class="d-block invalid-feedback" asp-validation-for="HolderName"></span>
+            </div>
+        </div>
 
-    });
-    $("#users").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
-        $("#userMedia").removeClass('actives');
-         $("#accounts").addClass('actives');
-         $("#accountMedia").addClass('actives');
-</script>
-}
+        <!-- National ID -->
+        <div class="col-xs-12 col-lg-6 col-xl-4">
+            <div class="input-group has-validation">
+                <span class="input-group-text">@Icon.IdCard.Render()</span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Holder name" aria-describedby="nationalIdValidation" asp-for="NationalId">
+                    <label>National ID</label>
+                </div>
+                <span id="nationalIdValidation" class="d-block invalid-feedback" asp-validation-for="NationalId"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Identification info -->
+    <h6>Personal info</h6>
+    <div class="row mb-3">
+        <!-- Phone number -->
+        <div class="col-xs-12 col-lg-6 col-xl-4">
+            <div class="input-group has-validation">
+                <span class="input-group-text">@Icon.Phone.Render()</span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Phone number" aria-describedby="phoneNumberValidation" asp-for="PhoneNumber">
+                    <label>Phone number</label>
+                </div>
+                <span id="phoneNumberValidation" class="d-block invalid-feedback" asp-validation-for="PhoneNumber"></span>
+            </div>
+        </div>
+
+        <!-- Job -->
+        <div class="col-xs-12 col-lg-6 col-xl-4">
+            <div class="input-group has-validation">
+                <span class="input-group-text">@Icon.Suitcase.Render()</span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Job" aria-describedby="jobValidation" asp-for="Job">
+                    <label>Job</label>
+                </div>
+                <span id="jobValidation" class="d-block invalid-feedback" asp-validation-for="Job"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social status -->
+    <h6>@Icon.Book.Render() Social Status</h6>
+    <div class="mb-3 d-flex flex-wrap gap-4">
+        @foreach (var s in System.Enum.GetValues<SocialStatus>())
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="@(s)Radio" value="@s" asp-for="SocialStatus">
+                <label class="form-check-label" for="@(s)Radio" asp-for="SocialStatus">
+                    @s
+                </label>
+            </div>
+        }
+    </div>
+
+    <!-- Permissions -->
+    <h6>@Icon.Key.Render() Permissions</h6>
+    <div class="d-flex flex-wrap gap-4 mb-3">
+        <!-- Read -->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="readCheck" asp-for="Permissions.Read">
+            <label class="form-check-label" for="readCheck">Read</label>
+        </div>
+        <!-- Create -->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="createCheck" asp-for="Permissions.Create">
+            <label class="form-check-label" for="createCheck">Create</label>
+        </div>
+
+        <!-- Update -->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="updateCheck" asp-for="Permissions.Update">
+            <label class="form-check-label" for="updateCheck">Update</label>
+        </div>
+
+        <!-- Delete -->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="enabledCheck" asp-for="Permissions.Delete">
+            <label class="form-check-label" for="enabledCheck">Delete</label>
+        </div>
+    </div>
+
+    <!-- Enabled check -->
+    <h6>@Icon.UserCheck.Render() Account status</h6>
+    <div class="form-check mb-4">
+        <input class="form-check-input" type="checkbox" id="enabledCheck" asp-for="IsActive">
+        <label class="form-check-label" for="enabledCheck">Enabled</label>
+    </div>
+
+    <div class="row my-2">
+        <hr class="col-lg-8 col-md-12" />
+    </div>
+
+    <!-- actions -->
+    <div class="row">
+        <div class="d-flex justify-content-between col-lg-8 col-md-12">
+            <button class="btn btn-outline-warning" onclick="$('#update-password-modal').modal('show');" type="button">
+                @Icon.Lock.Render(additionalClasses: "me-1") UPDATE PASSOWRD
+            </button>
+            <button class="btn btn-primary" type="submit">@Icon.Floppy.Render(additionalClasses: "me-1") SAVE</button>
+        </div>
+    </div>
+
+</form>
+
+@await Html.PartialAsync("_UpdatePassword", new UpdatePassowrdForm { Id = Model.Id });
