@@ -27,7 +27,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             var result = await (await _landSvc.GetProductsByUserIdAsync(
             User.GetAccountId(), User.GetUserId()))
-            .Where(u => u.CropName.Contains(args.Query))
+            .Where(u => u.CropName.Contains(args.Query ?? string.Empty))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
             .Select(_mapper.Map<LandProductDto>)
