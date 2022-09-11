@@ -256,44 +256,6 @@ public class AnimalService : IAnimalService
         return expense;
     }
 
-    public async Task<AnimalProduct> ConfirmAnimalProduct(long accountId, long animalProductId, bool isConfirm)
-    {
-        var animalProduct = await _uow.AnimalProducts.Query()
-            .Include(u => u.Producer.OwnedBy)
-            .FindAsync(animalProductId);
-        var farmer = await _uow.Users.Query().Include(a => a.Accounts).FindAsync(animalProduct.Producer.OwnedBy.Id);
-
-        await _permissionsService.ValidateUserPatenthoodAsync(accountId, farmer.Id, PermissionType.Update);
-
-        if (isConfirm) _uow.AnimalProducts.Confirm(animalProduct);
-        else _uow.AnimalProducts.Decline(animalProduct);
-
-        await _uow.CommitAsync();
-        return animalProduct;
-    }
-
-    public async Task<AnimalGroup> ConfirmAnimalGroup(long accountId, long animalGroupId, bool isConfirm)
-    {
-        var animalGroup = await _uow.AnimalGroups.Query().
-            Include(u => u.OwnedBy!)
-            .Where(s => s.Id == animalGroupId).FirstAsync();
-
-        await _permissionsService.ValidateUserPatenthoodAsync(accountId, animalGroup.OwnedBy.Id, PermissionType.Update);
-
-        if (isConfirm)
-        {
-            _uow.AnimalGroups.Confirm(animalGroup);
-        }
-        else
-        {
-            _uow.AnimalGroups.Decline(animalGroup);
-        }
-
-        await _uow.CommitAsync();
-
-        return animalGroup;
-    }
-
     public async Task<IQueryBuilder<AnimalProductUnit>> GetAnimalProductUnitAsync(long accountId)
     {
         var account = await _uow.Accounts.Query()
