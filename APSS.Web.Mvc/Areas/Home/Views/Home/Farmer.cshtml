@@ -1,0 +1,81 @@
+﻿<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-9">
+                <table class="table table-borderless bg-light rounded">
+                    <thead>
+                        <tr>
+                    <th class="text-start">Land Name</th>
+                    <th class="text-start">Land Address</th>
+                    <th class="text-start">Usable</th>
+                    <th class="text-start">Used</th>
+                    <th class="text-start">Confirmed</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                @foreach (var land in ViewBag.FarmerLands)
+                    {
+                            <tr>
+                                <td>@land.Name</td>
+                                <td>@land.Address</td>
+                                <td>@land.IsUsable</td>
+                                <td>@land.IsUsed</td>
+                                <td>@land.IsConfirmed</td>
+                            </tr>
+                    }
+                        </tbody>
+                </table>
+        </div>
+
+        <div class="column col-sm-12 col-xl-3 g-4 justify-content-between align-items-center">
+            <div class="col-sm-12 mb-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-dollar-sign fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <h6>Total Lands Products Expenses</h6>
+                        <h6>@ViewBag.LandsProductsExpenses</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 ">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-dollar-sign fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <h6>Total Animals Products Expenses</h6>
+                        <h6>@ViewBag.AnimalsProductsExpenses</h6>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-sm-12">
+                <table class="table table-borderless bg-light rounded">
+                    <thead>
+                        <tr>
+
+                    <th class="text-start">Account Name</th>
+                    <th class="text-start">Phone Number</th>
+                    <th class="text-start">Job</th>
+                    <th class="text-start">Active</th>
+                    <th class="text-start">Permissions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var account in ViewBag.FarmerAccounts)
+                    {
+                        <tr class="text-start">
+                            <td>@account.HolderName</td>
+                            <td>@account.PhoneNumber</td>
+                            <td>@account.Job</td>
+                            <td>@account.IsActive</td>
+                            <td>@account.Permissions</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+
+        </div>
+    </div>
+</div>
