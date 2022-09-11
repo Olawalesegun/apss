@@ -22,5 +22,5 @@ public sealed class FilteringParameters
     /// <summary>
     /// Gets or sets the query string
     /// </summary>
-    public string Query { get; set; } = string.Empty;
+    public string? Query { get; set; }
 }
