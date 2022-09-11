@@ -1,22 +1,18 @@
-﻿@model CrudViewModel<LandDto>
-
-@{
-    Layout = "Layout/Dashboard";
-}
-
+﻿@model CrudViewModel<LandProductDto>
 <div class="aling" id="loader"></div>
 
 <div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 needs-validation " id="table">
     <div class="col-sm-12  ">
+
         <div class=" mt-3 bg-light table-rsponsive mb-3 table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar" id="">
             <table class="table table-hover table-responsive table-bordered   table-striped  " id="sortTable">
 
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
                         <th class="fw-bold align-middle">@Html.DisplayNameFor(i => i.First().Id)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(n => n.First().Name)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(a => a.First().Address)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(a => a.First().Area)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(n => n.First().CropName)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(h => h.First().HarvestStart)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(h => h.First().HarvestEnd)</th>
                         <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -24,11 +20,11 @@
                     @foreach (var item in Model!)
                     {
                         <tr>
-                            <td>@item.Id</td>
-                            <td> @item.Name</td>
-                            <td>@item.Address</td>
-                            <td>@item.Area</td>
 
+                            <td class="text-break text-capitalize align-middle">@item.Id</td>
+                            <td class="text-break text-capitalize align-middle">@item.CropName</td>
+                            <td class="text-break text-capitalize align-middle">@item.HarvestStart</td>
+                            <td class="text-break text-capitalize align-middle">@item.HarvestEnd </td>
                             <td class="align-middle center">
                                 <div class=" dropdown">
                                     <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
@@ -36,25 +32,25 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Details)/@item.Id">
+                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Products.Details)/@item.Id">
                                                 Details @Icon.Info.Render()
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Update)/@item.Id">
+                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Products.Update)?id=@item.Id">
                                                 Update @Icon.Pen.Render()
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Delete)/@item.Id">
+                                            <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Product `@item.CropName`?', @item.Id)">
                                                 Delete @Icon.TrashCan.Render()
                                             </a>
                                         </li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Products.Add.FullPath)/@item.Id">
-                                                Add Product @Icon.Plus.Render()
+                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Expenses.Add.FullPath)?id=@item.Id">
+                                                Add Expense @Icon.Plus.Render()
                                             </a>
                                         </li>
                                     </ul>
@@ -84,4 +80,4 @@
         </ul>
     </nav>
 </div>
-}
+@await Html.DeleteDialogAsync()

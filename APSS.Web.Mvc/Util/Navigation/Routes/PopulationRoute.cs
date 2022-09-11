@@ -8,10 +8,14 @@ public sealed class PopulationRoute : Route
     {
         Families = FromCrudController<FamiliesController>(icon: Icon.People);
         Individuals = FromCrudController<IndividualsController>(icon: Icon.People);
+        Skills = FromCrudController<SkillsController>(icon: Icon.People);
+        Voluntaries = FromCrudController<VoluntariesController>(icon: Icon.People);
     }
 
     public CrudRoute Families { get; init; }
     public CrudRoute Individuals { get; init; }
+    public CrudRoute Skills { get; init; }
+    public CrudRoute Voluntaries { get; init; }
 
     public override IRoute DefaultRoute => Families;
 }

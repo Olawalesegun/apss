@@ -26,25 +26,6 @@
                             <td>@item.SpentOn.Id</td>
                             <td>@item.CreatedAt</td>
                             <td>@item.ModifiedAt</td>
-                            <td class="align-middle center">
-                                <div class=" dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                        @Icon.Bars.Render()
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Expenses.Update)?id=@item.Id">
-                                                Update @Icon.Pen.Render()
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Expense `@item.Type`?', @item.Id)">
-                                                Delete @Icon.TrashCan.Render()
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
                         </tr>
                     }
                 </tbody>
@@ -69,4 +50,3 @@
         </ul>
     </nav>
 </div>
-@await Html.DeleteDialogAsync()

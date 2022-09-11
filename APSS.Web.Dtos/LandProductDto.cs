@@ -66,13 +66,11 @@ public class LandProductDto : ProductDto
     [Display(Name = " Harvest Start")]
     [DataType(DataType.Date)]
     [Required]
-    [CustomValidation.StartDate(ErrorMessage = "back date is not allowd")]
     public DateTime HarvestStart { get; set; }
 
     [Display(Name = "Harvest End")]
     [DataType(DataType.Date)]
     [Required]
-    [CustomValidation.StartDate(ErrorMessage = "back date is not allowd")]
     public DateTime HarvestEnd { get; set; }
 
     [Display(Name = "Is Government Funded")]

@@ -187,5 +187,7 @@ public interface ISurveysService
     /// <returns></returns>
     Task Removequestion(long accountId, long questionId);
 
+    IQueryBuilder<MultipleChoiceQuestionAnswer> GetItemsAnswer(long accountId, long questionId);
+
     #endregion Public Methods
 }

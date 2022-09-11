@@ -1,0 +1,67 @@
+﻿
+@model CrudViewModel<FamilyDto>
+
+        <div class="table-rsponsive">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>@Icon.Hashtag.Render()</th>
+                <th>@Html.DisplayNameFor(m => m.First().Name)</th>
+                <th>@Html.DisplayNameFor(m => m.First().LivingLocation)</th>
+                <th>@Html.DisplayNameFor(m => m.First().CreatedAt)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.LivingLocation</td>
+                    <td>@item.CreatedAt</td>
+
+                    <td class="align-middle center">
+                        <div class=" dropdown">
+                            <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                @Icon.Bars.Render()
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Families.Details)?id=@item.Id">
+                                        Details @Icon.Info.Render()
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete family `@item.Name`?', @item.Id)">
+                                        Delete @Icon.TrashCan.Render()
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Families.Update)?id=@item.Id" >
+                                        Update @Icon.Pen.Render()
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Families.GetAll)?id=@item.Id">
+                                        Manage Individual  @Icon.UsersGear.Render()
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex justified-content-between" href="@(Routes.Dashboard.Population.Individuals.Add)?id=@item.Id">
+                                        <span>Add Individual</span>  <span>@Icon.UserPlus.Render()</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<partial name="Layout/Paginator" model="@Model.Params.Page" />
+@await Html.DeleteDialogAsync()

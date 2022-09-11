@@ -8,13 +8,13 @@
         <div class="d-flex justify-content-center">
             <h4 > Add Individual</h4>
         </div>
-       <form method="post" asp-area="Population" asp-controller="Individuals" asp-action="AddIndividual" asp-route-Id="@Model.FamilyId" class="needs-validation" novalidate>
+       <form method="post" action="@Routes.Dashboard.Population.Individuals.Add" class="needs-validation" asp-antiforgery="true" novalidate>
             <!-- ID input -->
             <input type="number" asp-for="FamilyId" hidden/>
             <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-person"></i></span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Name" asp-for="Name" pattern="^[a-zA-Z\]{1,}$" aria-describedby="indvidualName" >
+                    <input type="text" class="form-control" placeholder="Name" asp-for="Name"  aria-describedby="indvidualName" >
                     <label asp-for="Name"></label>
                 </div>
                 <span id="indvidualName" class="d-block invalid-feedback" asp-validation-for="Name"></span>

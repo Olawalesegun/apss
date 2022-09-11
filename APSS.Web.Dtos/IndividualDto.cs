@@ -1,4 +1,4 @@
-﻿using APSS.Web.Dtos.ValueTypes;
+﻿using APSS.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos;
@@ -14,10 +14,10 @@ public class IndividualDto : BaseAuditbleDto
 
     [Display(Name = "Sex")]
     [Required(ErrorMessage = "Field Sex is required")]
-    public SexDto Sex { get; set; }
+    public IndividualSex Sex { get; set; }
 
     [Display(Name = "Social Status")]
-    public SocialStatusDto SocialStatus { get; set; }
+    public SocialStatus SocialStatus { get; set; }
 
     [Display(Name = "Phone Number")]
     public string? PhonNumber { get; set; }
@@ -32,10 +32,6 @@ public class IndividualDto : BaseAuditbleDto
     [Display(Name = "Birth Date")]
     public DateTime? DateOfBirth { get; set; }
 
-    [Display(Name = "Family")]
-    public String Family { get; set; } = null!;
-
-    public string? User { get; set; }
-    public bool Isparent { get; set; } = false;
-    public bool Isprovider { get; set; } = true;
+    [Display(Name = "User")]
+    public UserDto AddBy { get; set; } = null!;
 }

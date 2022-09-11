@@ -13,5 +13,5 @@ public class FamilyDto : BaseAuditbleDto
     public string LivingLocation { get; set; } = null!;
 
     [Display(Name = "Employee")]
-    public string UserName { get; set; } = null!;
+    public UserDto AddBy { get; set; } = null!;
 }

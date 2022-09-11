@@ -3,11 +3,11 @@ using AutoMapper;
 
 namespace APSS.Web.Dtos.Profilies;
 
-public class FamilyProfile : Profile
+public class VoluntaryProfile : Profile
 {
-    public FamilyProfile()
+    public VoluntaryProfile()
     {
-        CreateMap<Family, FamilyDto>()
+        CreateMap<Voluntary, VoluntaryDto>()
             .ReverseMap();
     }
 }
