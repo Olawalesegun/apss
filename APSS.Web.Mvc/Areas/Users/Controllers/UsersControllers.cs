@@ -17,13 +17,11 @@ namespace APSS.Web.Mvc.Areas.Users.Controllers;
 public class UsersController : Controller
 {
     private readonly IUsersService _userService;
-    private readonly IUnitOfWork _uow;
     private readonly IMapper _mapper;
 
-    public UsersController(IUsersService userService, IUnitOfWork uow, IMapper mapper)
+    public UsersController(IUsersService userService, IMapper mapper)
     {
         _userService = userService;
-        _uow = uow;
         _mapper = mapper;
     }
 
