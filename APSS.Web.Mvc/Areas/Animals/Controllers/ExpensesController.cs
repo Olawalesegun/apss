@@ -57,7 +57,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(expence);
         }
 
-        public async Task<IActionResult> Add(long id)
+        public IActionResult Add(long id)
         {
             var expense = new ProductExpenseDto();
             expense.ProductId = id;
@@ -68,11 +68,15 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(ProductExpenseDto productExpense)
         {
-            var add = await _pes.CreateProductExpenseAsync(User.GetAccountId(),
-                productExpense.ProductId,
-                productExpense.Type,
-                productExpense.Price);
-            return LocalRedirect(Routes.Dashboard.Animals.Products.FullPath);
+            if (ModelState.IsValid)
+            {
+                var add = await _pes.CreateProductExpenseAsync(User.GetAccountId(),
+                    productExpense.ProductId,
+                    productExpense.Type,
+                    productExpense.Price);
+                return LocalRedirect(Routes.Dashboard.Animals.Products.FullPath);
+            }
+            else return View(productExpense);
         }
 
         public async Task<ActionResult> Details(long id)
@@ -109,6 +113,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(ProductExpenseDto productExpense)
         {
+            if (!ModelState.IsValid) return View(productExpense);
             var update = await _pes.UpdateProductExpensesAsync(User.GetAccountId(), productExpense.ProductId, expense =>
               {
                   expense.Price = productExpense.Price;
