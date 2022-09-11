@@ -321,16 +321,17 @@ public class LandService : ILandService
     }
 
     // <inheritdoc/>
-    public async Task<IQueryBuilder<ProductExpense>> GetAllExpensesAsync(long accountId)
+    public async Task<IQueryBuilder<ProductExpense>> GetExpensesByUserAsync(long accountId, long userId)
     {
-        var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+        await _permissionsSvc.ValidatePermissionsAsync(
+            accountId,
+            userId,
+            PermissionType.Read);
 
         return _uow.ProductExpenses.Query()
             .Include(s => s.SpentOn)
             .Include(s => s.SpentOn.AddedBy)
-            .Where(u => u.SpentOn.AddedBy.Id == account.User.Id);
+            .Where(u => u.SpentOn.AddedBy.Id == userId);
     }
 
     /// <inheritdoc/>
@@ -367,7 +368,7 @@ public class LandService : ILandService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<ProductExpense>> GetLandProductExpensesAsync(
+    public async Task<IQueryBuilder<ProductExpense>> GetExpensesByProductAsync(
         long accountId,
         long landProductId)
     {
@@ -508,6 +509,17 @@ public class LandService : ILandService
     public IQueryBuilder<LandProductUnit> GetLandProductUnitsAsync()
     {
         return _uow.LandProductUnits.Query();
+    }
+
+    public async Task<IQueryBuilder<LandProduct>> GetProductsByUserIdAsync(long accountId, long userId)
+    {
+        await _permissionsSvc.ValidatePermissionsAsync(
+            accountId,
+            userId,
+            PermissionType.Read);
+
+        return _uow.LandProducts.Query()
+            .Where(u => u.AddedBy.Id == userId);
     }
 
     #endregion Public Methods

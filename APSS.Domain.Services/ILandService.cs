@@ -251,16 +251,25 @@ public interface ILandService
     /// <param name="accountId">The account id of the user who want to get the product expenses</param>
     /// <param name="landProductId">The id of the land product that the expense spent on</param>
     /// <returns>The land product expenses</returns>
-    Task<IQueryBuilder<ProductExpense>> GetLandProductExpensesAsync(
+   /* Task<IQueryBuilder<ProductExpense>> GetLandProductExpensesAsync(
         long accountId,
-        long landProductId);
+        long landProductId);*/
 
     /// <summary>
-    /// Asynchronously gets all user Expenses for all user products
+    /// Asynchronously gets all user Expenses for a user
     /// </summary>
-    /// <param name="accountId">The account id of the user who owns the Expenses</param>
+    /// <param name="accountId">The account id of the user who want the expenses</param>
+    /// <param name="userId">The id of the user who owns the Expenses</param>
     /// <returns>The Expenses list that the user has</returns>
-    Task<IQueryBuilder<ProductExpense>> GetAllExpensesAsync(long accountId);
+    Task<IQueryBuilder<ProductExpense>> GetExpensesByUserAsync(long accountId, long userId);
+
+    /// <summary>
+    /// Asynchronously gets all user Expenses for a product
+    /// </summary>
+    /// <param name="accountId">The account id of the user who want the expenses</param>
+    /// <param name="productId">The prodcut id </param>
+    /// <returns>The product expenses </returns>
+    Task<IQueryBuilder<ProductExpense>> GetExpensesByProductAsync(long accountId, long productId);
 
     /// <summary>
     /// Asynchronously gets all user products for all user lands
@@ -268,6 +277,14 @@ public interface ILandService
     /// <param name="accountId">The account id of the user who owns the products</param>
     /// <returns>The products list that the user has</returns>
     Task<IQueryBuilder<LandProduct>> GetAllLandProductsAsync(long accountId);
+
+    /// <summary>
+    /// Asynchronously gets all user products by user id
+    /// </summary>
+    /// <param name="accountId">The account id of the user who wants the products</param>
+    /// <param name="userId">The id of the user who owns the land</param>
+    /// <returns>The products that the user has</returns>
+    Task<IQueryBuilder<LandProduct>> GetProductsByUserIdAsync(long accountId, long userId);
 
     #endregion Public Methods
 }

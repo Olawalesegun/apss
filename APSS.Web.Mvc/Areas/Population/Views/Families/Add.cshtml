@@ -1,0 +1,51 @@
+﻿@model FamilyAddForm
+
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Population.Families.Add.FullPath" asp-antiforgery="true" novalidate>
+    <div class="d-flex mt-5">
+    </div>
+    <div class="modal fade" id="addFamilyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addFamilyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addFamilyModalLabel">Add a new Family</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- User name -->
+                      <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-people-roof"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control"  placeholder="Name" asp-for="Name"  >
+                    <label asp-for="Name"></label>
+                </div>
+                <span  class="d-block invalid-feedback" asp-validation-for="Name"></span>
+            </div>
+                <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-house-chimney"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Address" asp-for="LivingLocation" >
+                    <label asp-for="LivingLocation"></label>
+                </div>
+                <span  class="d-block invalid-feedback" asp-validation-for="LivingLocation"></span>
+            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Users.Users.FullPath">Cancel</a>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    <script>
+
+        $(window).on('load', function () {
+            $('#addFamilyModal').modal('show');
+        });
+    </script>
+}
+ 

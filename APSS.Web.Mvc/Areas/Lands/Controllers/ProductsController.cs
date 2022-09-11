@@ -22,20 +22,11 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             _landSvc = landService;
         }
 
-        //[ApssAuthorized(
-        //    AccessLevel.Presedint |
-        //    AccessLevel.Directorate |
-        //    AccessLevel.District |
-        //    AccessLevel.Village |
-        //    AccessLevel.Farmer |
-        //    AccessLevel.Governorate |
-        //    AccessLevel.Group |
-        //    AccessLevel.Root,
-        //    PermissionType.Read)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
         public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
-            var result = await (await _landSvc.GetAllLandProductsAsync(
-            User.GetAccountId()))
+            var result = await (await _landSvc.GetProductsByUserIdAsync(
+            User.GetAccountId(), User.GetUserId()))
             .Where(u => u.CropName.Contains(args.Query))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
@@ -46,7 +37,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: LandProduc tController/Add a new landProduct
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<ActionResult> Add(long Id)
         {
             var seasonsList = await _landSvc.GetSeasonsAsync().AsAsyncEnumerable().ToListAsync();
@@ -65,7 +56,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: LandController/Add a new landProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<ActionResult> Add(LandProductDto landProduct)
         {
             if (!ModelState.IsValid)
@@ -95,16 +86,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
 
-        //[ApssAuthorized(
-        //    AccessLevel.Presedint |
-        //    AccessLevel.Directorate |
-        //    AccessLevel.District |
-        //    AccessLevel.Village |
-        //    AccessLevel.Farmer |
-        //    AccessLevel.Governorate |
-        //    AccessLevel.Group |
-        //    AccessLevel.Root,
-        //    PermissionType.Read)]
+        [ApssAuthorized(AccessLevel.All, PermissionType.Read)]
         public async Task<ActionResult> Details(long Id)
         {
             return View(_mapper.Map<LandProductDto>(
@@ -112,7 +94,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: LandController/Update landProduct
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
         public async Task<ActionResult> Update(long Id)
         {
             var products = _mapper.Map<LandProductDto>(
@@ -124,7 +106,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: LandController/Update landProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
         public async Task<ActionResult> Update(LandProductDto landProduct)
         {
             if (!ModelState.IsValid)
@@ -156,16 +138,9 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: LandController/Delete landProduct
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        [HttpPost]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<ActionResult> Delete(long Id)
-        {
-            return View(_mapper.Map<LandProductDto>(
-            await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
-        }
-
-        // POST: LandController/Delete landProduct
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-        public async Task<ActionResult> DeletePost(long Id)
         {
             await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
 
@@ -173,37 +148,34 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
 
-        // GET: LandController/Get landProduct
-        //[ApssAuthorized(
-        //    AccessLevel.Presedint |
-        //    AccessLevel.Directorate |
-        //    AccessLevel.District |
-        //    AccessLevel.Village |
-        //    AccessLevel.Farmer |
-        //    AccessLevel.Governorate |
-        //    AccessLevel.Group |
-        //    AccessLevel.Root,
-        //    PermissionType.Read)]
-        public async Task<ActionResult> GetLandProduct(long Id)
+        // POST: LandController/Delete landProduct
+        /*[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        public async Task<ActionResult> DeletePost(long Id)
         {
-            return View(_mapper.Map<LandProductDto>(
-            await (await _landSvc.GetLandProductAsync(User.GetAccountId(), Id)).FirstAsync()));
-        }
+            await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
 
-        // GET: LandController/Get landProducts
-        //[ApssAuthorized(
-        //    AccessLevel.Presedint |
-        //    AccessLevel.Directorate |
-        //    AccessLevel.District |
-        //    AccessLevel.Village |
-        //    AccessLevel.Farmer |
-        //    AccessLevel.Governorate |
-        //    AccessLevel.Group |
-        //    AccessLevel.Root,
-        //    PermissionType.Read)]
-        public async Task<ActionResult> GetAll([FromQuery] FilteringParameters args, long Id)
+            TempData["success"] = "Product removed";
+            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
+        }*/
+
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
+        public async Task<ActionResult> byLand([FromQuery] FilteringParameters args, long Id)
         {
             var result = await (await _landSvc.GetLandProductsAsync(
+                User.GetAccountId(), Id))
+                .Where(n => n.CropName.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
+                .AsAsyncEnumerable()
+                .Select(_mapper.Map<LandProductDto>)
+                .ToListAsync();
+
+            return View(new CrudViewModel<LandProductDto>(result, args));
+        }
+
+        [ApssAuthorized(AccessLevel.All, PermissionType.Read)]
+        public async Task<ActionResult> byUser([FromQuery] FilteringParameters args, long Id)
+        {
+            var result = await (await _landSvc.GetProductsByUserIdAsync(
                 User.GetAccountId(), Id))
                 .Where(n => n.CropName.Contains(args.Query))
                 .Page(args.Page, args.PageLength)

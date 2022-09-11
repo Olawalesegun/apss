@@ -4,7 +4,6 @@ namespace APSS.Web.Dtos.Forms;
 
 public class FamilyEditForm
 {
-    [Required]
     public long Id { get; set; }
 
     [Required]

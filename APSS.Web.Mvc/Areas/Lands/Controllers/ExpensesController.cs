@@ -24,10 +24,11 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             _landSvc = landService;
         }
 
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
         public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
             var expenses = await (
-                await _landSvc.GetAllExpensesAsync(User.GetAccountId()))
+                await _landSvc.GetExpensesByUserAsync(User.GetAccountId(), User.GetUserId()))
                 .Where(u => u.Type.Contains(args.Query))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
@@ -38,7 +39,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         [HttpGet]
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public IActionResult Add(long Id)
         {
             var expense = new ProductExpenseDto
@@ -51,7 +52,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Create)]
         public async Task<IActionResult> Add(ProductExpenseDto productExpense)
         {
             if (!ModelState.IsValid)
@@ -69,7 +70,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: landProductExpense/Update landProductExpense
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
         public async Task<IActionResult> Update(long Id)
         {
             return View(_mapper.Map<ProductExpenseDto>(
@@ -80,7 +81,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         // POST: landProductExpense/Update landProductExpense
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Update)]
         public async Task<IActionResult> Update(ProductExpenseDto productExpense)
         {
             if (!ModelState.IsValid)
@@ -101,35 +102,48 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         }
 
         // GET: landProductExpense/Delete landProductExpense
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
         public async Task<IActionResult> Delete(long Id)
         {
-            return View(_mapper.Map<ProductExpenseDto>(
-                await (await _landSvc.GetLandProductExpenseAsync(User.GetAccountId(), Id))
-                             .FirstAsync()));
-        }
-
-        //[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-        public async Task<IActionResult> DeletePost(long id)
-        {
-            await _landSvc.RemoveLandProductExpenseAsync(User.GetAccountId(), id);
+            await _landSvc.RemoveLandProductExpenseAsync(User.GetAccountId(), Id);
 
             TempData["success"] = "Expense Removed Successfully";
 
             return LocalRedirect(Routes.Dashboard.Lands.Expenses.FullPath);
         }
 
-        // GET: landProductExpense/Get landProductExpense
-        public async Task<IActionResult> GetExpense(long Id)
-        {
-            return View(_mapper.Map<ProductExpenseDto>(
-                await (await _landSvc.GetLandProductExpenseAsync(User.GetAccountId(), Id)).FirstAsync()));
-        }
+        /*        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
+                public async Task<IActionResult> DeletePost(long id)
+                {
+                    await _landSvc.RemoveLandProductExpenseAsync(User.GetAccountId(), id);
 
-        public async Task<IActionResult> GetAll([FromQuery] FilteringParameters args, long Id)
+                    TempData["success"] = "Expense Removed Successfully";
+
+                    return LocalRedirect(Routes.Dashboard.Lands.Expenses.FullPath);
+                }*/
+
+        // GET: landProductExpense/Get landProductExpense
+        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
+        public async Task<IActionResult> byLand([FromQuery] FilteringParameters args, long Id)
         {
             var expenses = await (
-                await _landSvc.GetLandProductExpensesAsync(User.GetAccountId(), Id))
+                await _landSvc.GetExpensesByProductAsync(User.GetAccountId(), Id))
+                .Where(u => u.Type.Contains(args.Query))
+                .Page(args.Page, args.PageLength)
+                .AsAsyncEnumerable()
+                .Select(_mapper.Map<ProductExpenseDto>)
+                .ToListAsync();
+
+            return View(new CrudViewModel<ProductExpenseDto>(expenses, args));
+        }
+
+        [ApssAuthorized(AccessLevel.All, PermissionType.Read)]
+        public async Task<IActionResult> byUser([FromQuery] FilteringParameters args, long Id)
+        {
+            var expenses = await (
+                await _landSvc.GetExpensesByUserAsync(User.GetAccountId(), Id))
                 .Where(u => u.Type.Contains(args.Query))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()

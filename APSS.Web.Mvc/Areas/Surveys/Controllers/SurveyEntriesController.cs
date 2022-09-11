@@ -1,4 +1,5 @@
-﻿using APSS.Domain.Services;
+﻿using APSS.Domain.Entities;
+using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Mvc.Auth;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,6 @@ public class SurveyEntriesController : Controller
             .Include(e => e.MadeBy)
             .Include(e => e.Answers)
             .Include(e => e.Survey.Questions)
-            .Include(e => e.Answers)
             .AsAsyncEnumerable()
             .ToListAsync())
         {
@@ -47,9 +47,31 @@ public class SurveyEntriesController : Controller
     }
 
     //GET:SurveyEntry/AddSurveyEntry/id
-    public IActionResult AddSurveyEntry()
+    public async Task<IActionResult> AddSurveyEntry()
     {
-        return View();
+        var entries = await _surveysService.GetSurveyEntriesAsync(User.GetAccountId());
+        var entriesdto = new List<SurveyEntryDto>();
+
+        foreach (var entry in await entries.AsAsyncEnumerable().ToListAsync())
+        {
+            var items = new List<MultipleChoiceQuestionAnswer>();
+            foreach (var answer in entry.Answers)
+            {
+                if (answer is MultipleChoiceQuestionAnswer)
+                {
+                    items = await _surveysService
+                       .GetItemsAnswer(User.GetAccountId(), answer.Question.Id).AsAsyncEnumerable().ToListAsync();
+                }
+            }
+
+            entriesdto.Add(new SurveyEntryDto
+            {
+                Id = entry.Id,
+                Survey = entry.Survey,
+                anwserItems = items
+            });
+        }
+        return View(entriesdto);
     }
 
     //POST:SurveyEntry/AddSurveyEntry/5

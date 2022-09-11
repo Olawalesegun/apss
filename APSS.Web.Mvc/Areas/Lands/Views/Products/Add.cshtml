@@ -7,7 +7,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addUserModalLabel">Add a new Land</h5>
+                    <h5 class="modal-title" id="addUserModalLabel">Add a new Land product</h5>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" asp-for="landId" />
@@ -74,7 +74,7 @@
                             <div class="input-group has-validation">
                                 <span class="input-group-text">#</span>
                                 <div class="form-floating col">
-                                    <input type="date" asp-for="HarvestStart" class="form-control" placeholder=" " aria-describedby="harvestSValidation" required />
+                                    <input type="date" asp-for="HarvestStart" class="form-control" placeholder=" " aria-describedby="harvestSValidation" required value=">=@DateTime.Now" />
                                     <label asp-for="HarvestStart" class="form-label textOverflow"></label>
                                 </div>
                                 <span id="harvestSValidation" class="d-block invalid-feedback" asp-validation-for="HarvestStart"></span>
@@ -84,7 +84,7 @@
                             <div class="input-group has-validation">
                                 <span class="input-group-text">#</span>
                                 <div class="form-floating col">
-                                    <input type="date" asp-for="HarvestEnd" class="form-control" placeholder=" " aria-describedby="harvestEValidation" required />
+                                    <input type="date" asp-for="HarvestEnd" class="form-control" placeholder=" " aria-describedby="harvestEValidation" required value="@DateTime.Now.AddDays(3)" />
                                     <label asp-for="HarvestEnd" class="form-label textOverflow"></label>
                                 </div>
                                 <span id="harvestEValidation" class="d-block invalid-feedback" asp-validation-for="HarvestEnd"></span>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using APSS.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos;
 
@@ -17,5 +18,5 @@ public class SkillDto : BaseAuditbleDto
 
     [Display(Name = "Person")]
     [Required(ErrorMessage = "Field Persone is required")]
-    public string IndividualName { get; set; } = null!;
+    public Individual BelongsTo { get; set; } = null!;
 }

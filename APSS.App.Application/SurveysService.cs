@@ -48,6 +48,14 @@ public sealed class SurveysService : ISurveysService
         return AddQuestionAsync(_uow.LogicalQuestions, accountId, surveyId, text, isRequired);
     }
 
+    public IQueryBuilder<MultipleChoiceQuestionAnswer> GetItemsAnswer(long accountId, long questionId)
+    {
+        var items = _uow.MultipleChoiceQuestionAnswers.Query()
+             .Include(q => q.Answers)
+             .Include(q => q.Question).Where(q => q.Question.Id == questionId);
+        return items;
+    }
+
     /// <inheritdoc/>
     public async Task<MultipleChoiceQuestion> AddMultipleChoiceQuestionAsync(
         long accountId,
