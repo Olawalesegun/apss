@@ -116,8 +116,16 @@ public sealed class AccountsService : IAccountsService
     }
 
     /// <inheritdoc/>
-    public IQueryBuilder<Account> GetAccountAsync(long accountId)
-        => _uow.Accounts.Query().Where(a => a.Id == accountId);
+    public async Task<Account> GetAccountAsync(long superUserAccountId, long accountId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(a => a.User)
+            .FindAsync(accountId);
+
+        await _permissionsSvc.ValidatePermissionsAsync(superUserAccountId, account.User.Id, PermissionType.Read);
+
+        return account;
+    }
 
     /// <inheritdoc/>
     public async Task<IQueryBuilder<Account>> GetAccountsAsync(long accountId, long userId)

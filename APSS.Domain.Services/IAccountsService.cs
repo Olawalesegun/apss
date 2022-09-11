@@ -87,9 +87,10 @@ public interface IAccountsService
     /// <summary>
     /// Asynchronously gets account details using ID
     /// </summary>
+    /// <param name="superUserAccountId">The id of the account to make the change with</param>
     /// <param name="accountId">The id of the account to get its data</param>
     /// <returns></returns>
-    IQueryBuilder<Account> GetAccountAsync(long accountId);
+    Task<Account> GetAccountAsync(long superUserAccountId, long accountId);
 
     /// <summary>
     /// Asynchronously gets accounts for a user
