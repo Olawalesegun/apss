@@ -1,6 +1,6 @@
 ﻿@{
     var currentDashboardRoute = Context.GetCurrentDashboardRoute()!;
-    var currentRoute = Context.GetCurrentRoute();
+    var currentRoute = Context.GetCurrentRoute()!;
 
     var subRoutes = currentDashboardRoute.Children
         .Where(r => r.IsNavigatable)
@@ -9,7 +9,7 @@
 
     var selectedRoute = subRoutes
         .OrderByDescending(r => r.FullPath.Length)
-        .First(r => r.FullPath.StartsWith(r.FullPath));
+        .First(r => currentRoute.FullPath.StartsWith(r.FullPath));
 }
 
 <nav class="d-flex py-3 ps-2">

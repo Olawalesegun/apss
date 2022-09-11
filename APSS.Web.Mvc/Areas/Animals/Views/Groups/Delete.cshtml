@@ -34,26 +34,5 @@
                 <a class="btn btn-danger btn-rounded  " asp-route-id="@Model.Id" asp-controller="Groups" asp-action="DeleteConfirm"><i class="fa-solid fa-trash-can me-2"></i>Confirm</a>
             </div>
         </div>
-
-        @*<a class="btn text-primary shadow-0 btn-link text-decoration-none" style="font-size:18px"><span class=""><i class="fa-solid fa-angles-left"></i></span> التكلفة </a>*@
     </div>
 </div>
-
-@section scripts{
-<script>
-
-     $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-     $("#dataManagement").addClass('active');
-    });
-     document.getElementById("nav-system-name").innerHTML="Employees Management";
-    document.getElementById("media-system-name").innerHTML="Employees Management";
-
-       $("#animalProducts").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
-       $("#animalGroups").addClass('actives');
-</script>
-    }

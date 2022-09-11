@@ -46,11 +46,6 @@ public sealed class Account : AuditableEntity
     public User User { get; set; } = null!;
 
     /// <summary>
-    /// Gets or sets the user who created the account
-    /// </summary>
-    public User AddedBy { get; set; } = null!;
-
-    /// <summary>
     /// Gets or sets the permissions of the account
     /// </summary>
     public PermissionType Permissions { get; set; }
@@ -64,7 +59,7 @@ public sealed class Account : AuditableEntity
 /// <summary>
 /// An enum to represent social status
 /// </summary>
-public enum SocialStatus
+public enum SocialStatus : int
 {
     Unspecified,
     Unmarried,

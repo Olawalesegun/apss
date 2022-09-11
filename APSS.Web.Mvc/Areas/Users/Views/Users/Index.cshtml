@@ -29,34 +29,34 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Details)@item.Id">
+                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users.Details)?id=@item.Id">
                                         Details @Icon.Info.Render()
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Delete)/@item.Id">
+                                    <button class="dropdown-item justified-content-between" onclick="showDeletionModal('Are you sure you want to delete user `@item.Name`?', @item.Id)">
                                         Delete @Icon.TrashCan.Render()
-                                    </a>
+                                    </button>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Users.Update)/@item.Id">
+                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users.Update)?id=@item.Id">
                                         Update @Icon.Pen.Render()
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Users.Accounts)/@item.Id">
+                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Accounts)?id=@item.Id">
                                         Manage Accounts @Icon.UsersGear.Render()
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex justified-content-between" href="@(Routes.Dashboard.Users.Accounts.Add)/@item.Id">
+                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Accounts.Add)?id=@item.Id">
                                         Add Account  @Icon.UserPlus.Render()
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex justified-content-between" asp-action="ListGroup" asp-controller="Groups" asp-route-id="@item.Id">
-                                        Add Account  @Icon.UserPlus.Render()
+                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users.Add)?id=@item.Id">
+                                        Sub Users  @Icon.UserPlus.Render()
                                     </a>
                                 </li>
                             </ul>
@@ -69,3 +69,5 @@
 </div>
 
 <partial name="Layout/Paginator" model="@Model.Params.Page" />
+
+@await Html.DeleteDialogAsync()

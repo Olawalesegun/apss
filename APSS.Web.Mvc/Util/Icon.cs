@@ -47,6 +47,16 @@ public enum Icon
     Info,
     Hashtag,
     Bars,
+    Lock,
+    Circle,
+    Floppy,
+    Suitcase,
+    Phone,
+    IdCard,
+    Face,
+    Book,
+    UserCheck,
+    Cross,
 }
 
 public static class IconExtensoins
@@ -95,6 +105,16 @@ public static class IconExtensoins
         { Icon.Info, "fa-solid fa-info" },
         { Icon.Hashtag, "fa-solid fa-hashtag" },
         { Icon.Bars, "fa-solid fa-bars" },
+        { Icon.Lock, "fa-solid fa-lock" },
+        { Icon.Circle, "fa-solid fa-circle" },
+        { Icon.Floppy, "fa-solid fa-floppy-disk" },
+        { Icon.Suitcase, "fa-solid fa-suitcase" },
+        { Icon.Phone, "fa-solid fa-phone" },
+        { Icon.IdCard, "fa-solid fa-id-card" },
+        { Icon.Face, "fa-solid fa-face-smile" },
+        { Icon.Book, "fa-solid fa-book" },
+        { Icon.UserCheck, "fa-solid fa-user-check" },
+        { Icon.Cross, "fa-solid fa-xmark" },
     };
 
     public static HtmlString? Render(

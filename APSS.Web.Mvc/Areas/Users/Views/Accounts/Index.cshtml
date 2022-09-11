@@ -1,102 +1,63 @@
-﻿@model IEnumerable<APSS.Web.Dtos.AccountDto>
+﻿@model CrudViewModel<AccountDto>
 
-<div class="container-fluid  border p-2  col-ms-12  my-0 mt-2  rounded ml-2 animal-table" id="">
-    <div class="col-sm-12  ">
+<!--the main account view-->
+<div class="table-rsponsive">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>@Icon.Hashtag.Render()</th>
+                <th>@Html.DisplayNameFor(m => m.First().HolderName)</th>
+                <th>@Html.DisplayNameFor(m => m.First().PhoneNumber)</th>
+                <th>@Html.DisplayNameFor(m => m.First().NationalId)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Job)</th>
+                <th>@Html.DisplayNameFor(m => m.First().SocialStatus)</th>
+                <th>@Html.DisplayNameFor(m => m.First().CreatedAt)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
 
-        <div class=" my-3 bg-light table-rsponsive  table-success table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
+            @foreach (var item in Model)
+            {
+                <tr class="@(item.IsActive ? string.Empty : "bg-warning")">
+                    <td>@item.Id</td>
+                    <td>@item.HolderName</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.NationalId</td>
+                    <td>@item.Job</td>
+                    <td>@item.SocialStatus</td>
+                    <td>@item.CreatedAt</td>
 
-            <table class="table table-hover table-responsive table-bordered table-striped   mb-0 " id="myTable">
-
-                <thead>
-                    <tr class="header  bg-fixed border border-bottom fw-bold">
-                        <th class=" fw-bold align-middle">#</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.HolderName)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.PhoneNumber)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.NationalId)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.CreatedAt)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Job)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.IsActive)</th>
-                        <th style="width:20px" class="fw-bold align-middle"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr class="align-top bg-white">
-
-                            <td class="text-break text-capitalize ">@item.Id</td>
-                            <td class="text-break text-capitalize "> @item.HolderName</td>
-                            <td class="text-break text-capitalize ">@item.PhoneNumber</td>
-                            <td class="text-break text-capitalize ">  @item.NationalId</td>
-                            <td class="text-break text-capitalize ">  @item.CreatedAt</td>
-                            <td class="text-break text-capitalize   "> @item.Job </td>
-                            @{
-                                if (@item.IsActive)
-                                {
-                                    <td class="text-break text-capitalize text-center "> <div class=""><label class="activeLabel bg-success"></label></div> </td>
-                                }
-                                else
-                                {
-                                    <td class="text-break text-capitalize text-center "> <div class=""><label class="activeLabel bg-danger"></label></div> </td>
-                                }
-                            }
-
-                            <td class="align-middle center">
-                                <div class=" dropend">
-                                    <a class="" href="#" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                        @Icon.Bars.Render()
+                    <td class="align-middle center">
+                        <div class=" dropdown">
+                            <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                @Icon.Bars.Render()
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Accounts.Details)?id=@item.Id">
+                                        Details @Icon.Info.Render()
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="Details"><div class="d-flex justify-content-between"> <span>Details</span>  <span><i class="fa-solid fa-info"></i> </span> </div> </a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="Deletet"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></a></li>
-                                        <li><a class="dropdown-item btn-link" asp-route-id="@item.Id" asp-controller="Accounts" asp-action="Update"><div class="d-flex justify-content-between"> <span>Update</span>  <span><i class="fa-solid fa-pen-to-square"></i> </span> </div></a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="d-flex justify-content-center">
-        <div class="container col-sm-12 col-lg-4 col-md-4">
-            <ul class="pagination d-flex justify-content-between">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </div>
-    </div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content-between" onclick="showDeletionModal('Are you sure you want to delete account `@item.HolderName`?', @item.Id)">
+                                        Delete @Icon.TrashCan.Render()
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Accounts.Update)?id=@item.Id">
+                                        Update @Icon.Pen.Render()
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
-@section scripts{
-<script>
-        $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#accountManagement").addClass('active');
-    });
-     document.getElementById("nav-system-name").innerHTML="Employees Management";
-      document.getElementById("media-system-name").innerHTML="Employees Management";
+<partial name="Layout/Paginator" model="@Model.Params.Page" />
 
-    $(".scrollmenu a").on('click',function(){
-        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-
-    });
-    $(".manage-ment ul li a").on('click',function(){
-        $(".scrollmenu a.actives").removeClass('actives');
-        $("#animalGroups").addClass('actives');
-
-    });
-    $("#users").removeClass('actives');
-        $("#userMedia").removeClass('actives');
-         $("#accounts").addClass('actives');
-         $("#accountMedia").addClass('actives');
-</script>
-}
+@await Html.DeleteDialogAsync()

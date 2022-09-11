@@ -3,15 +3,10 @@ using APSS.Domain.Repositories;
 using APSS.Domain.Repositories.Extensions;
 using APSS.Domain.Services;
 using APSS.Domain.Services.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APSS.Application.App
 {
-    internal class ConfirmService : IConfirmSrevice
+    public class ConfirmService : IConfirmService
     {
         private readonly IPermissionsService _permissionsSvc;
         private readonly IUnitOfWork _uow;
@@ -156,8 +151,6 @@ namespace APSS.Application.App
             return _uow.LandProducts.Query()
                 .Include(u => u.AddedBy)
                 .Include(u => u.Unit)
-                .Include(s => s.ProducedIn)
-                .Include(p => p.Producer)
                 .Include(s => s.AddedBy.SupervisedBy!)
                 .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == false);
         }
@@ -172,8 +165,6 @@ namespace APSS.Application.App
             return _uow.LandProducts.Query()
                 .Include(u => u.AddedBy)
                 .Include(u => u.Unit)
-                .Include(s => s.ProducedIn)
-                .Include(p => p.Producer)
                 .Include(s => s.AddedBy.SupervisedBy!)
                 .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == null);
         }
@@ -189,6 +180,29 @@ namespace APSS.Application.App
                 .Include(u => u.AddedBy)
                 .Include(s => s.AddedBy.SupervisedBy!)
                 .Where(p => p.AddedBy.SupervisedBy!.Id == account.User.Id && p.IsConfirmed == true);
+        }
+
+        public async Task<IQueryBuilder<AnimalGroup>> GetAllAnimal(long accountId)
+        {
+            var account = await _uow.Accounts.Query()
+               .Include(u => u.User)
+               .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
+            return _uow.AnimalGroups.Query()
+                .Include(o => o.OwnedBy)
+                .Where(u => u.OwnedBy.SupervisedBy!.Id == account.User.Id)
+                .Where(c => c.IsConfirmed == null);
+        }
+
+        public async Task<IQueryBuilder<AnimalProduct>> GetAllAnimalProduct(long accountId)
+        {
+            var account = await _uow.Accounts.Query()
+               .Include(u => u.User)
+               .FindWithAccessLevelValidationAsync(accountId, AccessLevel.Group, PermissionType.Read);
+            return _uow.AnimalProducts.Query()
+                .Include(o => o.Producer.OwnedBy)
+                .Include(o => o.Producer.OwnedBy.SupervisedBy!)
+                .Where(u => u.Producer.OwnedBy!.SupervisedBy!.Id == account.User.Id)
+                .Where(c => c.IsConfirmed == null);
         }
     }
 }

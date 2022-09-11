@@ -12,6 +12,7 @@ using APSS.Infrastructure.Services;
 using APSS.Web.Dtos.Profilies;
 using APSS.Web.Mvc.Areas;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Filters;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +45,7 @@ svc.AddScoped<IAnimalService, AnimalService>();
 svc.AddScoped<ILandService, LandService>();
 svc.AddScoped<IPopulationService, PopulationService>();
 svc.AddScoped<ISurveysService, SurveysService>();
+svc.AddScoped<IConfirmService, ConfirmService>();
 svc.AddTransient<ISetupService, SetupService>();
 
 // Auth service
@@ -73,19 +75,26 @@ var app = builder.Build();
 // Environmen-dependent settings
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     app.UseHttpsRedirection();
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseStatusCodePagesWithReExecute("/Error/_{0}");
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 #region Routes
+
+// Error area
+app.MapAreaControllerRoute(
+    name: Areas.Error,
+    areaName: Areas.Error,
+    pattern: "{controller}/{action=Index}");
 
 // Auth area
 app.MapAreaControllerRoute(
@@ -104,7 +113,7 @@ foreach (var area in Areas.Dashboard)
     app.MapAreaControllerRoute(
         name: area,
         areaName: area,
-        pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}");
+        pattern: $"{{area:exists}}/{{controller={area}}}/{{action=Index}}/{{id?}}").RequireAuthorization();
 }
 
 // Redirects
