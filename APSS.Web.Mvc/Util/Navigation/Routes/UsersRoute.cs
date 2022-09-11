@@ -2,28 +2,18 @@
 
 namespace APSS.Web.Mvc.Util.Navigation.Routes;
 
-public sealed class UserManagmentRoute : CrudRoute
+public sealed class UsersRoute : CrudRoute
 {
-    public UserManagmentRoute(IRoute parent) : base(parent, "User Managment", "Users", icon: Icon.Users)
+    public UsersRoute(IRoute parent) : base(parent, "User Managment", "Users", icon: Icon.Users)
     {
-        Users = new UsersRoute(this);
+        Users = FromCrudController<UsersController>("Users", Icon.Users);
         Accounts = new AccountsRoute(this);
     }
 
-    public UsersRoute Users { get; init; }
+    public CrudRoute Users { get; init; }
     public AccountsRoute Accounts { get; init; }
 
     public override IRoute DefaultRoute => Users;
-}
-
-public sealed class UsersRoute : CrudRoute
-{
-    public UsersRoute(IRoute? parent) : base(parent, "Users", "Users", icon: Icon.Users)
-    {
-        SubUsers = new Route(this, "Sub-users", "SubUsers");
-    }
-
-    public IRoute SubUsers { get; init; }
 }
 
 public sealed class AccountsRoute : CrudRoute

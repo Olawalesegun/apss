@@ -24,25 +24,14 @@ namespace APSS.Web.Mvc.Areas.Animals.Controllers
 
         public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
-            //var unitDto = new List<AnimalProductUnitDto>();
             var units = await (await _aps.GetAnimalProductUnitAsync(User.GetAccountId()))
-                 .Where(u => u.Name.Contains(args.Query))
-            .Page(args.Page, args.PageLength)
-            .AsAsyncEnumerable()
-            .Select(_mapper.Map<AnimalProductUnitDto>)
-            .AsAsyncEnumerable()
-            .ToListAsync();
-            /*foreach (var unit in units)
-            {
-                unitDto.Add(new AnimalProductUnitDto
-                {
-                    Id = unit.Id,
-                    Name = unit.Name,
-                    CreatedAt = unit.CreatedAt,
-                    ModifiedAt = unit.ModifiedAt
-                });
-            }*/
-
+                .Where(u => u.Name.Contains(args.Query ?? string.Empty))
+                .Page(args.Page, args.PageLength)
+                .AsAsyncEnumerable()
+                .Select(_mapper.Map<AnimalProductUnitDto>)
+                .AsAsyncEnumerable()
+                .ToListAsync();
+            
             return View(new CrudViewModel<AnimalProductUnitDto>(units, args));
         }
 
