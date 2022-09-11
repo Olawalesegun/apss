@@ -69,7 +69,7 @@ public class UsersController : Controller
     {
         await _userService.RemoveAsync(User.GetAccountId(), id);
 
-        return await Index(new FilteringParameters());
+        return LocalRedirect(Routes.Dashboard.Users.Users.FullPath);
     }
 
     [HttpGet]
