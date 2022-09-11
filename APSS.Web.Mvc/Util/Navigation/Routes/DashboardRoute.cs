@@ -8,7 +8,7 @@ public sealed class DashboardRoute : Route
     public DashboardRoute(IRoute parent) : base(parent, "Dashboard", string.Empty)
     {
         Home = FromController<HomeController>(icon: Icon.Home);
-        Users = new UsersRoute(this);
+        Users = new UserManagmentRoute(this);
         Animals = new AnimalsRoute(this);
         Lands = new LandsRoute(this);
         Surveys = new SurveysRoute(this);
@@ -17,7 +17,7 @@ public sealed class DashboardRoute : Route
     }
 
     public IRoute Home { get; init; }
-    public UsersRoute Users { get; init; }
+    public UserManagmentRoute Users { get; init; }
     public AnimalsRoute Animals { get; init; }
     public LandsRoute Lands { get; init; }
     public SurveysRoute Surveys { get; init; }
