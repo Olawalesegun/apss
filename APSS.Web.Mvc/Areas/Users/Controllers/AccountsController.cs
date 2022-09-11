@@ -31,7 +31,7 @@ public class AccountsController : Controller
     {
         var ret = await (await _accountsService
             .GetAccountsAsync(User.GetAccountId(), id ?? User.GetUserId()))
-            .Where(u => u.HolderName.Contains(args.Query))
+            .Where(u => u.HolderName.Contains(args.Query ?? string.Empty))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
             .Select(_mapper.Map<AccountDto>)

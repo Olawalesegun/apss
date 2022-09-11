@@ -32,7 +32,7 @@ public class UsersController : Controller
     public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
     {
         var ret = await (await _userService.GetSubuserAsync(User.GetAccountId()))
-            .Where(u => u.Name.Contains(args.Query))
+            .Where(u => u.Name.Contains(args.Query ?? string.Empty))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
             .Select(_mapper.Map<UserDto>)
