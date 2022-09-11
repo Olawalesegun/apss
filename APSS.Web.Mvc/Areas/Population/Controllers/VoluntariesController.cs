@@ -9,6 +9,7 @@ using APSS.Web.Mvc.Auth;
 using APSS.Web.Dtos.Parameters;
 using APSS.Web.Mvc.Models;
 using AutoMapper;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
@@ -59,7 +60,7 @@ public class VoluntariesController : Controller
         await _populationSvc
             .AddVoluntaryAsync(User.GetAccountId(), Voluntary.IndividualId, Voluntary.Name, Voluntary.Field);
 
-        return RedirectToAction(nameof(Index), new { id = Voluntary.IndividualId });
+        return LocalRedirect(Routes.Dashboard.Population.Voluntaries.FullPath + $"?id={Voluntary.IndividualId}");
     }
 
     //GET:VoluntaryController/UpdateVoluntary/5
@@ -91,7 +92,7 @@ public class VoluntariesController : Controller
                 v.Name = Voluntary.Name;
                 v.Field = Voluntary.Field;
             });
-        return RedirectToAction(nameof(Index), new { id = Voluntary.IndividualId });
+        return LocalRedirect(Routes.Dashboard.Population.Voluntaries.FullPath + $"?id={Voluntary.IndividualId}");
     }
 
     public async Task<IActionResult> ConfirmDeleteVoluntary(long id)
@@ -115,6 +116,6 @@ public class VoluntariesController : Controller
     {
         var v = await _populationSvc.GetVoluntaryAsync(User.GetAccountId(), id);
         await _populationSvc.RemoveVoluntaryAsync(User.GetAccountId(), id);
-        return RedirectToAction(nameof(Index), new { id = v.OfferedBy.Id });
+        return LocalRedirect(Routes.Dashboard.Population.Voluntaries.FullPath + $"?id={v.OfferedBy.Id}");
     }
 }

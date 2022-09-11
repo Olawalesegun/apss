@@ -6,6 +6,7 @@ using APSS.Web.Mvc.Auth;
 using APSS.Web.Dtos.Parameters;
 using AutoMapper;
 using APSS.Web.Mvc.Models;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
@@ -56,7 +57,7 @@ public class SkillsController : Controller
         await _populationSvc
             .AddSkillAsync(User.GetAccountId(), skill.IndividualId, skill.Name, skill.Field, skill.Description);
 
-        return RedirectToAction(nameof(Index), new { id = skill.IndividualId });
+        return LocalRedirect(Routes.Dashboard.Population.Skills.FullPath + $"?id={skill.IndividualId}");
     }
 
     //GET:SkillController/UpdateSkill/5
@@ -91,7 +92,7 @@ public class SkillsController : Controller
                 s.Field = skill.Field;
             });
         long id = skill.IndividualId;
-        return RedirectToAction(nameof(Index), new { id = skill.IndividualId });
+        return LocalRedirect(Routes.Dashboard.Population.Skills.FullPath + $"?id={skill.IndividualId}");
     }
 
     public async Task<IActionResult> ConfirmDeleteSkill(long id)
@@ -116,6 +117,6 @@ public class SkillsController : Controller
     {
         var s = await _populationSvc.GetSkillAsync(User.GetAccountId(), id);
         await _populationSvc.RemoveSkillAsync(User.GetAccountId(), id);
-        return RedirectToAction(nameof(Index), new { id = s.BelongsTo.Id });
+        return LocalRedirect(Routes.Dashboard.Population.Skills.FullPath + $"?id={s.BelongsTo.Id}");
     }
 }

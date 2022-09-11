@@ -24,6 +24,7 @@ public class IndividualsController : Controller
     }
 
     // GET: Individual/GetIndividuals
+    [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Read)]
     public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
     {
         var ret = await (await _populationSvc.GetIndividuals(User.GetAccountId()))
@@ -37,6 +38,7 @@ public class IndividualsController : Controller
     }
 
     // GET: IndividualController/AddIndividual/5
+    [ApssAuthorized(AccessLevel.Group, PermissionType.Create)]
     public IActionResult Add(long id)
     {
         var individual = new IndividualAddForm
@@ -49,6 +51,7 @@ public class IndividualsController : Controller
     // POST: IndividualController/AddIndividual
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [ApssAuthorized(AccessLevel.Group, PermissionType.Create)]
     public async Task<IActionResult> Add([FromForm] IndividualAddForm individual)
     {
         if (!ModelState.IsValid)
@@ -57,11 +60,13 @@ public class IndividualsController : Controller
         }
         await _populationSvc.AddIndividualAsync(
             User.GetAccountId(), individual.FamilyId, individual.Name, individual.Address, (IndividualSex)individual.Sex);
+        TempData["success"] = "Individual Added successfully";
 
         return RedirectToAction(nameof(Index));
     }
 
     // Get: IndividualController/UpdateIndividual/5
+    [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
     public async Task<IActionResult> Update(long id)
     {
         var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
@@ -116,35 +121,30 @@ public class IndividualsController : Controller
                 i.IsParent = individual.Isparent;
                 i.IsProvider = individual.Isprovider;
             });
+        TempData["success"] = "Individual Updated successfully";
 
         return RedirectToAction(nameof(Index));
     }
 
     // GET: IndividualController/ConfirmDeleteIndividual/5
-    public async Task<IActionResult> Delete(long id)
+    [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
+    public IActionResult Delete()
     {
-        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
-        var individualDto = new IndividualDto
-        {
-            Id = individual.Id,
-            Name = individual.Name,
-            Job = individual.Job!,
-            Address = individual.Address,
-            PhonNumber = individual.PhoneNumber!,
-            Sex = individual.Sex
-        };
-        return View(individualDto);
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: IndividualController/DeleteIndividual/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
     public async Task<IActionResult> Delete(long id, IndividualDto individual)
     {
         await _populationSvc.RemoveIndividualAsync(User.GetAccountId(), id);
+        TempData["success"] = "Individual deleted successfully";
         return RedirectToAction(nameof(Index));
     }
 
+    [ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
     public async Task<IActionResult> Details(long id)
     {
         var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);

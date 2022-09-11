@@ -37,6 +37,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         // GET: FamilyController/GetFamilies
 
         [HttpGet]
+        [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Read)]
         public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
             var ret = await (await _populationSvc.GetFamilies(User.GetAccountId()))
@@ -50,6 +51,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         }
 
         // GET: FamilyController/FamilyDetails/5
+        [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Read)]
         public async Task<IActionResult> Details(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
@@ -58,7 +60,9 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         }
 
         // GET: FamilyController/GetFamilyIndividuals/5
-        public async Task<IActionResult> GetFamilyIndividuals(long id)
+        [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Read)]
+        [HttpGet, ActionName("GetAll")]
+        public async Task<IActionResult> GetAll(long id)
         {
             List<FamilyIndividualGetDto> familyindividualsDto = new List<FamilyIndividualGetDto>();
             var familyindividuals = await _populationSvc
@@ -80,6 +84,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         }
 
         // GET: FamilyController/AddFamily
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Create)]
         public IActionResult Add()
         {
             return View();
@@ -88,6 +93,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         // POST: FamilyController/AddFamily
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Create)]
         public async Task<IActionResult> Add([FromForm] FamilyAddForm family)
         {
             if (!ModelState.IsValid)
@@ -95,10 +101,13 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
                 return View(family);
             }
             await _populationSvc.AddFamilyAsync(User.GetAccountId(), family.Name, family.LivingLocation);
+            TempData["success"] = "Family Added successfully";
+
             return RedirectToAction(nameof(Index));
         }
 
         // GET: FamilyController/EditFamily/5
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
         public async Task<IActionResult> Update(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
@@ -115,6 +124,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         // POST: FamilyController/EditFamily/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
         public async Task<IActionResult> Update([FromForm] FamilyEditForm familynew)
         {
             if (!ModelState.IsValid)
@@ -129,20 +139,16 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
                    f.Name = familynew.Name;
                    f.LivingLocation = familynew.LivingLocation;
                });
+            TempData["success"] = "Family Updated successfully";
 
             return RedirectToAction(nameof(Index));
         }
 
         // GET: FamilyController/DeleteFamily/5
-        public async Task<IActionResult> Delete(long id)
+        [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
+        public IActionResult Delete(long id)
         {
-            var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
-            if (family == null)
-            {
-                return View();
-            }
-            var familydto = _mapper.Map<FamilyDto>(family);
-            return View(familydto);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: FamilyController/DeleteFamily/5
@@ -152,6 +158,8 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         {
             if (id == family.Id)
                 await _populationSvc.RemoveFamilyAsync(User.GetAccountId(), id);
+            TempData["success"] = "Family deleted successfully";
+
             return RedirectToAction(nameof(Index));
         }
     }
