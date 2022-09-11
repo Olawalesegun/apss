@@ -1,25 +1,25 @@
 ﻿@model APSS.Web.Dtos.ConfirmationDto
 
- <nav class="navbar navbar-light bg-light navbar-expand-lg">
-        <div class="container-fluid justify-content-between">
-            <a class="navbar-brand" href="#">Lands</a>
+<nav class="navbar navbar-light bg-light navbar-expand-lg">
+    <div class="container-fluid justify-content-between">
+        <a class="navbar-brand" href="#">Animals</a>
 
-            <div class=" d-flex gap-2">
-                <div class="d-flex justify-content-end">
-    <div class="btn-group dropstart">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            Action
-        </button>
+        <div class=" d-flex gap-2">
+            <div class="d-flex justify-content-end">
+                <div class="btn-group dropstart">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Action
+                    </button>
 
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="@Routes.Dashboard.Animals.Confirmation.FullPath">Animal Group</a></li>
-            <li><a class="dropdown-item" asp-action="Lands" asp-controller="Confirmations">Animals</a></li>
-        </ul>
-    </div>
-</div>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="@Routes.Dashboard.Animals.Confirmation.FullPath">Animal Group</a></li>
+                        <li><a class="dropdown-item" asp-action="Lands" asp-controller="Confirmations">Lands</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
 <div class="my-2 mx-2">
     <div class="row row-cols-1 row-cols-md-2 g-4 ">
