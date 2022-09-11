@@ -27,6 +27,14 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return View(confirm);
         }
 
+        public async Task<IActionResult> ConfirmLand(long id, bool value)
+        {
+            var land = await _confirm.ConfirmLandAsync(User.GetAccountId(), id, value);
+            TempData["Action"] = "Confirm";
+            TempData["success"] = "Successfully";
+            return RedirectToAction("Lands");
+        }
+
         public async Task<IActionResult> ConfirmAnimalGroup(long id)
         {
             var animal = await (await _confirm.GetAllAnimal(User.GetAccountId())).Where(u => u.IsConfirmed == null).Include(o => o.OwnedBy).AsAsyncEnumerable().ToListAsync();
@@ -86,7 +94,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> ConfirmAnimal(long id, bool value)
         {
-            // var animal = await _confirm.ConfirmAnimalGroup(User.GetAccountId(), id, value);
+            var animal = await _confirm.ConfirmAnimalGroup(User.GetAccountId(), id, value);
 
             TempData["Action"] = "Add Erea";
             TempData["success"] = $"{id } null";
@@ -95,7 +103,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> ConfirmProduct(long id, bool value)
         {
-            // var confrom = await _confirm.ConfirmAnimalProduct(User.GetAccountId(), id, value);
+            var confrom = await _confirm.ConfirmAnimalProduct(User.GetAccountId(), id, value);
             return RedirectToAction("Index");
         }
 
