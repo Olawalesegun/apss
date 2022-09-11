@@ -15,7 +15,7 @@
         <form method="post" action="@Routes.Auth.SignIn.FullPath" asp-antiforgery="true" class="needs-validation" novalidate>
             <!-- ID input -->
             <div class="input-group has-validation mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <span class="input-group-text">@Icon.Hashtag.Render()</span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" placeholder="Account ID" asp-for="AccountId" pattern="^[0-9]{6,}$" aria-describedby="accountIdValidation">
                     <label>Account ID</label>
@@ -25,7 +25,7 @@
 
             <!-- Password input -->
             <div class="input-group has-validation mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                <span class="input-group-text">@Icon.Lock.Render()</span>
                 <div class="form-floating flex-grow-1">
                     <input type="password" class="form-control" placeholder="Enter your password" asp-for="Password" pattern="^.{6,}$">
                     <label>Password</label>

@@ -53,6 +53,7 @@ public class AuthController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [TypeFilter(typeof(ExceptionHandlingFilter<InvalidAccountIdOrPasswordException>))]
+    [TypeFilter(typeof(ExceptionHandlingFilter<DisabledAccountException>))]
     public async Task<IActionResult> Login([FromForm] SignInForm form, [FromQuery] string? returnUrl)
     {
         if (!ModelState.IsValid)

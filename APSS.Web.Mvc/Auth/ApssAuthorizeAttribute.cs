@@ -32,7 +32,7 @@ public class ApssAuthorizedAttribute : AuthorizeAttribute, IAuthorizationFilter
     }
 
     public bool AreAccessLevelsValid(ClaimsPrincipal user)
-        => _accessLevel.AsEnumerable().All(user.IsInLevel);
+        => _accessLevel.AsEnumerable().Any(user.IsInLevel);
 
     public bool ArePermissionsValid(ClaimsPrincipal user)
     {

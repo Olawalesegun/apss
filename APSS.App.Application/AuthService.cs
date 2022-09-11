@@ -52,6 +52,9 @@ public sealed class AuthService : IAuthService
         if (session.ValidUntil < DateTime.Now)
             throw new ExpiredSessionException(accountId, session.Id);
 
+        if (!session.Owner.IsActive)
+            throw new DisabledAccountException(accountId);
+
         session = UpdateSessionWith(accountId, session, info);
 
         _uow.Sessions.Update(session);
@@ -69,6 +72,9 @@ public sealed class AuthService : IAuthService
 
         if (account is null || !await _cryptoHashSvc.VerifyAsync(password, account.PasswordHash, account.PasswordSalt))
             throw new InvalidAccountIdOrPasswordException();
+
+        if (!account.IsActive)
+            throw new DisabledAccountException(accountId);
 
         var validSessions = await ValidSessionsOf(accountId)
             .OrderBy(s => s.CreatedAt)
