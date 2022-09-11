@@ -236,24 +236,6 @@ public interface ILandService
     Task<ProductExpense> RemoveLandProductExpenseAsync(long accountId, long productExpenseId);
 
     /// <summary>
-    /// Asynchronously confirms or decline land information
-    /// </summary>
-    /// <param name="accountId">The account id of the land owner supervisor</param>
-    /// <param name="landId">The id of the land</param>
-    /// <param name="confirm">The status of the land</param>
-    /// <returns>The confimred or declined land</returns>
-    Task<Land> ConfirmLandAsync(long accountId, long landId, bool confirm);
-
-    /// <summary>
-    /// Asynchronously confirms or decline land product information
-    /// </summary>
-    /// <param name="accountId">The account id of the land product owner supervisor</param>
-    /// <param name="landProductId">The id of the land product</param>
-    /// <param name="confirm">The status of the land</param>
-    /// <returns>The confimred or declined land</returns>
-    Task<LandProduct> ConfirmProductAsync(long accountId, long landProductId, bool confirm);
-
-    /// <summary>
     /// Asynchronously gets the user`s land product expense by the expense id
     /// </summary>
     /// <param name="accountId">The account id of the user who want to get the product expense</param>
