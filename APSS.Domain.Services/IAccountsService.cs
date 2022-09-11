@@ -100,5 +100,14 @@ public interface IAccountsService
     /// <returns></returns>
     Task<IQueryBuilder<Account>> GetAccountsAsync(long accountId, long userId);
 
+    /// <summary>
+    /// Asynchronously updates an account's password
+    /// </summary>
+    /// <param name="superUserAccountId">The id of the account to make the change with</param>
+    /// <param name="accountId">The id of the account to change its passowrd</param>
+    /// <param name="password">The new password</param>
+    /// <returns></returns>
+    Task<Account> UpdatePasswordAsync(long superUserAccountId, long accountId, string password);
+
     #endregion Public Methods
 }

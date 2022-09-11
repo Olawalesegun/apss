@@ -135,6 +135,19 @@ public sealed class AccountsService : IAccountsService
         return _uow.Accounts.Query().Where(a => a.User.Id == userId);
     }
 
+    /// <inheritdoc/>
+    public async Task<Account> UpdatePasswordAsync(long superUserAccountId, long accountId, string password)
+    {
+        var account = await GetAccountAsync(superUserAccountId, accountId);
+
+        (account.PasswordHash, account.PasswordSalt) = await GeneratePasswordPairAsync(password);
+
+        _uow.Accounts.Update(account);
+        await _uow.CommitAsync();
+
+        return account;
+    }
+
     #endregion Public Methods
 
     #region Private Methods
@@ -147,15 +160,14 @@ public sealed class AccountsService : IAccountsService
         bool isActive,
         IAsyncDatabaseTransaction? tx = null)
     {
-        var passwordSalt = _rndSvc.NextBytes(PASSWORD_SALT_LENGTH).ToArray();
-        var passwordHash = await _cryptoHashSvc.HashAsync(Encoding.UTF8.GetBytes(password), passwordSalt);
+        var (passwordHash, passwordSalt) = await GeneratePasswordPairAsync(password);
 
         var account = new Account
         {
             User = owner,
             HolderName = holderName,
-            PasswordHash = Convert.ToBase64String(passwordHash),
-            PasswordSalt = Convert.ToBase64String(passwordSalt),
+            PasswordHash = passwordHash,
+            PasswordSalt = passwordSalt,
             Permissions = permissions,
             IsActive = isActive,
         };
@@ -165,6 +177,14 @@ public sealed class AccountsService : IAccountsService
         await _uow.CommitAsync(tx);
 
         return account;
+    }
+
+    private async Task<(string Hash, string Salt)> GeneratePasswordPairAsync(string password)
+    {
+        var passwordSalt = _rndSvc.NextBytes(PASSWORD_SALT_LENGTH).ToArray();
+        var passwordHash = await _cryptoHashSvc.HashAsync(Encoding.UTF8.GetBytes(password), passwordSalt);
+
+        return (Convert.ToBase64String(passwordHash), Convert.ToBase64String(passwordSalt));
     }
 
     #endregion Private Methods
