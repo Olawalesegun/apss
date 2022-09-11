@@ -41,6 +41,15 @@ public class AccountsController : Controller
     }
 
     [HttpGet]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Read)]
+    public async Task<IActionResult> Details(long? id)
+    {
+        var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id ?? User.GetAccountId());
+
+        return View(_mapper.Map<AccountDto>(account));
+    }
+
+    [HttpGet]
     [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Create)]
     public IActionResult Add(long id)
         => View(new AddAccountForm { UserId = id });
