@@ -59,6 +59,7 @@ public class VoluntariesController : Controller
 
         await _populationSvc
             .AddVoluntaryAsync(User.GetAccountId(), Voluntary.IndividualId, Voluntary.Name, Voluntary.Field);
+        TempData["success"] = "Voluntary Added successfully";
 
         return LocalRedirect(Routes.Dashboard.Population.Voluntaries.FullPath + $"?id={Voluntary.IndividualId}");
     }
@@ -92,21 +93,9 @@ public class VoluntariesController : Controller
                 v.Name = Voluntary.Name;
                 v.Field = Voluntary.Field;
             });
+        TempData["success"] = "voluntary Updated successfully";
+
         return LocalRedirect(Routes.Dashboard.Population.Voluntaries.FullPath + $"?id={Voluntary.IndividualId}");
-    }
-
-    public async Task<IActionResult> ConfirmDeleteVoluntary(long id)
-    {
-        var Voluntary = await _populationSvc.GetVoluntaryAsync(User.GetAccountId(), id);
-        var Voluntarydto = new VoluntaryDto
-        {
-            Id = Voluntary.Id,
-            Name = Voluntary.Name,
-            Field = Voluntary.Field,
-            OfferedBy = Voluntary.OfferedBy
-        };
-
-        return View(Voluntarydto);
     }
 
     // POST: VoluntaryController/DeleteVoluntary/5
@@ -116,6 +105,8 @@ public class VoluntariesController : Controller
     {
         var v = await _populationSvc.GetVoluntaryAsync(User.GetAccountId(), id);
         await _populationSvc.RemoveVoluntaryAsync(User.GetAccountId(), id);
+        TempData["success"] = "Voluntary Deleted successfully";
+
         return LocalRedirect(Routes.Dashboard.Population.Voluntaries.FullPath + $"?id={v.OfferedBy.Id}");
     }
 }
