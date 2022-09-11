@@ -3,6 +3,7 @@ using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
@@ -11,14 +12,13 @@ namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 public class QuestionsController : Controller
 {
     private readonly ISurveysService _surveysService;
-    private readonly long id;
 
     public QuestionsController(ISurveysService surveysService)
     {
         _surveysService = surveysService;
     }
 
-    public IActionResult AddQuestion(long id)
+    public IActionResult Add(long id)
     {
         var questiondto = new QuestionAddForm
         {
@@ -30,7 +30,7 @@ public class QuestionsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddQuestion([FromForm] QuestionAddForm questionDto)
+    public async Task<IActionResult> Add([FromForm] QuestionAddForm questionDto)
     {
         if (!ModelState.IsValid)
         {
@@ -63,10 +63,10 @@ public class QuestionsController : Controller
                 questionDto.Text, questionDto.IsRequired,
                 questionDto.CanMultiSelect!, questionDto.CandidateAnswers!.ToList());
         }
-        return RedirectToAction(nameof(GetQuestionsSurvey), new { id = questionDto.SurveyId });
+        return View("byUser", questionDto.SurveyId);
     }
 
-    public async Task<IActionResult> GetQuestionsSurvey(long id)
+    public async Task<IActionResult> GetAll(long id)
     {
         var questions = await _surveysService.GetQuestionsSurveysAsync(User.GetAccountId(), id);
         List<QuestionDto> questionsdto = new List<QuestionDto>();
@@ -87,23 +87,23 @@ public class QuestionsController : Controller
         return View(questionsdto);
     }
 
-    public IActionResult EditQuestion()
+    public IActionResult Update()
     {
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult EditQuestion(IFormCollection form)
+    public IActionResult Update(IFormCollection form)
     {
         return View();
     }
 
     [HttpPost, ActionName("DeleteQuestion")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteQuestion(long id)
+    public async Task<IActionResult> Delete(long id)
     {
         await _surveysService.Removequestion(User.GetAccountId(), id);
-        return RedirectToAction(nameof(GetQuestionsSurvey));
+        return LocalRedirect(Routes.Dashboard.Surveys.Surveys.byUser.FullPath);
     }
 }

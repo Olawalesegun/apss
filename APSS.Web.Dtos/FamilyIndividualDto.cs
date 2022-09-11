@@ -6,11 +6,11 @@ namespace APSS.Web.Dtos
     {
         [Display(Name = "Family")]
         [Required(ErrorMessage = "Field Family is required")]
-        public FamilyDto Family { get; set; } = null!;
+        public string Family { get; set; } = null!;
 
         [Display(Name = "Individual")]
         [Required(ErrorMessage = "Field Individual is required")]
-        public IndividualDto Individual { get; set; } = null!;
+        public string Individual { get; set; } = null!;
 
         [Display(Name = "Proveder")]
         public bool IsProvider { get; set; } = false;

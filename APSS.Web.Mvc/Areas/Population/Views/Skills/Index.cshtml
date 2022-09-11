@@ -1,0 +1,56 @@
+﻿
+@model CrudViewModel<SkillDto>
+
+        <div class="table-rsponsive">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>@Icon.Hashtag.Render()</th>
+                <th>@Html.DisplayNameFor(m => m.First().Name)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Field)</th>
+                <th>@Html.DisplayNameFor(m => m.First().BelongsTo)</th>
+                <th>@Html.DisplayNameFor(m => m.First().CreatedAt)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Field</td>
+                    <td>@item.BelongsTo.Name</td>
+                    <td>@item.CreatedAt</td>
+
+                    <td class="align-middle center">
+                        <div class=" dropdown">
+                            <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                @Icon.Bars.Render()
+                            </a>
+                            <ul class="dropdown-menu">
+                               
+                                <li>
+                                    <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Skill `@item.Name`?', @item.Id)">
+                                        Delete @Icon.TrashCan.Render()
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content"  href="@(Routes.Dashboard.Population.Skills.Update)?id=@item.Id">
+                                        Update @Icon.Pen.Render()
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<partial name="Layout/Paginator" model="@Model.Params.Page" />
+
+@await Html.DeleteDialogAsync()

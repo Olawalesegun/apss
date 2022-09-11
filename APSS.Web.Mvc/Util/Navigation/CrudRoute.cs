@@ -16,6 +16,7 @@ public class CrudRoute : Route, ICrudRoute
         Details = new Route(this, "Show details", "Details", icon: Icon.List, isNavigatable: false);
         byUser = new Route(this, "get items", "byUser", icon: Icon.List, isNavigatable: false);
         byLand = new Route(this, "get items", "byLand", icon: Icon.List, isNavigatable: false);
+        GetAll = new Route(this, "get items", "GetAll", icon: Icon.List, isNavigatable: false);
     }
 
     /// <inheritdoc/>
@@ -34,4 +35,5 @@ public class CrudRoute : Route, ICrudRoute
 
     public IRoute byUser { get; init; }
     public IRoute byLand { get; init; }
+    public IRoute GetAll { get; init; }
 }

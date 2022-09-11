@@ -12,15 +12,17 @@ public sealed class PopulationService : IPopulationService
 
     private readonly IPermissionsService _permissionsSvc;
     private readonly IUnitOfWork _uow;
+    private readonly IUsersService _usersSvc;
 
     #endregion Fields
 
     #region Public Constructors
 
-    public PopulationService(IUnitOfWork uow, IPermissionsService permissions)
+    public PopulationService(IUnitOfWork uow, IPermissionsService permissions, IUsersService usersSvc)
     {
         _uow = uow;
         _permissionsSvc = permissions;
+        _usersSvc = usersSvc;
     }
 
     #endregion Public Constructors
@@ -474,37 +476,6 @@ public sealed class PopulationService : IPopulationService
     #endregion Public Methods
 
     #region Private Methods
-
-    private async Task<int> GetSubuserDistanceAsync(long accountId, long subuserId)
-    {
-        var account = await _uow.Accounts.Query().Include(s => s.User).FindAsync(accountId);
-        var superuser = account.User;
-
-        if (superuser.AccessLevel == AccessLevel.Root)
-            return 0;
-
-        var subuser = await _uow.Users
-            .Query()
-            .Include(u => u.SupervisedBy!)
-            .FindAsync(subuserId);
-
-        if ((int)superuser.AccessLevel > (int)subuser.AccessLevel)
-            return -1;
-
-        for (int i = 0; ; ++i)
-        {
-            if (subuser.SupervisedBy is null)
-                return -1;
-
-            if (subuser.SupervisedBy.Id == superuser.Id)
-                return i;
-
-            subuser = await _uow.Users
-                .Query()
-                .Include(u => u.SupervisedBy!)
-                .FindAsync(subuser.SupervisedBy.Id);
-        }
-    }
 
     private Task<Account> GetAuthorizedGroupAccountAsync(long accountId, PermissionType permissions)
         => _uow.Accounts.Query()

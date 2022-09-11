@@ -87,9 +87,10 @@ public interface IAccountsService
     /// <summary>
     /// Asynchronously gets account details using ID
     /// </summary>
+    /// <param name="superUserAccountId">The id of the account to make the change with</param>
     /// <param name="accountId">The id of the account to get its data</param>
     /// <returns></returns>
-    IQueryBuilder<Account> GetAccountAsync(long accountId);
+    Task<Account> GetAccountAsync(long superUserAccountId, long accountId);
 
     /// <summary>
     /// Asynchronously gets accounts for a user
@@ -98,6 +99,15 @@ public interface IAccountsService
     /// <param name="userId">The id of the user to get accounts for</param>
     /// <returns></returns>
     Task<IQueryBuilder<Account>> GetAccountsAsync(long accountId, long userId);
+
+    /// <summary>
+    /// Asynchronously updates an account's password
+    /// </summary>
+    /// <param name="superUserAccountId">The id of the account to make the change with</param>
+    /// <param name="accountId">The id of the account to change its passowrd</param>
+    /// <param name="password">The new password</param>
+    /// <returns></returns>
+    Task<Account> UpdatePasswordAsync(long superUserAccountId, long accountId, string password);
 
     #endregion Public Methods
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using APSS.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos;
 
@@ -14,5 +15,5 @@ public class VoluntaryDto : BaseAuditbleDto
 
     [Display(Name = "Person")]
     [Required(ErrorMessage = "Field Person is required")]
-    public string IndividualName { get; set; } = null!;
+    public Individual OfferedBy { get; set; } = null!;
 }
