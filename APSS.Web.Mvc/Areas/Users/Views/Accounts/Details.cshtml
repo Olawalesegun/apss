@@ -1,11 +1,11 @@
 ﻿@model APSS.Web.Dtos.AccountDto
 
-<div class="card  shadow-0 border-0">
+<div class="card shadow-0 border-0">
     <div class="card-body ">
-        <h3 class="mt-1 mb-3">Employee Information </h3>
-        <table class="table user-view-table m-0 border ">
+        <h3 class="mt-1 mb-3">Account details</h3>
+        <table class="table user-view-table m-0 border">
             <tbody>
-                <tr class="">
+                <tr>
                     <th class="align-middle" style="width:30%">@Html.DisplayNameFor(m=>m.Id) </th>
                     <td>@Model.Id </td>
                 </tr>
@@ -43,8 +43,8 @@
                     }
                 </tr>
                 <tr>
-                    <th class="align-middle">@Html.DisplayNameFor(m=>m.PermissionTypeDto.Permissions) </th>
-                    <td>  @Model.PermissionTypeDto.Permissions </td>
+                    <th class="align-middle">@Html.DisplayNameFor(m=>m.Permissions.Permissions) </th>
+                    <td>@Model.Permissions.Permissions </td>
                 </tr>
                 <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m=>m.CreatedAt) </th>
