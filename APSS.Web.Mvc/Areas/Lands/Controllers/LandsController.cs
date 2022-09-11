@@ -171,7 +171,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
         public async Task<IActionResult> ConfirmLand(long id, bool value)
         {
-            await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
+            // await _landSvc.ConfirmLandAsync(User.GetAccountId(), id, value);
             TempData["success"] = value ? "Land confirmed successfully" : "Land declined successfully";
 
             //return LocalRedirect(Routes.Dashboard.Users.FullPath);
