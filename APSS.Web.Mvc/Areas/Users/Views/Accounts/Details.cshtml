@@ -62,36 +62,11 @@
             <a class="btn btn-outline-primary mx-1 my-2" asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="Update">
                 <i class="fa-solid fa-pen-to-square mx-2"> </i><span>Edit</span>
             </a>
-            <a class="btn btn-danger  mx-1 my-2" asp-route-id="@Model.Id" asp-controller="Accounts" asp-action="Delete"> <i class="fa-solid fa-trash-can mx-2"></i><span>Delete</span>  </a>
+            <buttn class="btn btn-danger mx-1 my-2" onclick="showDeletionModal('Are you sure you want to delete account `@Model.HolderName`?', @Model.Id)">
+                @Icon.TrashCan.Render(additionalClasses: "me-1") Delete
+            </buttn>
         </div>
     </div>
 </div>
 
-@section scripts{
-<script>
-        $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#accountManagement").addClass('active');
-    });
-     document.getElementById("nav-system-name").innerHTML="Employee Management";
-      document.getElementById("media-system-name").innerHTML="Employee Management";
-
-    $(".scrollmenu a").on('click',function(){
-        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-
-    });
-    $(".manage-ment ul li a").on('click',function(){
-        $(".scrollmenu a.actives").removeClass('actives');
-        $("#animalGroups").addClass('actives');
-
-    });
-    $("#users").removeClass('actives');
-       $("#lands").removeClass('actives');
-       $("#landProducts").removeClass('actives');
-        $("#confirmation").removeClass('actives');
-        $("#units").removeClass('actives');
-        $("#userMedia").removeClass('actives');
-         $("#accounts").addClass('actives');
-         $("#accountMedia").addClass('actives');
-</script>
-    }
+@await Html.DeleteDialogAsync()
