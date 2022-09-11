@@ -4,6 +4,8 @@ using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
 using APSS.Web.Mvc.Util.Navigation.Routes;
+using APSS.Web.Mvc.Models;
+using APSS.Web.Dtos.Parameters;
 
 namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 
@@ -18,25 +20,27 @@ public class SurveysController : Controller
     }
 
     // GET: Survey/GetSurveys
-    public async Task<ActionResult> Index()
+    [HttpGet]
+    public async Task<ActionResult> Index([FromQuery] FilteringParameters args)
     {
-        var surveys = await _surveySvc.GetAvailableSurveysAsync(User.GetAccountId());
-        List<SurveyDto> surveysDto = new();
-        foreach (var survey in await surveys.AsAsyncEnumerable().ToListAsync())
-        {
-            surveysDto.Add(
-                new SurveyDto
-                {
-                    Id = survey.Id,
-                    Name = survey.Name,
-                    ExpirationDate = survey.ExpirationDate,
-                    UserName = survey.CreatedBy.Name
-                });
-        }
-        return View("GetSurveys", surveysDto);
+        var ret = await (await _surveySvc.GetAvailableSurveysAsync(User.GetAccountId()))
+            .Where(s => s.Name.Contains(args.Query ?? string.Empty))
+            .Page(args.Page, args.PageLength)
+            .AsAsyncEnumerable()
+            .Select(s => new SurveyDto
+            {
+                Id = s.Id,
+                Name = s.Name,
+                ExpirationDate = s.ExpirationDate,
+                UserName = s.CreatedBy.Name
+            }).ToListAsync();
+
+
+        return View(new CrudViewModel<SurveyDto>(ret, args));
     }
 
     // GET: Survey/SurveyDetails/5
+    [HttpGet]
     public async Task<ActionResult> Details(long id)
     {
         var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
@@ -53,20 +57,20 @@ public class SurveysController : Controller
     }
 
     // GET: Survey/Add Survey
-    public ActionResult Add()
-    {
-        return View();
-    }
+    [HttpGet]
+    public ActionResult Add() => View();
 
     // POST: Survey/AddSurvey
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Add([FromForm] SurveyAddForm survey)
+    public async Task<ActionResult> Add([FromForm] SurveyAddForm form)
     {
         if (!ModelState.IsValid)
-            return View(survey);
-        await _surveySvc.CreateSurveyAsync(User.GetAccountId(), survey.Name, survey.ExpirationDate);
-        return RedirectToAction(nameof(Index));
+            return View(form);
+
+        await _surveySvc.CreateSurveyAsync(User.GetAccountId(), form.Name, form.ExpirationDate);
+
+        return LocalRedirect(Routes.Dashboard.Surveys.Surveys.FullPath);
     }
 
     [HttpPost, ActionName("ActiveSurvey")]
@@ -79,6 +83,7 @@ public class SurveysController : Controller
     }
 
     // GET: Survey/EditSurvey/5
+    [HttpGet]
     public async Task<ActionResult> Update(long id)
     {
         var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
@@ -89,40 +94,35 @@ public class SurveysController : Controller
             IsActive = survey.IsActive,
             ExpirationDate = survey.ExpirationDate
         };
+
         return View(surveyform);
     }
 
     // POST: Survey/EditSurvey/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Update([FromForm] SurveyEditForm survey)
+    public async Task<ActionResult> Update([FromForm] SurveyEditForm form)
     {
         if (!ModelState.IsValid)
-        {
-            return View(survey);
-        }
+            return View(form);
 
-        await _surveySvc.UpdateSurveyAsync(User.GetAccountId(), survey.Id, s =>
+        await _surveySvc.UpdateSurveyAsync(User.GetAccountId(), form.Id, s =>
         {
-            s.Name = survey.Name;
-            s.IsActive = survey.IsActive;
-            s.ExpirationDate = survey.ExpirationDate;
+            s.Name = form.Name;
+            s.IsActive = form.IsActive;
+            s.ExpirationDate = form.ExpirationDate;
         });
-        return RedirectToAction(nameof(Index));
-    }
 
-    //GET:Survey/confirmDeleteSurvey/5
-    public IActionResult Delete(long id)
-    {
-        return LocalRedirect(Routes.Dashboard.Population.Voluntaries.FullPath);
+        return LocalRedirect(Routes.Dashboard.Surveys.Surveys.FullPath);
     }
 
     // POST: Survey/SurveyDelete/5
-    [HttpPost, ActionName("DeleteSurvey")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> DeleteSurvey(long id)
+    public async Task<ActionResult> Delete(long id)
     {
         await _surveySvc.RemoveSurveyAsync(User.GetAccountId(), id);
-        return RedirectToAction(nameof(Index));
+
+        return LocalRedirect(Routes.Dashboard.Surveys.Surveys.FullPath);
     }
 }

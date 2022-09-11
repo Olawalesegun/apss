@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.QuestionDto>
+﻿@model CrudViewModel<QuestionDto>
 
 <div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 " id="table">
 
@@ -10,11 +10,11 @@
 
                 <thead class="table-light">
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Index)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.Text)</th>
-                        <th class="fw-bold align-middle"> @Html.DisplayNameFor(m=>m.IsRequired)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=>m.QuestionType)</th>
-                        <th class="fw-bold align-middle"> @Html.DisplayNameFor(m=>m.Survey)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor( m=>m.First().Index)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor( m=>m.First().Text)</th>
+                        <th class="fw-bold align-middle"> @Html.DisplayNameFor(m=>m.First().IsRequired)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(m=> m.First().QuestionType)</th>
+                        <th class="fw-bold align-middle"> @Html.DisplayNameFor(m=>m.First().Survey)</th>
                         <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -38,10 +38,10 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                       <form asp-area="Surveys" asp-controller="Questions" asp-action="DeleteQuestion" asp-route-id="@item.Id" method="post" >
-                                        <li><button type="submit" class="dropdown-item" ><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></button></li>
+                                        <form asp-area="Surveys" asp-controller="Questions" asp-action="DeleteQuestion" asp-route-id="@item.Id" method="post">
+                                        <li><button type="submit" class="dropdown-item"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></button></li>
 
-                                       </form>
+                                        </form>
                                     </ul>
                                 </div>
                             </td>
@@ -53,3 +53,4 @@
     </div>
 </div>
 
+<partial name="Layout/Paginator" model="@Model.Params.Page" />

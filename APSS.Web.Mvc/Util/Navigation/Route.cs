@@ -96,11 +96,12 @@ public class Route : IRoute
 
     protected CrudRoute FromCrudController<T>(
         string? displayName = null,
-        Icon icon = Icon.None)
+        Icon icon = Icon.None,
+        bool isNavigatable = true)
     {
         var baseName = typeof(T).Name.Replace("Controller", string.Empty);
 
-        return new CrudRoute(this, displayName ?? baseName, baseName, icon: icon);
+        return new CrudRoute(this, displayName ?? baseName, baseName, icon: icon, isNavigatable: isNavigatable);
     }
 
     #endregion Protected Methods
