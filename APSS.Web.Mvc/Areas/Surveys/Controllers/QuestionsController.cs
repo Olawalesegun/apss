@@ -12,14 +12,13 @@ namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 public class QuestionsController : Controller
 {
     private readonly ISurveysService _surveysService;
-    private readonly long id;
 
     public QuestionsController(ISurveysService surveysService)
     {
         _surveysService = surveysService;
     }
 
-    public IActionResult AddQuestion(long id)
+    public IActionResult Add(long id)
     {
         var questiondto = new QuestionAddForm
         {
@@ -67,7 +66,7 @@ public class QuestionsController : Controller
         return View("byUser", questionDto.SurveyId);
     }
 
-    public async Task<IActionResult> byUser(long id)
+    public async Task<IActionResult> GetAll(long id)
     {
         var questions = await _surveysService.GetQuestionsSurveysAsync(User.GetAccountId(), id);
         List<QuestionDto> questionsdto = new List<QuestionDto>();

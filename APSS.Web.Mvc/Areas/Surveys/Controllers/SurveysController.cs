@@ -3,6 +3,7 @@ using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 
@@ -36,7 +37,7 @@ public class SurveysController : Controller
     }
 
     // GET: Survey/SurveyDetails/5
-    public async Task<ActionResult> SurveyDetails(long id)
+    public async Task<ActionResult> Details(long id)
     {
         var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
 
@@ -52,7 +53,7 @@ public class SurveysController : Controller
     }
 
     // GET: Survey/Add Survey
-    public ActionResult AddSurvey()
+    public ActionResult Add()
     {
         return View();
     }
@@ -60,7 +61,7 @@ public class SurveysController : Controller
     // POST: Survey/AddSurvey
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> AddSurvey([FromForm] SurveyAddForm survey)
+    public async Task<ActionResult> Add([FromForm] SurveyAddForm survey)
     {
         if (!ModelState.IsValid)
             return View(survey);
@@ -78,7 +79,7 @@ public class SurveysController : Controller
     }
 
     // GET: Survey/EditSurvey/5
-    public async Task<ActionResult> EditSurvey(long id)
+    public async Task<ActionResult> Update(long id)
     {
         var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
         var surveyform = new SurveyEditForm
@@ -94,7 +95,7 @@ public class SurveysController : Controller
     // POST: Survey/EditSurvey/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> EditSurvey([FromForm] SurveyEditForm survey)
+    public async Task<ActionResult> Update([FromForm] SurveyEditForm survey)
     {
         if (!ModelState.IsValid)
         {
@@ -111,19 +112,9 @@ public class SurveysController : Controller
     }
 
     //GET:Survey/confirmDeleteSurvey/5
-    public async Task<IActionResult> ConfirmDeleteSurvey(long id)
+    public IActionResult Delete(long id)
     {
-        var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
-        var surveydto = new SurveyDto
-        {
-            Id = survey.Id,
-            Name = survey.Name,
-            UserName = survey.CreatedBy.Name,
-            IsActive = survey.IsActive,
-            CreatedAt = survey.CreatedAt,
-            ModifiedAt = survey.ModifiedAt
-        };
-        return View(surveydto);
+        return LocalRedirect(Routes.Dashboard.Population.Voluntaries.FullPath);
     }
 
     // POST: Survey/SurveyDelete/5
