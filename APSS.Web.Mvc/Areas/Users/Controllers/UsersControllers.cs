@@ -116,4 +116,16 @@ public class UsersController : Controller
 
         return LocalRedirect(Routes.Dashboard.Users.FullPath);
     }
+
+    public async Task<IActionResult> SubUsers(long id, [FromQuery] FilteringParameters args)
+    {
+        var ret = await (await _userService.GetSubuserAsync(User.GetAccountId()))
+            .Where(u => u.Name.Contains(args.Query ?? String.Empty))
+            .Page(args.Page, args.PageLength)
+            .AsAsyncEnumerable()
+            .Select(_mapper.Map<UserDto>)
+            .ToListAsync();
+
+        return View(new CrudViewModel<UserDto>(ret, args));
+    }
 }

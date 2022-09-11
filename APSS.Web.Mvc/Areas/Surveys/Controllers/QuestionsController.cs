@@ -2,7 +2,9 @@
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
+using APSS.Web.Dtos.Parameters;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Models;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +20,7 @@ public class QuestionsController : Controller
         _surveysService = surveysService;
     }
 
+    [HttpGet]
     public IActionResult Add(long id)
     {
         var questiondto = new QuestionAddForm
@@ -63,30 +66,33 @@ public class QuestionsController : Controller
                 questionDto.Text, questionDto.IsRequired,
                 questionDto.CanMultiSelect!, questionDto.CandidateAnswers!.ToList());
         }
-        return View("byUser", questionDto.SurveyId);
+
+        return LocalRedirect($"{Routes.Dashboard.Surveys.Questions}?id=${questionDto.SurveyId}");
     }
 
-    public async Task<IActionResult> GetAll(long id)
+    [HttpGet]
+    public async Task<IActionResult> Index(long id, [FromQuery] FilteringParameters args)
     {
-        var questions = await _surveysService.GetQuestionsSurveysAsync(User.GetAccountId(), id);
-        List<QuestionDto> questionsdto = new List<QuestionDto>();
-        foreach (var question in await questions.AsAsyncEnumerable().ToListAsync())
-        {
-            questionsdto.Add(new QuestionDto
+        var ret = await (await _surveysService.GetQuestionsSurveysAsync(User.GetAccountId(), id))
+            .Where(q => q.Text.Contains(args.Query ?? string.Empty))
+            .Page(args.Page, args.PageLength)
+            .AsAsyncEnumerable()
+            .Select(q => new QuestionDto
             {
-                Id = question.Id,
-                Index = question.Index,
-                Text = question.Text,
-                IsRequired = question.IsRequired,
-                Survey = question.Survey,
+                Id = q.Id,
+                Index = q.Index,
+                Text = q.Text,
+                IsRequired = q.IsRequired,
+                Survey = q.Survey,
                 QuestionType =
                 (QuestionTypeDto)Enum.Parse(typeof(QuestionTypeDto),
-                question.GetType().ToString().Split('.').Last(), true)
-            });
-        }
-        return View(questionsdto);
+                q.GetType().ToString().Split('.').Last(), true)
+            }).ToListAsync();
+
+        return View(new CrudViewModel<QuestionDto>(ret, args));
     }
 
+    [HttpGet]
     public IActionResult Update()
     {
         return View();

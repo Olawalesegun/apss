@@ -15,9 +15,9 @@ namespace APSS.Web.Mvc.Areas.Confirmations.Controllers
     public class ConfirmationsController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IConfirmSrevice _confirm;
+        private readonly IConfirmService _confirm;
 
-        public ConfirmationsController(IConfirmSrevice confirm, IMapper mapper)
+        public ConfirmationsController(IConfirmService confirm, IMapper mapper)
         {
             _mapper = mapper;
             _confirm = confirm;

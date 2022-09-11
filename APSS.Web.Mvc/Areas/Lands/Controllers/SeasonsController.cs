@@ -26,7 +26,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
             var seasons = await _landSvc.GetSeasonsAsync()
-                .Where(u => u.Name.Contains(args.Query))
+                .Where(u => u.Name.Contains(args.Query ?? string.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<SeasonDto>)

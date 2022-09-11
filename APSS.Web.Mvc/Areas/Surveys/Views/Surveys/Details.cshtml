@@ -1,4 +1,4 @@
-﻿@model APSS.Web.Dtos.SurveyDto
+﻿@model SurveyDto
 
 <div class="card mt-2">
     <div class="d-inline">
@@ -48,9 +48,9 @@
         <br />
         <div cllass="d-inline pt-2">
             <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-area="Surveys" asp-controller="Questions" asp-action="AddQuestion"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Question</span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Surveys" asp-area="Surveys" asp-action="EditSurvey"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
-            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="Surveys" asp-area="Surveys" asp-action="ConfirmDeleteSurvey" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
+            <a class="btn btn-outline-primary mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-area="Surveys" asp-controller="Questions" asp-action="AddQuestion"> <i class="fa-solid fa-plus mx-1 "> </i><span> Add Question</span> </a>
+            <a class="btn btn-outline-primary mx-1 pr-1 my-2 " href="@(Routes.Dashboard.Surveys.Surveys.Update)?id=@Model.Id"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
+            <a class="btn  btn-outline-danger mx-1 my-2 " asp-controller="Surveys" asp-area="Surveys" asp-action="ConfirmDeleteSurvey" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
             <a  class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-area="Surveys" asp-controller="Questions" asp-action="GetQuestionsSurvey"><span class="">Questions </span> </a>
             <a  class="btn btn-outline-dark   my-2   text-decoration-none mx-1" asp-route-id="@Model.Id" asp-controller="SurveyEntries" asp-area="Surveys" asp-action="Index"><span class="">Entries </span> </a>
         </div>

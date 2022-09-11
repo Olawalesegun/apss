@@ -7,9 +7,10 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addAnimalUnit">Add New Animal Product</h5>
+                    <h5 class="modal-title" id="addAnimalUnit">Update Animal Product</h5>
                 </div>
                 <div class="modal-body">
+                     <input type="hidden" asp-for="Id" />
                     <!-- 2 column puts for the National number and Phome Number-->
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="ProducerId" />

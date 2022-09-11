@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace APSS.Domain.Services;
 
-public interface IConfirmSrevice
+public interface IConfirmService
 {
     Task<AnimalProduct> ConfirmAnimalProduct(long accountId, long animalProductId, bool isConfirm);
 
@@ -73,4 +73,8 @@ public interface IConfirmSrevice
     /// <param name="accountId">The account id of the group user who wants to get the lands</param>
     /// <returns>The lands list that are not confirmed </returns>
     Task<IQueryBuilder<Land>> UnConfirmedLandsAsync(long accountId);
+
+    Task<IQueryBuilder<AnimalGroup>> GetAllAnimal(long accountId);
+
+    Task<IQueryBuilder<AnimalProduct>> GetAllAnimalProduct(long accountId);
 }

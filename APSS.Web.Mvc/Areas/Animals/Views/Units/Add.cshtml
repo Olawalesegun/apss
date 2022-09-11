@@ -1,0 +1,39 @@
+﻿@model APSS.Web.Dtos.AnimalProductUnitDto
+<form class="needs-validation form-group" method="post" action="@Routes.Dashboard.Animals.Units.Add.FullPath" asp-antiforgery="true" novalidate>
+    <div class="d-flex mt-5">
+    </div>
+    <div class="modal fade" id="AddAnimalUnitModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addAnimalUnit" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAnimalUnit">Add  Animal Unit</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4 input-group has-validation">
+                        <span class="input-group-text">@@</span>
+                        <div class="form-floating col">
+                            <input type="text" id="user_name" asp-for="Name" class="form-control" aria-describedby="unitValidation" placeholder="name" required />
+                            <label class="" asp-for="Name"></label>
+                        </div>
+                        <span asp-validation-for="Name" id="unitValidation" class="text-danger d-block invalid-feedback"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" href="@Routes.Dashboard.Animals.Units.FullPath">Cancel</a>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+    @section scripts {
+<script>
+
+    $(window).on('load', function () {
+    $('#AddAnimalUnitModal').modal('show');
+    });
+</script>
+    }

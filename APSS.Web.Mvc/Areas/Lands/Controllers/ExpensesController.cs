@@ -29,7 +29,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             var expenses = await (
                 await _landSvc.GetExpensesByUserAsync(User.GetAccountId(), User.GetUserId()))
-                .Where(u => u.Type.Contains(args.Query))
+                .Where(u => u.Type.Contains(args.Query ?? string.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<ProductExpenseDto>)

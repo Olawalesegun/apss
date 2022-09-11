@@ -28,7 +28,7 @@ public class IndividualsController : Controller
     public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
     {
         var ret = await (await _populationSvc.GetIndividuals(User.GetAccountId()))
-            .Where(u => u.Name.Contains(args.Query))
+            .Where(u => u.Name.Contains(args.Query ?? string.Empty))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
             .Select(_mapper.Map<IndividualDto>)
