@@ -1,0 +1,33 @@
+﻿@model APSS.Web.Dtos.AnimalProductUnitDto
+
+<div class="card  shadow-0 border-0 p-2 ">
+    <div class="card-body ">
+        <h1 class="fw-light my-3">Confirm Delete Unit </h1>
+        <table class="table user-view-table m-0 border ">
+            <tbody>
+                <tr class="">
+                    <th>@Html.DisplayNameFor(m=>m.Id)</th>
+                    <td>  @Model.Id </td>
+                </tr>
+                <tr>
+                    <th> @Html.DisplayNameFor(m=>m.Name) </th>
+                    <td>@Model.Name</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.CreatedAt)  </th>
+                    <td>@Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m=>m.ModifiedAt) </th>
+                    <td>@Model.ModifiedAt</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end mx-2">
+        <div class=" ">
+            <a onClick="history.go(-1); return false;" class="btn btn-link text-decoration-none   mx-2" style="background-color:#DCEEFB">Cancel</a>
+            <a class="btn btn-danger mx-1 px-3" asp-route-id="@Model.Id" asp-controller="AnimalUnits" asp-action="ConfirmDelete"> <span> Confirm </span> </a>
+        </div>
+    </div>
+</div>
