@@ -101,16 +101,6 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
         }
 
-        // POST: SeasonController/Delete Season
-        /*//[ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
-        public async Task<IActionResult> DeletePost(long Id)
-        {
-            await _landSvc.RemoveSeasonAsync(User.GetAccountId(), Id);
-
-            TempData["success"] = "Season removed";
-            return LocalRedirect(Routes.Dashboard.Lands.Seasons.FullPath);
-        }*/
-
         // GET: SeasonController/Get Season
         [ApssAuthorized(AccessLevel.Root, PermissionType.Read)]
         public async Task<IActionResult> GetSeason(long Id)

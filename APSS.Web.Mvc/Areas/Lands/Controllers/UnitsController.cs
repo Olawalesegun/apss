@@ -98,17 +98,6 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             return LocalRedirect(Routes.Dashboard.Lands.Units.FullPath);
         }
 
-        // POST: LandProductUnitController/Delete LandProductUnit
-        //[ApssAuthorized(AccessLevel.Root, PermissionType.Delete)]
-        /*public async Task<ActionResult> DeletePost(long Id)
-        {
-            await _landSvc.RemoveLandProductUnitAsync(User.GetAccountId(), Id);
-            TempData["success"] = "Unit removed";
-
-            return LocalRedirect(Routes.Dashboard.Lands.Units.FullPath);
-        }
-*/
-
         // GET: LandProductUnitController/Get LandProductUnit
         public async Task<IActionResult> GetLandProductUnit(long Id)
         {
