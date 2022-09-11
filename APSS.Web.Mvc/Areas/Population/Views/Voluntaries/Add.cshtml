@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-center">
             <h4 style="border-bottom :2px darkgray solid;"> Add Voluntary</h4>
         </div>
-        <form class="mt-3" rout method="post"  asp-action="Add" asp-area="Population" asp-controller="Skills" asp-route-Id="@Model.IndividualId">
+        <form class="mt-3" rout method="post"  href="@(Routes.Dashboard.Population.Voluntaries.Add)">
             <input type="text" asp-for="IndividualId" hidden/>
              <div class="input-group has-validation mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-handshake"></i></span>

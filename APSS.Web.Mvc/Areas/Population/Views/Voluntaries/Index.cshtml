@@ -32,12 +32,12 @@
                             <ul class="dropdown-menu">
                                
                                 <li>
-                                    <a class="dropdown-item justified-content" asp-action="Delete" asp-area="Population" asp-controller="Voluntaries" asp-route-Id="@item.Id">
+                                    <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Voluntary `@item.Name`?', @item.Id)">
                                         Delete @Icon.TrashCan.Render()
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content" asp-action="Update" asp-area="Population" asp-controller="Voluntaries" asp-route-Id="@item.Id">
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Voluntaries.Update)?id=@item.Id">
                                         Update @Icon.Pen.Render()
                                     </a>
                                 </li>
@@ -52,5 +52,5 @@
 </div>
 
 <partial name="Layout/Paginator" model="@Model.Params.Page" />
-    
+   @await Html.DeleteDialogAsync() 
 

@@ -31,38 +31,38 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Individuals.Details)/@item.Id">
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Individuals.Details)?id=@item.Id">
                                         Details @Icon.Info.Render()
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Individuals.Delete)/@item.Id">
+                                    <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Individual `@item.Name`?', @item.Id)">
                                         Delete @Icon.TrashCan.Render()
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Individuals.Update)/@item.Id">
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Individuals.Update)?id=@item.Id">
                                         Update @Icon.Pen.Render()
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item justified-content" asp-action="Index" asp-area="Population" asp-controller="Skills" asp-route-Id="@item.Id">
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Population.Skills)?id=@item.Id">
                                         Manage skills  @Icon.UsersGear.Render()
                                     </a>
                                 </li>
                                   <li>
-                                    <a class="dropdown-item justified-content"  asp-action="Index" asp-area="Population" asp-controller="Voluntaries" asp-route-Id="@item.Id">
+                                    <a class="dropdown-item justified-content"  href="@(Routes.Dashboard.Population.Voluntaries)?id=@item.Id">
                                         Manage Voluntaries  @Icon.UsersGear.Render()
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex justified-content-between"  asp-action="Add" asp-area="Population" asp-controller="Skills" asp-route-Id="@item.Id">
+                                    <a class="dropdown-item d-flex justified-content-between"  href="@(Routes.Dashboard.Population.Skills.Add)?id=@item.Id">
                                         <span>Add Skill</span>  <span>@Icon.UserPlus.Render()</span>
                                     </a>
                                 </li>
                                  <li>
-                                    <a class="dropdown-item d-flex justified-content-between"  asp-action="Add" asp-area="Population" asp-controller="Voluntaries" asp-route-Id="@item.Id">
+                                    <a class="dropdown-item d-flex justified-content-between"  href="@(Routes.Dashboard.Population.Voluntaries.Add)?id=@item.Id">
                                         <span>Add Voluntary</span>  <span>@Icon.UserPlus.Render()</span>
                                     </a>
                                 </li>
@@ -76,3 +76,4 @@
 </div>
 
 <partial name="Layout/Paginator" model="@Model.Params.Page" />
+@await Html.DeleteDialogAsync()

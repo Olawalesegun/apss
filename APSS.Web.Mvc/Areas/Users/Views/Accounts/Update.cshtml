@@ -1,4 +1,4 @@
-﻿@using APSS.Domain.Entities
+﻿@*@using APSS.Domain.Entities
 @model APSS.Web.Dtos.AccountDto
  @await Html.PartialAsync("_requiredStyle.cshtml")
 <div class="col-lg-8 col-sm-12  col-md-12   mx-lg-4  my-3 d-flex px-0">
@@ -70,7 +70,7 @@
                     <input class="form-check-input " type="radio" asp-for="SocialStatus" id="socialstatus" value="@Model.SocialStatus" checked />
                     <label class="form-check-label" asp-for="SocialStatus"></label>
                     </div>*@
-                @foreach (var item in Enum.GetValues<SocialStatus>())
+              @*  @foreach (var item in Enum.GetValues<SocialStatus>())
                 {
                     if (@Model.SocialStatus == (SocialStatusDto)@item)
                     {
@@ -164,4 +164,4 @@
          $("#accounts").addClass('actives');
          $("#accountMedia").addClass('actives');
 </script>
-}
+}*@
