@@ -60,6 +60,54 @@ public class AccountsController : Controller
         return LocalRedirect(Routes.Dashboard.Users.Accounts.FullPath + $"?id={form.UserId}");
     }
 
+    [HttpGet]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Update)]
+    public async Task<IActionResult> Update(long id)
+    {
+        var account = await _accountsService.GetAccountAsync(User.GetAccountId(), id);
+
+        return View(new UpdateAccountForm
+        {
+            Id = account.Id,
+            HolderName = account.HolderName,
+            NationalId = account.NationalId,
+            PhoneNumber = account.PhoneNumber,
+            Job = account.Job,
+            SocialStatus = account.SocialStatus,
+            Permissions = new(account.Permissions),
+            IsActive = account.IsActive,
+        });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Update)]
+    public async Task<IActionResult> Update([FromForm] UpdateAccountForm form)
+    {
+        var account = await _accountsService.UpdateAsync(User.GetAccountId(), form.Id, a =>
+        {
+            a.HolderName = form.HolderName;
+            a.NationalId = form.NationalId;
+            a.PhoneNumber = form.PhoneNumber;
+            a.Job = form.Job;
+            a.SocialStatus = form.SocialStatus;
+            a.Permissions = form.Permissions.Permissions;
+            a.IsActive = form.IsActive;
+        });
+
+        return LocalRedirect($"{Routes.Dashboard.Users.Accounts}?id={account.User.Id}");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [ApssAuthorized(AccessLevel.All, PermissionType.Update)]
+    public async Task<IActionResult> UpdatePassword([FromForm] UpdatePassowrdForm form)
+    {
+        var account = await _accountsService.UpdatePasswordAsync(User.GetAccountId(), form.Id, form.Password);
+
+        return LocalRedirect($"{Routes.Dashboard.Users.Accounts}?id={account.User.Id}");
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Create)]
