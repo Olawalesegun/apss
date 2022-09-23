@@ -28,7 +28,7 @@ public class SkillsController : Controller
     public async Task<IActionResult> Index([FromQuery] FilteringParameters args, long id)
     {
         var ret = await (await _populationSvc.GetSkillOfindividualAsync(User.GetAccountId(), id))
-            .Where(s => s.Name.Contains(args.Query))
+            .Where(s => s.Name.Contains(args.Query ?? string.Empty))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
             .Select(_mapper.Map<SkillDto>)

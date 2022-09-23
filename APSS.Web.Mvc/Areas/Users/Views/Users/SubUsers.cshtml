@@ -1,5 +1,4 @@
 ﻿@model CrudViewModel<UserDto>
-
 <!--the main account view-->
 <div class="table-rsponsive">
     <table class="table table-hover">
@@ -55,7 +54,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users.SubUsers)?id=@item.Id">
+                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users.Add)?id=@item.Id">
                                         Sub Users  @Icon.UserPlus.Render()
                                     </a>
                                 </li>

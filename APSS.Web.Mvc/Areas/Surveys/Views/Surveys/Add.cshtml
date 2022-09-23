@@ -1,0 +1,35 @@
+﻿@model SurveyAddForm
+<div class="container-fluid px-3 py-3  mx-4 my-1">
+    <div class="col-sm-6">
+        <div class="d-flex justify-content-center">
+            <h4>Add Survey </h4>
+        </div>
+
+        <form class="mt-3" method="post" action="@Routes.Dashboard.Surveys.Surveys.Add" asp-antiforgery="true">
+
+            <!-- survey Name -->
+            <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                <div class="form-floating flex-grow-1">
+                    <input type="text" class="form-control" placeholder="Name " asp-for="Name">
+                    <label asp-for="Name"></label>
+                </div>
+                <span class="d-block invalid-feedback" asp-validation-for="Name"></span>
+            </div>
+            <!-- post and end survey date -->
+            <div class="input-group has-validation mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                <div class=" datepicker input-group.date-p form-floating flex-grow-1">
+                    <label class="form-label" asp-for="ExpirationDate"></label>
+                    <input type="date" id="sandbox-container-p" asp-for="ExpirationDate" class="form-control" />
+                </div>
+                <span class="d-block invalid-feedback" asp-validation-for="ExpirationDate"></span>
+            </div>
+
+            <div class="mb-4  mt-4">
+                <button type="submit" class="btn btn-primary  ">Add</button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

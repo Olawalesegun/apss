@@ -28,7 +28,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
         {
             var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), User.GetUserId()))
-                .Where(u => u.Name.Contains(args.Query))
+                .Where(u => u.Name.Contains(args.Query ?? string.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<LandDto>)
@@ -125,17 +125,6 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             return LocalRedirect(Routes.Dashboard.Lands.Lands.FullPath);
         }
 
-        /* // POST: LandController/Delete land
-         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-         public async Task<IActionResult> DeletePost(long Id)
-         {
-             await _landSvc.RemoveLandAsync(User.GetAccountId(), Id);
-             TempData["success"] = "Land deleted successfully";
-
-             return LocalRedirect(Routes.Dashboard.Lands.FullPath);
-         }
- */
-
         // GET: LandController/Get land
         [ApssAuthorized(AccessLevel.All, PermissionType.Read)]
         public async Task<ActionResult> GetLand(long Id)
@@ -149,7 +138,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         public async Task<IActionResult> byUser([FromQuery] FilteringParameters args, long Id)
         {
             var result = await (await _landSvc.GetLandsAsync(User.GetAccountId(), Id))
-                .Where(u => u.Name.Contains(args.Query))
+                .Where(u => u.Name.Contains(args.Query ?? String.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<LandDto>)

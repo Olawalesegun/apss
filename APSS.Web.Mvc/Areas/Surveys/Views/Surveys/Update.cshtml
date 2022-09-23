@@ -5,7 +5,7 @@
             <h4 >Update Survey </h4>
         </div>
 
-        <form class="mt-3" method="post" asp-area="Surveys" asp-controller="Surveys" asp-action="EditSurvey">
+        <form class="mt-3" method="post" action="@Routes.Dashboard.Surveys.Surveys.Update" asp-antiforgery="true">
            <input type="number" asp-for="Id" hidden />
               <!-- survey Name -->
           <div class="input-group has-validation mb-3">

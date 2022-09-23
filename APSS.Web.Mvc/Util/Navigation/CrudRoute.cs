@@ -7,7 +7,8 @@ public class CrudRoute : Route, ICrudRoute
         string name,
         string? pathSegment = null,
         IList<IRoute>? children = null,
-        Icon icon = Icon.None) : base(parent, name, pathSegment, children, icon)
+        Icon icon = Icon.None,
+        bool isNavigatable = true) : base(parent, name, pathSegment, children, icon, isNavigatable)
     {
         Add = new Route(this, "Add item", "Add", icon: Icon.Plus, isNavigatable: false);
         Update = new Route(this, "Update item", "Update", icon: Icon.Pen, isNavigatable: false);

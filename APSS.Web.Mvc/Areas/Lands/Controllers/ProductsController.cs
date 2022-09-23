@@ -27,7 +27,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             var result = await (await _landSvc.GetProductsByUserIdAsync(
             User.GetAccountId(), User.GetUserId()))
-            .Where(u => u.CropName.Contains(args.Query))
+            .Where(u => u.CropName.Contains(args.Query ?? string.Empty))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
             .Select(_mapper.Map<LandProductDto>)
@@ -115,7 +115,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             await _landSvc.UpdateLandProductAsync(
                 User.GetAccountId(),
                 landProduct.Id,
-            async f =>
+             f =>
             {
                 f.StoringMethod = landProduct.StoringMethod;
                 f.Category = landProduct.Category;
@@ -148,22 +148,12 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
         }
 
-        // POST: LandController/Delete landProduct
-        /*[ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-        public async Task<ActionResult> DeletePost(long Id)
-        {
-            await _landSvc.RemoveLandProductAsync(User.GetAccountId(), Id);
-
-            TempData["success"] = "Product removed";
-            return LocalRedirect(Routes.Dashboard.Lands.Products.FullPath);
-        }*/
-
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
         public async Task<ActionResult> byLand([FromQuery] FilteringParameters args, long Id)
         {
             var result = await (await _landSvc.GetLandProductsAsync(
                 User.GetAccountId(), Id))
-                .Where(n => n.CropName.Contains(args.Query))
+                .Where(n => n.CropName.Contains(args.Query ?? String.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<LandProductDto>)
@@ -177,7 +167,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             var result = await (await _landSvc.GetProductsByUserIdAsync(
                 User.GetAccountId(), Id))
-                .Where(n => n.CropName.Contains(args.Query))
+                .Where(n => n.CropName.Contains(args.Query ?? String.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<LandProductDto>)

@@ -29,7 +29,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             var expenses = await (
                 await _landSvc.GetExpensesByUserAsync(User.GetAccountId(), User.GetUserId()))
-                .Where(u => u.Type.Contains(args.Query))
+                .Where(u => u.Type.Contains(args.Query ?? string.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<ProductExpenseDto>)
@@ -114,23 +114,13 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
             return LocalRedirect(Routes.Dashboard.Lands.Expenses.FullPath);
         }
 
-        /*        [ApssAuthorized(AccessLevel.Farmer, PermissionType.Delete)]
-                public async Task<IActionResult> DeletePost(long id)
-                {
-                    await _landSvc.RemoveLandProductExpenseAsync(User.GetAccountId(), id);
-
-                    TempData["success"] = "Expense Removed Successfully";
-
-                    return LocalRedirect(Routes.Dashboard.Lands.Expenses.FullPath);
-                }*/
-
         // GET: landProductExpense/Get landProductExpense
         [ApssAuthorized(AccessLevel.Farmer, PermissionType.Read)]
         public async Task<IActionResult> byLand([FromQuery] FilteringParameters args, long Id)
         {
             var expenses = await (
                 await _landSvc.GetExpensesByProductAsync(User.GetAccountId(), Id))
-                .Where(u => u.Type.Contains(args.Query))
+                .Where(u => u.Type.Contains(args.Query ?? String.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<ProductExpenseDto>)
@@ -144,7 +134,7 @@ namespace APSS.Web.Mvc.Areas.Lands.Controllers
         {
             var expenses = await (
                 await _landSvc.GetExpensesByUserAsync(User.GetAccountId(), Id))
-                .Where(u => u.Type.Contains(args.Query))
+                .Where(u => u.Type.Contains(args.Query ?? String.Empty))
                 .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<ProductExpenseDto>)

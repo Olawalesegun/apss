@@ -59,7 +59,7 @@ public sealed class Account : AuditableEntity
 /// <summary>
 /// An enum to represent social status
 /// </summary>
-public enum SocialStatus
+public enum SocialStatus : int
 {
     Unspecified,
     Unmarried,
