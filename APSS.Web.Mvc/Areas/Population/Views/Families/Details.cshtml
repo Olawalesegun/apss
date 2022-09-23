@@ -47,7 +47,7 @@
                 <div class="mx-lg-2 mx-sm-1 mx-sm-1 my-1 d-flex justify-content-between">
                     <div class="">
                         <a class="btn btn-link text-decoration-none mx-1 " href="@(Routes.Dashboard.Population.Individuals.Add)?id=@Model!.Id"><span>@Icon.Plus.Render() Add Individual </span>  </a>
-                        <a class="btn btn-link text-decoration-none mx-1 " asp-controller="Families" asp-action="GetFamilyIndividuals" asp-area="Population" asp-route-Id="@Model.Id"><span>@Icon.Seeding.Render() Individuals</span>  </a>
+                        <a class="btn btn-link text-decoration-none mx-1 " href="@(Routes.Dashboard.Population.Families.GetAll)?id=@Model!.Id"><span>@Icon.Seeding.Render() Individuals</span>  </a>
                     </div>
                     <div class="d-flex">
                         <a class="btn btn-outline-primary mx-1 " href="@(Routes.Dashboard.Population.Families.Update.FullPath)?id=@Model!.Id">@Icon.Pen.Render()<span>Edit</span> </a>
