@@ -64,10 +64,15 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         [HttpGet, ActionName("GetAll")]
         public async Task<IActionResult> GetAll(long id)
         {
-            List<FamilyIndividualGetDto> familyindividualsDto = new List<FamilyIndividualGetDto>();
+            List<FamilyIndividualDto> familyindividualsDto = new List<FamilyIndividualDto>();
             var familyindividuals = await _populationSvc
                 .GetIndividualsOfFamilyAsync(User.GetAccountId(), id);
-            foreach (var familyindividual in await familyindividuals.AsAsyncEnumerable().ToListAsync())
+            familyindividualsDto = await familyindividuals
+                   .AsAsyncEnumerable()
+                   .Select(_mapper.Map<FamilyIndividualDto>)
+                   .ToListAsync();
+
+            /* foreach (var familyindividual in await familyindividuals.AsAsyncEnumerable().ToListAsync())
             {
                 familyindividualsDto.Add(new FamilyIndividualGetDto
                 {
@@ -78,7 +83,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
                     IsParent = familyindividual.IsParent,
                     IsProvider = familyindividual.IsProvider
                 });
-            }
+            }*/
 
             return View(familyindividualsDto);
         }
@@ -111,6 +116,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         public async Task<IActionResult> Update(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
+
             FamilyEditForm familyDto = new FamilyEditForm
             {
                 Id = family.Id,
