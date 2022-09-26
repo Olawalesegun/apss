@@ -34,4 +34,6 @@ public class IndividualDto : BaseAuditbleDto
 
     [Display(Name = "User")]
     public UserDto AddBy { get; set; } = null!;
+
+    public FamilyDto Family { get; set; } = null!;
 }
