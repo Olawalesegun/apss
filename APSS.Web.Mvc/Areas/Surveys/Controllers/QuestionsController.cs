@@ -1,5 +1,4 @@
-﻿using APSS.Domain.Entities;
-using APSS.Domain.Services;
+﻿using APSS.Domain.Services;
 using APSS.Web.Dtos;
 using APSS.Web.Dtos.Forms;
 using APSS.Web.Dtos.Parameters;
@@ -109,7 +108,7 @@ public class QuestionsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(long id)
     {
-        await _surveysService.Removequestion(User.GetAccountId(), id);
+        await _surveysService.RemoveQuestion(User.GetAccountId(), id);
         return LocalRedirect(Routes.Dashboard.Surveys.Surveys.byUser.FullPath);
     }
 }
