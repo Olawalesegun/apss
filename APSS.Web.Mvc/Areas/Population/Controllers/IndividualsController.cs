@@ -8,6 +8,7 @@ using APSS.Web.Mvc.Auth;
 using APSS.Web.Dtos.Parameters;
 using AutoMapper;
 using APSS.Web.Mvc.Models;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers;
 
@@ -62,14 +63,14 @@ public class IndividualsController : Controller
             User.GetAccountId(), individual.FamilyId, individual.Name, individual.Address, (IndividualSex)individual.Sex);
         TempData["success"] = "Individual Added successfully";
 
-        return RedirectToAction(nameof(Index));
+        return LocalRedirect(Routes.Dashboard.Population.Individuals.FullPath);
     }
 
     // Get: IndividualController/UpdateIndividual/5
     [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
     public async Task<IActionResult> Update(long id)
     {
-        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
+        var individual = await (await _populationSvc.GetIndividualAsync(User.GetAccountId(), id)).FirstAsync();
         var individualForm = new IndividualEditForm
         {
             Id = individual.Id,
@@ -82,11 +83,14 @@ public class IndividualsController : Controller
             Sex = (SexDto)individual.Sex,
             SocialStatus = (SocialStatusDto)individual.SocialStatus!,
         };
-        var family = await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id);
-        individualForm.FamilyId = family!.Family.Id;
-        individualForm.FamilyName = family!.Family.Name;
-        individualForm.Isparent = family.IsParent;
-        individualForm.Isprovider = family.IsProvider;
+        var family = await (await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id)).FirstOrNullAsync();
+        if (family != null)
+        {
+            individualForm.FamilyId = family!.Family.Id;
+            individualForm.FamilyName = family!.Family.Name;
+            individualForm.Isparent = family.IsParent;
+            individualForm.Isprovider = family.IsProvider;
+        }
 
         return View(individualForm);
     }
@@ -112,43 +116,47 @@ public class IndividualsController : Controller
                 i.Job = individual.Job;
                 i.Name = individual.Name;
             });
-        var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), individual.FamilyId);
+        if (individual.FamilyId != 0)
+        {
+            var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), individual.FamilyId);
 
-        await _populationSvc.UpdateFamilyIndividualAsync(User.GetAccountId(), individual.Id,
-            i =>
-            {
-                i.Family = family;
-                i.IsParent = individual.Isparent;
-                i.IsProvider = individual.Isprovider;
-            });
+            await _populationSvc.UpdateFamilyIndividualAsync(User.GetAccountId(), individual.Id,
+                i =>
+                {
+                    i.Family = family;
+                    i.IsParent = individual.Isparent;
+                    i.IsProvider = individual.Isprovider;
+                });
+        }
+
         TempData["success"] = "Individual Updated successfully";
 
-        return RedirectToAction(nameof(Index));
+        return LocalRedirect(Routes.Dashboard.Population.Individuals.FullPath);
     }
 
-    // GET: IndividualController/ConfirmDeleteIndividual/5
-    [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
-    public IActionResult Delete()
-    {
-        return RedirectToAction(nameof(Index));
-    }
-
-    // GET: IndividualController/DeleteIndividual/5
+    // POST: IndividualController/DeleteIndividual/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
-    public async Task<IActionResult> Delete(long id, IndividualDto individual)
+    public async Task<IActionResult> Delete(long id)
     {
         await _populationSvc.RemoveIndividualAsync(User.GetAccountId(), id);
+
         TempData["success"] = "Individual deleted successfully";
-        return RedirectToAction(nameof(Index));
+
+        return LocalRedirect(Routes.Dashboard.Population.Individuals.FullPath);
     }
 
     [ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
     public async Task<IActionResult> Details(long id)
     {
-        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
+        var individual = await (await _populationSvc.GetIndividualAsync(User.GetAccountId(), id)).FirstAsync();
+
         var individualDto = _mapper.Map<IndividualDto>(individual);
+
+        var family = await (await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id)).FirstOrNullAsync();
+        if (family != null)
+            individualDto.Family = _mapper.Map<FamilyDto>(family!.Family);
 
         return View(individualDto);
     }
