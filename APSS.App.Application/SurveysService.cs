@@ -336,6 +336,18 @@ public sealed class SurveysService : ISurveysService
             .Where(s => s.Id == surveyId && s.CreatedBy.Id == account.User.Id).FirstAsync();
     }
 
+    public async Task<Question> GetQuestionAsync(long accountId, long questionId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(a => a.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        var question = await _uow.Questions.Query()
+            .Include(q => q.Survey)
+            .FindAsync(questionId);
+        return question;
+    }
+
     /// <inheritdoc/>
     public async Task<IQueryBuilder<SurveyEntry>> GetSurveyEntriesAsync(long accountId)
     {
@@ -454,6 +466,23 @@ public sealed class SurveysService : ISurveysService
         await _uow.CommitAsync();
 
         return survey;
+    }
+
+    public async Task<Question> UpdateQuestionAsync(long accountId, long questionId, Action<Question> updater)
+    {
+        var question = await _uow.Questions.Query().Include(q => q.Survey).FindAsync(questionId);
+
+        var (survey, _) = await GetSurveyWithAuthorizationAsync(
+            accountId,
+            question.Survey.Id,
+            PermissionType.Create | PermissionType.Update);
+
+        updater(question);
+
+        _uow.Questions.Update(question);
+        await _uow.CommitAsync();
+
+        return question;
     }
 
     #endregion Public Methods

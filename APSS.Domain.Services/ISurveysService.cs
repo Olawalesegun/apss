@@ -194,6 +194,10 @@ public interface ISurveysService
     /// <returns></returns>
     Task RemoveQuestion(long accountId, long questionId);
 
+    Task<Question> GetQuestionAsync(long accountId, long questionId);
+
+    Task<Question> UpdateQuestionAsync(long accountId, long questionId, Action<Question> updater);
+
     IQueryBuilder<MultipleChoiceQuestionAnswer> GetItemsAnswer(long accountId, long questionId);
 
     #endregion Public Methods
