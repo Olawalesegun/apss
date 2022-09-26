@@ -1,14 +1,14 @@
 ﻿@using APSS.Web.Dtos
-@model APSS.Web.Dtos.QuestionDto
+@model QuestionDto
 <div class="container-fluid  mt-3  mx-4 my-1  ">
     <div class="row d-flex ">
         <div class="col-xl-7  col-md-9 col-12 border rounded shadow-sm  p-2">
             <div class="d-flex  justify-content-center pb-4 pt-4">
                 <div class=""> <h3 class="text-decoration-underline ">Update Question  </h3></div>
             </div>
-            <form class="" method="post" >
+            <form class="" method="post" action="@(Routes.Dashboard.Surveys.Questions.Update)" asp-antiforgery="true" novalidate >
 
-                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="number" asp-for="Id"hidden />
 
 
                 <div class="row d-flex justify-content-between mb-3">

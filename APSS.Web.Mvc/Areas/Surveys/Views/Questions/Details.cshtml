@@ -1,6 +1,5 @@
 ﻿@using APSS.Web.Dtos
-@model APSS.Web.Dtos.QuestionDto
-    @await Html.PartialAsync("_SurveyNavBar")
+@model QuestionDto
 
 <div class="card mt-2">
     <div class="d-inline">
@@ -8,9 +7,9 @@
     <div class="card-body">
         <div class="d-flex ">
 
-            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Question Information </h3>
+            <i class="fa-solid fa-caret-left fs-1 " style="padding-left:3px"></i> <h3>Question Information</h3>
         </div>
-        <table class="table user-view-table m-0 t ">
+          <table class="table user-view-table m-0 t ">
             <tbody>
                 <tr class="">
                     <td class="label"><label>@Html.DisplayNameFor(m => m.Id)</label></td>
@@ -68,25 +67,18 @@
             </tbody>
         </table>
         <br />
-       @ViewData["action"]
-        <div cllass="d-inline pt-2">
-            <a class="btn btn-outline-dark mx-1 my-2" onclick="history.go(-1)"> <i class="fa-solid fa-arrow-right mx-2"> </i><span>Back</span> </a>
-            <a class="btn btn-outline-primary    mx-1 pr-1 my-2 " asp-route-id="@Model.Id" asp-controller="Questions" asp-action="EditQuestion"> <i class="fa-solid fa-pen-to-square mx-1 "> </i><span>Edit</span> </a>
-            <a class="btn  btn-outline-danger   mx-1 my-2 " asp-controller="Quetions" asp-action="Deletequestion" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can mx-1"></i><span>Delete</span>  </a>
+        <div class="table-responsive">
+            <div cllass="d-inline  ">
+                <div class="mx-lg-2 mx-sm-1 mx-sm-1 my-1 d-flex justify-content-between">
+                    
+                    <div class="d-flex">
+                        <a class="btn btn-outline-primary mx-1 " href="@(Routes.Dashboard.Surveys.Questions.Update)?id=@Model!.Id">@Icon.Pen.Render()<span>Edit</span> </a>
+                        <a class="btn btn-danger mx-1 " onclick="showDeletionModal('Are you sure you want to delete Question `@Model.Text`?', @Model.Id)">@Icon.TrashCan.Render()<span>Delete</span>  </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-@section scripts{
-<script>
-          $(document).ready(function() {
-            $(".sidebar ul li.active").removeClass('active');
-            $("#populationManagement").addClass('active');
-        });
-        document.getElementById("nav-system-name").innerHTML = "Populatoin Management";
-        document.getElementById("media-system-name").innerHTML = "Populatoin Management";
-
-        $("#survey").AddClass('actives');
-        $("#serveyentry").removeClass('actives');
-</script>
-}
+        
+@await Html.DeleteDialogAsync()
