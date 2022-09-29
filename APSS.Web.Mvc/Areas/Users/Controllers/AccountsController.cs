@@ -32,6 +32,7 @@ public class AccountsController : Controller
         var ret = await (await _accountsService
             .GetAccountsAsync(User.GetAccountId(), id ?? User.GetUserId()))
             .Where(u => u.HolderName.Contains(args.Query ?? string.Empty))
+            .Include(u=>u.User)
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
             .Select(_mapper.Map<AccountDto>)

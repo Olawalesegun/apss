@@ -39,15 +39,15 @@
                 </tr>
             </tbody>
         </table>
-        <div class="d-flex justify-content-between pt-3">
-            <div class="d-flex">
-                <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1 " asp-controller="Groups" asp-action="Index"><i class="fa-solid fa-arrow-left me-2"></i><span class="">Back </span> </a>
-            </div>
+        <div class="d-flex justify-content-end pt-3">
             <div>
-                <a class="btn btn-outline-primary mx-1 pr-1 my-2" asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Add"> <i class="fa-solid fa-plus me-2 "> </i><span> Add Product</span> </a>
-                <a class="btn btn-outline-primary mx-1 pr-1 my-2" asp-route-id="@Model.Id" asp-controller="Groups" asp-action="Edit"> <i class="fa-solid fa-pen-to-square me-2 "> </i><span>Edit</span> </a>
-                <a class="btn btn-outline-danger mx-1 my-2 " asp-controller="AnimalGroups" asp-action="Groups" asp-route-Id="@Model.Id"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
-                <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1" href="@Url.Action("AllProducts","Products",new{id=@Model.Id,userId=@Model.OwnedBy.Id})"><span class="">Products </span> </a>
+                @if (User.GetAccessLevel() == AccessLevel.Farmer)
+                {
+                    <a class="btn btn-outline-primary mx-1 pr-1 my-2" href="@(Routes.Dashboard.Animals.Products.Add)?id=@Model.Id"> <i class="fa-solid fa-plus me-2 "> </i><span> Add Product</span> </a>
+                    <a class="btn btn-outline-primary mx-1 pr-1 my-2" href="@(Routes.Dashboard.Animals.Groups.Update)?id=@Model.Id"> <i class="fa-solid fa-pen-to-square me-2 "> </i><span>Edit</span> </a>
+                    <a class="btn btn-outline-danger mx-1 my-2 " href="@(Routes.Dashboard.Animals.Groups.Delete)?id=@Model.Id"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
+                }
+                <a id="III" class="btn btn-outline-dark my-2 text-decoration-none mx-1" href="@(Routes.Dashboard.Animals.Products.GetAll)?id=@Model.Id"><span class="">Products </span> </a>
             </div>
         </div>
     </div>

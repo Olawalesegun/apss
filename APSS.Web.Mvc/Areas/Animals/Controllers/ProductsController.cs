@@ -25,8 +25,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             var products = await (await _aps.GetAllAnimalProductsAsync(User.GetAccountId(), User.GetUserId()))
                 .Include(u => u.Unit)
-                .Where(u => u.Name.Contains(args.Query))
-                .Page(args.Page, args.PageLength)
+                /*  .Where(u => u.Name.Contains(args.Query))
+                  .Page(args.Page, args.PageLength)*/
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<AnimalProductDetailsDto>)
                 .ToListAsync();
@@ -140,7 +140,7 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var delete = await (await _aps.GetAnimalProductAsync(User.GetAccountId(), id)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
+            /*var delete = await (await _aps.GetAnimalProductAsync(User.GetAccountId(), id)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
             var single = delete.FirstOrDefault();
             var productDto = new AnimalProductDetailsDto
             {
@@ -152,7 +152,18 @@ namespace APSS.Web.Mvc.Areas.Controllers
                 CreatedAt = single.CreatedAt,
                 ModifiedAt = single.ModifiedAt,
             };
-            return View(productDto);
+            return View(productDto);*/
+
+            try
+            {
+                if (id > 0)
+                {
+                    await _aps.RemoveAnimalProductAsync(User.GetAccountId(), id);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception) { return BadRequest(); }
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> DeleteConfirm(int id)
@@ -169,30 +180,18 @@ namespace APSS.Web.Mvc.Areas.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> AllProducts(long id, long userId)
+        [HttpGet]
+        public async Task<IActionResult> GetAll(long id, [FromQuery] FilteringParameters args)
         {
-            var Product = await (await _aps.GetAllAnimalProductsAsync(id, userId)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
-            var animalProducts = new List<AnimalProductListDto>();
-            foreach (var product in Product)
-            {
-                animalProducts.Add(new AnimalProductListDto
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Quantity = product.Quantity,
-                    CreatedAt = product.CreatedAt,
-                    Unit = product.Unit,
-                    Producer = product.Producer,
-                });
-            }
-            return View(animalProducts);
-        }
+            var products = await (await _aps.GetSpecificAnimalProductsAsync(User.GetAccountId(), id))
+                  .Include(u => u.Unit)
+                  /* .Where(u => u.Name.Contains(args.Query))
+                   .Page(args.Page, args.PageLength)*/
+                  .AsAsyncEnumerable()
+                  .Select(_mapper.Map<AnimalProductDetailsDto>)
+                  .ToListAsync();
 
-        public async Task<IActionResult> ListProductExpense(long id)
-        {
-            var expense = new List<ProductExpenseDto>();
-            expense.Add(new ProductExpenseDto { Id = 1, Type = "شراء", Price = 10000 });
-            return View(expense);
+            return View(new CrudViewModel<AnimalProductDetailsDto>(products, args));
         }
 
         public async Task<IActionResult> ProductList(long id)

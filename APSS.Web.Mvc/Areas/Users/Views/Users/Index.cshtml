@@ -55,11 +55,32 @@
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users)?id=@item.Id">
-                                        Sub Users  @Icon.UserPlus.Render()
-                                    </a>
-                                </li>
+                                @{
+                                    if (item.AccessLevel != AccessLevel.Farmer)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users)?id=@item.Id">
+                                                Sub Users  @Icon.UserPlus.Render()
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="drop">
+                                            <a class=" dropdown-item justified-content-between" href="#">
+                                                Properties  @Icon.UserPlus.Render()
+                                            </a>
+                                            <div class="dropdown-content">
+                                                <a class="dropdown-item justified-content-between p-2 " href="@(Routes.Dashboard.Animals.Groups.GetAll)?id=@item.Id">
+                                                    Animals  @Icon.Cow.Render()
+                                                </a>
+                                                <a class="dropdown-item justified-content-between p-2 " href="@(Routes.Dashboard.Animals.Products.GetAll)?id=@item.Id">
+                                                    Animal Products  @Icon.UserPlus.Render()
+                                                </a>
+                                            </div>
+                                        </li>
+                                    }
+                                }
                             </ul>
                         </div>
                     </td>
@@ -72,3 +93,98 @@
 <partial name="Layout/Paginator" model="@Model.Params.Page" />
 
 @await Html.DeleteDialogAsync()
+@*
+    @model CrudViewModel<UserDto>
+
+    <!--the main account view-->
+    <div class="table-rsponsive">
+    <table class="table table-hover">
+    <thead class="table-light">
+    <tr>
+    <th>@Icon.Hashtag.Render()</th>
+    <th>@Html.DisplayNameFor(m => m.First().Name)</th>
+    <th>@Html.DisplayNameFor(m => m.First().AccessLevel)</th>
+    <th>@Html.DisplayNameFor(m => m.First().CreatedAt)</th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @foreach (var item in Model)
+    {
+    <tr class="@(item.UserStatus == UserStatus.Inactive ? "bg-warning" : item.UserStatus == UserStatus.Terminated ? "bg-danger" : string.Empty)">
+    <td>@item.Id</td>
+    <td>@item.Name</td>
+    <td>@item.AccessLevel</td>
+    <td>@item.CreatedAt</td>
+
+    <td class="align-middle center">
+    <div class=" dropdown">
+    <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+    @Icon.Bars.Render()
+    </a>
+    <ul class="dropdown-menu">
+    <li>
+    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users.Details)?id=@item.Id">
+    Details @Icon.Info.Render()
+    </a>
+    </li>
+    <li>
+    <button class="dropdown-item justified-content-between" onclick="showDeletionModal('Are you sure you want to delete user `@item.Name`?', @item.Id)">
+    Delete @Icon.TrashCan.Render()
+    </button>
+    </li>
+    <li>
+    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users.Update)?id=@item.Id">
+    Update @Icon.Pen.Render()
+    </a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Accounts)?id=@item.Id">
+    Manage Accounts @Icon.UsersGear.Render()
+    </a>
+    </li>
+    <li>
+    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Accounts.Add)?id=@item.Id">
+    Add Account  @Icon.UserPlus.Render()
+    </a>
+    </li>
+
+    <li><hr class="dropdown-divider"></li>
+    <li class="drop">
+
+    @{
+    if (item.AccessLevel != AccessLevel.Farmer)
+    {
+    <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Users.Users)?id=@item.Id">
+    Sub Users  @Icon.UserPlus.Render()
+    </a>
+    }
+    else
+    {
+    <a class=" dropdown-item justified-content-between" href="#">
+    Properties  @Icon.UserPlus.Render()
+    </a>
+    <div class="dropdown-content">
+    <a class="dropdown-item justified-content-between p-2 " href="@(Routes.Dashboard.Animals.Groups.GetAll)?id=@item.Id">
+    Animals  @Icon.UserPlus.Render()
+    </a>
+    <a class="dropdown-item justified-content-between p-2 " href="@(Routes.Dashboard.Animals.Products.GetAll)?id=@item.Id">
+    Products  @Icon.UserPlus.Render()
+    </a>
+    </div>
+    }
+    }
+    </li>
+    </div>
+    </td>
+    </tr>
+    }
+    </tbody>
+    </table>
+    </div>
+
+    <partial name="Layout/Paginator" model="@Model.Params.Page" />
+
+    @await Html.DeleteDialogAsync()*@

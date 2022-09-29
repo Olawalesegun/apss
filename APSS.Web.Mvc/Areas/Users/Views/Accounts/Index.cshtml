@@ -49,6 +49,15 @@
                                         Update @Icon.Pen.Render()
                                     </a>
                                 </li>
+                                <li class="s003"></li>
+                                @if (item.User.AccessLevel == AccessLevel.Farmer)
+                                {
+                                    <li>
+                                        <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Animals.Groups.GetAll)?id=@item.Id">
+                                            Animals @Icon.Cow.Render()
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </td>
