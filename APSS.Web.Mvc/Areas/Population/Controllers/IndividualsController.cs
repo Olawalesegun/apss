@@ -70,7 +70,7 @@ public class IndividualsController : Controller
     [ApssAuthorized(AccessLevel.Group, PermissionType.Update)]
     public async Task<IActionResult> Update(long id)
     {
-        var individual = await (await _populationSvc.GetIndividualAsync(User.GetAccountId(), id)).FirstAsync();
+        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
         var individualForm = new IndividualEditForm
         {
             Id = individual.Id,
@@ -83,7 +83,7 @@ public class IndividualsController : Controller
             Sex = (SexDto)individual.Sex,
             SocialStatus = (SocialStatusDto)individual.SocialStatus!,
         };
-        var family = await (await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id)).FirstOrNullAsync();
+        var family = await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id);
         if (family != null)
         {
             individualForm.FamilyId = family!.Family.Id;
@@ -150,11 +150,11 @@ public class IndividualsController : Controller
     [ApssAuthorized(AccessLevel.Group, PermissionType.Read)]
     public async Task<IActionResult> Details(long id)
     {
-        var individual = await (await _populationSvc.GetIndividualAsync(User.GetAccountId(), id)).FirstAsync();
+        var individual = await _populationSvc.GetIndividualAsync(User.GetAccountId(), id);
 
         var individualDto = _mapper.Map<IndividualDto>(individual);
 
-        var family = await (await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id)).FirstOrNullAsync();
+        var family = await _populationSvc.GetFamilyIndividual(User.GetAccountId(), id);
         if (family != null)
             individualDto.Family = _mapper.Map<FamilyDto>(family!.Family);
 
