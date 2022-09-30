@@ -48,12 +48,13 @@ public sealed class SurveysService : ISurveysService
         return AddQuestionAsync(_uow.LogicalQuestions, accountId, surveyId, text, isRequired);
     }
 
-    public IQueryBuilder<MultipleChoiceQuestionAnswer> GetItemsAnswer(long accountId, long questionId)
+    public async Task<ICollection<MultipleChoiceAnswerItem>> GetItemsAnswer(long accountId, long questionId)
     {
-        var items = _uow.MultipleChoiceQuestionAnswers.Query()
-             .Include(q => q.Answers)
-             .Include(q => q.Question).Where(q => q.Question.Id == questionId);
-        return items;
+        var answers = await _uow.MultipleChoiceQuestions.Query()
+            .Include(a => a.CandidateAnswers)
+            .FindAsync(questionId);
+
+        return answers.CandidateAnswers;
     }
 
     /// <inheritdoc/>
@@ -483,6 +484,18 @@ public sealed class SurveysService : ISurveysService
         await _uow.CommitAsync();
 
         return question;
+    }
+
+    public async Task<MultipleChoiceAnswerItem> UpdateItemsAnswerAsync(long accountId, long itemId, Action<MultipleChoiceAnswerItem> updater)
+    {
+        var item = await _uow.MultipleChoiceAnswerItems.Query().FindAsync(itemId);
+
+        updater(item);
+
+        _uow.MultipleChoiceAnswerItems.Update(item);
+        await _uow.CommitAsync();
+
+        return item;
     }
 
     #endregion Public Methods
