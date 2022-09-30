@@ -1,11 +1,12 @@
 ﻿@model QuestionAddForm
-<div class="container-fluid  mt-3    ">
+
+<div class="container-fluid  mt-3">
     <div class="row d-flex ">
         <div class="col-xl-7  col-md-9 col-12 border rounded shadow-sm  p-2">
             <div class="d-flex  justify-content-center pb-4 pt-4">
                 <div class=""> <h3 class="text-decoration-underline "> Add Question </h3></div>
             </div>
-            <form class="" method="post" action="@Routes.Dashboard.Surveys.Surveys.FullPath" asp-antiforgery="true" novalidate>
+            <form class="" method="post" action="@Routes.Dashboard.Surveys.Questions.Add" asp-antiforgery="true" novalidate>
 
                 <input asp-for="SurveyId" hidden />
                 <div class="row d-flex justify-content-center mb-3">
@@ -149,18 +150,17 @@
         const box7 = document.getElementById('box7');
         const box8=document.getElementById('box8');
         const can=document.getElementById('canmultiple');
-     var     counter=0;
-    el.a    ddEventListener('change', function handleChange(event) {
+     var counter=0;
+       el.addEventListener('change', function handleChange(event) {
       if     (event.target.value === '2') {
-          alert("hellow")
             box1.style.display = 'block';
             box2.style.display= 'block';
             box3.style.display= 'block';
         addicon.style.display='block';
             can.style.display='block';
-        co    unter=3;
+        counter=3;
 
-      }     el    se {
+      }     else {
               box1.style.display = 'none';
               box2.style.display= 'none';
               box3.style.display= 'none';
@@ -174,8 +174,8 @@
               counter=0;
           }
     });
-addi    con.addEventListener('click', function handleClick(event) {
-    coun    ter = counter + 1;
+addicon.addEventListener('click', function handleClick(event) {
+    counter = counter + 1;
 
             if (counter == 1) {
             box4.style.display = 'block';
@@ -194,7 +194,7 @@ addi    con.addEventListener('click', function handleClick(event) {
             addicon.style.display = 'none';
     }
 
-    el    se     {
+    else     {
             box4.style.display = 'none';
             box5.style.display = 'none';
             box6.style.display = 'none';
