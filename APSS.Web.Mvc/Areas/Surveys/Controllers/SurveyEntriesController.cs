@@ -37,7 +37,7 @@ public class SurveyEntriesController : Controller
                 CreatedAt = entry.CreatedAt
             });
         }
-        return View("GetSurveyEntries", entriesdto);
+        return View(entriesdto);
     }
 
     //Get:SurveyEntry/SurveyEntryDetails/5
@@ -54,13 +54,14 @@ public class SurveyEntriesController : Controller
 
         foreach (var entry in await entries.AsAsyncEnumerable().ToListAsync())
         {
-            var items = new List<MultipleChoiceQuestionAnswer>();
+            ICollection<MultipleChoiceAnswerItem> items = null!;
             foreach (var answer in entry.Answers)
             {
                 if (answer is MultipleChoiceQuestionAnswer)
                 {
-                    items = await _surveysService
-                       .GetItemsAnswer(User.GetAccountId(), answer.Question.Id).AsAsyncEnumerable().ToListAsync();
+                    var itemsanswer = await _surveysService
+                        .GetItemsAnswer(User.GetAccountId(), answer.Question.Id);
+                    items = itemsanswer;
                 }
             }
 
