@@ -3,3 +3,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
+#box1, #box2, #box3, #box, #box4, #box5, #box6, #box7, #box8, #box9, #canmultiple, #AddIcon {
+    display: none;
+}
