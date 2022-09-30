@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using APSS.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace APSS.Web.Dtos.Forms;
 
@@ -22,7 +23,7 @@ public class QuestionEditForm
     public QuestionTypeDto QuestionType { get; set; }
 
     [Display(Name = "Choices")]
-    public ICollection<string>? CandidateAnswers { get; set; }
+    public ICollection<MultipleChoiceAnswerItem>? CandidateAnswers { get; set; }
 
     [Display(Name = "Select More one?")]
     public bool CanMultiSelect { get; set; }

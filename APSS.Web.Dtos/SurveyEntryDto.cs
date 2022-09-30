@@ -14,5 +14,5 @@ public class SurveyEntryDto : BaseAuditbleDto
     [Display(Name = "Type Of Answer")]
     public TypeAnswerDto Answers { get; set; } = null!;
 
-    public List<MultipleChoiceQuestionAnswer> anwserItems = new List<MultipleChoiceQuestionAnswer>();
+    public ICollection<MultipleChoiceAnswerItem> anwserItems = new List<MultipleChoiceAnswerItem>();
 }
