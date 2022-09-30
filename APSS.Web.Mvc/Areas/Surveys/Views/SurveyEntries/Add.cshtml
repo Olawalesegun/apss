@@ -1,4 +1,4 @@
-﻿@*@using APSS.Web.Dtos
+﻿@using APSS.Web.Dtos
 @model APSS.Web.Dtos.SurveyEntryDto
 <div class="container-fluid px-3 py-3  mx-4 my-1">
     <div class="col-sm-6">
@@ -36,17 +36,13 @@
                 @if (question is MultipleChoiceQuestion)
                     {
 
-                        @foreach (var value in @Model.anwserItems.Where())
+                        @foreach (var value in @Model.anwserItems)
                         {
                          <label ></label>
-                        
                            <input asp-for="@Model.Answers.MultipleChoiceQuestionAnswer!.Answers" type="checkbox" > 
+                        }  
                         }
-                        else{
-                           <input asp-for="@Model.Answers.MultipleChoiceQuestionAnswer!.Answers" type="radio" > 
-                            }
-                        }
-                    }
+                    
                 </div>
              @if (question.IsRequired==true)
                 {
@@ -59,4 +55,4 @@
             </div>
         </form>
         </div>
-        </div>*@
+        </div>
