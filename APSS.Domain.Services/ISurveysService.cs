@@ -198,9 +198,13 @@ public interface ISurveysService
 
     Task<Question> UpdateQuestionAsync(long accountId, long questionId, Action<Question> updater);
 
-    Task<MultipleChoiceAnswerItem> UpdateItemsAnswerAsync(long accountId, long itemId, Action<MultipleChoiceAnswerItem> updater);
+    Task<MultipleChoiceAnswerItem> UpdateItemsAnswerAsync(long itemId, Action<MultipleChoiceAnswerItem> updater);
 
     Task<ICollection<MultipleChoiceAnswerItem>> GetItemsAnswer(long accountId, long questionId);
+
+    Task<SurveyEntry> GetSurveyEntryAsync(long accountId, long entryId);
+
+    Task<MultipleChoiceQuestion> UpdateMultipleChoiceQuestion(long questionId, Action<MultipleChoiceQuestion> updater);
 
     #endregion Public Methods
 }
