@@ -337,6 +337,17 @@ public sealed class SurveysService : ISurveysService
             .Where(s => s.Id == surveyId && s.CreatedBy.Id == account.User.Id).FirstAsync();
     }
 
+    public async Task<SurveyEntry> GetSurveyEntryAsync(long accountId, long entryId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(a => a.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        return await _uow.SurveyEntries
+            .Query()
+            .FindAsync(entryId);
+    }
+
     public async Task<Question> GetQuestionAsync(long accountId, long questionId)
     {
         var account = await _uow.Accounts.Query()
@@ -486,7 +497,7 @@ public sealed class SurveysService : ISurveysService
         return question;
     }
 
-    public async Task<MultipleChoiceAnswerItem> UpdateItemsAnswerAsync(long accountId, long itemId, Action<MultipleChoiceAnswerItem> updater)
+    public async Task<MultipleChoiceAnswerItem> UpdateItemsAnswerAsync(long itemId, Action<MultipleChoiceAnswerItem> updater)
     {
         var item = await _uow.MultipleChoiceAnswerItems.Query().FindAsync(itemId);
 
@@ -496,6 +507,17 @@ public sealed class SurveysService : ISurveysService
         await _uow.CommitAsync();
 
         return item;
+    }
+
+    public async Task<MultipleChoiceQuestion> UpdateMultipleChoiceQuestion(long questionId, Action<MultipleChoiceQuestion> updater)
+    {
+        var question = await _uow.MultipleChoiceQuestions.Query().Include(q => q.CandidateAnswers).FindAsync(questionId);
+        updater(question);
+
+        _uow.MultipleChoiceQuestions.Update(question);
+        await _uow.CommitAsync();
+
+        return question;
     }
 
     #endregion Public Methods
