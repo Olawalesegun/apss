@@ -114,7 +114,7 @@ public class QuestionsController : Controller
         if (question is MultipleChoiceQuestion)
         {
             var items = await _surveysService.GetItemsAnswer(User.GetAccountId(), question.Id);
-            questionDto.CandidateAnswers = items;
+            questionDto.CandidateAnswers = items.ToList();
         }
 
         return View(questionDto);
@@ -130,6 +130,17 @@ public class QuestionsController : Controller
              q.IsRequired = question.IsRequired;
          });
 
+        await _surveysService.UpdateMultipleChoiceQuestion(question.Id,
+            q => q.CanMultiSelect = question.CanMultiSelect);
+
+        if (question.CandidateAnswers != null)
+        {
+            foreach (var answer in question.CandidateAnswers!)
+            {
+                await _surveysService.UpdateItemsAnswerAsync(answer.Id,
+                     a => a.Value = answer.Value);
+            }
+        }
         TempData["success"] = "Question Updated successfully";
 
         return LocalRedirect(Routes.Dashboard.Surveys.Questions.FullPath + $"?id={question.SurveyId}");
