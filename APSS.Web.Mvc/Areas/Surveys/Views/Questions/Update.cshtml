@@ -42,32 +42,24 @@
 
               
 
-                  <div class="d-flex justify-content-between">
                           
                     @if (Model.QuestionType.ToString()== "MultipleChoiceQuestion")
                     {
 
-                         <div class="col-6">
-                        <div class="form-check flex-grow-1 mt-4 ">
-                            <input class="form-check-input " type="checkbox" asp-for="IsRequired">
-                            <label class="form-check-label" asp-for="IsRequired"> </label>
-                        </div>
-                   </div>
-                        @foreach (var item in Model.CandidateAnswers!)
+                     <label asp-for="CandidateAnswers" class="mt-2"></label>
+                        @for(int i=0;i<@Model.CandidateAnswers!.Count();i++)
                         {
-
-                         <div class="input-group has-validation mb-3">
+                            <input asp-for="CandidateAnswers![i].Id" hidden />
+                     <div class="input-group has-validation mb-3">
                     <span class="input-group-text"><i class="fa-regular fa-circle-question"></i></span>
                     <div class="form-floating flex-grow-1">
-                        <input type="text" class="form-control" placeholder="Why What...?" asp-for="CandidateAnswers" value="@item.Value">
-                     <label asp-for="CandidateAnswers"></label>
+                        <input type="text" class="form-control" placeholder="Why What...?" asp-for="CandidateAnswers![i].Value">
                     </div>
                 </div>
 
                         }
                     }
 
-                   </div>
 
                  <div class="mb-4  mt-4">
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-pen-to-square mx-2 fa-lg"></i><span>Edit</span>  </button>
