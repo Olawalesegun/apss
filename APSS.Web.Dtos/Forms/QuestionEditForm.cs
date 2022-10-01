@@ -23,7 +23,7 @@ public class QuestionEditForm
     public QuestionTypeDto QuestionType { get; set; }
 
     [Display(Name = "Choices")]
-    public ICollection<MultipleChoiceAnswerItem>? CandidateAnswers { get; set; }
+    public IList<MultipleChoiceAnswerItem>? CandidateAnswers { get; set; }
 
     [Display(Name = "Select More one?")]
     public bool CanMultiSelect { get; set; }
