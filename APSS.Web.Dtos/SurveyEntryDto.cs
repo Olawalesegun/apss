@@ -9,10 +9,8 @@ public class SurveyEntryDto : BaseAuditbleDto
     public User MadeBy { get; set; } = null!;
 
     [Display(Name = "Survey")]
-    public Survey Survey { get; set; } = null!;
+    public SurveyDto Survey { get; set; } = null!;
 
     [Display(Name = "Type Of Answer")]
-    public TypeAnswerDto Answers { get; set; } = null!;
-
-    public ICollection<MultipleChoiceAnswerItem> anwserItems = new List<MultipleChoiceAnswerItem>();
+    public List<QuestionAnswer> Answers { get; set; } = new List<QuestionAnswer>();
 }
