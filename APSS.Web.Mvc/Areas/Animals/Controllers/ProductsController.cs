@@ -21,12 +21,13 @@ namespace APSS.Web.Mvc.Areas.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
+        public async Task<IActionResult> Index(long id, [FromQuery] FilteringParameters args)
         {
-            var products = await (await _aps.GetAllAnimalProductsAsync(User.GetAccountId(), User.GetUserId()))
+            var userId = id > 0 ? id : User.GetUserId();
+            var products = await (await _aps.GetAllAnimalProductsAsync(User.GetAccountId(), userId))
                 .Include(u => u.Unit)
-                /*  .Where(u => u.Name.Contains(args.Query))
-                  .Page(args.Page, args.PageLength)*/
+                .Where(u => u.Name.Contains(args.Query ?? String.Empty))
+                .Page(args.Page, args.PageLength)
                 .AsAsyncEnumerable()
                 .Select(_mapper.Map<AnimalProductDetailsDto>)
                 .ToListAsync();
@@ -140,20 +141,6 @@ namespace APSS.Web.Mvc.Areas.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            /*var delete = await (await _aps.GetAnimalProductAsync(User.GetAccountId(), id)).Include(u => u.Unit).AsAsyncEnumerable().ToListAsync();
-            var single = delete.FirstOrDefault();
-            var productDto = new AnimalProductDetailsDto
-            {
-                Id = single!.Id,
-                Name = single.Name,
-                Quantity = single.Quantity,
-                UnitName = single.Unit.Name,
-                PeriodTaken = single.PeriodTaken,
-                CreatedAt = single.CreatedAt,
-                ModifiedAt = single.ModifiedAt,
-            };
-            return View(productDto);*/
-
             try
             {
                 if (id > 0)
@@ -185,8 +172,8 @@ namespace APSS.Web.Mvc.Areas.Controllers
         {
             var products = await (await _aps.GetSpecificAnimalProductsAsync(User.GetAccountId(), id))
                   .Include(u => u.Unit)
-                  /* .Where(u => u.Name.Contains(args.Query))
-                   .Page(args.Page, args.PageLength)*/
+                   .Where(u => u.Name.Contains(args.Query ?? String.Empty))
+                  .Page(args.Page, args.PageLength)
                   .AsAsyncEnumerable()
                   .Select(_mapper.Map<AnimalProductDetailsDto>)
                   .ToListAsync();

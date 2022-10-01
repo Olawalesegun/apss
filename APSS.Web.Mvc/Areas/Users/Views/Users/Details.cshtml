@@ -56,29 +56,3 @@
         </div>
     </div>
 </div>
-
-@section scripts{
-<script>
-        $(document).ready(function(){
-    $(".sidebar ul li.active").removeClass('active');
-    $("#accountManagement").addClass('active');
-    });
-
-     document.getElementById("nav-system-name").innerHTML="Employees Management ";
-    document.getElementById("media-system-name").innerHTML="Employees Management";
-    $(".scrollmenu a").on('click',function(){
-        $(".scrollmenu a.MediaActive").removeClass('MediaActive');
-
-    });
-    $(".manage-ment ul li a").on('click',function(){
-        $(".scrollmenu a.actives").removeClass('actives');
-        $("#accounts").addClass('actives');
-
-    });
-    $(".scrollmenu ul li a").on('click',function(){
-        $(".scrollmenu ul li a.actives").removeClass('actives');
-        $("#accounts").addClass('actives');
-    });
-    $("#userMedia").addClass("actives")
-</script>
-}

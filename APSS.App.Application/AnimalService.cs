@@ -120,7 +120,7 @@ public class AnimalService : IAnimalService
     {
         await _permissionsService.ValidatePermissionsAsync(accountId, userId, PermissionType.Read);
 
-        return _uow.AnimalProducts.Query()
+        return _uow.AnimalProducts.Query().Include(p => p.Producer)
             .Where(p => p.Producer.OwnedBy.Id == userId);
     }
 
@@ -275,7 +275,8 @@ public class AnimalService : IAnimalService
     {
         var account = await _uow.Accounts.Query()
             .Include(u => u.User)
-            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+            .FindAsync(accountId);
+        await _permissionsService.ValidatePermissionsAsync(account.Id, account.User.Id, PermissionType.Read);
 
         return _uow.ProductExpenses.Query().Where(p => p.Id == expenseId);
     }
@@ -292,14 +293,14 @@ public class AnimalService : IAnimalService
         await _uow.CommitAsync();
     }
 
-    public async Task<IQueryBuilder<AnimalProduct>> GetSpecificAnimalProductsAsync(long accountId, long animalId)
+    public async Task<IQueryBuilder<AnimalProduct>> GetSpecificAnimalProductsAsync(long accountId, long userId)
     {
         var account = await _uow.Accounts.Query()
             .Include(u => u.User)
             .FindAsync(accountId);
         await _permissionsService.ValidatePermissionsAsync(accountId, account.User.Id, PermissionType.Read);
 
-        return _uow.AnimalProducts.Query().Where(i => i.Producer.Id == animalId);
+        return _uow.AnimalProducts.Query().Where(i => i.Producer.Id == userId);
     }
 
     #endregion Public Methods

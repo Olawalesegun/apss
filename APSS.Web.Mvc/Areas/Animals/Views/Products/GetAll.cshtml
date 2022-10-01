@@ -22,7 +22,7 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr class="@(item.IsConfirmed.Equals(false) ? "bg-danger text-white" : item.IsConfirmed==null ? "bg-warring" : string.Empty )">
+                        <tr class="@(item.IsConfirmed.Equals(false) ? "custom-bg-danger text-white" : item.IsConfirmed==null ? "custom-bg-warning" : string.Empty )">
 
                             <td class="text-break text-capitalize align-middle">@item.Id</td>
                             <td class="text-break text-capitalize align-middle"> @item.Name</td>

@@ -54,3 +54,11 @@
 /*.drop:hover .dropbtn {
     background-color: #3e8e41;
 }*/
+
+.custom-bg-danger {
+    background-color: rgb(200, 100, 0,1) !important;
+}
+
+.custom-bg-warning {
+    background-color: rgb(255, 216, 0,0.5) !important;
+}
