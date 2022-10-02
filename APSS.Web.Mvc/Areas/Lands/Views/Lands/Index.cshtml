@@ -36,24 +36,24 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Details)?id=@item.Id">
+                                            <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Lands.Lands.Details)?id=@item.Id">
                                                 Details @Icon.Info.Render()
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Lands.Update)?id=@item.Id">
+                                            <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Lands.Lands.Update)?id=@item.Id">
                                                 Update @Icon.Pen.Render()
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Land `@item.Name`?', @item.Id)">
+                                            <a class="dropdown-item justified-content-between" href="#" onclick="showDeletionModal('Are you sure you want to delete Land `@item.Name`?', @item.Id)">
                                                 Delete @Icon.TrashCan.Render()
                                             </a>
                                         </li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Products.Add.FullPath)?id=@item.Id">
+                                            <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Lands.Products.Add.FullPath)?id=@item.Id">
                                                 Add Product @Icon.Plus.Render()
                                             </a>
                                         </li>
@@ -66,22 +66,8 @@
             </table>
         </div>
     </div>
-    <nav aria-label="Page navigation example" class="float-left pl-5">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
 </div>
+
+<partial name="Layout/Paginator" model="@Model.Params.Page" />
+
 @await Html.DeleteDialogAsync()

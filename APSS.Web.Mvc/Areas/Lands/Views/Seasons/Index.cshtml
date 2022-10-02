@@ -38,12 +38,12 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Lands.Seasons.Update)?id=@item.Id">
+                                            <a class="dropdown-item justified-content-between" href="@(Routes.Dashboard.Lands.Seasons.Update)?id=@item.Id">
                                                 Update @Icon.Pen.Render()
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Product `@item.Name`?', @item.Id)">
+                                            <a class="dropdown-item justified-content-between" onclick="showDeletionModal('Are you sure you want to delete Product `@item.Name`?', @item.Id)">
                                                 Delete @Icon.TrashCan.Render()
                                             </a>
                                         </li>
@@ -56,22 +56,6 @@
             </table>
         </div>
     </div>
-    <nav aria-label="Page navigation example" class="float-left pl-5">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <partial name="Layout/Paginator" model="@Model.Params.Page" />
 </div>
 @await Html.DeleteDialogAsync()
