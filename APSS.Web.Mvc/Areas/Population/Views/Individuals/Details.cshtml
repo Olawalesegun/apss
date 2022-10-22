@@ -42,6 +42,17 @@
                     <th class="align-middle">@Html.DisplayNameFor(m => m.SocialStatus)</th>
                     <td> @Model.SocialStatus </td>
                 </tr>
+                 <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.Family)</th>
+                    <td>
+                        @if (@Model.Family == null) { } 
+                        else @Model.Family.Name 
+                        </td>
+                </tr>
+                 <tr>
+                    <th class="align-middle">@Html.DisplayNameFor(m => m.AddBy)</th>
+                    <td> @Model.AddBy.Name </td>
+                </tr>
                 <tr>
                     <th class="align-middle">@Html.DisplayNameFor(m => m.DateOfBirth)</th>
                     <td> @Model.DateOfBirth </td>

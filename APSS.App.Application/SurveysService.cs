@@ -48,12 +48,13 @@ public sealed class SurveysService : ISurveysService
         return AddQuestionAsync(_uow.LogicalQuestions, accountId, surveyId, text, isRequired);
     }
 
-    public IQueryBuilder<MultipleChoiceQuestionAnswer> GetItemsAnswer(long accountId, long questionId)
+    public async Task<ICollection<MultipleChoiceAnswerItem>> GetItemsAnswer(long accountId, long questionId)
     {
-        var items = _uow.MultipleChoiceQuestionAnswers.Query()
-             .Include(q => q.Answers)
-             .Include(q => q.Question).Where(q => q.Question.Id == questionId);
-        return items;
+        var answers = await _uow.MultipleChoiceQuestions.Query()
+            .Include(a => a.CandidateAnswers)
+            .FindAsync(questionId);
+
+        return answers.CandidateAnswers;
     }
 
     /// <inheritdoc/>
@@ -310,6 +311,20 @@ public sealed class SurveysService : ISurveysService
         return await DoGetAvailableSurveysAsync(account.Id);
     }
 
+    public async Task<IQueryBuilder<Survey>> GetSurveysAsync(long accountId)
+    {
+        var account = await _uow.Accounts.Query()
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        var usersHierarchyIds = await _usersSvc
+           .GetUpwardHierarchyAsync(accountId)
+           .Select(u => u.Id)
+           .ToListAsync();
+
+        return _uow.Surveys.Query()
+            .Where(s => usersHierarchyIds.Contains(s.CreatedBy.Id));
+    }
+
     /// <inheritdoc/>
     public async Task<Survey> GetSurveyAsync(long accountId, long surveyId)
     {
@@ -320,6 +335,29 @@ public sealed class SurveysService : ISurveysService
         return await _uow.Surveys
             .Query()
             .Where(s => s.Id == surveyId && s.CreatedBy.Id == account.User.Id).FirstAsync();
+    }
+
+    public async Task<SurveyEntry> GetSurveyEntryAsync(long accountId, long entryId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(a => a.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        return await _uow.SurveyEntries
+            .Query()
+            .FindAsync(entryId);
+    }
+
+    public async Task<Question> GetQuestionAsync(long accountId, long questionId)
+    {
+        var account = await _uow.Accounts.Query()
+            .Include(a => a.User)
+            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+
+        var question = await _uow.Questions.Query()
+            .Include(q => q.Survey)
+            .FindAsync(questionId);
+        return question;
     }
 
     /// <inheritdoc/>
@@ -358,16 +396,65 @@ public sealed class SurveysService : ISurveysService
     {
         var (survey, _) = await GetSurveyWithAuthorizationAsync(accountId, surveyId, PermissionType.Delete);
 
+        var questions = await _uow.Questions.Query()
+            .Where(q => q.Survey.Id == surveyId)
+            .AsAsyncEnumerable()
+            .ToListAsync();
+
+        var questionIds = await questions.Select(q => q.Id)
+            .ToAsyncEnumerable()
+            .ToListAsync();
+
+        var answers = await _uow.MultipleChoiceQuestions.Query()
+              .Include(q => q.CandidateAnswers)
+              .Where(q => questionIds.Contains(q.Id))
+              .AsAsyncEnumerable()
+              .Select(q => q.CandidateAnswers)
+              .ToListAsync();
+
+        foreach (var answer in answers)
+        {
+            var items = answer.ToList().Select(a => a.Id);
+
+            var itemsanswer = await _uow.MultipleChoiceAnswerItems.Query()
+                .Where(i => items.Contains(i.Id))
+                .AsAsyncEnumerable()
+                .ToListAsync();
+
+            itemsanswer.ForEach(_uow.MultipleChoiceAnswerItems.Remove);
+        }
+
+        questions.ForEach(_uow.Questions.Remove);
+
         _uow.Surveys.Remove(survey);
         await _uow.CommitAsync();
     }
 
-    public async Task Removequestion(long accountId, long questionId)
+    public async Task RemoveQuestion(long accountId, long questionId)
     {
         var question = await _uow.Questions.Query()
             .Include(q => q.Survey).FindAsync(questionId);
 
-        var (survey, _) = await GetSurveyWithAuthorizationAsync(accountId, question.Survey.Id, PermissionType.Delete);
+        var (survey, _) = await GetSurveyWithAuthorizationAsync(
+                            accountId,
+                            question.Survey.Id,
+                            PermissionType.Delete);
+        if (await _uow.MultipleChoiceQuestions
+            .Query()
+            .AnyAsync(q => q.Id == questionId))
+        {
+            var items = await _uow.MultipleChoiceQuestions.Query()
+                       .Include(a => a.CandidateAnswers)
+                       .FindAsync(questionId);
+            var itemsId = items.CandidateAnswers.Select(a => a.Id);
+
+            var itemsanswer = await _uow.MultipleChoiceAnswerItems.Query()
+               .Where(i => itemsId.Contains(i.Id))
+               .AsAsyncEnumerable()
+               .ToListAsync();
+
+            itemsanswer.ForEach(_uow.MultipleChoiceAnswerItems.Remove);
+        }
         _uow.Questions.Remove(question);
         await _uow.CommitAsync();
     }
@@ -391,6 +478,46 @@ public sealed class SurveysService : ISurveysService
         await _uow.CommitAsync();
 
         return survey;
+    }
+
+    public async Task<Question> UpdateQuestionAsync(long accountId, long questionId, Action<Question> updater)
+    {
+        var question = await _uow.Questions.Query().Include(q => q.Survey).FindAsync(questionId);
+
+        var (survey, _) = await GetSurveyWithAuthorizationAsync(
+            accountId,
+            question.Survey.Id,
+            PermissionType.Create | PermissionType.Update);
+
+        updater(question);
+
+        _uow.Questions.Update(question);
+        await _uow.CommitAsync();
+
+        return question;
+    }
+
+    public async Task<MultipleChoiceAnswerItem> UpdateItemsAnswerAsync(long itemId, Action<MultipleChoiceAnswerItem> updater)
+    {
+        var item = await _uow.MultipleChoiceAnswerItems.Query().FindAsync(itemId);
+
+        updater(item);
+
+        _uow.MultipleChoiceAnswerItems.Update(item);
+        await _uow.CommitAsync();
+
+        return item;
+    }
+
+    public async Task<MultipleChoiceQuestion> UpdateMultipleChoiceQuestion(long questionId, Action<MultipleChoiceQuestion> updater)
+    {
+        var question = await _uow.MultipleChoiceQuestions.Query().Include(q => q.CandidateAnswers).FindAsync(questionId);
+        updater(question);
+
+        _uow.MultipleChoiceQuestions.Update(question);
+        await _uow.CommitAsync();
+
+        return question;
     }
 
     #endregion Public Methods

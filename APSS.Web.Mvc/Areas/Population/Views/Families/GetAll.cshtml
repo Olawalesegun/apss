@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<FamilyIndividualGetDto>
+@model IEnumerable<FamilyIndividualDto>
 
 
 
@@ -10,8 +10,8 @@
             <thead class="table-light">
                 <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
                     <th class=" fw-bold align-middle">@Html.DisplayNameFor(f=>f.Id)</th>
-                    <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.NameFamily) </th>
-                    <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.NameIndividual) </th>
+                    <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.Family) </th>
+                    <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.Individual) </th>
                     <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.IsParent) </th>
                     <th  class="fw-bold  align-middle">@Html.DisplayNameFor(f=>f.IsProvider) </th>
                 </tr>
@@ -22,8 +22,8 @@
                 {
                     <tr >
                         <td>@item.Id</td>
-                        <td>@item.NameFamily</td>
-                        <td>@item.NameIndividual</td>
+                        <td>@item.Family.Name</td>
+                        <td>@item.Individual.Name</td>
                         <td>@item.IsParent</td>
                         <td>@item.IsProvider</td>
                        

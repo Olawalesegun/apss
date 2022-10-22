@@ -31,22 +31,31 @@
                             <td>@item.QuestionType</td>
                             <td>@item.Survey.Name</td>
                             <td class="align-middle center">
-
-                                <div class=" dropend">
-                                    <a class="" role="button" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        <div class=" dropdown">
+                            <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                @Icon.Bars.Render()
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Surveys.Questions.Details)?id=@item.Id">
+                                        Details @Icon.Info.Render()
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <form asp-area="Surveys" asp-controller="Questions" asp-action="DeleteQuestion" asp-route-id="@item.Id" method="post">
-                                        <li><button type="submit" class="dropdown-item"><div class="d-flex justify-content-between"> <span>Delete</span>  <span><i class="fa-solid fa-trash-can"></i> </span> </div></button></li>
-
-                                        </form>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    }
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content" onclick="showDeletionModal('Are you sure you want to delete Question `@item.Text`?', @item.Id)">
+                                        Delete @Icon.TrashCan.Render()
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Surveys.Questions.Update)?id=@item.Id" >
+                                        Update @Icon.Pen.Render()
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
                 </tbody>
             </table>
         </div>
@@ -54,3 +63,4 @@
 </div>
 
 <partial name="Layout/Paginator" model="@Model.Params.Page" />
+@await Html.DeleteDialogAsync()

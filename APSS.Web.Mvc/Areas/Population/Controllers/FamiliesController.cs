@@ -1,7 +1,4 @@
-﻿using System.Linq;
-
-using Microsoft.AspNetCore.Mvc;
-using APSS.Application.App;
+﻿using Microsoft.AspNetCore.Mvc;
 using APSS.Domain.Entities;
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
@@ -11,6 +8,7 @@ using APSS.Web.Mvc.Auth;
 using AutoMapper;
 using APSS.Web.Dtos.Parameters;
 using APSS.Web.Mvc.Models;
+using APSS.Web.Mvc.Util.Navigation.Routes;
 
 namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
 {
@@ -54,9 +52,8 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         [ApssAuthorized(AccessLevel.All ^ AccessLevel.Farmer, PermissionType.Read)]
         public async Task<IActionResult> Details(long id)
         {
-            var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
-            var familyDto = _mapper.Map<FamilyDto>(family);
-            return View(familyDto);
+            return View(_mapper.Map<FamilyDto>(
+              await _populationSvc.GetFamilyAsync(User.GetAccountId(), id)));
         }
 
         // GET: FamilyController/GetFamilyIndividuals/5
@@ -64,21 +61,13 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         [HttpGet, ActionName("GetAll")]
         public async Task<IActionResult> GetAll(long id)
         {
-            List<FamilyIndividualGetDto> familyindividualsDto = new List<FamilyIndividualGetDto>();
+            List<FamilyIndividualDto> familyindividualsDto = new List<FamilyIndividualDto>();
             var familyindividuals = await _populationSvc
                 .GetIndividualsOfFamilyAsync(User.GetAccountId(), id);
-            foreach (var familyindividual in await familyindividuals.AsAsyncEnumerable().ToListAsync())
-            {
-                familyindividualsDto.Add(new FamilyIndividualGetDto
-                {
-                    Id = familyindividual.Id,
-                    NameFamily = familyindividual.Family.Name,
-                    NameIndividual = familyindividual.Individual.Name,
-                    CreatedAt = familyindividual.CreatedAt,
-                    IsParent = familyindividual.IsParent,
-                    IsProvider = familyindividual.IsProvider
-                });
-            }
+            familyindividualsDto = await familyindividuals
+                   .AsAsyncEnumerable()
+                   .Select(_mapper.Map<FamilyIndividualDto>)
+                   .ToListAsync();
 
             return View(familyindividualsDto);
         }
@@ -103,7 +92,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
             await _populationSvc.AddFamilyAsync(User.GetAccountId(), family.Name, family.LivingLocation);
             TempData["success"] = "Family Added successfully";
 
-            return RedirectToAction(nameof(Index));
+            return LocalRedirect(Routes.Dashboard.Population.Families.FullPath);
         }
 
         // GET: FamilyController/EditFamily/5
@@ -111,6 +100,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
         public async Task<IActionResult> Update(long id)
         {
             var family = await _populationSvc.GetFamilyAsync(User.GetAccountId(), id);
+
             FamilyEditForm familyDto = new FamilyEditForm
             {
                 Id = family.Id,
@@ -141,14 +131,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
                });
             TempData["success"] = "Family Updated successfully";
 
-            return RedirectToAction(nameof(Index));
-        }
-
-        // GET: FamilyController/DeleteFamily/5
-        [ApssAuthorized(AccessLevel.Group, PermissionType.Delete)]
-        public IActionResult Delete(long id)
-        {
-            return RedirectToAction(nameof(Index));
+            return LocalRedirect(Routes.Dashboard.Population.Families.FullPath);
         }
 
         // POST: FamilyController/DeleteFamily/5
@@ -160,7 +143,7 @@ namespace APSS.Web.Mvc.Areas.Populatoin.Controllers
                 await _populationSvc.RemoveFamilyAsync(User.GetAccountId(), id);
             TempData["success"] = "Family deleted successfully";
 
-            return RedirectToAction(nameof(Index));
+            return LocalRedirect(Routes.Dashboard.Population.Families.FullPath);
         }
     }
 }

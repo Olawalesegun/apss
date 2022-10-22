@@ -6,6 +6,7 @@ using APSS.Web.Mvc.Auth;
 using APSS.Web.Mvc.Util.Navigation.Routes;
 using APSS.Web.Mvc.Models;
 using APSS.Web.Dtos.Parameters;
+using AutoMapper;
 
 namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 
@@ -13,28 +14,24 @@ namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 public class SurveysController : Controller
 {
     private readonly ISurveysService _surveySvc;
+    private readonly IMapper _mapper;
 
-    public SurveysController(ISurveysService surveySvc)
+    public SurveysController(ISurveysService surveySvc, IMapper mapper)
     {
         _surveySvc = surveySvc;
+        _mapper = mapper;
     }
 
     // GET: Survey/GetSurveys
     [HttpGet]
     public async Task<ActionResult> Index([FromQuery] FilteringParameters args)
     {
-        var ret = await (await _surveySvc.GetAvailableSurveysAsync(User.GetAccountId()))
+        var ret = await (await _surveySvc.GetSurveysAsync(User.GetAccountId()))
             .Where(s => s.Name.Contains(args.Query ?? string.Empty))
             .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
-            .Select(s => new SurveyDto
-            {
-                Id = s.Id,
-                Name = s.Name,
-                ExpirationDate = s.ExpirationDate,
-                UserName = s.CreatedBy.Name
-            }).ToListAsync();
-
+            .Select(_mapper.Map<SurveyDto>)
+            .ToListAsync();
 
         return View(new CrudViewModel<SurveyDto>(ret, args));
     }
@@ -43,17 +40,8 @@ public class SurveysController : Controller
     [HttpGet]
     public async Task<ActionResult> Details(long id)
     {
-        var survey = await _surveySvc.GetSurveyAsync(User.GetAccountId(), id);
-
-        var surveydto = new SurveyDto
-        {
-            Id = survey.Id,
-            Name = survey.Name,
-            UserName = survey.CreatedBy.Name,
-            ExpirationDate = survey.ExpirationDate
-        };
-
-        return View(surveydto);
+        return View(_mapper.Map<SurveyDto>(
+               await _surveySvc.GetSurveyAsync(User.GetAccountId(), id)));
     }
 
     // GET: Survey/Add Survey

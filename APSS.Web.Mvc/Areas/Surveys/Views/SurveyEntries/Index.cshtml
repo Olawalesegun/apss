@@ -1,0 +1,46 @@
+﻿
+@model CrudViewModel<SurveyEntryDto>
+
+        <div class="table-rsponsive">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>@Icon.Hashtag.Render()</th>
+                <th>@Html.DisplayNameFor(m => m.First().MadeBy)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Survey)</th>
+                <th>@Html.DisplayNameFor(m => m.First().CreatedAt)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.MadeBy.Name</td>
+                    <td>@item.Survey.Name</td>
+                    <td>@item.CreatedAt</td>
+
+                    <td class="align-middle center">
+                        <div class=" dropdown">
+                            <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                @Icon.Bars.Render()
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item justified-content" href="@(Routes.Dashboard.Surveys.Entries.Details)?id=@item.Id">
+                                        Details @Icon.Info.Render()
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<partial name="Layout/Paginator" model="@Model.Params.Page" />
+@await Html.DeleteDialogAsync()

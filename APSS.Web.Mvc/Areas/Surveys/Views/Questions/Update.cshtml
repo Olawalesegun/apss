@@ -1,65 +1,71 @@
-﻿@using APSS.Web.Dtos
-@model APSS.Web.Dtos.QuestionDto
-<div class="container-fluid  mt-3  mx-4 my-1  ">
+﻿@model QuestionEditForm
+
+<div class="container-fluid  mt-3">
     <div class="row d-flex ">
         <div class="col-xl-7  col-md-9 col-12 border rounded shadow-sm  p-2">
             <div class="d-flex  justify-content-center pb-4 pt-4">
-                <div class=""> <h3 class="text-decoration-underline ">Update Question  </h3></div>
+                <div class=""> <h3 class="text-decoration-underline "> Update Question </h3></div>
             </div>
-            <form class="" method="post" >
+            <form class="" method="post" action="@(Routes.Dashboard.Surveys.Questions.Update)" asp-antiforgery="true" novalidate >
 
-                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="number" asp-for="Id"hidden />
+                <input type="number" asp-for="SurveyId"hidden />
 
 
-                <div class="row d-flex justify-content-between mb-3">
+
+                <div class="row d-flex justify-content-center mb-3">
                     <div class="col-6">
-                <label asp-for="QuestionType"></label>
+                        <label asp-for="QuestionType"></label>
 
-            <select asp-for="QuestionType" onselect="@Model.CandidateAnswers"
-            asp-items="Html.GetEnumSelectList<QuestionTypeDto>()"
-            class="form-control" >
-            </select>
+                        <select asp-for="QuestionType"
+                                asp-items="Html.GetEnumSelectList<QuestionTypeDto>()"
+                                class="form-control" id="multiple">
+                        </select>
           </div>
-                   
-            <div class="col-6">
-             <div class="form-check flex-grow-1">
-                    <input class="form-check-input" type="checkbox"  asp-for="IsRequired" value="@Model.IsRequired">
-                    <label class="form-check-label" asp-for="IsRequired"> </label>
-                </div> 
-          </div>
+
+           <div class="col-6 ">
+                        <div class="form-check flex-grow-1 mt-4 ">
+                            <input class="form-check-input " type="checkbox" asp-for="IsRequired">
+                            <label class="form-check-label" asp-for="IsRequired"> </label>
+                        </div>
+               </div>
+               </div>
+
+                <div class="input-group has-validation mb-3">
+                    <span class="input-group-text"><i class="fa-regular fa-circle-question"></i></span>
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" class="form-control" placeholder="Why What...?" asp-for="Text">
+                     <label asp-for="Text"></label>
+                    </div>
+                    <span class="d-block invalid-feedback" asp-validation-for="Text"></span>
                 </div>
-                <div class=" mt-4">
-                    <span class="text-danger">*</span>
-                    <label asp-for="Text" class="form-label"></label>
-                    <input type="text"  class="form-control" asp-for="Text" value="@Model.Text"  aria-label="Text input with dropdown button">
-                </div>
-                <span asp-validation-for="Text" class="text-danger"></span>
-                                     <div class="row d-flex justify-content-between">
+
+              
+
                           
-                   @foreach (var item in Model.CandidateAnswers!)
+                    @if (Model.QuestionType.ToString()== "MultipleChoiceQuestion")
+                    {
+
+                     <label asp-for="CandidateAnswers" class="mt-2"></label>
+                        @for(int i=0;i<@Model.CandidateAnswers!.Count();i++)
                         {
-                        
-                        <div class=" col-6" id="box1">
-                            <div class=" form-group" id="">
-                            <label  class="form-label" > Selection  </label>
-                            <input type="text" asp-for="@Model.CandidateAnswers"  class="form-control" id="exampleFormControlInput1">
-                        </div>
-                        </div>
-                  
+                            <input asp-for="CandidateAnswers![i].Id" hidden />
+                     <div class="input-group has-validation mb-3">
+                    <span class="input-group-text"><i class="fa-regular fa-circle-question"></i></span>
+                    <div class="form-floating flex-grow-1">
+                        <input type="text" class="form-control" placeholder="Why What...?" asp-for="CandidateAnswers![i].Value">
+                    </div>
+                </div>
+
                         }
+                    }
 
-                
-                   </div>
 
-                <div class="d-inline">
-                <button class="btn btn-primary mt-4 mx-1" asp-controller="Question" asp-action="EditQuestion"> 
-                    <i class="fa-solid fa-pen-to-square fa-lg mx-2"></i><span>Edit</span> 
-                </button>
-               <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
-
+                 <div class="mb-4  mt-4">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-pen-to-square mx-2 fa-lg"></i><span>Edit</span>  </button>
+                <a onClick="history.go(-1); return false;" class="btn btn-link   mx-2" style="background-color:#DCEEFB">Cancel</a>
             </div>
-
-            </form>
-        </div>
+        </form>
     </div>
+</div>
 </div>

@@ -1,7 +1,10 @@
 ﻿using APSS.Domain.Entities;
 using APSS.Domain.Services;
 using APSS.Web.Dtos;
+using APSS.Web.Dtos.Parameters;
 using APSS.Web.Mvc.Auth;
+using APSS.Web.Mvc.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
@@ -10,34 +13,23 @@ namespace APSS.Web.Mvc.Areas.Surveys.Controllers;
 public class SurveyEntriesController : Controller
 {
     private readonly ISurveysService _surveysService;
+    private readonly IMapper _mapper;
 
-    public SurveyEntriesController(ISurveysService surveysService)
+    public SurveyEntriesController(ISurveysService surveysService, IMapper mapper)
     {
         _surveysService = surveysService;
+        _mapper = mapper;
     }
 
     //Get:SurveyEntry/GetSurveyEntries
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index([FromQuery] FilteringParameters args)
     {
-        var entries = await _surveysService.GetSurveyEntriesAsync(User.GetAccountId());
-        List<SurveyEntryDto> entriesdto = new List<SurveyEntryDto>();
-        foreach (var entry in await entries
-            .Include(e => e.Survey)
-            .Include(e => e.MadeBy)
-            .Include(e => e.Answers)
-            .Include(e => e.Survey.Questions)
+        var ret = await (await _surveysService.GetSurveyEntriesAsync(User.GetAccountId()))
+            .Page(args.Page, args.PageLength)
             .AsAsyncEnumerable()
-            .ToListAsync())
-        {
-            entriesdto.Add(new SurveyEntryDto
-            {
-                Id = entry.Id,
-                Survey = entry.Survey,
-                MadeBy = entry.MadeBy,
-                CreatedAt = entry.CreatedAt
-            });
-        }
-        return View("GetSurveyEntries", entriesdto);
+            .Select(_mapper.Map<SurveyEntryDto>).ToListAsync();
+
+        return View(new CrudViewModel<SurveyEntryDto>(ret, args));
     }
 
     //Get:SurveyEntry/SurveyEntryDetails/5
@@ -47,31 +39,12 @@ public class SurveyEntriesController : Controller
     }
 
     //GET:SurveyEntry/AddSurveyEntry/id
-    public async Task<IActionResult> AddSurveyEntry()
+    public async Task<IActionResult> AddSurveyEntry(long id)
     {
-        var entries = await _surveysService.GetSurveyEntriesAsync(User.GetAccountId());
-        var entriesdto = new List<SurveyEntryDto>();
+        var entry = await _surveysService.GetSurveyEntryAsync(User.GetAccountId(), id);
+        var entrydto = _mapper.Map<SurveyEntryDto>(entry);
 
-        foreach (var entry in await entries.AsAsyncEnumerable().ToListAsync())
-        {
-            var items = new List<MultipleChoiceQuestionAnswer>();
-            foreach (var answer in entry.Answers)
-            {
-                if (answer is MultipleChoiceQuestionAnswer)
-                {
-                    items = await _surveysService
-                       .GetItemsAnswer(User.GetAccountId(), answer.Question.Id).AsAsyncEnumerable().ToListAsync();
-                }
-            }
-
-            entriesdto.Add(new SurveyEntryDto
-            {
-                Id = entry.Id,
-                Survey = entry.Survey,
-                anwserItems = items
-            });
-        }
-        return View(entriesdto);
+        return View(entrydto);
     }
 
     //POST:SurveyEntry/AddSurveyEntry/5

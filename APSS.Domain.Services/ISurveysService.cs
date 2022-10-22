@@ -131,6 +131,13 @@ public interface ISurveysService
     Task<IQueryBuilder<Survey>> GetAvailableSurveysAsync(long accountId);
 
     /// <summary>
+    /// Asynchrnously gets  surveys for a specific user
+    /// </summary>
+    /// <param name="accountId">The id of the account to get surveys for</param>
+    /// <returns>A query builder with the matching surveys for the user</returns>
+    Task<IQueryBuilder<Survey>> GetSurveysAsync(long accountId);
+
+    /// <summary>
     /// Asynchronously gets a survey by id
     /// </summary>
     /// <param name="accountId">the id of the account who wants to access the survey</param>
@@ -185,9 +192,19 @@ public interface ISurveysService
     /// <param name="accountId">The id of the account removing the survey</param>
     /// <param name="questionId">The id of the question to remove</param>
     /// <returns></returns>
-    Task Removequestion(long accountId, long questionId);
+    Task RemoveQuestion(long accountId, long questionId);
 
-    IQueryBuilder<MultipleChoiceQuestionAnswer> GetItemsAnswer(long accountId, long questionId);
+    Task<Question> GetQuestionAsync(long accountId, long questionId);
+
+    Task<Question> UpdateQuestionAsync(long accountId, long questionId, Action<Question> updater);
+
+    Task<MultipleChoiceAnswerItem> UpdateItemsAnswerAsync(long itemId, Action<MultipleChoiceAnswerItem> updater);
+
+    Task<ICollection<MultipleChoiceAnswerItem>> GetItemsAnswer(long accountId, long questionId);
+
+    Task<SurveyEntry> GetSurveyEntryAsync(long accountId, long entryId);
+
+    Task<MultipleChoiceQuestion> UpdateMultipleChoiceQuestion(long questionId, Action<MultipleChoiceQuestion> updater);
 
     #endregion Public Methods
 }

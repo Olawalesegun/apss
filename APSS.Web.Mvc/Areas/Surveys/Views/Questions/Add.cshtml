@@ -1,11 +1,12 @@
 ﻿@model QuestionAddForm
-<div class="container-fluid  mt-3    ">
+
+<div class="container-fluid  mt-3">
     <div class="row d-flex ">
         <div class="col-xl-7  col-md-9 col-12 border rounded shadow-sm  p-2">
             <div class="d-flex  justify-content-center pb-4 pt-4">
                 <div class=""> <h3 class="text-decoration-underline "> Add Question </h3></div>
             </div>
-            <form class="" method="post" action="@Routes.Dashboard.Surveys.Surveys.FullPath">
+            <form class="" method="post" action="@Routes.Dashboard.Surveys.Questions.Add" asp-antiforgery="true" novalidate>
 
                 <input asp-for="SurveyId" hidden />
                 <div class="row d-flex justify-content-center mb-3">
@@ -126,8 +127,8 @@
                             </div>
                         </div>
                     </div>
-                    <button id="AddIcon" class="btn btn-link "><i class="fa-sold fa-plus "></i></button>div>
-
+                    <button id="AddIcon" class="btn btn-link "><i class="fa-sold fa-plus "></i></button>
+                    </div>
                     <div class="mt-4"></div>
                 <button class="btn btn-primary"><i class="fa-solid fa-plus"></i>Add</button>
             <a onClick="history.go(-1); return false;" class="btn btn-link w-25 my-4 mx-3" style="background-color:#DCEEFB">Cancel</a>
@@ -136,30 +137,30 @@
     </div>
 </div>
 
-<scr    ipt>
+<script>
           const el = document.getElementById('multiple');
 
-            const box1 = document.getElementById('box1');
+        const box1 = document.getElementById('box1');
         const box2=document.getElementById('box2');
         const box3=document.getElementById('box3');
         const addicon=document.getElementById('AddIcon');
         const box4 = document.getElementById('box4');
         const box5=document.getElementById('box5');
         const box6=document.getElementById('box6');
-    c    onst box7 = document.getElementById('box7');
+        const box7 = document.getElementById('box7');
         const box8=document.getElementById('box8');
-    co    nst can=document.getElementById('canmultiple');
-     var     counter=0;
-    el.a    ddEventListener('change', function handleChange(event) {
+        const can=document.getElementById('canmultiple');
+     var counter=0;
+       el.addEventListener('change', function handleChange(event) {
       if     (event.target.value === '2') {
             box1.style.display = 'block';
             box2.style.display= 'block';
             box3.style.display= 'block';
         addicon.style.display='block';
             can.style.display='block';
-        co    unter=3;
+        counter=3;
 
-      }     el    se {
+      }     else {
               box1.style.display = 'none';
               box2.style.display= 'none';
               box3.style.display= 'none';
@@ -173,8 +174,8 @@
               counter=0;
           }
     });
-addi    con.addEventListener('click', function handleClick(event) {
-    coun    ter = counter + 1;
+addicon.addEventListener('click', function handleClick(event) {
+    counter = counter + 1;
 
             if (counter == 1) {
             box4.style.display = 'block';
@@ -193,7 +194,7 @@ addi    con.addEventListener('click', function handleClick(event) {
             addicon.style.display = 'none';
     }
 
-    el    se     {
+    else     {
             box4.style.display = 'none';
             box5.style.display = 'none';
             box6.style.display = 'none';
