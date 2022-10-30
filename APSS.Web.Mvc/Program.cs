@@ -79,8 +79,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseStatusCodePagesWithReExecute("/Error/_{0}");
-app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+//app.UseStatusCodePagesWithReExecute("/Error/_{0}");
+//app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.UseStaticFiles();
 app.UseRouting();

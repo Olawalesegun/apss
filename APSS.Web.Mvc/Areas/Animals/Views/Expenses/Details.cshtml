@@ -34,9 +34,10 @@
         </table>
         <br />
         <div class="d-flex justify-content-end">
-            <a class="btn btn-outline-secondary  my-2   mx-1" onclick="history.back()"> <i class="fa-solid fa-angle-left me-2"></i><span> Back </span> </a>
-            <a class="btn btn-outline-primary   my-2   mx-1" asp-route-Id="@Model?.Id" asp-controller="Expenses" asp-action="Update"> <i class="fa-solid fa-pen-to-square me-2"> </i><span>Update</span> </a>
-            <a class="btn btn-outline-danger   my-2   mx-1" asp-controller="Expenses" asp-action="Delete" asp-route-id="@Model?.Id"> <i class="fa-solid fa-trash-can me-2"></i><span>Delete</span>  </a>
+            <a class=" btn btn-outline-primary   my-2   mx-1" href="@(Routes.Dashboard.Animals.Expense.Update)?id=@Model!.Id"> <i class="fa-solid fa-trash-can me-2"></i><span>Update</span>  </a>
+            <a class="btn btn-outline-danger   my-2   mx-1 " onclick="showDeletionModal('Are you sure you want to delete Animal Group `@Model.Type`?', @Model.Id)"> <i class="fa-solid fa-pen-to-square me-2"> </i><span>Update</span> </a>
         </div>
     </div>
 </div>
+
+@await Html.DeleteDialogAsync()

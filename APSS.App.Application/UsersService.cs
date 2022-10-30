@@ -61,13 +61,18 @@ public sealed class UsersService : IUsersService
     }
 
     /// <inheritdoc/>
-    public async Task<IQueryBuilder<User>> GetSubuserAsync(long accountId)
+    public async Task<IQueryBuilder<User>> GetSubusersAsync(long accountId, long? userId)
     {
         var account = await _uow.Accounts.Query()
-            .Include(u => u.User)
-            .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
+         .Include(u => u.User)
+         .FindWithPermissionsValidationAsync(accountId, PermissionType.Read);
 
-        return _uow.Users.Query().Where(u => u.SupervisedBy != null && u.SupervisedBy.Id == account.User.Id);
+        var query = _uow.Users.Query();
+
+        if (userId is not null)
+            return query.Where(u => u.SupervisedBy != null && u.SupervisedBy.Id == userId);
+
+        return query.Where(u => u.SupervisedBy != null && u.SupervisedBy.Id == account.User.Id);
     }
 
     /// <inheritdoc/>

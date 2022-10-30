@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APSS.Web.Dtos.ProductExpenseDto>
+﻿@model CrudViewModel<ProductExpenseDto>
 <div class="   p-2  col-ms-12  my-0 mt-2  rounded ml-2 needs-validation " id="table">
     <div class="col-sm-12  ">
         <div class="row d-flex justify-content-betweent">
@@ -9,11 +9,11 @@
 
                 <thead>
                     <tr class="header  bg-fixed " style="border-bottom:2px #5C5C5C solid;">
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(i => i.Id)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(t => t.Type)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.Price)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.CreatedAt)</th>
-                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.ModifiedAt)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(i => i.First().Id)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(t => t.First().Type)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.First().Price)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.First().CreatedAt)</th>
+                        <th class="fw-bold align-middle">@Html.DisplayNameFor(p => p.First().ModifiedAt)</th>
                         <th style="width:20px;" class="fw-bold align-middle"></th>
                     </tr>
                 </thead>
@@ -45,3 +45,5 @@
         </div>
     </div>
 </div>
+
+@await Html.DeleteDialogAsync()

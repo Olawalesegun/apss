@@ -124,5 +124,7 @@ public interface IAnimalService
 
     Task RemoveProductExpenseAsync(long accountId, long expenseId);
 
+    Task<IQueryBuilder<AnimalProduct>> GetSpecificAnimalProductsAsync(long accountId, long animalId);
+
     #endregion Public Methods
 }
